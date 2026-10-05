@@ -1,0 +1,32 @@
+{
+  "topic": "component-api",
+  "title": "Angular Component APIs: Native Semantics and Consumer Contracts",
+  "goals": "Design predictable inputs and events, preserve native element capabilities, use composition, and implement the forms control contract.",
+  "sources": [
+    {
+      "id": "API-001",
+      "title": "A button that saves twice and ignores disabled",
+      "file": "api-001-a-button-that-clicks-twice.md",
+      "followups": 3
+    },
+    {
+      "id": "API-002",
+      "title": "A wrapper that hides the native element",
+      "file": "api-002-wrapping-native-elements.md",
+      "followups": 3
+    },
+    {
+      "id": "API-003",
+      "title": "A card with an input for everything",
+      "file": "api-003-configuration-versus-composition.md",
+      "followups": 3
+    },
+    {
+      "id": "API-004",
+      "title": "A checkbox that makes every form dirty",
+      "file": "api-004-a-control-value-accessor-that-lies.md",
+      "followups": 3
+    }
+  ],
+  "pauses": 16
+}

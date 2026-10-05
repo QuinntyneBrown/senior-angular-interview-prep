@@ -1,0 +1,2436 @@
+{
+  "duration": 2866.099417,
+  "chunks": [
+    {
+      "heading": null,
+      "start": 0,
+      "duration": 9.4,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Senior Angular interview preparation, lesson 2. Design Tokens: Themes, Accessibility, and Public Contracts.",
+          "start": 0,
+          "duration": 7.192
+        }
+      ]
+    },
+    {
+      "heading": "A design system is a contract between teams",
+      "start": 9.4,
+      "duration": 33,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A design system is a contract between teams",
+          "start": 9.4,
+          "duration": 2.542
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Welcome to the design tokens lesson. We will review four questions: raw values and token layers, renaming a public token, dark mode and forced colors, and controls that break when text grows. Before looking at those defects, we need to understand what tokens promise. A token is a named design decision that can be reused by code and design tools. Its value might be a color, a distance, a font size, or a duration. A useful name explains the role of that decision rather than its current appearance.",
+          "start": 13.067,
+          "duration": 27.958
+        }
+      ]
+    },
+    {
+      "heading": "A design system is a contract between teams · 2",
+      "start": 42.4,
+      "duration": 30.7,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A design system is a contract between teams · 2",
+          "start": 42.4,
+          "duration": 3.242
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The consumer of a shared library should be able to change a supported theme without copying a component's stylesheet. If every component chooses its own blue, radius, and spacing, a brand refresh becomes a search through unrelated code. More subtly, a dark theme can change a background without changing its foreground. The result can be technically consistent with the old stylesheet and still unreadable. Tokens let us express related decisions together and review them as a system.",
+          "start": 46.767,
+          "duration": 24.958
+        }
+      ]
+    },
+    {
+      "heading": "A design system is a contract between teams · 3",
+      "start": 73.1,
+      "duration": 29.48,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A design system is a contract between teams · 3",
+          "start": 73.1,
+          "duration": 3.55
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "In an interview, do not stop at replacing hexadecimal values with variables. Explain the source of truth, the token layers, the override boundary, and how you test the result. A senior answer also considers existing consumers. A public CSS custom property is an interface even though TypeScript cannot see it. Its name, meaning, inheritance, and fallback behavior can all become dependencies for another team.",
+          "start": 77.775,
+          "duration": 23.43
+        }
+      ]
+    },
+    {
+      "heading": "Primitive, semantic, and component layers",
+      "start": 102.58,
+      "duration": 25.94,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Primitive, semantic, and component layers",
+          "start": 102.58,
+          "duration": 1.953
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Primitive tokens describe a palette or scale: a blue step, a spacing increment, or a radius. They are reusable ingredients. Semantic tokens describe intent: action background, content on an action, surface border, or disabled foreground. Components consume semantic roles so they do not need to know which palette step implements a role in each theme.",
+          "start": 105.658,
+          "duration": 21.487
+        }
+      ]
+    },
+    {
+      "heading": "Primitive, semantic, and component layers · 2",
+      "start": 128.52,
+      "duration": 30.58,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Primitive, semantic, and component layers · 2",
+          "start": 128.52,
+          "duration": 2.73
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A component token is justified when consumers need a documented component-specific override that should not affect every use of the semantic role. A button's corner shape might be one such decision. Creating a token for every declaration is usually counterproductive. It exposes implementation details and makes future refactoring expensive. Start with reusable semantic decisions, then add component tokens when a real supported customization requires them.",
+          "start": 132.375,
+          "duration": 25.35
+        }
+      ]
+    },
+    {
+      "heading": "Primitive, semantic, and component layers · 3",
+      "start": 159.1,
+      "duration": 28.5,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Primitive, semantic, and component layers · 3",
+          "start": 159.1,
+          "duration": 2.459
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The example separates a palette value from its purpose. In dark mode, the semantic role can point to another primitive while the component still consumes the same name. Define foreground and background roles as a pair and verify their contrast for every relevant state. A hover role, selected role, and focus indicator need deliberate design; deriving all of them with opacity can fail against a different background.",
+          "start": 162.684,
+          "duration": 23.541
+        }
+      ]
+    },
+    {
+      "heading": "Inheritance and override placement",
+      "start": 187.6,
+      "duration": 22.16,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Inheritance and override placement",
+          "start": 187.6,
+          "duration": 1.38
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "CSS custom properties participate in the cascade and ordinarily inherit. A product can set a token on a theme container and descendants can consume the inherited value. This is an important part of a scoped theme: two regions on one page can use different semantic mappings without a global JavaScript toggle.",
+          "start": 190.105,
+          "duration": 18.28
+        }
+      ]
+    },
+    {
+      "heading": "Inheritance and override placement · 2",
+      "start": 209.76,
+      "duration": 30.4,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Inheritance and override placement · 2",
+          "start": 209.76,
+          "duration": 1.993
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Be careful where you declare defaults. If a component declares its public override property directly on its host, that declaration wins over an inherited value on an ancestor. The consumer may have set the documented property correctly and still see no change. Prefer consuming a public property with a fallback to the library's semantic role. The fallback supplies a default when the consumer did not provide a value; it does not need to overwrite the consumer's inherited decision.",
+          "start": 212.878,
+          "duration": 25.907
+        }
+      ]
+    },
+    {
+      "heading": "Inheritance and override placement · 3",
+      "start": 240.16,
+      "duration": 30.52,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Inheritance and override placement · 3",
+          "start": 240.16,
+          "duration": 2.213
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Debug this in the browser's computed styles. Check the property on the theme ancestor and on the component host, then inspect the actual background declaration. A variable's existence does not prove the component reads it. Also remember that a fallback handles a missing variable; a present value that is invalid for the consuming property can invalidate that declaration at computed-value time. Document the expected value type and test representative overrides.",
+          "start": 243.498,
+          "duration": 25.807
+        }
+      ]
+    },
+    {
+      "heading": "Renaming a token without losing overrides",
+      "start": 270.68,
+      "duration": 24.2,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Renaming a token without losing overrides",
+          "start": 270.68,
+          "duration": 1.973
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Renaming a public token is a migration. During the compatibility period, the new name should win when supplied, the old name should still work when the new one is absent, and the library default should remain last. Put that order in the consuming declaration. Avoid defining an alias so eagerly that the old value can no longer reach the fallback.",
+          "start": 273.778,
+          "duration": 19.727
+        }
+      ]
+    },
+    {
+      "heading": "Renaming a token without losing overrides · 2",
+      "start": 294.88,
+      "duration": 30.48,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Renaming a token without losing overrides · 2",
+          "start": 294.88,
+          "duration": 2.87
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Test the four consumer cases: neither name, old name only, new name only, and both names. Include inherited values on a container because testing only direct host styles can hide the cascade bug. Publish the replacement, removal version, and migration examples. A token contract also includes units and meaning. Renaming a fixed height to a minimum height may improve accessibility but can change layout, so teams need to review it.",
+          "start": 298.875,
+          "duration": 25.11
+        }
+      ]
+    },
+    {
+      "heading": "Renaming a token without losing overrides · 3",
+      "start": 325.36,
+      "duration": 26.54,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Renaming a token without losing overrides · 3",
+          "start": 325.36,
+          "duration": 2.708
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The eventual removal belongs in a release that follows your compatibility policy. Forty teams will not all migrate on the same day. Agree on a support window, supply automated help where possible, and collect evidence of remaining uses. Do not remove an override merely because the library itself no longer uses the old name. The consumer is the reason the compatibility alias exists.",
+          "start": 329.193,
+          "duration": 21.332
+        }
+      ]
+    },
+    {
+      "heading": "System themes and application preferences",
+      "start": 351.9,
+      "duration": 25.48,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "System themes and application preferences",
+          "start": 351.9,
+          "duration": 1.915
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A theme library should not assume that every application starts in a browser or stores a preference in local storage. Server rendering, hydration, embedded applications, and scoped themes have different requirements. Let CSS handle a system color preference where possible. An explicit application choice can set a dedicated attribute without replacing unrelated classes.",
+          "start": 354.94,
+          "duration": 21.065
+        }
+      ]
+    },
+    {
+      "heading": "System themes and application preferences · 2",
+      "start": 377.38,
+      "duration": 28.92,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "System themes and application preferences · 2",
+          "start": 377.38,
+          "duration": 2.466
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The light-dark function selects a value according to the used color scheme. A root that supports light and dark can follow the system preference, while a scoped explicit scheme can choose one. For older supported browsers, provide light defaults and a prefers-color-scheme media query, then explicit theme overrides. Check the actual browser support policy before selecting the implementation; the function is a capability, not a universal assumption.",
+          "start": 380.971,
+          "duration": 23.954
+        }
+      ]
+    },
+    {
+      "heading": "System themes and application preferences · 3",
+      "start": 406.3,
+      "duration": 29.48,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "System themes and application preferences · 3",
+          "start": 406.3,
+          "duration": 2.518
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A stored explicit choice needs to be restored before first paint if the application wants to avoid a flash. A library can document how the application sets an attribute during server rendering or initial page setup. It should not silently choose a storage policy or overwrite body classes. When JavaScript is needed, inject the document and guard browser-only APIs; a framework service must still respect the execution environment.",
+          "start": 409.943,
+          "duration": 24.462
+        }
+      ]
+    },
+    {
+      "heading": "Forced colors and non-color state",
+      "start": 435.78,
+      "duration": 24.54,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Forced colors and non-color state",
+          "start": 435.78,
+          "duration": 1.722
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Forced-colors mode changes the rules. The browser can replace author colors with system colors chosen by the user. A selected chip that differs only by a blue background may become indistinguishable from an unselected chip. Communicate selection with an additional cue such as a check mark, border, or text, and expose the same state through the appropriate ARIA attribute.",
+          "start": 438.627,
+          "duration": 20.318
+        }
+      ]
+    },
+    {
+      "heading": "Forced colors and non-color state · 2",
+      "start": 460.32,
+      "duration": 26.04,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Forced colors and non-color state · 2",
+          "start": 460.32,
+          "duration": 2.575
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use system colors deliberately where a custom indicator needs them. Highlight and HighlightText form a system-selected pair; GrayText can express disabled text. Avoid turning off forced color adjustment for a whole component simply to preserve a brand palette. A narrowly justified adjustment must still use colors that respect the user's mode and retain a visible focus indicator.",
+          "start": 464.02,
+          "duration": 20.965
+        }
+      ]
+    },
+    {
+      "heading": "Forced colors and non-color state · 3",
+      "start": 486.36,
+      "duration": 27.76,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Forced colors and non-color state · 3",
+          "start": 486.36,
+          "duration": 2.639
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Browser emulation in CI can check that outlines, selected markers, and disabled states remain rendered. Automated checks are valuable, but they do not replace testing on an actual high contrast configuration with assistive technology. Treat a forced-colors screenshot as evidence of the tested browser state, not a certification of every platform. This distinction will matter when we discuss verification.",
+          "start": 490.124,
+          "duration": 22.621
+        }
+      ]
+    },
+    {
+      "heading": "Text growth, reflow, and target size",
+      "start": 514.12,
+      "duration": 27.58,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Text growth, reflow, and target size",
+          "start": 514.12,
+          "duration": 2.033
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Relative font units help controls follow the user's preferred default text size. A rem is relative to the root font size. Avoid setting a fixed root size that defeats that preference. Browser zoom and an increased default font size are different mechanisms, so test both. A pixel border can be reasonable even when the text is relative; the goal is usable scaling rather than replacing every unit mechanically.",
+          "start": 517.278,
+          "duration": 23.047
+        }
+      ]
+    },
+    {
+      "heading": "Text growth, reflow, and target size · 2",
+      "start": 541.7,
+      "duration": 31.72,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Text growth, reflow, and target size · 2",
+          "start": 541.7,
+          "duration": 2.687
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fixed heights, hidden overflow, and non-wrapping labels are a dangerous combination. Use minimum sizes with padding and allow the control to grow. Check long translations, two hundred percent text scaling, and the WCAG text-spacing adjustments: line height of one and a half, paragraph spacing of twice the font size, letter spacing of point one two em, and word spacing of point one six em. No text or essential operation should disappear when those values are applied.",
+          "start": 545.512,
+          "duration": 26.533
+        }
+      ]
+    },
+    {
+      "heading": "Text growth, reflow, and target size · 3",
+      "start": 573.42,
+      "duration": 31.46,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Text growth, reflow, and target size · 3",
+          "start": 573.42,
+          "duration": 3.089
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Separate icon size from hit target size. A small icon can sit in a much larger native button. WCAG's minimum target criterion is twenty-four CSS pixels with defined exceptions; many systems choose larger touch targets. A dense layout requires checking spacing and exception conditions, not simply claiming that twenty-four-pixel rows make every target compliant. Verify the actual clickable rectangle and neighboring targets.",
+          "start": 577.634,
+          "duration": 25.871
+        }
+      ]
+    },
+    {
+      "heading": "A repeatable review and verification method",
+      "start": 604.88,
+      "duration": 28.86,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A repeatable review and verification method",
+          "start": 604.88,
+          "duration": 2.592
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Review tokens from the consumer outward. Identify the supported override, follow its fallback chain, then examine every visual state that consumes it. Include light, dark, explicit preferences, inherited scoped overrides, forced colors, disabled states, focus, enlarged text, and long labels. This matrix turns vague reports such as the theme does not work into reproducible cases.",
+          "start": 608.598,
+          "duration": 23.767
+        }
+      ]
+    },
+    {
+      "heading": "A repeatable review and verification method · 2",
+      "start": 633.74,
+      "duration": 30.5,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A repeatable review and verification method · 2",
+          "start": 633.74,
+          "duration": 3.027
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Centralize authoring where designers and engineers can review the same decisions, and generate platform artifacts rather than manually synchronizing values. The generated CSS, native platform constants, documentation, and previews should preserve semantic names. Validate references and types so a missing alias or mismatched unit fails before publication. A lint rule can prevent new raw values in component styles while allowing the intentional palette source.",
+          "start": 637.892,
+          "duration": 24.973
+        }
+      ]
+    },
+    {
+      "heading": "A repeatable review and verification method · 3",
+      "start": 664.24,
+      "duration": 23.58,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A repeatable review and verification method · 3",
+          "start": 664.24,
+          "duration": 2.765
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "As we read the questions, connect every proposed correction to a failure mechanism and a regression test. Explain who owns an override and what existing consumers will observe. That combination demonstrates senior judgment: the design is coherent, the implementation respects CSS behavior, and the rollout protects teams who depend on it.",
+          "start": 668.13,
+          "duration": 18.315
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · Scenario",
+      "start": 687.82,
+      "duration": 14,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · Scenario",
+          "start": 687.82,
+          "duration": 2.226
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "We now review TOK-001: A button that cannot be themed. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+          "start": 691.171,
+          "duration": 9.274
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · Scenario",
+      "start": 701.82,
+      "duration": 20.92,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · Scenario",
+          "start": 701.82,
+          "duration": 1.727
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`@acme/ui` is adding a dark theme and a second brand for an acquired company. The button below does not change in either theme. A product team also complains that they had to write `.ui-button { background: ... }` in their global stylesheet to restyle a button for a campaign page, and it broke after the last library release.",
+          "start": 704.672,
+          "duration": 16.693
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · Scenario",
+      "start": 722.74,
+      "duration": 5.84,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · Scenario",
+          "start": 722.74,
+          "duration": 2.227
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The tokens file:",
+          "start": 726.092,
+          "duration": 1.113
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · Scenario · block 1 · page 1",
+      "start": 728.58,
+      "duration": 18.08,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · Scenario · block 1 · page 1",
+          "start": 728.58,
+          "duration": 3.739
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 1. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 733.444,
+          "duration": 11.841
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · Scenario",
+      "start": 746.66,
+      "duration": 6.38,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · Scenario",
+          "start": 746.66,
+          "duration": 2.587
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The button's stylesheet:",
+          "start": 750.372,
+          "duration": 1.293
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · Scenario · block 2 · page 1",
+      "start": 753.04,
+      "duration": 16.88,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · Scenario · block 2 · page 1",
+          "start": 753.04,
+          "duration": 3.835
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 2. Focus on background. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 758,
+          "duration": 10.545
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · Scenario · block 3 · page 2",
+      "start": 769.92,
+      "duration": 17.28,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · Scenario · block 3 · page 2",
+          "start": 769.92,
+          "duration": 3.942
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 2 of 2. Focus on background. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 774.987,
+          "duration": 10.838
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · Interview question",
+      "start": 787.2,
+      "duration": 18.469,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · Interview question",
+          "start": 787.2,
+          "duration": 1.908
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Why can't this button be themed, and what token structure would you put in place? Then tell me how product teams should customise it, and what is wrong with the focus style.",
+          "start": 790.233,
+          "duration": 8.786
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · 1. Raw values bypass the token system",
+      "start": 805.669,
+      "duration": 25.505,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · 1. Raw values bypass the token system",
+          "start": 805.669,
+          "duration": 4.546
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`#0b5fff`, `white`, `8px 16px`, `4px` and the font shorthand are written directly into the component. A theme can only change custom properties, so these values never change. Each one is also a copy of a decision made elsewhere, which drifts silently the next time the design team adjusts it.",
+          "start": 811.34,
+          "duration": 18.459
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · 2. Components use palette tokens, which have no meaning",
+      "start": 831.174,
+      "duration": 22.28,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · 2. Components use palette tokens, which have no meaning",
+          "start": 831.174,
+          "duration": 5.225
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`--color-blue-700` names a colour, not a purpose. A dark theme cannot sensibly redefine \"blue-700\", and the acquired brand's primary colour is not blue at all. Themes need something to remap that describes intent. The usual answer is three layers:",
+          "start": 837.524,
+          "duration": 14.555
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · 2. Components use palette tokens, which have no meaning · comparison 1",
+      "start": 853.454,
+      "duration": 17.9,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · 2. Components use palette tokens, which have no meaning · comparison 1",
+          "start": 853.454,
+          "duration": 8.727
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Layer: Primitive (palette). Example: `--ui-palette-blue-500: #0b5fff`. Who uses it: Only the semantic layer.",
+          "start": 863.306,
+          "duration": 6.673
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · 2. Components use palette tokens, which have no meaning · comparison 2",
+      "start": 871.354,
+      "duration": 18.1,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · 2. Components use palette tokens, which have no meaning · comparison 2",
+          "start": 871.354,
+          "duration": 9.145
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Layer: Semantic. Example: `--ui-color-action-primary: var(--ui-palette-blue-500)`. Who uses it: Components; themes remap these.",
+          "start": 881.624,
+          "duration": 6.455
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · 2. Components use palette tokens, which have no meaning · comparison 3",
+      "start": 889.454,
+      "duration": 15,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · 2. Components use palette tokens, which have no meaning · comparison 3",
+          "start": 889.454,
+          "duration": 7.084
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Layer: Component. Example: `--ui-button-background`. Who uses it: Consumers who need a documented override.",
+          "start": 897.663,
+          "duration": 5.416
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · 2. Components use palette tokens, which have no meaning",
+      "start": 904.454,
+      "duration": 11.24,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · 2. Components use palette tokens, which have no meaning",
+          "start": 904.454,
+          "duration": 4.532
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A dark theme or a second brand then redefines the semantic layer only:",
+          "start": 910.111,
+          "duration": 4.208
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · Answer · block 1 · page 1",
+      "start": 915.694,
+      "duration": 23.48,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · Answer · block 1 · page 1",
+          "start": 915.694,
+          "duration": 3.703
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 2. Read this part in the context of 2. Components use palette tokens, which have no meaning. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 920.522,
+          "duration": 17.277
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · Answer · block 2 · page 2",
+      "start": 939.174,
+      "duration": 24.64,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · Answer · block 2 · page 2",
+          "start": 939.174,
+          "duration": 3.907
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 2 of 2. Read this part in the context of 2. Components use palette tokens, which have no meaning. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 944.206,
+          "duration": 18.233
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · 2. Components use palette tokens, which have no meaning",
+      "start": 963.814,
+      "duration": 16.54,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · 2. Components use palette tokens, which have no meaning",
+          "start": 963.814,
+          "duration": 5.781
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The names are also prefixed (`--ui-`). Unprefixed names such as `--color-blue-500` collide with custom properties that product applications already define.",
+          "start": 970.72,
+          "duration": 8.259
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · 3. Consumers had to style private markup",
+      "start": 980.354,
+      "duration": 24.2,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · 3. Consumers had to style private markup",
+          "start": 980.354,
+          "duration": 3.774
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The campaign team targeted `.ui-button`, an internal class. Internal class names and DOM structure are not public API, so a refactor broke them, and the library had no way to know. The fix is to give consumers a documented hook: component-level tokens that the component reads with a fallback to the semantic token.",
+          "start": 985.253,
+          "duration": 17.926
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · Answer · block 3 · page 1",
+      "start": 1004.554,
+      "duration": 20.42,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · Answer · block 3 · page 1",
+          "start": 1004.554,
+          "duration": 3.91
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 2. Focus on background. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1009.589,
+          "duration": 14.01
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · Answer · block 4 · page 2",
+      "start": 1024.974,
+      "duration": 20.28,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · Answer · block 4 · page 2",
+          "start": 1024.974,
+          "duration": 3.879
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 2 of 2. Focus on background. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1029.978,
+          "duration": 13.901
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · 3. Consumers had to style private markup",
+      "start": 1045.254,
+      "duration": 21.64,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · 3. Consumers had to style private markup",
+          "start": 1045.254,
+          "duration": 4.254
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The campaign team now writes `.campaign ui-button { --ui-button-background: ... }`. That name is listed in the button's documentation and covered by the library's versioning policy, so renaming it later is a breaking change the library manages deliberately (see TOK-002).",
+          "start": 1050.633,
+          "duration": 14.886
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · 3. Consumers had to style private markup",
+      "start": 1066.894,
+      "duration": 16.26,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · 3. Consumers had to style private markup",
+          "start": 1066.894,
+          "duration": 4.234
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The underscore properties (`--_background`) are private working variables. They let the danger variant change the defaults without overwriting the public tokens a consumer may have set.",
+          "start": 1072.253,
+          "duration": 9.526
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · 4. The focus style fails in two ways",
+      "start": 1083.154,
+      "duration": 41.48,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · 4. The focus style fails in two ways",
+          "start": 1083.154,
+          "duration": 4.649
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`outline: none` plus `box-shadow`. In forced-colors mode (Windows contrast themes) the browser removes `box-shadow`, so keyboard users see no focus indicator at all. An outline survives forced colors because the browser repaints it in a system colour. - `:focus` instead of `:focus-visible`. The ring appears on every mouse click, which is why teams are tempted to remove it. `:focus-visible` shows it when the browser judges a focus indicator useful, such as keyboard navigation. The 40%-opacity ring is also unlikely to meet the 3:1 contrast required for focus indicators against both the button and the page background.",
+          "start": 1088.928,
+          "duration": 34.331
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · Follow-up 1",
+      "start": 1124.634,
+      "duration": 48.299,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · Follow-up 1",
+          "start": 1124.634,
+          "duration": 2.587
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Where should token values be authored so that web, iOS and Android stay in step? What would you generate from that source?",
+          "start": 1128.346,
+          "duration": 8.56
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use a versioned token source shared by design and engineering, with typed values, semantic aliases, descriptions, and ownership. Generate CSS custom properties, native platform constants, design-tool artifacts, and documentation from it. Validate alias references and platform transformations in CI. Platforms can use different representations while preserving the same semantic role; do not assume every CSS unit transfers directly to mobile. Review generated changes with design previews so a synchronized value is also an intentional decision.",
+          "start": 1141.996,
+          "duration": 29.562
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · Follow-up 2",
+      "start": 1172.933,
+      "duration": 47.083,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · Follow-up 2",
+          "start": 1172.933,
+          "duration": 2.419
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "A team wants a \"slightly lighter\" primary button on one page. Do you add a component token, a variant, or say no? What decides it?",
+          "start": 1176.477,
+          "duration": 8.904
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Ask whether the request represents a recurring supported role or a one-page exception. A reusable action variant deserves a named semantic contract and state rules. A supported component customization may justify a component token. A purely local art-direction choice can remain an application override without expanding the public API. Check foreground contrast, hover, disabled, and focus states before approving any lighter background. Avoid a variant named only after its current shade because that meaning will not survive another theme.",
+          "start": 1190.643,
+          "duration": 27.998
+        }
+      ]
+    },
+    {
+      "heading": "TOK-001 · Follow-up 3",
+      "start": 1220.016,
+      "duration": 41.877,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-001 · Follow-up 3",
+          "start": 1220.016,
+          "duration": 2.576
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How would you stop raw hex values from being merged into the library again?",
+          "start": 1223.717,
+          "duration": 5.484
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Lint component styles to reject raw colors outside the approved primitive token source. Use an allowlist for deliberate values such as transparent and system colors, and require review for exceptions. Validate generated token references, run theme previews and contrast checks, and teach the role-based naming model in contribution guidance. A rule that blindly forbids every hexadecimal value even in the palette source will only encourage suppressions; enforce the actual architecture boundary.",
+          "start": 1234.388,
+          "duration": 26.13
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · Scenario",
+      "start": 1261.893,
+      "duration": 15.06,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · Scenario",
+          "start": 1261.893,
+          "duration": 2.283
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "We now review TOK-002: Renaming a public token in a minor release. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+          "start": 1265.301,
+          "duration": 10.277
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · Scenario",
+      "start": 1276.953,
+      "duration": 22,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · Scenario",
+          "start": 1276.953,
+          "duration": 2.25
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A pull request to `@acme/ui` is titled \"chore(button): rename token for consistency\" and is labelled for the next minor release. The description says: \"Renamed `--ui-button-bg` to `--ui-button-background` to match our naming guidelines. Also moved the default onto `:host` so it shows up in DevTools.\"",
+          "start": 1280.328,
+          "duration": 17.25
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · Scenario",
+      "start": 1298.953,
+      "duration": 5.42,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · Scenario",
+          "start": 1298.953,
+          "duration": 2.502
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Before:",
+          "start": 1302.58,
+          "duration": 0.418
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · Scenario · block 1 · page 1",
+      "start": 1304.373,
+      "duration": 16.94,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · Scenario · block 1 · page 1",
+          "start": 1304.373,
+          "duration": 3.851
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 1. Focus on background. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1309.349,
+          "duration": 10.589
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · Scenario",
+      "start": 1321.313,
+      "duration": 5.44,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · Scenario",
+          "start": 1321.313,
+          "duration": 2.52
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "After:",
+          "start": 1324.958,
+          "duration": 0.42
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · Scenario · block 2 · page 1",
+      "start": 1326.753,
+      "duration": 17.34,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · Scenario · block 2 · page 1",
+          "start": 1326.753,
+          "duration": 3.957
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 1. Focus on background. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1331.835,
+          "duration": 10.883
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · Scenario",
+      "start": 1344.093,
+      "duration": 11.26,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · Scenario",
+          "start": 1344.093,
+          "duration": 2.389
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The button documentation lists `--ui-button-bg` as a supported customisation token. Product teams use it like this:",
+          "start": 1347.607,
+          "duration": 6.371
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · Scenario · block 3 · page 1",
+      "start": 1355.353,
+      "duration": 18.24,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · Scenario · block 3 · page 1",
+          "start": 1355.353,
+          "duration": 3.777
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 1. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1360.255,
+          "duration": 11.963
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · Interview question",
+      "start": 1373.593,
+      "duration": 18.997,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · Interview question",
+          "start": 1373.593,
+          "duration": 2.172
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Would you approve this pull request? Explain exactly what breaks for consumers, including consumers who switch to the new name, and describe how you would ship the rename safely.",
+          "start": 1376.89,
+          "duration": 9.05
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · Answer",
+      "start": 1392.59,
+      "duration": 10.284,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · Answer",
+          "start": 1392.59,
+          "duration": 1.964
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "No. The change is breaking in two separate ways, and the second one also breaks the new name.",
+          "start": 1395.679,
+          "duration": 5.82
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · 1. The old name silently stops working",
+      "start": 1402.874,
+      "duration": 26.32,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · 1. The old name silently stops working",
+          "start": 1402.874,
+          "duration": 3.97
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Every product team that sets `--ui-button-bg` now gets the default colour. CSS does not fail: an unused custom property is valid, nothing is logged, and no build or type check catches it. The documented token was public API, so removing it requires a major release, and should come after a deprecation period, not in a minor.",
+          "start": 1407.969,
+          "duration": 19.85
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · 2. Declaring the token on `:host` blocks consumer overrides",
+      "start": 1429.194,
+      "duration": 17.78,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · 2. Declaring the token on `:host` blocks consumer overrides",
+          "start": 1429.194,
+          "duration": 5.943
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "With emulated encapsulation, `:host` compiles to an attribute selector such as `[_nghost-abc]`, with the specificity of a class (0,1,0). Two consequences:",
+          "start": 1436.262,
+          "duration": 9.337
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · 2. Declaring the token on `:host` blocks consumer overrides",
+      "start": 1446.974,
+      "duration": 42.92,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · 2. Declaring the token on `:host` blocks consumer overrides",
+          "start": 1446.974,
+          "duration": 5.895
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Inheritance is cut off. `.checkout ui-button { --ui-button-background: ... }` is fine, but a team that sets the token on an ancestor (`.checkout { --ui-button-background: ... }`) relies on inheritance, and the host element now declares its own value, which wins over anything inherited. Theming a whole region stops working. Element selectors lose. `ui-button { --ui-button-background: red; }` has specificity (0,0,1) and loses to the `:host` rule. Consumers must out-specify the library, and the library's stylesheet is usually inserted after the application's, so equal specificity also loses.",
+          "start": 1453.994,
+          "duration": 34.525
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · 2. Declaring the token on `:host` blocks consumer overrides",
+      "start": 1489.894,
+      "duration": 11.54,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · 2. Declaring the token on `:host` blocks consumer overrides",
+          "start": 1489.894,
+          "duration": 4.365
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "So even teams that migrate to the new name find it does not work reliably.",
+          "start": 1495.384,
+          "duration": 4.675
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · 2. Declaring the token on `:host` blocks consumer overrides",
+      "start": 1501.434,
+      "duration": 12.5,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · 2. Declaring the token on `:host` blocks consumer overrides",
+          "start": 1501.434,
+          "duration": 4.516
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Rule: a component reads its public tokens with a fallback and never declares them on its host.",
+          "start": 1507.075,
+          "duration": 5.484
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · How to ship the rename safely",
+      "start": 1513.934,
+      "duration": 9.28,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · How to ship the rename safely",
+          "start": 1513.934,
+          "duration": 3.243
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Minor release: add the new name and keep the old one working.",
+          "start": 1518.302,
+          "duration": 3.537
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · Answer · block 1 · page 1",
+      "start": 1523.214,
+      "duration": 20.26,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · Answer · block 1 · page 1",
+          "start": 1523.214,
+          "duration": 3.875
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 1. Focus on background. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1528.214,
+          "duration": 13.885
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · How to ship the rename safely",
+      "start": 1543.474,
+      "duration": 17.34,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · How to ship the rename safely",
+          "start": 1543.474,
+          "duration": 3.797
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The new name wins when set; otherwise the old name applies; otherwise the semantic default. Order matters: reversing the first two would let a forgotten old declaration override a team's new one.",
+          "start": 1548.396,
+          "duration": 11.043
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · How to ship the rename safely",
+      "start": 1560.814,
+      "duration": 10.44,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · How to ship the rename safely",
+          "start": 1560.814,
+          "duration": 3.494
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Then make the deprecation visible, because CSS cannot warn on its own:",
+          "start": 1565.433,
+          "duration": 4.446
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · How to ship the rename safely",
+      "start": 1571.254,
+      "duration": 35.9,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · How to ship the rename safely",
+          "start": 1571.254,
+          "duration": 3.434
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Mark `--ui-button-bg` as deprecated in the documentation and the changelog, with the replacement and the major version that removes it. Keep a machine-readable list of deprecated tokens (for example `deprecations.json` with old name, new name and removal version). Generate the docs from it, and use it in a lint rule product teams can run in CI, and in an `ng update` migration that rewrites their stylesheets. Optionally, in development builds only, check once whether the old property is set on any button and log a warning that names the replacement.",
+          "start": 1575.813,
+          "duration": 29.966
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · How to ship the rename safely",
+      "start": 1607.154,
+      "duration": 15.98,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · How to ship the rename safely",
+          "start": 1607.154,
+          "duration": 4.12
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Next major release: remove the old name. The `ng update` migration rewrites `--ui-button-bg` to `--ui-button-background`, and the release notes list the removal under breaking changes.",
+          "start": 1612.399,
+          "duration": 9.36
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · How to ship the rename safely",
+      "start": 1623.134,
+      "duration": 15.12,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · How to ship the rename safely",
+          "start": 1623.134,
+          "duration": 3.856
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Tests: add visual or computed-style tests for all three cases: old name set, new name set, neither set. These are the behaviours the release promises.",
+          "start": 1628.115,
+          "duration": 8.764
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · Follow-up 1",
+      "start": 1638.254,
+      "duration": 42.9,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · Follow-up 1",
+          "start": 1638.254,
+          "duration": 2.282
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "A team says \"just use `!important` in your fallback\". Why is that worse?",
+          "start": 1641.661,
+          "duration": 4.267
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Important changes cascade priority; it does not repair the fallback order or a default declared on the wrong element. Inherited values still do not compete as direct declarations on the child. Escalating specificity makes scoped themes harder to override and creates an arms race between library and product CSS. Keep consumer override properties unset until supplied, consume the new name then the old name, and test the computed result at the component. The fallback is an expression, not a place to insert an important flag.",
+          "start": 1651.378,
+          "duration": 28.401
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · Follow-up 2",
+      "start": 1681.154,
+      "duration": 48.315,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · Follow-up 2",
+          "start": 1681.154,
+          "duration": 2.497
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How long should a deprecation period be for a library used by forty teams? What evidence would you collect before removing the old token?",
+          "start": 1684.776,
+          "duration": 8.92
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Choose a published window long enough for the slowest supported release cadence, with a removal major and named migration owners. For forty teams, collect repository scans, actual theme override uses, CI build results, and completion confirmations. Include applications that upgrade infrequently. Supply a codemod or guidance and track unresolved cases. Time elapsed alone is weak evidence: remove the old token when the policy permits it and consumers have a viable migration path, not merely when the library stopped referring to it.",
+          "start": 1698.851,
+          "duration": 29.243
+        }
+      ]
+    },
+    {
+      "heading": "TOK-002 · Follow-up 3",
+      "start": 1729.469,
+      "duration": 43.096,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-002 · Follow-up 3",
+          "start": 1729.469,
+          "duration": 2.408
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Could registering the property with `@property` help here? What would `inherits` need to be?",
+          "start": 1733.002,
+          "duration": 5.022
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Property registration can describe syntax and an initial value, but it cannot fix an incorrect cascade or decide which deprecated name wins. For a token intended to flow from theme containers into descendants, inherits normally needs to be true. A registered initial value can also make a variable present when it used to be missing, changing fallback behavior. Test that interaction before registration. Use registration when its typing or animation behavior is needed, not as a substitute for a compatibility chain.",
+          "start": 1743.333,
+          "duration": 27.857
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Scenario",
+      "start": 1772.565,
+      "duration": 16.42,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Scenario",
+          "start": 1772.565,
+          "duration": 2.61
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "We now review TOK-003: Dark mode that flashes, crashes and disappears. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+          "start": 1776.3,
+          "duration": 11.31
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Scenario",
+      "start": 1788.985,
+      "duration": 10.38,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Scenario",
+          "start": 1788.985,
+          "duration": 1.97
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`@acme/ui` ships a theme service and theme-aware components. Three bug reports arrive in the same week:",
+          "start": 1792.08,
+          "duration": 5.91
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Scenario · item 1",
+      "start": 1799.365,
+      "duration": 9.72,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Scenario · item 1",
+          "start": 1799.365,
+          "duration": 3.094
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "\"Our server-rendered app crashes on startup since we added the theme service.\".",
+          "start": 1803.584,
+          "duration": 4.126
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Scenario · item 2",
+      "start": 1809.085,
+      "duration": 10.64,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Scenario · item 2",
+          "start": 1809.085,
+          "duration": 3.488
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "\"Our page loads white, then flashes dark. And our `body` classes disappear.\".",
+          "start": 1813.698,
+          "duration": 4.652
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Scenario · item 3",
+      "start": 1819.725,
+      "duration": 11.12,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Scenario · item 3",
+          "start": 1819.725,
+          "duration": 3.527
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "\"With Windows contrast themes on, users cannot tell which filter chips are selected.\".",
+          "start": 1824.377,
+          "duration": 5.093
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Scenario · block 1 · page 1",
+      "start": 1830.845,
+      "duration": 18.02,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Scenario · block 1 · page 1",
+          "start": 1830.845,
+          "duration": 4.048
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 2. Focus on ThemeService, theme. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1836.018,
+          "duration": 11.472
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Scenario · block 2 · page 2",
+      "start": 1848.865,
+      "duration": 18.5,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Scenario · block 2 · page 2",
+          "start": 1848.865,
+          "duration": 3.84
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 2 of 2. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1853.83,
+          "duration": 12.16
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Scenario · block 3 · page 1",
+      "start": 1867.365,
+      "duration": 18.42,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Scenario · block 3 · page 1",
+          "start": 1867.365,
+          "duration": 3.821
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 2. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1872.311,
+          "duration": 12.099
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Scenario · block 4 · page 2",
+      "start": 1885.785,
+      "duration": 18.52,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Scenario · block 4 · page 2",
+          "start": 1885.785,
+          "duration": 4.09
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 2 of 2. Focus on background, aria-pressed. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1891,
+          "duration": 11.93
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Interview question",
+      "start": 1904.305,
+      "duration": 20.687,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Interview question",
+          "start": 1904.305,
+          "duration": 2.499
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Explain the cause of each report and redesign the theming approach. Keep in mind this is a library: it cannot assume how each application boots, renders or stores preferences.",
+          "start": 1907.929,
+          "duration": 10.413
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Report 1: global browser objects crash server rendering",
+      "start": 1924.992,
+      "duration": 23.725,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Report 1: global browser objects crash server rendering",
+          "start": 1924.992,
+          "duration": 4.696
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`window` and `document` do not exist during server-side rendering, so `window.matchMedia` throws a `ReferenceError` as soon as the service is created. Because the service is `providedIn: 'root'` and injected early, the whole application fails. A library cannot assume it only runs in a browser.",
+          "start": 1930.813,
+          "duration": 16.529
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Report 1: global browser objects crash server rendering",
+      "start": 1948.717,
+      "duration": 13.48,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Report 1: global browser objects crash server rendering",
+          "start": 1948.717,
+          "duration": 5.948
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: inject `DOCUMENT`, and do not read browser-only APIs during construction.",
+          "start": 1955.79,
+          "duration": 5.032
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Report 2: the flash, and the lost classes",
+      "start": 1962.197,
+      "duration": 38.5,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Report 2: the flash, and the lost classes",
+          "start": 1962.197,
+          "duration": 4.374
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The flash. No theme applies until JavaScript has loaded, bootstrapped, and run the effect. Until then the page has no theme class, so the light defaults show, then switch. Users with a dark system preference see this on every load. Lost classes. `document.body.className = ...` replaces every class on `body`, including the application's own. It also goes stale. The OS preference is read once. If the user's system switches to dark at sunset, the page does not follow. There is also no way to say \"follow the system\" after toggling.",
+          "start": 1967.696,
+          "duration": 31.626
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Report 2: the flash, and the lost classes",
+      "start": 2000.697,
+      "duration": 13.6,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Report 2: the flash, and the lost classes",
+          "start": 2000.697,
+          "duration": 4.81
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: let CSS handle the system preference, and use JavaScript only for an explicit choice.",
+          "start": 2006.632,
+          "duration": 6.29
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Answer · block 1 · page 1",
+      "start": 2014.297,
+      "duration": 20.66,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Answer · block 1 · page 1",
+          "start": 2014.297,
+          "duration": 3.963
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 1. Focus on color-scheme. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2019.385,
+          "duration": 14.197
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Report 2: the flash, and the lost classes",
+      "start": 2034.957,
+      "duration": 21.08,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Report 2: the flash, and the lost classes",
+          "start": 2034.957,
+          "duration": 4.238
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`light-dark()` picks a value based on the element's used `color-scheme`. With no attribute, the browser follows the OS preference before any script runs, so there is no flash and no stale value. `color-scheme` also makes scrollbars and native form controls match the theme.",
+          "start": 2040.32,
+          "duration": 14.342
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Answer · block 2 · page 1",
+      "start": 2056.037,
+      "duration": 22.62,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Answer · block 2 · page 1",
+          "start": 2056.037,
+          "duration": 4.163
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 2. Focus on ThemePreference, ThemeService, root, preference. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2061.325,
+          "duration": 15.957
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Answer · block 3 · page 2",
+      "start": 2078.657,
+      "duration": 23.94,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Answer · block 3 · page 2",
+          "start": 2078.657,
+          "duration": 3.84
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 2 of 2. Read this part in the context of Report 2: the flash, and the lost classes. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2083.622,
+          "duration": 17.6
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Report 2: the flash, and the lost classes",
+      "start": 2102.597,
+      "duration": 27.82,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Report 2: the flash, and the lost classes",
+          "start": 2102.597,
+          "duration": 4.22
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The service touches only its own attribute on `<html>`, works on the server, and exposes the preference as a signal. Persisting the choice is the application's decision; the library documents how to restore it before first paint (for example, an inline script in `index.html` that sets `data-ui-theme` from storage, or setting it during server rendering from a cookie).",
+          "start": 2107.942,
+          "duration": 21.1
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Report 3: state shown by colour alone",
+      "start": 2130.417,
+      "duration": 23.7,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Report 3: state shown by colour alone",
+          "start": 2130.417,
+          "duration": 4.386
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "In forced-colors mode the browser replaces author background colours with system colours (for a `<button>`, `ButtonFace`). Both chips now look identical. This also fails WCAG 1.4.1 (Use of Color) in normal mode for users who cannot distinguish the two background colours.",
+          "start": 2135.928,
+          "duration": 16.814
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Report 3: state shown by colour alone",
+      "start": 2154.117,
+      "duration": 11.98,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Report 3: state shown by colour alone",
+          "start": 2154.117,
+          "duration": 4.375
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: convey state with something other than colour, and opt into system colours deliberately:",
+          "start": 2159.617,
+          "duration": 5.105
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Answer · block 4 · page 1",
+      "start": 2166.097,
+      "duration": 21.22,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Answer · block 4 · page 1",
+          "start": 2166.097,
+          "duration": 3.941
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 2. Focus on aria-pressed, background. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2171.163,
+          "duration": 14.779
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Answer · block 5 · page 2",
+      "start": 2187.317,
+      "duration": 23.34,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Answer · block 5 · page 2",
+          "start": 2187.317,
+          "duration": 3.789
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 2 of 2. Read this part in the context of Report 3: state shown by colour alone. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2192.231,
+          "duration": 17.051
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Report 3: state shown by colour alone",
+      "start": 2210.657,
+      "duration": 27.74,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Report 3: state shown by colour alone",
+          "start": 2210.657,
+          "duration": 3.985
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The transparent border becomes visible in forced-colors mode, because the browser repaints border colours with a system colour, so every chip keeps an outline. The check mark is visual only (the empty alternative text after `/` keeps it out of the accessible name, since `aria-pressed` already conveys the state). `forced-color-adjust: none` is used only on the one rule that then uses system colours.",
+          "start": 2215.767,
+          "duration": 21.255
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · What a strong candidate also mentions",
+      "start": 2238.397,
+      "duration": 32.24,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · What a strong candidate also mentions",
+          "start": 2238.397,
+          "duration": 3.804
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Contrast is a property of token pairs. Define tokens as pairs (`surface` and `on-surface`, `selected` and `on-selected`) and test every pair in every theme for 4.5:1 text contrast in CI, rather than checking components one by one. Themes can apply to a region, not just the page. Because tokens are custom properties, a `data-ui-theme` attribute on any element can work if the library supports it, but `color-scheme` must be set on that element too.",
+          "start": 2243.326,
+          "duration": 25.936
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Follow-up 1",
+      "start": 2270.637,
+      "duration": 41.601,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Follow-up 1",
+          "start": 2270.637,
+          "duration": 2.474
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Which browsers support `light-dark()`? What is your fallback for applications that must support older ones?",
+          "start": 2274.236,
+          "duration": 5.769
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Check the maintained support tables for the browser versions your applications actually support. The function is available in modern engines, but older supported versions may need light defaults, a prefers-color-scheme media query, and explicit attribute overrides. Use feature detection with supports where appropriate. Keep semantic token names identical across the modern and fallback implementations. The lesson links the support reference instead of freezing a list of browser versions that will become stale.",
+          "start": 2285.413,
+          "duration": 25.45
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Follow-up 2",
+      "start": 2312.238,
+      "duration": 40.077,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Follow-up 2",
+          "start": 2312.238,
+          "duration": 2.671
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How would you test the forced-colors behaviour in CI?",
+          "start": 2316.034,
+          "duration": 4.059
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use browser automation to emulate forced colors and inspect selected markers, focus outlines, disabled states, and computed system colors. Capture representative screenshots with stable fonts and data. Assert the selected state is conveyed by a non-color cue and that keyboard focus remains visible. Emulation covers the browser's forced-color mode, not every operating-system palette or screen reader; retain manual checks on supported real configurations and document that limitation.",
+          "start": 2325.37,
+          "duration": 25.57
+        }
+      ]
+    },
+    {
+      "heading": "TOK-003 · Follow-up 3",
+      "start": 2352.315,
+      "duration": 47.459,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-003 · Follow-up 3",
+          "start": 2352.315,
+          "duration": 2.654
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "A product team wants a third \"high contrast\" theme. What does your token structure need for that to be a remapping rather than a fork?",
+          "start": 2356.094,
+          "duration": 9.929
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Add another semantic mapping rather than duplicating component CSS. Components continue to consume surface, foreground, action, border, and focus roles. Define the high contrast mapping centrally, including interaction states, and verify paired contrast values. Scope the mapping so the application can choose it without replacing unrelated classes. Distinguish an authored high contrast theme from the user's forced-colors mode, which can still override author colors. Test the interaction of both choices.",
+          "start": 2371.095,
+          "duration": 27.304
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · Scenario",
+      "start": 2399.774,
+      "duration": 14.98,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · Scenario",
+          "start": 2399.774,
+          "duration": 2.269
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "We now review TOK-004: Size tokens that break zoom and text spacing. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+          "start": 2403.168,
+          "duration": 10.211
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · Scenario",
+      "start": 2414.754,
+      "duration": 9.22,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · Scenario",
+          "start": 2414.754,
+          "duration": 2.016
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "An accessibility audit of a product built on `@acme/ui` reports three failures:",
+          "start": 2417.895,
+          "duration": 4.704
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · Scenario",
+      "start": 2423.974,
+      "duration": 18.2,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · Scenario",
+          "start": 2423.974,
+          "duration": 1.962
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "With the browser's default font size set to 24px, button labels do not grow. With text spacing increased (a common user stylesheet or bookmarklet), labels are cut off. On a narrow phone, the icon buttons in the toolbar are hard to hit.",
+          "start": 2427.061,
+          "duration": 13.738
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · Scenario",
+      "start": 2442.174,
+      "duration": 7.18,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · Scenario",
+          "start": 2442.174,
+          "duration": 2.34
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The relevant tokens and component styles:",
+          "start": 2445.639,
+          "duration": 2.34
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · Scenario · block 1 · page 1",
+      "start": 2449.354,
+      "duration": 17.4,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · Scenario · block 1 · page 1",
+          "start": 2449.354,
+          "duration": 3.973
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 2. Focus on font-size. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 2454.452,
+          "duration": 10.927
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · Scenario · block 2 · page 2",
+      "start": 2466.754,
+      "duration": 17.98,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · Scenario · block 2 · page 2",
+          "start": 2466.754,
+          "duration": 3.715
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 2 of 2. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 2471.594,
+          "duration": 11.765
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · Interview question",
+      "start": 2484.734,
+      "duration": 16.923,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · Interview question",
+          "start": 2484.734,
+          "duration": 2.546
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Explain each failure and fix the tokens and styles. Which WCAG success criteria are involved?",
+          "start": 2488.405,
+          "duration": 6.602
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · 1. Pixel font sizes ignore the user's font-size setting",
+      "start": 2501.657,
+      "duration": 23.405,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · 1. Pixel font sizes ignore the user's font-size setting",
+          "start": 2501.657,
+          "duration": 4.388
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`px` font sizes stay the same when a user raises the browser's default font size. Browser zoom scales them, but many users with low vision rely on the font-size setting instead, and it is the only option in some environments. `rem` is relative to the root font size, which follows the user's setting.",
+          "start": 2507.17,
+          "duration": 16.517
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · 1. Pixel font sizes ignore the user's font-size setting",
+      "start": 2525.062,
+      "duration": 18.58,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · 1. Pixel font sizes ignore the user's font-size setting",
+          "start": 2525.062,
+          "duration": 5.772
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: express font sizes in `rem` (`0.875rem` is 14px at the default 16px) and line heights as unitless ratios, so they scale with the text.",
+          "start": 2531.959,
+          "duration": 10.308
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · 2. Fixed heights with hidden overflow cut off text",
+      "start": 2543.642,
+      "duration": 30.24,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · 2. Fixed heights with hidden overflow cut off text",
+          "start": 2543.642,
+          "duration": 5.548
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "WCAG 1.4.12 (Text Spacing) requires that no content is lost when users increase line height, letter spacing, word spacing and paragraph spacing. 1.4.4 (Resize Text) requires text to scale to 200% without loss of content. A fixed `height` with `overflow: hidden` and `nowrap` guarantees clipping in both cases, and also with long translations.",
+          "start": 2550.315,
+          "duration": 22.192
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · 2. Fixed heights with hidden overflow cut off text",
+      "start": 2573.882,
+      "duration": 14.4,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · 2. Fixed heights with hidden overflow cut off text",
+          "start": 2573.882,
+          "duration": 4.76
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: size controls with `min-height` and padding, not `height`, and let labels wrap unless there is a documented reason not to.",
+          "start": 2579.767,
+          "duration": 7.14
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · 3. The icon buttons are too small to hit",
+      "start": 2588.282,
+      "duration": 27.04,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · 3. The icon buttons are too small to hit",
+          "start": 2588.282,
+          "duration": 5.206
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "20 × 20 CSS pixels is below the WCAG 2.2 minimum of 24 × 24 (2.5.8 Target Size (Minimum), level AA), unless enough spacing surrounds each target. Many design systems choose 44 × 44 for touch anyway. The icon can stay small; the clickable area should not.",
+          "start": 2594.613,
+          "duration": 19.334
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · 3. The icon buttons are too small to hit",
+      "start": 2615.322,
+      "duration": 10.56,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · 3. The icon buttons are too small to hit",
+          "start": 2615.322,
+          "duration": 4.513
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: separate the icon size token from the target size token.",
+          "start": 2620.96,
+          "duration": 3.547
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · Answer · block 1 · page 1",
+      "start": 2625.882,
+      "duration": 20.72,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · Answer · block 1 · page 1",
+          "start": 2625.882,
+          "duration": 3.975
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 2. Focus on font-size. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2630.982,
+          "duration": 14.245
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · Answer · block 2 · page 2",
+      "start": 2646.602,
+      "duration": 21.36,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · Answer · block 2 · page 2",
+          "start": 2646.602,
+          "duration": 3.71
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 2 of 2. Read this part in the context of Fixed version. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2651.437,
+          "duration": 15.15
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · What a strong candidate also mentions",
+      "start": 2667.962,
+      "duration": 33.26,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · What a strong candidate also mentions",
+          "start": 2667.962,
+          "duration": 3.759
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Renaming `--ui-control-height` is a breaking change for teams who set it. Keep it as a deprecated alias that feeds `--ui-control-min-height` (see TOK-002), and call out in the changelog that buttons may now grow taller than before. Visual regression tests at 200% text size and with the WCAG text-spacing values applied would have caught this before release. Borders and focus rings can stay in `px`. Scaling a 1px hairline with text is rarely wanted.",
+          "start": 2672.846,
+          "duration": 27.001
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · Follow-up 1",
+      "start": 2701.222,
+      "duration": 43.121,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · Follow-up 1",
+          "start": 2701.222,
+          "duration": 2.362
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Should spacing tokens be in `rem` too? What changes visually when a user increases font size?",
+          "start": 2704.709,
+          "duration": 5.477
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Spacing can use rem when it should grow with text, such as control padding that protects a larger label. But not every dimension needs the same scaling policy. Borders may stay in pixels, and dense data layouts may use a distinct spacing contract. Explain which values follow font preferences and check that growing padding does not create avoidable overflow. With a larger root font, rem-based text and spacing both grow, so controls need flexible minimum dimensions rather than a fixed height.",
+          "start": 2715.632,
+          "duration": 27.336
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · Follow-up 2",
+      "start": 2744.343,
+      "duration": 45.76,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · Follow-up 2",
+          "start": 2744.343,
+          "duration": 2.752
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How would you automate the text-spacing check?",
+          "start": 2748.22,
+          "duration": 2.93
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Apply the WCAG text-spacing values to a representative rendered fixture: line height one point five, paragraph spacing two em, letter spacing point one two em, and word spacing point one six em. Verify text remains visible, labels can wrap, operations remain available, and containers do not clip essential content. Inspect geometry and screenshots, including long translations. Do not simply assert a stylesheet contains rem; the criterion concerns the resulting usable page. Combine this with separate text-resize and zoom checks.",
+          "start": 2756.493,
+          "duration": 32.235
+        }
+      ]
+    },
+    {
+      "heading": "TOK-004 · Follow-up 3",
+      "start": 2790.103,
+      "duration": 43.223,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "TOK-004 · Follow-up 3",
+          "start": 2790.103,
+          "duration": 2.62
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "A dense data grid needs 24px rows. How do you meet target-size requirements there?",
+          "start": 2793.848,
+          "duration": 5.314
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Measure the actual targets and spacing. A twenty-four-pixel row height does not guarantee a twenty-four by twenty-four clickable area. Make the control's target large enough or meet the criterion's specific spacing exception, considering neighboring targets and overlapping hit areas. Keep small visual icons inside larger targets. If the design depends on another exception, document why it applies rather than treating density as an exemption. Test pointer use, keyboard operation, and text growth together.",
+          "start": 2804.612,
+          "duration": 27.339
+        }
+      ]
+    },
+    {
+      "heading": "Final review checklist",
+      "start": 2833.326,
+      "duration": 32.66,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Final review checklist",
+          "start": 2833.326,
+          "duration": 1.165
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Review the lesson by answering each main question and follow-up aloud. For Design Tokens: Themes, Accessibility, and Public Contracts, connect each reported symptom to its mechanism, explain the corrected public contract, and name a regression check that exercises the consumer path. State compatibility and accessibility limitations clearly. The linked transcript, complete code, source questions, and verification report let you repeat the exercises at your own pace.",
+          "start": 2835.616,
+          "duration": 25.625
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "That's the end of lesson 2.",
+          "start": 2862.282,
+          "duration": 2.329
+        }
+      ]
+    }
+  ],
+  "rawDuration": 3419.376,
+  "playbackRate": 1.2,
+  "preservedInterviewPauses": 16
+}

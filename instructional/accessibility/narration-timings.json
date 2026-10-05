@@ -1,0 +1,3973 @@
+{
+  "duration": 4732.609958,
+  "chunks": [
+    {
+      "heading": null,
+      "start": 0,
+      "duration": 9.74,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Senior Angular interview preparation, lesson 3. Accessible Angular Components: Names, Focus, and Interaction.",
+          "start": 0,
+          "duration": 7.532
+        }
+      ]
+    },
+    {
+      "heading": "Accessibility is observable behavior",
+      "start": 9.74,
+      "duration": 25.64,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Accessibility is observable behavior",
+          "start": 9.74,
+          "duration": 1.518
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Welcome to the accessibility lesson. We will examine an icon button, a modal dialog, tabs, a form field, toast announcements, and a complete listbox coding exercise. Accessibility is part of a component's behavior and public contract. A control must have a discoverable role, a meaningful name, appropriate states, and an interaction model that works without a pointer.",
+          "start": 12.383,
+          "duration": 21.622
+        }
+      ]
+    },
+    {
+      "heading": "Accessibility is observable behavior · 2",
+      "start": 35.38,
+      "duration": 27.74,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Accessibility is observable behavior · 2",
+          "start": 35.38,
+          "duration": 1.942
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A screenshot cannot tell you whether pressing Tab reaches the control, whether the focused item is selected, or whether an error is connected to its input. A component can look correct while its accessibility tree tells a different story. Start a review by inspecting the native element, then its computed role and accessible name, then its states and relationships. Finally use the keyboard to operate it in the order a user would.",
+          "start": 38.447,
+          "duration": 23.298
+        }
+      ]
+    },
+    {
+      "heading": "Accessibility is observable behavior · 3",
+      "start": 63.12,
+      "duration": 27.7,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Accessibility is observable behavior · 3",
+          "start": 63.12,
+          "duration": 2.291
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Our examples are teaching implementations. We will verify DOM relationships, keyboard events, native dialog behavior, and focus in a real browser. We will not treat those checks as proof of every screen reader's announcements. Speech output depends on browser and assistive technology combinations. A senior answer states which behavior was tested and where manual testing is still needed.",
+          "start": 66.536,
+          "duration": 22.909
+        }
+      ]
+    },
+    {
+      "heading": "Choose native semantics before adding ARIA",
+      "start": 90.82,
+      "duration": 25.46,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Choose native semantics before adding ARIA",
+          "start": 90.82,
+          "duration": 2.119
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A native button already supports keyboard activation, focus, disabled behavior, and a button role. A clickable div has none of those properties automatically. Adding role button only changes its semantic description; it does not make Space activate it, put it in the tab order, or prevent activation while disabled. Prefer the native element when it provides the required behavior.",
+          "start": 94.064,
+          "duration": 20.841
+        }
+      ]
+    },
+    {
+      "heading": "Choose native semantics before adding ARIA · 2",
+      "start": 116.28,
+      "duration": 28.64,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Choose native semantics before adding ARIA · 2",
+          "start": 116.28,
+          "duration": 2.988
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "ARIA supplements semantics when a native element does not express the complete widget. It describes roles, states, and relationships. The application remains responsible for keeping those states synchronized with behavior. A tab marked selected must show the corresponding panel. An option marked disabled must not become selectable through a separate click handler. An aria-modal attribute does not itself make the background inert.",
+          "start": 120.393,
+          "duration": 23.152
+        }
+      ]
+    },
+    {
+      "heading": "Choose native semantics before adding ARIA · 3",
+      "start": 144.92,
+      "duration": 28.86,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Choose native semantics before adding ARIA · 3",
+          "start": 144.92,
+          "duration": 2.85
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use the WAI-ARIA Authoring Practices patterns as an interaction reference for composite widgets. They provide expected keyboard behavior and explain focus strategies. They are guidance rather than a blanket compliance certificate. Select the pattern that fits the user task, then implement the whole model. A row of buttons is not automatically a tablist, and a list of links may be better navigation than a custom listbox.",
+          "start": 148.895,
+          "duration": 23.51
+        }
+      ]
+    },
+    {
+      "heading": "Accessible names and descriptions",
+      "start": 173.78,
+      "duration": 28.78,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Accessible names and descriptions",
+          "start": 173.78,
+          "duration": 1.44
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "An accessible name identifies a control. For a visible text button, its content often supplies that name. An icon-only button needs another naming source, such as aria-label or aria-labelledby. Hide decorative icon markup from assistive technology so an SVG title or glyph does not compete with the intended label. The label should describe the action, such as Delete invoice, rather than the image, such as Trash can.",
+          "start": 176.345,
+          "duration": 24.84
+        }
+      ]
+    },
+    {
+      "heading": "Accessible names and descriptions · 2",
+      "start": 202.56,
+      "duration": 23.48,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Accessible names and descriptions · 2",
+          "start": 202.56,
+          "duration": 2.098
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "An accessible description provides supporting information. Connect instructions, constraints, and errors with aria-describedby rather than replacing the name. A tooltip is not a reliable substitute for a required name. Keyboard users must be able to reveal and dismiss supplemental tooltip content, and the button should already make sense before the tooltip appears.",
+          "start": 205.783,
+          "duration": 18.882
+        }
+      ]
+    },
+    {
+      "heading": "Accessible names and descriptions · 3",
+      "start": 226.04,
+      "duration": 29.96,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Accessible names and descriptions · 3",
+          "start": 226.04,
+          "duration": 2.423
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Prefer aria-labelledby when visible text already provides the right wording, particularly when several labels contribute useful context. Ensure every referenced identifier exists and is unique. Generated identifiers must work across multiple instances. Module counters are convenient in simple browser examples, but server rendering and hydration require a stable strategy so the client does not produce different relationships from the server.",
+          "start": 229.588,
+          "duration": 25.037
+        }
+      ]
+    },
+    {
+      "heading": "Focus is a resource with an owner",
+      "start": 256,
+      "duration": 22.84,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Focus is a resource with an owner",
+          "start": 256,
+          "duration": 2.373
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Focus tells the keyboard user where the next operation will happen. Keep a visible focus indicator, avoid unnecessary positive tabindex values, and preserve a logical reading order. When a component moves focus, it should have a clear user-facing reason. Opening a modal is one such reason; receiving a background toast normally is not.",
+          "start": 259.498,
+          "duration": 17.967
+        }
+      ]
+    },
+    {
+      "heading": "Focus is a resource with an owner · 2",
+      "start": 278.84,
+      "duration": 28.36,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Focus is a resource with an owner · 2",
+          "start": 278.84,
+          "duration": 3.103
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Before opening a modal, remember the invoking element. On open, focus an appropriate element inside the dialog. Contain interaction while it is modal and provide a keyboard dismissal path. On close, restore focus when the invoking element still exists and is usable. If a destructive action removed it, choose a logical next location rather than focusing a detached node. This fallback is a production design responsibility.",
+          "start": 283.068,
+          "duration": 22.757
+        }
+      ]
+    },
+    {
+      "heading": "Focus is a resource with an owner · 3",
+      "start": 307.2,
+      "duration": 28.68,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Focus is a resource with an owner · 3",
+          "start": 307.2,
+          "duration": 2.772
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Initial focus depends on content and risk. A destructive confirmation commonly starts on the safe action. A long structured explanation can start at a heading or paragraph with tabindex minus one so users can read it before acting. Do not focus the entire dialog element merely because it is easy to query. Native dialog and the CDK reduce the amount of custom behavior, but they still need a name and a deliberate focus policy.",
+          "start": 311.097,
+          "duration": 23.408
+        }
+      ]
+    },
+    {
+      "heading": "Modal dialogs and content creation",
+      "start": 335.88,
+      "duration": 22.9,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Modal dialogs and content creation",
+          "start": 335.88,
+          "duration": 1.673
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use showModal on a native dialog when its behavior fits. It places the dialog in the top layer and makes the rest of the document inert. Merely setting the open attribute creates an open dialog without the same modal operation. The distinction explains why visually covering a page does not prevent keyboard interaction with controls underneath.",
+          "start": 338.678,
+          "duration": 18.727
+        }
+      ]
+    },
+    {
+      "heading": "Modal dialogs and content creation · 2",
+      "start": 358.78,
+      "duration": 24.84,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Modal dialogs and content creation · 2",
+          "start": 358.78,
+          "duration": 2.443
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Keep the Angular state and the native dialog state connected. Escape produces a cancel event. A form with method dialog can close the element through another path. Route those paths back to the component's model, and restore focus after closure. Invoke browser DOM operations after rendering, not during a constructor before the view query exists.",
+          "start": 362.348,
+          "duration": 19.897
+        }
+      ]
+    },
+    {
+      "heading": "Modal dialogs and content creation · 3",
+      "start": 383.62,
+      "duration": 27.2,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Modal dialogs and content creation · 3",
+          "start": 383.62,
+          "duration": 2.506
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Projection is another source of surprises. A parent creates its projected content even if the child's ng-content appears inside a condition. Hiding a dialog does not prevent an expensive projected form from being created or making requests. Offer a template slot that is instantiated only when open, or a dialog service that creates a component on demand. This separates visibility from lifetime.",
+          "start": 387.251,
+          "duration": 22.194
+        }
+      ]
+    },
+    {
+      "heading": "Composite widgets and keyboard tables",
+      "start": 410.82,
+      "duration": 24.82,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Composite widgets and keyboard tables",
+          "start": 410.82,
+          "duration": 1.993
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A composite widget groups several related items into a coherent keyboard interaction. A tablist generally has one tab in the page's tab order. Arrow keys move within it, Home and End reach the extremes, and selection determines which panel is shown. Keep roles, aria-selected, tabindex, aria-controls, and panel labeling consistent.",
+          "start": 413.938,
+          "duration": 20.327
+        }
+      ]
+    },
+    {
+      "heading": "Composite widgets and keyboard tables · 2",
+      "start": 435.64,
+      "duration": 29.58,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Composite widgets and keyboard tables · 2",
+          "start": 435.64,
+          "duration": 2.462
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Automatic activation selects a tab as focus moves. It works well when panels display immediately. Manual activation moves focus first and selects on Enter or Space, which can avoid repeated slow requests. Do not combine half of each model. If scrolling buttons are added for narrow screens, preserve keyboard access to the actual tabs and scroll the focused tab into view. The extra buttons should not replace the tablist semantics.",
+          "start": 439.227,
+          "duration": 24.618
+        }
+      ]
+    },
+    {
+      "heading": "Composite widgets and keyboard tables · 3",
+      "start": 465.22,
+      "duration": 25.52,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Composite widgets and keyboard tables · 3",
+          "start": 465.22,
+          "duration": 2.517
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Track identity rather than assuming a static index is always enough. Removing the final tab must not leave an inaccessible panel or no reachable tab. Handle empty lists, disabled items if supported, right-to-left direction, and multiple groups. A key manager can help with traversal and wrapping, but it does not supply the entire semantic and selection contract.",
+          "start": 468.863,
+          "duration": 20.502
+        }
+      ]
+    },
+    {
+      "heading": "Form relationships and error timing",
+      "start": 490.74,
+      "duration": 23,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Form relationships and error timing",
+          "start": 490.74,
+          "duration": 1.898
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A visible label needs a programmatic connection to the input. Match label for with input id, or use valid wrapping label semantics. A custom component wrapper cannot rely on an identifier on its host automatically naming an internal input. Form-field abstractions need an explicit relationship to the actual control.",
+          "start": 493.763,
+          "duration": 18.602
+        }
+      ]
+    },
+    {
+      "heading": "Form relationships and error timing · 2",
+      "start": 513.74,
+      "duration": 27.34,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Form relationships and error timing · 2",
+          "start": 513.74,
+          "duration": 2.318
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use aria-describedby for helper and error text and aria-invalid when the control is invalid according to the application's display policy. Do not announce every validation detail before the user has had a chance to enter data. An error shown after blur or submission usually needs a clear explanation and a route to correction. Preserve instructions when adding an error rather than dropping their identifier accidentally.",
+          "start": 517.183,
+          "duration": 22.522
+        }
+      ]
+    },
+    {
+      "heading": "Form relationships and error timing · 3",
+      "start": 541.08,
+      "duration": 27.78,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Form relationships and error timing · 3",
+          "start": 541.08,
+          "duration": 2.901
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "For live error updates, establish the live region before putting the message into it. Some assistive technology misses a region inserted together with its first text. Keep the name, description, visual error, and live announcement synchronized, but avoid redundant repeated speech. Verify the structural relationships automatically and test actual announcements manually on supported combinations.",
+          "start": 545.106,
+          "duration": 22.379
+        }
+      ]
+    },
+    {
+      "heading": "Live regions are asynchronous communication",
+      "start": 568.86,
+      "duration": 24.46,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Live regions are asynchronous communication",
+          "start": 568.86,
+          "duration": 1.742
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A toast's presence on screen does not mean a screen reader will announce it. A persistent live region provides a communication channel. Polite announcements usually wait for an appropriate pause; assertive announcements may interrupt. Choose urgency according to the user impact, not the color of the toast. Routine success feedback should rarely interrupt what the user is reading.",
+          "start": 571.728,
+          "duration": 20.217
+        }
+      ]
+    },
+    {
+      "heading": "Live regions are asynchronous communication · 2",
+      "start": 593.32,
+      "duration": 25.94,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Live regions are asynchronous communication · 2",
+          "start": 593.32,
+          "duration": 2.449
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Separate the visible notification history from the announcement channel. Replacing a list of toasts can cause too much content to be spoken or can repeat old messages. Publish the specific new status through a live announcer or persistent region while leaving the visible items available for review. Do not move focus into a noninteractive toast simply to make it noticeable.",
+          "start": 596.894,
+          "duration": 20.991
+        }
+      ]
+    },
+    {
+      "heading": "Live regions are asynchronous communication · 3",
+      "start": 619.26,
+      "duration": 29.34,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Live regions are asynchronous communication · 3",
+          "start": 619.26,
+          "duration": 2.505
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Rapid changes can be coalesced or interrupted depending on the platform. A sequence such as three files uploaded, then four files uploaded, is not a reliable promise of two separate spoken sentences. Batch progress, announce a final summary, and offer stable visible status. Tests can verify that the intended text reaches a connected live region; they cannot assert a universal spoken transcript from a DOM change.",
+          "start": 622.89,
+          "duration": 24.335
+        }
+      ]
+    },
+    {
+      "heading": "Listbox focus and selection are different",
+      "start": 648.6,
+      "duration": 24.86,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Listbox focus and selection are different",
+          "start": 648.6,
+          "duration": 2.064
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A single-select listbox lets a user choose one option. The active option is the one keyboard navigation currently addresses. The selected value is the committed choice. These can differ when arrows move without selecting. Pick a documented behavior and keep it consistent for pointer and keyboard interaction. A native select is often preferable when it fits the product need.",
+          "start": 651.789,
+          "duration": 20.296
+        }
+      ]
+    },
+    {
+      "heading": "Listbox focus and selection are different · 2",
+      "start": 673.46,
+      "duration": 27.24,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Listbox focus and selection are different · 2",
+          "start": 673.46,
+          "duration": 2.711
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "With aria-activedescendant, DOM focus stays on the listbox container. The attribute points to the rendered active option, which must exist and have an identifier. Roving tabindex is an alternative for a standalone widget: focus moves among option elements. Do not mix both strategies casually. Neither strategy removes the need to scroll the active option into view and display a visible indicator.",
+          "start": 677.296,
+          "duration": 22.029
+        }
+      ]
+    },
+    {
+      "heading": "Listbox focus and selection are different · 3",
+      "start": 700.7,
+      "duration": 25.92,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Listbox focus and selection are different · 3",
+          "start": 700.7,
+          "duration": 3.176
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use roles listbox and option, an accessible name on the container, aria-selected on options, and aria-disabled where appropriate. Disabled options remain discoverable but must not be chosen. Keep identifiers unique across instances. In an empty or all-disabled list, remove an invalid active descendant reference and let navigation safely do nothing.",
+          "start": 705.001,
+          "duration": 20.244
+        }
+      ]
+    },
+    {
+      "heading": "Listbox state, typeahead, and dynamic data",
+      "start": 726.62,
+      "duration": 25.32,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Listbox state, typeahead, and dynamic data",
+          "start": 726.62,
+          "duration": 1.928
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The coding exercise uses a model for the selected value and a linked signal for the active index. When options change, reconcile the active item against current data instead of keeping an index that can point past the list. Object values may need compareWith because a refetch can return equal records with different references. Do not mutate the consumer's options to store local selection.",
+          "start": 729.673,
+          "duration": 20.892
+        }
+      ]
+    },
+    {
+      "heading": "Listbox state, typeahead, and dynamic data · 2",
+      "start": 751.94,
+      "duration": 34.12,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Listbox state, typeahead, and dynamic data · 2",
+          "start": 751.94,
+          "duration": 3.012
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Arrow keys, Home, and End traverse enabled options; Enter and Space commit the active item in this example. Prevent the browser's scrolling default for handled navigation keys. Printable characters build a short typeahead buffer, with a reset timer and modifier-key filtering. Clear the timer on destruction. Repeated-letter cycling deserves special attention: a buffer that becomes two identical letters does not automatically implement cycling. We will document that limitation in the source example and show a correction.",
+          "start": 756.077,
+          "duration": 28.608
+        }
+      ]
+    },
+    {
+      "heading": "Listbox state, typeahead, and dynamic data · 3",
+      "start": 786.06,
+      "duration": 28.46,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Listbox state, typeahead, and dynamic data · 3",
+          "start": 786.06,
+          "duration": 3.054
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Virtualization adds an important constraint. An active descendant cannot safely reference an option removed from the DOM. A large list needs an identity and rendering strategy that keeps the active option represented, correct position and set-size metadata where required, and integration tests. Do not add virtual scrolling to a semantic listbox and assume the accessibility contract survives unchanged.",
+          "start": 790.239,
+          "duration": 22.906
+        }
+      ]
+    },
+    {
+      "heading": "Style from state and verify transitions",
+      "start": 814.52,
+      "duration": 24.16,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Style from state and verify transitions",
+          "start": 814.52,
+          "duration": 2.203
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Selection should remain recognizable without color. A check mark or another shape can supplement background and weight. Style from ARIA state where it reflects the actual behavioral state, so a separate CSS flag cannot drift. Use design tokens for focus rings, surfaces, spacing, and disabled colors, with forced-colors adjustments where necessary.",
+          "start": 817.848,
+          "duration": 19.457
+        }
+      ]
+    },
+    {
+      "heading": "Style from state and verify transitions · 2",
+      "start": 838.68,
+      "duration": 28.2,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Style from state and verify transitions · 2",
+          "start": 838.68,
+          "duration": 3.163
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Build tests around transitions: focus enters, arrows move, selection commits, options change, a disabled item is skipped, and focus returns after dismissal. Render two instances to catch duplicate identifiers. Test empty and all-disabled data. For dialogs, use real Tab and Escape events in browser automation because synthetic dispatch alone does not perform the browser's default focus behavior.",
+          "start": 842.968,
+          "duration": 22.537
+        }
+      ]
+    },
+    {
+      "heading": "Style from state and verify transitions · 3",
+      "start": 866.88,
+      "duration": 26.12,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Style from state and verify transitions · 3",
+          "start": 866.88,
+          "duration": 2.952
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "An automated accessibility scanner catches many missing names and invalid relationships, but it does not prove the widget's full interaction pattern. A test can pass every scanner rule and still fail to move focus with ArrowRight. Combine structural checks, behavior tests, visual review, and manual assistive-technology checks. We will use this layered method in every walkthrough.",
+          "start": 870.958,
+          "duration": 20.667
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · Scenario",
+      "start": 893,
+      "duration": 15.52,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · Scenario",
+          "start": 893,
+          "duration": 1.972
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "We now review A11Y-001: An icon button that keyboard and screen-reader users cannot use. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+          "start": 896.098,
+          "duration": 11.047
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · Scenario",
+      "start": 908.52,
+      "duration": 18,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · Scenario",
+          "start": 908.52,
+          "duration": 1.49
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`@acme/ui` has shipped this icon button for a year. It uses an icon font with ligatures, so the text `delete` renders as a bin icon. Hundreds of call sites look like the usage below. An accessibility audit has just failed three products because of it.",
+          "start": 911.135,
+          "duration": 14.01
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · Scenario · block 1 · page 1",
+      "start": 926.52,
+      "duration": 17.92,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · Scenario · block 1 · page 1",
+          "start": 926.52,
+          "duration": 3.855
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 2. Focus on IconButtonComponent. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 931.5,
+          "duration": 11.565
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · Scenario · block 2 · page 2",
+      "start": 944.44,
+      "duration": 18.64,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · Scenario · block 2 · page 2",
+          "start": 944.44,
+          "duration": 3.859
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 2 of 2. Focus on icon, disabled, pressed. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 949.424,
+          "duration": 12.281
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · Scenario · block 3 · page 1",
+      "start": 963.08,
+      "duration": 18.2,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · Scenario · block 3 · page 1",
+          "start": 963.08,
+          "duration": 3.524
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 1. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 967.729,
+          "duration": 12.176
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · Interview question",
+      "start": 981.28,
+      "duration": 17.166,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · Interview question",
+          "start": 981.28,
+          "duration": 2.074
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "List the accessibility failures, fix the component, and explain how you would release the fix to hundreds of existing call sites.",
+          "start": 984.479,
+          "duration": 7.317
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · 1. It is not a button",
+      "start": 998.446,
+      "duration": 28.464,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · 1. It is not a button",
+          "start": 998.446,
+          "duration": 3.35
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A `<div>` with a click handler has no role, is not in the tab order, and does not respond to Enter or Space. Keyboard users cannot reach it; screen readers do not announce it as interactive. Adding `role=\"button\"`, `tabindex=\"0\"` and key handlers is possible but recreates what the native element already does, usually incompletely (Space activates on key up for native buttons, for example).",
+          "start": 1002.921,
+          "duration": 22.614
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · 1. It is not a button",
+      "start": 1026.91,
+      "duration": 12.9,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · 1. It is not a button",
+          "start": 1026.91,
+          "duration": 3.355
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: use a native `<button type=\"button\">`. `type=\"button\"` matters: a button inside a `<form>` defaults to `submit`.",
+          "start": 1031.39,
+          "duration": 7.045
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · 2. The accessible name is the ligature text",
+      "start": 1039.81,
+      "duration": 21.48,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · 2. The accessible name is the ligature text",
+          "start": 1039.81,
+          "duration": 3.86
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The only text inside is `more_vert`, so assistive technology announces something like \"more underscore vert\". `title` on the custom element does not help: it is on a host element with no role, and `title` is not reliably exposed or shown to keyboard and touch users anyway.",
+          "start": 1044.795,
+          "duration": 15.12
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · 2. The accessible name is the ligature text",
+      "start": 1061.29,
+      "duration": 14.62,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · 2. The accessible name is the ligature text",
+          "start": 1061.29,
+          "duration": 4.156
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: a `label` input bound to `aria-label` on the button, and `aria-hidden=\"true\"` on the icon so the ligature text is never read.",
+          "start": 1066.571,
+          "duration": 7.964
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · 3. Disabled is visual only",
+      "start": 1075.91,
+      "duration": 14.52,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · 3. Disabled is visual only",
+          "start": 1075.91,
+          "duration": 3.182
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The class greys the button out, but nothing tells assistive technology it is unavailable. There are two valid fixes, and the choice should be deliberate:",
+          "start": 1080.217,
+          "duration": 8.838
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · 3. Disabled is visual only",
+      "start": 1090.43,
+      "duration": 22.16,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · 3. Disabled is visual only",
+          "start": 1090.43,
+          "duration": 3.47
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Native `disabled`: removes the button from the tab order. Simple, but users cannot discover the control or a tooltip explaining why it is disabled. - `aria-disabled=\"true\"`: keeps it focusable and announced as unavailable. The component must then block activation itself.",
+          "start": 1095.025,
+          "duration": 16.19
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · 3. Disabled is visual only",
+      "start": 1112.59,
+      "duration": 11.82,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · 3. Disabled is visual only",
+          "start": 1112.59,
+          "duration": 3.813
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The fixed version uses `aria-disabled` so that disabled actions in toolbars remain discoverable.",
+          "start": 1117.528,
+          "duration": 5.507
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · Answer · block 1 · page 1",
+      "start": 1124.41,
+      "duration": 22.6,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · Answer · block 1 · page 1",
+          "start": 1124.41,
+          "duration": 3.949
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 2. Focus on aria-label, aria-disabled, aria-hidden. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1129.484,
+          "duration": 16.151
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · Answer · block 2 · page 2",
+      "start": 1147.01,
+      "duration": 23.26,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · Answer · block 2 · page 2",
+          "start": 1147.01,
+          "duration": 4.007
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 2 of 2. Focus on IconButtonComponent, icon, label, disabled. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1152.142,
+          "duration": 16.753
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · Fixed version",
+      "start": 1170.27,
+      "duration": 12.26,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · Fixed version",
+          "start": 1170.27,
+          "duration": 2.092
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Making `label` required turns a recurring accessibility bug into a compile error: nobody can add an icon button without a name again.",
+          "start": 1173.487,
+          "duration": 7.668
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · 4. Releasing it without breaking hundreds of call sites",
+      "start": 1182.53,
+      "duration": 13.92,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · 4. Releasing it without breaking hundreds of call sites",
+          "start": 1182.53,
+          "duration": 4.949
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A new required input is a breaking change: every existing `<ui-icon-button>` stops compiling. A safe rollout:",
+          "start": 1188.604,
+          "duration": 6.471
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · 4. Releasing it without breaking hundreds of call sites · item 1",
+      "start": 1196.45,
+      "duration": 21.14,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · 4. Releasing it without breaking hundreds of call sites · item 1",
+          "start": 1196.45,
+          "duration": 5.142
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Minor release: add `label` as optional. When it is missing, fall back to the `title` attribute if present, and log a development-mode warning that names the icon, so teams can find each call site. Mark the old behaviour deprecated in the changelog.",
+          "start": 1202.717,
+          "duration": 13.498
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · 4. Releasing it without breaking hundreds of call sites · item 2",
+      "start": 1217.59,
+      "duration": 16.56,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · 4. Releasing it without breaking hundreds of call sites · item 2",
+          "start": 1217.59,
+          "duration": 5.356
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Provide a migration: an `ng update` schematic that rewrites `title=\"...\"` to `label=\"...\"`, and reports call sites with neither for a person to fix.",
+          "start": 1224.071,
+          "duration": 8.704
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · 4. Releasing it without breaking hundreds of call sites · item 3",
+      "start": 1234.15,
+      "duration": 12.9,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · 4. Releasing it without breaking hundreds of call sites · item 3",
+          "start": 1234.15,
+          "duration": 5.739
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Next major: make `label` required. The compiler now lists any remaining call sites.",
+          "start": 1241.014,
+          "duration": 4.661
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · 4. Releasing it without breaking hundreds of call sites",
+      "start": 1247.05,
+      "duration": 22.14,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · 4. Releasing it without breaking hundreds of call sites",
+          "start": 1247.05,
+          "duration": 4.729
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The other changes (native button, `aria-hidden` icon, `aria-disabled`) fix behaviour without changing the API, so they can ship immediately in a minor or patch release. Mention them in the changelog: teams with styles targeting the internal `div` will notice.",
+          "start": 1252.904,
+          "duration": 14.911
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · Follow-up 1",
+      "start": 1269.19,
+      "duration": 46.919,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · Follow-up 1",
+          "start": 1269.19,
+          "duration": 2.103
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "A team wants a tooltip on every icon button. How does a tooltip relate to the accessible name, and how should it behave for keyboard users?",
+          "start": 1272.418,
+          "duration": 9.475
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A tooltip supplies supplemental explanation; the icon button still needs a name before it appears. Show it on keyboard focus as well as pointer hover, allow Escape to dismiss it, and avoid moving focus into a noninteractive tooltip. Associate useful descriptive content without making the name unexpectedly verbose. Ensure hoverable, dismissible, and persistent behavior where the content criterion applies. If the popup contains interactive controls, it is a different pattern and should not be presented as a simple tooltip.",
+          "start": 1287.05,
+          "duration": 27.684
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · Follow-up 2",
+      "start": 1316.109,
+      "duration": 41.916,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · Follow-up 2",
+          "start": 1316.109,
+          "duration": 2.235
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "When is `aria-labelledby` better than `aria-label` here?",
+          "start": 1319.469,
+          "duration": 3.489
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use labelledby when visible text already provides the intended label or when combining a visible action with contextual text is clearer than duplicating a string. It keeps spoken wording aligned with the visible interface and can improve localization maintenance. The referenced elements need stable unique identifiers. Use aria-label for an otherwise unnamed icon control when no suitable visible text exists. Do not add both casually and assume both will be spoken; naming precedence determines the result.",
+          "start": 1328.339,
+          "duration": 28.311
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-001 · Follow-up 3",
+      "start": 1358.025,
+      "duration": 43.465,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-001 · Follow-up 3",
+          "start": 1358.025,
+          "duration": 2.148
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How would you test, automatically, that every icon button in a product has a name?",
+          "start": 1361.298,
+          "duration": 5.51
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Run an accessibility scanner in the rendered product and add a browser test that queries buttons by their accessible name. Cover states where icons or labels change and multiple component instances. Required input typing can help library consumers, but an empty string can still pass a string type. Add runtime development diagnostics or tests for empty labels where useful. Automated checks establish that a name exists, not that every name is meaningful, so review representative wording as well.",
+          "start": 1372.194,
+          "duration": 27.921
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · Scenario",
+      "start": 1401.49,
+      "duration": 14.46,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · Scenario",
+          "start": 1401.49,
+          "duration": 1.993
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "We now review A11Y-002: A modal dialog that is not modal. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+          "start": 1404.608,
+          "duration": 9.967
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · Scenario",
+      "start": 1415.95,
+      "duration": 19.96,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · Scenario",
+          "start": 1415.95,
+          "duration": 1.587
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`@acme/ui` ships the dialog below. It looks correct with a mouse. A screen-reader user reports they \"can't tell a dialog opened, and Tab takes me to the page underneath\". Another team reports that a heavy form inside a closed dialog still makes HTTP requests when the page loads.",
+          "start": 1418.662,
+          "duration": 15.873
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · Scenario · block 1 · page 1",
+      "start": 1435.91,
+      "duration": 16.7,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · Scenario · block 1 · page 1",
+          "start": 1435.91,
+          "duration": 3.55
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 2. Focus on role. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1440.585,
+          "duration": 10.65
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · Scenario · block 2 · page 2",
+      "start": 1452.61,
+      "duration": 18.76,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · Scenario · block 2 · page 2",
+          "start": 1452.61,
+          "duration": 3.888
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 2 of 2. Focus on DialogComponent, open, heading. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1457.623,
+          "duration": 12.372
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · Interview question",
+      "start": 1471.37,
+      "duration": 18.118,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · Interview question",
+          "start": 1471.37,
+          "duration": 1.764
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "What does a modal dialog have to do for keyboard and screen-reader users, and which of those does this one do? Fix it, and explain the second team's bug.",
+          "start": 1474.259,
+          "duration": 8.579
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · Answer",
+      "start": 1489.488,
+      "duration": 17.964,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · Answer",
+          "start": 1489.488,
+          "duration": 1.667
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A modal dialog must: move focus into itself when it opens, keep keyboard focus and screen-reader browsing inside, have an accessible name, close on Escape, and return focus to where the user was when it closes. This one does none of them.",
+          "start": 1492.28,
+          "duration": 13.797
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · 1. Focus stays behind",
+      "start": 1507.452,
+      "duration": 14.9,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · 1. Focus stays behind",
+          "start": 1507.452,
+          "duration": 2.544
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Opening it does not move focus. A keyboard user's next Tab goes to whatever followed the trigger, and a screen-reader user hears nothing. The user may not know a dialog opened.",
+          "start": 1511.121,
+          "duration": 9.856
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · 2. The rest of the page is still reachable",
+      "start": 1522.352,
+      "duration": 15.88,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · 2. The rest of the page is still reachable",
+          "start": 1522.352,
+          "duration": 4.578
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Nothing stops Tab from leaving the dialog, and nothing hides the page behind it from assistive technology. `role=\"dialog\"` alone does not make anything modal.",
+          "start": 1528.055,
+          "duration": 8.802
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · 3. No accessible name",
+      "start": 1538.232,
+      "duration": 14.9,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · 3. No accessible name",
+          "start": 1538.232,
+          "duration": 2.918
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`role=\"dialog\"` with no `aria-labelledby` or `aria-label` is announced as just \"dialog\". The heading is right there; it needs an `id` and a reference.",
+          "start": 1542.275,
+          "duration": 9.482
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · 4. No keyboard way to close, and focus is lost on close",
+      "start": 1553.132,
+      "duration": 25.92,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · 4. No keyboard way to close, and focus is lost on close",
+          "start": 1553.132,
+          "duration": 5.064
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "There is no Escape handling, and the close control is a `<span>`: not focusable, not a button, and its only text, `×`, is announced as \"times\" or \"multiplication\". When the dialog closes, its content is destroyed while it contains focus, so focus falls back to `<body>` and the user has to find their place again.",
+          "start": 1559.321,
+          "duration": 18.356
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · Fix: use the native `<dialog>` element",
+      "start": 1579.052,
+      "duration": 24.48,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · Fix: use the native `<dialog>` element",
+          "start": 1579.052,
+          "duration": 3.609
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`showModal()` gives most of this for free: the dialog renders in the top layer, the rest of the document becomes inert (unreachable by Tab and hidden from assistive technology), focus moves into the dialog, and Escape fires a `cancel` event. The component then only needs to name it, provide a real close button, and restore focus.",
+          "start": 1583.786,
+          "duration": 18.371
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · Answer · block 1 · page 1",
+      "start": 1603.532,
+      "duration": 23.32,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · Answer · block 1 · page 1",
+          "start": 1603.532,
+          "duration": 3.524
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 5. Read this part in the context of Fix: use the native `<dialog>` element. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1608.181,
+          "duration": 17.296
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · Answer · block 2 · page 2",
+      "start": 1626.852,
+      "duration": 23.24,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · Answer · block 2 · page 2",
+          "start": 1626.852,
+          "duration": 3.934
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 2 of 5. Focus on aria-labelledby, aria-label, aria-hidden. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1631.911,
+          "duration": 16.806
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · Answer · block 3 · page 3",
+      "start": 1650.092,
+      "duration": 23.88,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · Answer · block 3 · page 3",
+          "start": 1650.092,
+          "duration": 4.126
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 3 of 5. Focus on DialogComponent, open, heading, closeLabel. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1655.343,
+          "duration": 17.254
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · Answer · block 4 · page 4",
+      "start": 1673.972,
+      "duration": 20.74,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · Answer · block 4 · page 4",
+          "start": 1673.972,
+          "duration": 3.716
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 4 of 5. Focus on onCancel. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1678.813,
+          "duration": 14.524
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · Answer · block 5 · page 5",
+      "start": 1694.712,
+      "duration": 21.26,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · Answer · block 5 · page 5",
+          "start": 1694.712,
+          "duration": 3.822
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 5 of 5. Focus on onClose. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1699.659,
+          "duration": 14.938
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · Fix: use the native `<dialog>` element",
+      "start": 1715.972,
+      "duration": 8.02,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · Fix: use the native `<dialog>` element",
+          "start": 1715.972,
+          "duration": 4.671
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Design notes:",
+          "start": 1721.768,
+          "duration": 0.849
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · Fix: use the native `<dialog>` element",
+      "start": 1723.992,
+      "duration": 33.22,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · Fix: use the native `<dialog>` element",
+          "start": 1723.992,
+          "duration": 3.714
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The model stays the single source of truth. Escape is cancelled and turned into `open.set(false)`, and the effect calls `close()`. Focus restoration happens in the `close` event handler, so it runs for every way of closing. - `afterRenderEffect` is used because `showModal()` needs the element to be rendered; it never runs during server rendering. The close label is an input so applications can translate it. The page backdrop is now the `::backdrop` pseudo-element, styled with tokens.",
+          "start": 1728.831,
+          "duration": 27.006
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · 5. The second team's bug: projected content is always created",
+      "start": 1757.212,
+      "duration": 29.52,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · 5. The second team's bug: projected content is always created",
+          "start": 1757.212,
+          "duration": 4.614
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`<ng-content>` inside `@if` does not delay anything. Projected content belongs to the parent's template, so the parent creates it, and runs its lifecycle hooks, whether or not the dialog ever shows it. That is why the hidden form makes HTTP requests on page load. The fixed version renders the content all the time inside a closed `<dialog>` (which is hidden), so the cost is the same.",
+          "start": 1762.951,
+          "duration": 22.406
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · 5. The second team's bug: projected content is always created",
+      "start": 1786.732,
+      "duration": 12.26,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · 5. The second team's bug: projected content is always created",
+          "start": 1786.732,
+          "duration": 5.466
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "For heavy or lazy content, the library should offer one of:",
+          "start": 1793.323,
+          "duration": 4.294
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · 5. The second team's bug: projected content is always created",
+      "start": 1798.992,
+      "duration": 24.14,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · 5. The second team's bug: projected content is always created",
+          "start": 1798.992,
+          "duration": 4.809
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A template slot: the consumer passes an `<ng-template>`, and the dialog renders it with `ngTemplateOutlet` only while open. A dialog service that creates the content component on demand (the CDK `Dialog` does this). Consumers can also wrap their content in `@defer` or their own `@if`.",
+          "start": 1804.926,
+          "duration": 16.831
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · Follow-up 1",
+      "start": 1823.132,
+      "duration": 46.2,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · Follow-up 1",
+          "start": 1823.132,
+          "duration": 2.102
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "A team wants clicking the backdrop to close the dialog. How would you implement it with `<dialog>`, and should it be the default?",
+          "start": 1826.359,
+          "duration": 9.327
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Detect a pointer interaction outside the dialog's content rectangle and route it through the component's normal close request. A dialog-target click alone can also occur in content padding, so account for geometry and pointer down/up behavior to avoid accidental closure after dragging. Make backdrop dismissal an explicit policy rather than a universal default. A destructive confirmation or unsaved form may require deliberate cancellation. Keep Escape and a visible close or cancel control available according to the product's requirements.",
+          "start": 1840.637,
+          "duration": 27.32
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · Follow-up 2",
+      "start": 1869.332,
+      "duration": 43.445,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · Follow-up 2",
+          "start": 1869.332,
+          "duration": 2.083
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Which element should receive focus first in a destructive confirmation dialog? Why?",
+          "start": 1872.54,
+          "duration": 4.167
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Usually focus the least destructive action so an accidental Enter does not commit the destructive operation. If the dialog begins with important structured information, focus a static heading or paragraph with tabindex minus one so the content can be read first. Choose according to the task rather than always focusing the first element in DOM order. Give the dialog a meaningful name and ensure the destructive action is clear. Confirm focus restoration and a sensible fallback if the invoking item is deleted.",
+          "start": 1881.99,
+          "duration": 29.412
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-002 · Follow-up 3",
+      "start": 1912.777,
+      "duration": 42.716,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-002 · Follow-up 3",
+          "start": 1912.777,
+          "duration": 2.191
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How would you test focus return and background inertness in an automated test?",
+          "start": 1916.093,
+          "duration": 4.838
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "In a real browser, focus the invoking button, open the modal, verify focus enters, and press Tab and Shift Tab to ensure background controls are unreachable. Press Escape and verify the model closes and focus returns. Try programmatically focusing a background control while the modal is open to check native inertness. Cover close-button and form-dialog paths too. DOM attributes alone do not prove native modality; showModal and actual interaction are the behavior under test.",
+          "start": 1926.36,
+          "duration": 27.758
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Scenario",
+      "start": 1955.493,
+      "duration": 14.86,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Scenario",
+          "start": 1955.493,
+          "duration": 2.06
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "We now review A11Y-003: Tabs that only work with a mouse. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+          "start": 1958.678,
+          "duration": 10.3
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Scenario",
+      "start": 1970.353,
+      "duration": 13.92,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Scenario",
+          "start": 1970.353,
+          "duration": 1.632
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the first version of the `@acme/ui` tabs component. It is already used on a settings page that shows two tab groups at once: \"Profile\" and \"Notifications\".",
+          "start": 1973.11,
+          "duration": 9.788
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Scenario · block 1 · page 1",
+      "start": 1984.273,
+      "duration": 18.86,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Scenario · block 1 · page 1",
+          "start": 1984.273,
+          "duration": 3.913
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 3. Focus on TabComponent, label, active. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1989.311,
+          "duration": 12.447
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Scenario · block 2 · page 2",
+      "start": 2003.133,
+      "duration": 18.76,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Scenario · block 2 · page 2",
+          "start": 2003.133,
+          "duration": 3.65
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 2 of 3. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 2007.908,
+          "duration": 12.61
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Scenario · block 3 · page 3",
+      "start": 2021.893,
+      "duration": 19.12,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Scenario · block 3 · page 3",
+          "start": 2021.893,
+          "duration": 4.063
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 3 of 3. Focus on TabsComponent, tabs. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 2027.081,
+          "duration": 12.557
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Scenario · block 4 · page 1",
+      "start": 2041.013,
+      "duration": 18.36,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Scenario · block 4 · page 1",
+          "start": 2041.013,
+          "duration": 3.56
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 1. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 2045.698,
+          "duration": 12.3
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Interview question",
+      "start": 2059.373,
+      "duration": 20.768,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Interview question",
+          "start": 2059.373,
+          "duration": 1.94
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Describe how tabs should behave for keyboard and screen-reader users, list what is missing, and fix the component. Point out any bug that only appears because there are two tab groups on the page.",
+          "start": 2062.438,
+          "duration": 11.053
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Answer",
+      "start": 2080.141,
+      "duration": 22.665,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Answer",
+          "start": 2080.141,
+          "duration": 1.703
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The WAI-ARIA tabs pattern: a `tablist` contains `tab` elements, each controlling a `tabpanel`. Only the selected tab is in the Tab order (a roving `tabindex`); arrow keys move between tabs, and Home and End jump to the first and last. Each tab says whether it is selected, and each panel is labelled by its tab.",
+          "start": 2082.969,
+          "duration": 18.462
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · 1. No roles or states",
+      "start": 2102.806,
+      "duration": 22.34,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · 1. No roles or states",
+          "start": 2102.806,
+          "duration": 3.72
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Divs with click handlers expose nothing. A screen reader announces plain text, not \"Security, tab, 2 of 2, selected\". Needed: `role=\"tablist\"` (with a label), `role=\"tab\"` with `aria-selected` and `aria-controls`, and `role=\"tabpanel\"` with `aria-labelledby`.",
+          "start": 2107.651,
+          "duration": 16.12
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · 2. Not keyboard operable",
+      "start": 2125.146,
+      "duration": 21.42,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · 2. Not keyboard operable",
+          "start": 2125.146,
+          "duration": 2.656
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The tabs are not focusable at all. Making each one a plain `<button>` would fix reachability but produce the wrong pattern: five Tab presses to get past five tabs. Only the selected tab should have `tabindex=\"0\"`; the rest get `-1`, and arrow keys move between them.",
+          "start": 2128.927,
+          "duration": 16.264
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · 3. Duplicate ids across instances",
+      "start": 2146.566,
+      "duration": 28.4,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · 3. Duplicate ids across instances",
+          "start": 2146.566,
+          "duration": 3.479
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Both groups render `id=\"tab-0\"` and `id=\"tab-1\"`. Duplicate ids are invalid, and any `aria-labelledby` or `aria-controls` reference resolves to the first match in the document, so the second group's panels would be labelled by the first group's tabs. Ids must be unique per instance: generate them from a counter, never from the position alone.",
+          "start": 2151.17,
+          "duration": 22.421
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · 4. Nothing is selected initially",
+      "start": 2174.966,
+      "duration": 15.84,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · 4. Nothing is selected initially",
+          "start": 2174.966,
+          "duration": 3.001
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "No tab starts active, so every panel is hidden until a click. With a roving `tabindex`, no tab would be focusable either, and the whole component would be unreachable by keyboard.",
+          "start": 2179.092,
+          "duration": 10.339
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · 5. State is pushed into children imperatively",
+      "start": 2190.806,
+      "duration": 18.58,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · 5. State is pushed into children imperatively",
+          "start": 2190.806,
+          "duration": 3.931
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`select` writes into each child's signal. If tabs are added or removed (`@if` around a `<ui-tab>`), nothing updates their state. Deriving \"am I selected?\" from one source in the parent avoids that.",
+          "start": 2195.862,
+          "duration": 12.149
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Answer · block 1 · page 1",
+      "start": 2209.386,
+      "duration": 22.18,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Answer · block 1 · page 1",
+          "start": 2209.386,
+          "duration": 3.608
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 8. Read this part in the context of Fixed version. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2214.119,
+          "duration": 16.072
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Answer · block 2 · page 2",
+      "start": 2231.566,
+      "duration": 21.22,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Answer · block 2 · page 2",
+          "start": 2231.566,
+          "duration": 3.813
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 2 of 8. Focus on selectedTab. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2236.504,
+          "duration": 14.907
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Answer · block 3 · page 3",
+      "start": 2252.786,
+      "duration": 23.74,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Answer · block 3 · page 3",
+          "start": 2252.786,
+          "duration": 4.099
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 3 of 8. Focus on TabComponent, label, tabId, panelId. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2258.01,
+          "duration": 17.141
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Answer · block 4 · page 4",
+      "start": 2276.526,
+      "duration": 24.02,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Answer · block 4 · page 4",
+          "start": 2276.526,
+          "duration": 4.081
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 4 of 8. Focus on role, aria-label, aria-controls, aria-selected. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2281.732,
+          "duration": 17.439
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Answer · block 5 · page 5",
+      "start": 2300.546,
+      "duration": 23.76,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Answer · block 5 · page 5",
+          "start": 2300.546,
+          "duration": 4.102
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 5 of 8. Focus on TabsComponent, label, selectedIndex, tabs. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2305.773,
+          "duration": 17.158
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Answer · block 6 · page 6",
+      "start": 2324.306,
+      "duration": 23.94,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Answer · block 6 · page 6",
+          "start": 2324.306,
+          "duration": 4.137
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 6 of 8. Focus on activeIndex, selectedTab, buttons, onKeydown. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2329.568,
+          "duration": 17.303
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Answer · block 7 · page 7",
+      "start": 2348.246,
+      "duration": 22.68,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Answer · block 7 · page 7",
+          "start": 2348.246,
+          "duration": 3.7
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 7 of 8. Read this part in the context of Fixed version. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2353.071,
+          "duration": 16.48
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Answer · block 8 · page 8",
+      "start": 2370.926,
+      "duration": 22.04,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Answer · block 8 · page 8",
+          "start": 2370.926,
+          "duration": 3.582
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 8 of 8. Read this part in the context of Fixed version. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2375.633,
+          "duration": 15.958
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Fixed version",
+      "start": 2392.966,
+      "duration": 20.32,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Fixed version",
+          "start": 2392.966,
+          "duration": 2.324
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This uses automatic activation: moving with the arrow keys also selects the tab. That suits panels that render instantly. If showing a panel is slow (it fetches data), use *manual activation* instead: arrows move focus, and Enter or Space selects.",
+          "start": 2396.415,
+          "duration": 15.496
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Fixed version",
+      "start": 2413.286,
+      "duration": 15.38,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Fixed version",
+          "start": 2413.286,
+          "duration": 2.146
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The panel has `tabindex=\"0\"` so keyboard users can reach a panel that has no focusable content. If every panel always starts with a focusable element, that can be dropped.",
+          "start": 2416.557,
+          "duration": 10.734
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · What a strong candidate also mentions",
+      "start": 2428.666,
+      "duration": 30.46,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · What a strong candidate also mentions",
+          "start": 2428.666,
+          "duration": 3.328
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Right-to-left layouts reverse the meaning of the left and right arrow keys. Read the direction (for example with the CDK `Directionality`) instead of hard-coding it. - `selectedIndex` as a `model()` lets consumers control the selected tab, for example to sync it with the URL. The label input is required, so a tablist is never nameless. Adding it to an existing component is breaking, so it would be staged (see A11Y-001).",
+          "start": 2433.119,
+          "duration": 24.632
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Follow-up 1",
+      "start": 2459.126,
+      "duration": 40.28,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Follow-up 1",
+          "start": 2459.126,
+          "duration": 2.304
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "When would you choose manual activation over automatic activation?",
+          "start": 2462.555,
+          "duration": 3.456
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use manual activation when showing a panel is slow or costly, such as a network request or heavy render. Arrows move focus, while Enter or Space commits selection. Automatic activation is appropriate when panel changes are immediate and moving through tabs remains responsive. Keep focused and selected indices separate for manual activation and document the keyboard model. Do not change between models unpredictably based on a transient request duration.",
+          "start": 2471.4,
+          "duration": 26.631
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Follow-up 2",
+      "start": 2499.406,
+      "duration": 42.743,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Follow-up 2",
+          "start": 2499.406,
+          "duration": 2.265
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "The tabs overflow on a phone. What happens to keyboard and screen-reader behaviour if you add scroll buttons?",
+          "start": 2502.796,
+          "duration": 6.91
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Keep tab roles, selection, panel relationships, and the one-tab-stop strategy intact. Scroll the focused tab into view and make scroll controls named native buttons if they are needed. The extra controls should not cause the arrow handler to treat them as tabs or hide selected tabs from assistive technology. Test touch, keyboard, narrow layouts, and right-to-left direction. A visual overflow solution should preserve the widget's semantic interaction model.",
+          "start": 2515.112,
+          "duration": 25.662
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-003 · Follow-up 3",
+      "start": 2542.149,
+      "duration": 47.483,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-003 · Follow-up 3",
+          "start": 2542.149,
+          "duration": 2.233
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Would you build this on the CDK's `FocusKeyManager`? What would it give you and what would it cost?",
+          "start": 2545.507,
+          "duration": 8.647
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "FocusKeyManager can manage active items, wrapping, orientation, disabled skipping, and typeahead depending on configuration. It can reduce bespoke traversal code. You still own tab semantics, selected state, panels, identifiers, rendering, and automatic versus manual activation. It also introduces an adapter contract and a CDK dependency that must fit the supported framework range. Use it when the shared behavior outweighs that cost, and test the complete component rather than assuming the manager supplies accessibility automatically.",
+          "start": 2559.222,
+          "duration": 29.035
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · Scenario",
+      "start": 2589.632,
+      "duration": 14.82,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · Scenario",
+          "start": 2589.632,
+          "duration": 2.054
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "We now review A11Y-004: A form field where nothing is connected. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+          "start": 2592.811,
+          "duration": 10.266
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · Scenario",
+      "start": 2604.452,
+      "duration": 18.04,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · Scenario",
+          "start": 2604.452,
+          "duration": 1.619
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Every form in every Acme product uses this text field from `@acme/ui`. It looks right. A screen-reader user testing the sign-up form says: \"I hear 'edit text, blank' for every field, and when I submit I don't know what went wrong.\"",
+          "start": 2607.196,
+          "duration": 13.921
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · Scenario · block 1 · page 1",
+      "start": 2622.492,
+      "duration": 18.12,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · Scenario · block 1 · page 1",
+          "start": 2622.492,
+          "duration": 3.507
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 2. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 2627.124,
+          "duration": 12.113
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · Scenario · block 2 · page 2",
+      "start": 2640.612,
+      "duration": 19.58,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · Scenario · block 2 · page 2",
+          "start": 2640.612,
+          "duration": 3.998
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 2 of 2. Focus on TextFieldComponent, label, hint, error. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 2645.735,
+          "duration": 13.082
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · Scenario · block 3 · page 1",
+      "start": 2660.192,
+      "duration": 18.04,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · Scenario · block 3 · page 1",
+          "start": 2660.192,
+          "duration": 3.489
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 1. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 2664.806,
+          "duration": 12.051
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · Interview question",
+      "start": 2678.232,
+      "duration": 21.209,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · Interview question",
+          "start": 2678.232,
+          "duration": 2.229
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "List everything a screen-reader user misses, and fix the component. The value binding is covered by another question (API-004); focus on labels, hints, errors and required state.",
+          "start": 2681.586,
+          "duration": 11.205
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · 1. The input has no accessible name",
+      "start": 2699.441,
+      "duration": 19.204,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · 1. The input has no accessible name",
+          "start": 2699.441,
+          "duration": 3.422
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The label is a `<span>`, not a `<label>` associated with the input, so the input is announced as \"edit text\" with no name. Clicking the label text also does not focus the input, which matters for users with motor impairments.",
+          "start": 2703.988,
+          "duration": 13.282
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · 1. The input has no accessible name",
+      "start": 2718.645,
+      "duration": 10.46,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · 1. The input has no accessible name",
+          "start": 2718.645,
+          "duration": 3.98
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: a `<label for>` pointing at a per-instance input `id`.",
+          "start": 2723.75,
+          "duration": 3.98
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · 2. The hint is a placeholder",
+      "start": 2729.105,
+      "duration": 18.22,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · 2. The hint is a placeholder",
+          "start": 2729.105,
+          "duration": 3.494
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Placeholder text disappears as soon as the user types, is often low contrast, and is not reliably announced as a description. Users with memory or cognitive impairments lose the instruction exactly when they need it.",
+          "start": 2733.724,
+          "duration": 12.226
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · 2. The hint is a placeholder",
+      "start": 2747.325,
+      "duration": 10.7,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · 2. The hint is a placeholder",
+          "start": 2747.325,
+          "duration": 3.417
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: render the hint as visible text and reference it with `aria-describedby`.",
+          "start": 2751.867,
+          "duration": 4.783
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · 3. Errors are visual only",
+      "start": 2758.025,
+      "duration": 15.52,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · 3. Errors are visual only",
+          "start": 2758.025,
+          "duration": 2.859
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A red border is not announced, and the error text is not connected to the input. A screen-reader user hears nothing about the error, now or when they return to the field.",
+          "start": 2762.009,
+          "duration": 10.161
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · 3. Errors are visual only",
+      "start": 2773.545,
+      "duration": 6.78,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · 3. Errors are visual only",
+          "start": 2773.545,
+          "duration": 3.852
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix:",
+          "start": 2778.522,
+          "duration": 0.428
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · 3. Errors are visual only",
+      "start": 2780.325,
+      "duration": 30.74,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · 3. Errors are visual only",
+          "start": 2780.325,
+          "duration": 2.675
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`aria-invalid=\"true\"` on the input while there is an error. Add the error's `id` to `aria-describedby`, so it is read when the field gets focus. Show something besides colour (an icon or the word \"Error\"), for WCAG 1.4.1. To announce an error that appears while the user is in the field, the error container needs to be a live region that is always in the DOM. A live region inserted together with its text is often not announced.",
+          "start": 2784.125,
+          "duration": 25.565
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · 4. Required is visual only",
+      "start": 2811.065,
+      "duration": 21.56,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · 4. Required is visual only",
+          "start": 2811.065,
+          "duration": 3.064
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The asterisk is read as \"star\" (or not at all), and the input does not say it is required. Use the `required` attribute (or `aria-required=\"true\"` if native validation is unwanted) and hide the asterisk from assistive technology. The form should also explain what the asterisk means.",
+          "start": 2815.254,
+          "duration": 15.996
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · 5. Ids must be unique per instance",
+      "start": 2832.625,
+      "duration": 17.3,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · 5. Ids must be unique per instance",
+          "start": 2832.625,
+          "duration": 3.971
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A sign-up form has many fields. Every `id` the component generates (input, hint, error) must be unique per instance, or `for` and `aria-describedby` point at the wrong field.",
+          "start": 2837.721,
+          "duration": 10.829
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · Answer · block 1 · page 1",
+      "start": 2849.925,
+      "duration": 20.44,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · Answer · block 1 · page 1",
+          "start": 2849.925,
+          "duration": 3.655
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 4. Focus on aria-hidden. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2854.705,
+          "duration": 14.285
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · Answer · block 2 · page 2",
+      "start": 2870.365,
+      "duration": 24.34,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · Answer · block 2 · page 2",
+          "start": 2870.365,
+          "duration": 4.005
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 2 of 4. Focus on aria-invalid, aria-describedby, aria-live, aria-hidden. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2875.495,
+          "duration": 17.835
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · Answer · block 3 · page 3",
+      "start": 2894.705,
+      "duration": 22.82,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · Answer · block 3 · page 3",
+          "start": 2894.705,
+          "duration": 3.922
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 3 of 4. Focus on TextFieldComponent, label, hint, error. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2899.752,
+          "duration": 16.398
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · Answer · block 4 · page 4",
+      "start": 2917.525,
+      "duration": 22.16,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · Answer · block 4 · page 4",
+          "start": 2917.525,
+          "duration": 3.605
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 4 of 4. Read this part in the context of Fixed version. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2922.255,
+          "duration": 16.055
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · Fixed version",
+      "start": 2939.685,
+      "duration": 14.9,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · Fixed version",
+          "start": 2939.685,
+          "duration": 1.908
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The error paragraph is always rendered (empty when there is no error), so the live region exists before its text changes. It is only referenced from `aria-describedby` while it has content.",
+          "start": 2942.718,
+          "duration": 10.492
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · What a strong candidate also mentions",
+      "start": 2954.585,
+      "duration": 53.98,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · What a strong candidate also mentions",
+          "start": 2954.585,
+          "duration": 3.387
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "When to show errors is a product decision the library must support, not make. Showing an error on the first keystroke is hostile; the usual pattern is after the field is left (touched) or after submit. The component receives `error` as an input, which keeps that decision with the consumer, and the documentation should recommend a default. On submit, the form, not the field, should move focus to the first invalid field or to an error summary at the top. The library can provide a helper for this. Announcing every keystroke's validation through the live region is noisy. Debounce the error or only set it on blur. - `autocomplete` must be passable to the inner input (`autocomplete=\"email\"`), for WCAG 1.3.5 (Identify Input Purpose). That is a reason to consider the attribute-selector design in API-002.",
+          "start": 2959.097,
+          "duration": 48.093
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · Follow-up 1",
+      "start": 3008.565,
+      "duration": 43.761,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · Follow-up 1",
+          "start": 3008.565,
+          "duration": 2.062
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Why do many screen readers ignore a live region that is inserted at the same time as its text?",
+          "start": 3011.752,
+          "duration": 6.782
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Assistive technology often observes changes to an already registered live region. If the region and its first message appear in one insertion, some combinations treat it as initial content rather than an update to announce. Keep a persistent empty region, then change its text after the relevant interaction. Timing varies across platforms, so a delayed write is not a universal guarantee. Verify the DOM sequence automatically and test announcements with the supported browser and screen reader combinations.",
+          "start": 3023.803,
+          "duration": 27.148
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · Follow-up 2",
+      "start": 3052.326,
+      "duration": 41.538,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · Follow-up 2",
+          "start": 3052.326,
+          "duration": 2.139
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Should the error be announced politely or assertively? What changes if you get it wrong?",
+          "start": 3055.59,
+          "duration": 5.477
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Polite is usually appropriate for field validation while the user is entering data. Assertive can interrupt the current speech and should be reserved for genuinely urgent information. Repeated assertive errors on every keystroke can make a form difficult to use. Decide when errors become visible, connect the error as a description, and avoid announcing unchanged messages repeatedly. Submission may need an error summary and deliberate focus management instead of several competing live announcements.",
+          "start": 3066.459,
+          "duration": 26.03
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-004 · Follow-up 3",
+      "start": 3093.864,
+      "duration": 44.843,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-004 · Follow-up 3",
+          "start": 3093.864,
+          "duration": 2.254
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How would this component expose the inner input to consumers who need `autocomplete`, `inputmode` or `maxlength`?",
+          "start": 3097.243,
+          "duration": 6.011
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Prefer a form-field that wraps a projected native input enhanced by a directive, so native attributes stay on the real control. The field and directive can share a control interface through dependency injection and register label, helper, and error identifiers. If an internal input is necessary, document explicit attribute forwarding and a focus API. Do not assume arbitrary attributes on the wrapper automatically reach the descendant. Include autocomplete and forms integration in consumer examples.",
+          "start": 3108.667,
+          "duration": 28.665
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Scenario",
+      "start": 3138.707,
+      "duration": 15.04,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Scenario",
+          "start": 3138.707,
+          "duration": 2.022
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "We now review A11Y-005: Toasts that vanish before anyone can use them. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+          "start": 3141.854,
+          "duration": 10.518
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Scenario",
+      "start": 3153.747,
+      "duration": 21.7,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Scenario",
+          "start": 3153.747,
+          "duration": 1.846
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`@acme/ui` provides a toast service. Products use it for messages like \"Saved\", \"Message deleted — Undo\", and \"Payment failed\". Accessibility testing found that screen-reader users sometimes hear nothing, are interrupted mid-sentence by \"Saved\", and that nobody using a keyboard has ever managed to press Undo.",
+          "start": 3156.718,
+          "duration": 17.354
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Scenario · block 1 · page 1",
+      "start": 3175.447,
+      "duration": 18,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Scenario · block 1 · page 1",
+          "start": 3175.447,
+          "duration": 3.789
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 4. Focus on ToastAction, Toast. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 3180.361,
+          "duration": 11.711
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Scenario · block 2 · page 2",
+      "start": 3193.447,
+      "duration": 19.66,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Scenario · block 2 · page 2",
+          "start": 3193.447,
+          "duration": 4.016
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 2 of 4. Focus on ToastService, toasts, Toast, nextId. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 3198.588,
+          "duration": 13.144
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Scenario · block 3 · page 3",
+      "start": 3213.107,
+      "duration": 17.32,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Scenario · block 3 · page 3",
+          "start": 3213.107,
+          "duration": 3.705
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 3 of 4. Focus on role. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 3217.937,
+          "duration": 11.115
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Scenario · block 4 · page 4",
+      "start": 3230.427,
+      "duration": 18.7,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Scenario · block 4 · page 4",
+          "start": 3230.427,
+          "duration": 3.96
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 4 of 4. Focus on ToastOutletComponent, service. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 3235.512,
+          "duration": 12.24
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Interview question",
+      "start": 3249.127,
+      "duration": 17.744,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Interview question",
+          "start": 3249.127,
+          "duration": 1.982
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Explain each of the three findings and redesign the service and outlet. Keep the API easy for product teams to use correctly.",
+          "start": 3252.234,
+          "duration": 7.987
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · 1. \"Sometimes hear nothing\": live regions created with their content",
+      "start": 3266.871,
+      "duration": 26.804,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · 1. \"Sometimes hear nothing\": live regions created with their content",
+          "start": 3266.871,
+          "duration": 4.88
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Each toast element is created already containing `role=\"alert\"` and its text. Screen readers announce changes inside live regions they already know about, and support for regions inserted together with their content is inconsistent. The reliable pattern is a live region that exists from page load and stays empty until a message is added to it.",
+          "start": 3272.876,
+          "duration": 19.424
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · 1. \"Sometimes hear nothing\": live regions created with their content",
+      "start": 3293.675,
+      "duration": 13.64,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · 1. \"Sometimes hear nothing\": live regions created with their content",
+          "start": 3293.675,
+          "duration": 5.999
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: the outlet renders permanent live-region containers; toasts are added inside them.",
+          "start": 3300.799,
+          "duration": 5.141
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · 2. \"Interrupted by 'Saved'\": everything is assertive",
+      "start": 3307.315,
+      "duration": 20.26,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · 2. \"Interrupted by 'Saved'\": everything is assertive",
+          "start": 3307.315,
+          "duration": 3.987
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`role=\"alert\"` is assertive: it interrupts whatever the screen reader is saying. That suits \"Payment failed\", not \"Saved\". The service must let callers choose politeness, with polite as the default so the easy path is the considerate one.",
+          "start": 3312.427,
+          "duration": 13.773
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · 3. \"Nobody can press Undo\": the timer",
+      "start": 3327.575,
+      "duration": 24.88,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · 3. \"Nobody can press Undo\": the timer",
+          "start": 3327.575,
+          "duration": 3.62
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Three seconds is too short to read for many users (screen magnifier users may not even have the toast in view), and far too short to reach a button at the end of the document by keyboard. WCAG 2.2.1 (Timing Adjustable) requires that users can turn off, adjust or extend time limits like this.",
+          "start": 3332.32,
+          "duration": 18.76
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · 3. \"Nobody can press Undo\": the timer",
+      "start": 3352.455,
+      "duration": 7.94,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · 3. \"Nobody can press Undo\": the timer",
+          "start": 3352.455,
+          "duration": 4.987
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix:",
+          "start": 3358.567,
+          "duration": 0.453
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · 3. \"Nobody can press Undo\": the timer",
+      "start": 3360.395,
+      "duration": 28.58,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · 3. \"Nobody can press Undo\": the timer",
+          "start": 3360.395,
+          "duration": 3.877
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Toasts with an action do not auto-dismiss by default; they stay until used or dismissed. Informational toasts use a longer default and pause while hovered or focused. Every toast has a dismiss button. Do not move focus to toasts: that would interrupt the user's work. Instead, important actions such as Undo should also be available somewhere persistent (for example, in the item's menu).",
+          "start": 3365.397,
+          "duration": 22.203
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Answer · block 1 · page 1",
+      "start": 3388.975,
+      "duration": 22.36,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Answer · block 1 · page 1",
+          "start": 3388.975,
+          "duration": 3.901
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 8. Focus on ToastPoliteness, ToastAction, ToastOptions. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 3394.001,
+          "duration": 15.959
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Answer · block 2 · page 2",
+      "start": 3411.335,
+      "duration": 22.46,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Answer · block 2 · page 2",
+          "start": 3411.335,
+          "duration": 3.852
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 2 of 8. Focus on Toast, id, message, politeness. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 3416.312,
+          "duration": 16.108
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Answer · block 3 · page 3",
+      "start": 3433.795,
+      "duration": 21.4,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Answer · block 3 · page 3",
+          "start": 3433.795,
+          "duration": 3.85
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 3 of 8. Focus on nextId. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 3438.77,
+          "duration": 15.05
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Answer · block 4 · page 4",
+      "start": 3455.195,
+      "duration": 22.38,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Answer · block 4 · page 4",
+          "start": 3455.195,
+          "duration": 3.645
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 4 of 8. Read this part in the context of Fixed version. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 3459.965,
+          "duration": 16.235
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Answer · block 5 · page 5",
+      "start": 3477.575,
+      "duration": 22.2,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Answer · block 5 · page 5",
+          "start": 3477.575,
+          "duration": 3.612
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 5 of 8. Read this part in the context of Fixed version. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 3482.312,
+          "duration": 16.088
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Answer · block 6 · page 6",
+      "start": 3499.775,
+      "duration": 23.64,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Answer · block 6 · page 6",
+          "start": 3499.775,
+          "duration": 4.08
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 6 of 8. Focus on ToastComponent, toast, service, dismissLabel. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 3504.98,
+          "duration": 17.06
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Answer · block 7 · page 7",
+      "start": 3523.415,
+      "duration": 21.38,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Answer · block 7 · page 7",
+          "start": 3523.415,
+          "duration": 3.846
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 7 of 8. Focus on aria-live. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 3528.386,
+          "duration": 15.034
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Answer · block 8 · page 8",
+      "start": 3544.795,
+      "duration": 23.34,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Answer · block 8 · page 8",
+          "start": 3544.795,
+          "duration": 4.022
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 8 of 8. Focus on ToastOutletComponent, service, polite, assertive. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 3549.942,
+          "duration": 16.818
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Fixed version",
+      "start": 3568.135,
+      "duration": 6.18,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Fixed version",
+          "start": 3568.135,
+          "duration": 2.209
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Notes on the design:",
+          "start": 3571.469,
+          "duration": 1.471
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Fixed version",
+      "start": 3574.315,
+      "duration": 28.72,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Fixed version",
+          "start": 3574.315,
+          "duration": 1.809
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The two regions exist as soon as the outlet renders, so a toast added later is a change inside a known live region. - `show()` returns the id, so callers can dismiss a toast when the situation resolves. The defaults make the safe choice the easy one: polite, a long duration, and no timer at all when there is an action. The dismiss label is fixed English here for brevity; in the library it would come from an injected, translatable configuration.",
+          "start": 3577.249,
+          "duration": 24.411
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · What a strong candidate also mentions",
+      "start": 3603.035,
+      "duration": 28,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · What a strong candidate also mentions",
+          "start": 3603.035,
+          "duration": 3.11
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The CDK `LiveAnnouncer` already manages a hidden live region and can be used instead of the visible regions for the announcement itself. Focus is lost if a focused toast is dismissed. When the user dismisses a toast they tabbed into, focus should go somewhere sensible, such as back to where it was before. Stacking: five toasts at once are unreadable. Limit how many are visible and queue the rest.",
+          "start": 3607.27,
+          "duration": 22.39
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Follow-up 1",
+      "start": 3631.035,
+      "duration": 44.32,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Follow-up 1",
+          "start": 3631.035,
+          "duration": 2.135
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "A toast says \"3 files uploaded\" and then \"4 files uploaded\" a second later. What will a screen reader say, and how would you improve it?",
+          "start": 3634.295,
+          "duration": 9.66
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Speech may skip, merge, or interrupt rapid updates; do not promise that both counts are read exactly. Batch progress updates and announce a useful final summary, while keeping current visible status available. A live announcer can replace an outdated progress message rather than queueing every intermediate number. Avoid repeatedly speaking the entire toast history. Test the message sequence and manually evaluate the supported assistive technology to choose a useful cadence.",
+          "start": 3649.069,
+          "duration": 24.911
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Follow-up 2",
+      "start": 3675.355,
+      "duration": 40.574,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Follow-up 2",
+          "start": 3675.355,
+          "duration": 2.195
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Should the outlet be a landmark region? What are the trade-offs?",
+          "start": 3678.675,
+          "duration": 4.077
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A named region can make a persistent notification history discoverable, especially if it contains actions users may revisit. But turning every transient toast into a landmark creates navigation noise. Prefer one meaningful named outlet when it serves a navigable purpose, and use a separate status announcement channel for new messages. Do not move focus to the region merely because a toast appeared. Evaluate the page's existing landmarks and the user's recovery task.",
+          "start": 3688.202,
+          "duration": 26.352
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-005 · Follow-up 3",
+      "start": 3715.929,
+      "duration": 39.9,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-005 · Follow-up 3",
+          "start": 3715.929,
+          "duration": 2.125
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How would you test that a toast is announced?",
+          "start": 3719.179,
+          "duration": 3.298
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Automate the structural contract: a persistent connected live region, the intended politeness, and the new message reaching it after the event. Spy on a live announcer at a unit boundary only when testing the call contract; also exercise the browser integration. A DOM test cannot prove the exact spoken output, so include manual screen reader checks for repeated messages, interruption, and timing. Document the tested combinations rather than declaring announcement behavior universally certified.",
+          "start": 3727.889,
+          "duration": 26.565
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Scenario",
+      "start": 3755.829,
+      "duration": 15.24,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Scenario",
+          "start": 3755.829,
+          "duration": 2.196
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "We now review A11Y-006: Live coding: build an accessible listbox. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+          "start": 3759.15,
+          "duration": 10.544
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Scenario",
+      "start": 3771.069,
+      "duration": 17.64,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Scenario",
+          "start": 3771.069,
+          "duration": 1.645
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`@acme/ui` needs a single-select listbox. It will be used on its own (for example, choosing a shipping method) and later inside a select and a combobox, so it must be correct, accessible, and easy for product teams to understand.",
+          "start": 3773.839,
+          "duration": 13.495
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Scenario",
+      "start": 3788.709,
+      "duration": 14.8,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Scenario",
+          "start": 3788.709,
+          "duration": 1.662
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "You have 40 minutes. Talk through your decisions as you go. The interviewer cares more about the order you tackle things in and the reasons you give than about finishing every step.",
+          "start": 3791.496,
+          "duration": 10.638
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Scenario",
+      "start": 3803.509,
+      "duration": 5.86,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Scenario",
+          "start": 3803.509,
+          "duration": 2.4
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Starting point:",
+          "start": 3807.034,
+          "duration": 0.96
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Scenario · block 1 · page 1",
+      "start": 3809.369,
+      "duration": 17.42,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Scenario · block 1 · page 1",
+          "start": 3809.369,
+          "duration": 3.73
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 2. Focus on ListboxOption. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 3814.224,
+          "duration": 11.19
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Scenario · block 2 · page 2",
+      "start": 3826.789,
+      "duration": 20.32,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Scenario · block 2 · page 2",
+          "start": 3826.789,
+          "duration": 4.17
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 2 of 2. Focus on ListboxComponent, options, ListboxOption, value. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 3832.084,
+          "duration": 13.65
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Scenario · block 3 · page 1",
+      "start": 3847.109,
+      "duration": 18.26,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Scenario · block 3 · page 1",
+          "start": 3847.109,
+          "duration": 3.538
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 1. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 3851.772,
+          "duration": 12.222
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Interview question",
+      "start": 3865.369,
+      "duration": 70.882,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Interview question",
+          "start": 3865.369,
+          "duration": 2.186
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Work through these steps in order. Each builds on the last. 1. Render and select (5 min). Show the options; clicking an enabled option selects it and updates `value`. 2. Semantics (5 min). Make a screen reader announce it as a listbox with a name, and announce each option and whether it is selected or disabled. 3. Keyboard (12 min). Tab moves focus to the listbox. Up and Down move the active option, skipping disabled ones; Home and End jump; Enter and Space select. Screen readers must announce the active option. Explain why you chose `aria-activedescendant` or a roving `tabindex`. 4. Type-ahead (5 min). Typing letters moves to the next matching option. 5. Styling with tokens (5 min). Show active, selected, disabled and focus states using only design tokens, and keep them visible in forced-colors mode. 6. Discussion (8 min). How would this work with reactive forms? With object values? How would you test it, and what would you give product teams for their tests?",
+          "start": 3868.68,
+          "duration": 60.921
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Answer · block 1 · page 1",
+      "start": 3936.251,
+      "duration": 20.825,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Answer · block 1 · page 1",
+          "start": 3936.251,
+          "duration": 3.752
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 12. Focus on ListboxOption. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 3941.128,
+          "duration": 14.573
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Answer · block 2 · page 2",
+      "start": 3957.076,
+      "duration": 21.7,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Answer · block 2 · page 2",
+          "start": 3957.076,
+          "duration": 3.84
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 2 of 12. Focus on role, tabindex. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 3962.041,
+          "duration": 15.36
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Answer · block 3 · page 3",
+      "start": 3978.776,
+      "duration": 25.04,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Answer · block 3 · page 3",
+          "start": 3978.776,
+          "duration": 4.132
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 3 of 12. Focus on aria-label, aria-activedescendant, role, aria-selected. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 3984.033,
+          "duration": 18.408
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Answer · block 4 · page 4",
+      "start": 4003.816,
+      "duration": 23.98,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Answer · block 4 · page 4",
+          "start": 4003.816,
+          "duration": 4.145
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 4 of 12. Focus on ListboxComponent, options, ListboxOption, label. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 4009.086,
+          "duration": 17.335
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Answer · block 5 · page 5",
+      "start": 4027.796,
+      "duration": 22.1,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Answer · block 5 · page 5",
+          "start": 4027.796,
+          "duration": 3.92
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 5 of 12. Focus on activeIndex, activeId. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 4032.841,
+          "duration": 15.68
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Answer · block 6 · page 6",
+      "start": 4049.896,
+      "duration": 22.82,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Answer · block 6 · page 6",
+          "start": 4049.896,
+          "duration": 3.991
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 6 of 12. Focus on typed, typedTimer, optionId. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 4055.012,
+          "duration": 16.329
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Answer · block 7 · page 7",
+      "start": 4072.716,
+      "duration": 22,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Answer · block 7 · page 7",
+          "start": 4072.716,
+          "duration": 3.9
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 7 of 12. Focus on isSelected, choose. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 4077.741,
+          "duration": 15.6
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Answer · block 8 · page 8",
+      "start": 4094.716,
+      "duration": 21.4,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Answer · block 8 · page 8",
+          "start": 4094.716,
+          "duration": 3.85
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 8 of 12. Focus on onKeydown. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 4099.691,
+          "duration": 15.05
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Answer · block 9 · page 9",
+      "start": 4116.116,
+      "duration": 23.62,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Answer · block 9 · page 9",
+          "start": 4116.116,
+          "duration": 3.63
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 9 of 12. Read this part in the context of Reference solution (steps 1 to 4). Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 4120.871,
+          "duration": 17.49
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Answer · block 10 · page 10",
+      "start": 4139.736,
+      "duration": 22,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Answer · block 10 · page 10",
+          "start": 4139.736,
+          "duration": 3.9
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 10 of 12. Focus on enabledIndexes, typeahead. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 4144.761,
+          "duration": 15.6
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Answer · block 11 · page 11",
+      "start": 4161.736,
+      "duration": 23.62,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Answer · block 11 · page 11",
+          "start": 4161.736,
+          "duration": 3.63
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 11 of 12. Read this part in the context of Reference solution (steps 1 to 4). Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 4166.491,
+          "duration": 17.49
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Answer · block 12 · page 12",
+      "start": 4185.356,
+      "duration": 23.74,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Answer · block 12 · page 12",
+          "start": 4185.356,
+          "duration": 3.65
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 12 of 12. Read this part in the context of Reference solution (steps 1 to 4). Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 4190.131,
+          "duration": 17.59
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Step-by-step notes · item 1",
+      "start": 4209.096,
+      "duration": 6.48,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Step-by-step notes · item 1",
+          "start": 4209.096,
+          "duration": 3.581
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Step",
+          "start": 4213.802,
+          "duration": 0.399
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Step-by-step notes · item 2",
+      "start": 4215.576,
+      "duration": 20.6,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Step-by-step notes · item 2",
+          "start": 4215.576,
+          "duration": 3.465
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`value` is a `model()`, so `[(value)]` works and selection is one signal. Options are `readonly` and never mutated (see SIG-004). `track option` uses object identity, which is correct here because options carry no per-row state.",
+          "start": 4220.166,
+          "duration": 14.635
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Step-by-step notes · item 1",
+      "start": 4236.176,
+      "duration": 6.48,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Step-by-step notes · item 1",
+          "start": 4236.176,
+          "duration": 3.581
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Step",
+          "start": 4240.882,
+          "duration": 0.399
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Step-by-step notes · item 2",
+      "start": 4242.656,
+      "duration": 21.68,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Step-by-step notes · item 2",
+          "start": 4242.656,
+          "duration": 3.596
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`role=\"listbox\"` with `aria-label`, `role=\"option\"` with `aria-selected`, and `aria-disabled` on disabled options. Disabled options stay visible and announced, which helps users understand what is unavailable. `label` is a required input, so a nameless listbox does not compile.",
+          "start": 4247.377,
+          "duration": 15.584
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Step-by-step notes · item 1",
+      "start": 4264.336,
+      "duration": 6.48,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Step-by-step notes · item 1",
+          "start": 4264.336,
+          "duration": 3.581
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Step",
+          "start": 4269.042,
+          "duration": 0.399
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Step-by-step notes · item 2",
+      "start": 4270.816,
+      "duration": 26.78,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Step-by-step notes · item 2",
+          "start": 4270.816,
+          "duration": 2.953
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`aria-activedescendant` keeps DOM focus on the listbox and tells assistive technology which option is active. It fits a listbox well, and it is the pattern a combobox needs later, where focus must stay in the text input. A roving `tabindex` (focus moves to each option) is also valid for a standalone listbox, and the candidate should be able to say so.",
+          "start": 4274.894,
+          "duration": 21.327
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Step-by-step notes",
+      "start": 4297.596,
+      "duration": 7.88,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Step-by-step notes",
+          "start": 4297.596,
+          "duration": 2.69
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Edge cases a strong candidate handles:",
+          "start": 4301.411,
+          "duration": 2.69
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Step-by-step notes",
+      "start": 4305.476,
+      "duration": 36.7,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Step-by-step notes",
+          "start": 4305.476,
+          "duration": 2.16
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "First focus: the active option is the selected one, or the first enabled one. A selected option that later becomes disabled is not made active. All options disabled: `activeIndex` is `-1`, `aria-activedescendant` is removed, and the keyboard does nothing. Options change: `linkedSignal` recomputes the active option from the new options, so it never points past the end of the list. Unique ids: derived from a per-instance counter, never from the index alone. Scrolling: the active option is scrolled into view after rendering, with `afterRenderEffect`.",
+          "start": 4308.761,
+          "duration": 32.04
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Step-by-step notes · item 1",
+      "start": 4342.176,
+      "duration": 6.48,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Step-by-step notes · item 1",
+          "start": 4342.176,
+          "duration": 3.581
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Step",
+          "start": 4346.882,
+          "duration": 0.399
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Step-by-step notes · item 2",
+      "start": 4348.656,
+      "duration": 15.42,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Step-by-step notes · item 2",
+          "start": 4348.656,
+          "duration": 3.875
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Type-ahead buffers keystrokes for 500 ms, ignores modifier shortcuts, skips disabled options and wraps around. The timer is cleared on destroy.",
+          "start": 4353.656,
+          "duration": 9.045
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Step 5: styles using only tokens",
+      "start": 4364.076,
+      "duration": 8.6,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Step 5: styles using only tokens",
+          "start": 4364.076,
+          "duration": 3.812
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "These go in the component's stylesheet.",
+          "start": 4369.013,
+          "duration": 2.288
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Answer · block 13 · page 1",
+      "start": 4372.676,
+      "duration": 21.16,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Answer · block 13 · page 1",
+          "start": 4372.676,
+          "duration": 3.8
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 4. Focus on background. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 4377.601,
+          "duration": 14.86
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Answer · block 14 · page 2",
+      "start": 4393.836,
+      "duration": 21.12,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Answer · block 14 · page 2",
+          "start": 4393.836,
+          "duration": 3.793
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 2 of 4. Focus on background. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 4398.754,
+          "duration": 14.827
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Answer · block 15 · page 3",
+      "start": 4414.956,
+      "duration": 22.7,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Answer · block 15 · page 3",
+          "start": 4414.956,
+          "duration": 3.967
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 3 of 4. Focus on aria-selected, aria-disabled. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 4420.048,
+          "duration": 16.233
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Answer · block 16 · page 4",
+      "start": 4437.656,
+      "duration": 21.34,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Answer · block 16 · page 4",
+          "start": 4437.656,
+          "duration": 3.837
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 4 of 4. Focus on aria-disabled. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 4442.618,
+          "duration": 15.003
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Step 5: styles using only tokens",
+      "start": 4458.996,
+      "duration": 19.84,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Step 5: styles using only tokens",
+          "start": 4458.996,
+          "duration": 3.271
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "States are styled from the ARIA attributes, so the visual state and the announced state cannot disagree. Selection shows a check mark as well as weight, so it does not depend on colour. The active option uses an outline, which forced-colors mode keeps.",
+          "start": 4463.392,
+          "duration": 14.069
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Step 6: discussion points",
+      "start": 4478.836,
+      "duration": 42.5,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Step 6: discussion points",
+          "start": 4478.836,
+          "duration": 2.963
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Forms: implement `ControlValueAccessor` writing the same `value` signal, following the contract in API-004 (`writeValue` never calls `onChange`; touched on blur; disabled state). Object values: `compareWith` lets teams pass objects that are equal but not identical, such as options rebuilt after a fetch. Tests: a host component with real options, keyboard interactions from the APG keyboard table, two instances on one page for id uniqueness, and axe in a real browser. For product teams: a `ListboxHarness` with `selectOption`, `getSelectedOptionLabel` and `pressKey`, published from a testing entry point (see TST-001).",
+          "start": 4482.924,
+          "duration": 37.037
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Follow-up 1",
+      "start": 4521.336,
+      "duration": 45.075,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Follow-up 1",
+          "start": 4521.336,
+          "duration": 2.34
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How would you extend this to multiple selection? What changes in ARIA and keyboard behaviour?",
+          "start": 4524.801,
+          "duration": 6.066
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Represent selection as a collection, add aria-multiselectable true, and expose aria-selected for each option. Choose an APG-supported multiple-selection keyboard model. In a modifier-free model, Space toggles the active option, with optional range and select-all behavior documented. Keep focus independent of selection so navigation does not unexpectedly clear choices. Define disabled behavior, output payloads, and reconciliation when options disappear. This is a new public contract, not just changing value to an array.",
+          "start": 4536.17,
+          "duration": 28.866
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Follow-up 2",
+      "start": 4566.411,
+      "duration": 47.022,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Follow-up 2",
+          "start": 4566.411,
+          "duration": 2.295
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "The list has 10,000 options. What breaks, and how would virtual scrolling interact with `aria-activedescendant`?",
+          "start": 4569.831,
+          "duration": 6.5
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Rendering ten thousand options can cost layout and memory, but virtualization can remove the element referenced by aria-activedescendant. Keep the active option rendered or provide a compatible identity strategy, and expose position and set-size information where the virtualized pattern requires it. Coordinate scrolling and rendering before assigning the reference. Test navigation across window boundaries, typeahead to offscreen items, and screen reader behavior. Consider filtering or a native control before adding complexity that the task does not need.",
+          "start": 4581.742,
+          "duration": 30.316
+        }
+      ]
+    },
+    {
+      "heading": "A11Y-006 · Follow-up 3",
+      "start": 4613.433,
+      "duration": 46.059,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A11Y-006 · Follow-up 3",
+          "start": 4613.433,
+          "duration": 2.153
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How would you build a select (a button that opens this listbox in a popup) on top of it?",
+          "start": 4616.711,
+          "duration": 7.192
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A popup select needs a named trigger, expanded state, an appropriate popup relationship, opening and closing keys, selection commitment, Escape handling, and focus restoration. Define whether DOM focus moves to the listbox or remains on a combobox-like trigger with active descendant management; follow the selected pattern consistently. Use an overlay strategy for positioning and outside interaction. Keep the standalone listbox's selection logic reusable, but do not assume adding a button and hiding the list supplies the complete popup contract.",
+          "start": 4629.051,
+          "duration": 29.066
+        }
+      ]
+    },
+    {
+      "heading": "Implementation clarification · Repeated-letter typeahead",
+      "start": 4659.492,
+      "duration": 21.68,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Implementation clarification · Repeated-letter typeahead",
+          "start": 4659.492,
+          "duration": 2.131
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The reference buffer accumulates repeated letters, so typing the same letter twice quickly searches for a doubled prefix rather than cycling. The supplemental listbox example resets repeated single-letter input to a one-letter search and verifies cycling. The source remains unchanged.",
+          "start": 4662.748,
+          "duration": 17.049
+        }
+      ]
+    },
+    {
+      "heading": "Implementation clarification · Browser checks and announcements",
+      "start": 4681.172,
+      "duration": 18.08,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Implementation clarification · Browser checks and announcements",
+          "start": 4681.172,
+          "duration": 3.116
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "DOM and browser interaction checks establish names, relationships, and focus in the tested browser. They do not establish a universal screen-reader announcement or server-hydration identifier strategy.",
+          "start": 4685.413,
+          "duration": 12.464
+        }
+      ]
+    },
+    {
+      "heading": "Final review checklist",
+      "start": 4699.252,
+      "duration": 33.14,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Final review checklist",
+          "start": 4699.252,
+          "duration": 1.184
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Review the lesson by answering each main question and follow-up aloud. For Accessible Angular Components: Names, Focus, and Interaction, connect each reported symptom to its mechanism, explain the corrected public contract, and name a regression check that exercises the consumer path. State compatibility and accessibility limitations clearly. The linked transcript, complete code, source questions, and verification report let you repeat the exercises at your own pace.",
+          "start": 4701.561,
+          "duration": 26.047
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "That's the end of lesson 3.",
+          "start": 4728.65,
+          "duration": 2.367
+        }
+      ]
+    }
+  ],
+  "rawDuration": 5649.144,
+  "playbackRate": 1.2,
+  "preservedInterviewPauses": 24
+}

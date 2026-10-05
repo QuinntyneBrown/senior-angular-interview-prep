@@ -1,0 +1,1052 @@
+{
+  "duration": 1277.029167,
+  "chunks": [
+    {
+      "heading": null,
+      "start": 0,
+      "duration": 9,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Senior Angular interview preparation, lesson 7. Angular Performance: Zoneless Rendering and Resource Lifetimes.",
+          "start": 0,
+          "duration": 6.792
+        }
+      ]
+    },
+    {
+      "heading": "Correct rendering comes before optimization",
+      "start": 9,
+      "duration": 21.94,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Correct rendering comes before optimization",
+          "start": 9,
+          "duration": 1.869
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Welcome to the performance lesson. The question is a copy button that depends on zone.js, measures its width through a zone event, and resets its status too early after repeated clicks. We will first understand rendering notifications, then fix state, timing, layout, error feedback, and resource cleanup.",
+          "start": 11.994,
+          "duration": 17.571
+        }
+      ]
+    },
+    {
+      "heading": "Correct rendering comes before optimization · 2",
+      "start": 30.94,
+      "duration": 26.98,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Correct rendering comes before optimization · 2",
+          "start": 30.94,
+          "duration": 2.413
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Performance is not just making a component execute fewer times. A fast component that fails to show the current state is incorrect. Start by tracing the operation: the click begins a clipboard request, the promise settles, the copied state changes, a timer later resets it, and the view must reflect both transitions. Ask which API tells Angular that each transition needs rendering.",
+          "start": 34.478,
+          "duration": 22.067
+        }
+      ]
+    },
+    {
+      "heading": "Correct rendering comes before optimization · 3",
+      "start": 57.92,
+      "duration": 24.24,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Correct rendering comes before optimization · 3",
+          "start": 57.92,
+          "duration": 2.579
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A senior answer connects scheduling to observable behavior. It also questions whether the JavaScript work is needed. Measuring a button can be more complex and less reliable than allowing CSS to reserve space for both labels. Removing an unnecessary layout read improves performance and simplifies correctness at the same time.",
+          "start": 61.624,
+          "duration": 19.161
+        }
+      ]
+    },
+    {
+      "heading": "Zone-based and zoneless change detection",
+      "start": 82.16,
+      "duration": 27.92,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Zone-based and zoneless change detection",
+          "start": 82.16,
+          "duration": 1.986
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Zone-based applications use patched asynchronous activity as a broad indication that something may have changed. This can make plain fields appear to update after timers or promises. It is not a universal guarantee: work outside the zone, unpatched APIs, and native asynchronous behavior can still require explicit notification. Avoid teaching that every promise completion automatically fixes every state update.",
+          "start": 85.271,
+          "duration": 23.434
+        }
+      ]
+    },
+    {
+      "heading": "Zone-based and zoneless change detection · 2",
+      "start": 110.08,
+      "duration": 24.88,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Zone-based and zoneless change detection · 2",
+          "start": 110.08,
+          "duration": 2.487
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Zoneless rendering relies on Angular notifications. Signals read by a template notify when they change. Bound template and host listeners, component setInput, markForCheck, and the async pipe are other important paths. A plain field assignment in an arbitrary asynchronous callback is not a notification. Neither is a raw timer merely because it ran.",
+          "start": 113.692,
+          "duration": 19.893
+        }
+      ]
+    },
+    {
+      "heading": "Zone-based and zoneless change detection · 3",
+      "start": 134.96,
+      "duration": 24.96,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Zone-based and zoneless change detection · 3",
+          "start": 134.96,
+          "duration": 2.577
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "OnPush is compatible with this model when the component observes its inputs and notifications correctly. It does not make all mutable state observable. Some dynamic-host library components require additional care for children with different assumptions. Test the behavior in a zoneless consumer rather than treating an OnPush annotation as proof of compatibility.",
+          "start": 138.663,
+          "duration": 19.882
+        }
+      ]
+    },
+    {
+      "heading": "Async boundaries and view notifications",
+      "start": 159.92,
+      "duration": 25.16,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Async boundaries and view notifications",
+          "start": 159.92,
+          "duration": 1.666
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A click listener can schedule a render before its awaited work finishes. If the handler later writes a plain copied field, that earlier render does not promise another check after the write. An unrelated event may make the label appear, which creates the misleading impression that the code usually works. Tests should isolate the completion and observe whether it schedules its own update.",
+          "start": 162.711,
+          "duration": 20.994
+        }
+      ]
+    },
+    {
+      "heading": "Async boundaries and view notifications · 2",
+      "start": 185.08,
+      "duration": 29.92,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Async boundaries and view notifications · 2",
+          "start": 185.08,
+          "duration": 2.594
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use a signal for state consumed by the template or explicitly mark a suitable view for checking. For observable data, the async pipe connects emissions to rendering. For third-party callbacks, adapt data at the boundary instead of requiring product teams to click somewhere else to refresh. NgZone.run is not itself a zoneless notification mechanism, although retaining run and runOutsideAngular can still matter for zone-based consumers.",
+          "start": 188.799,
+          "duration": 24.826
+        }
+      ]
+    },
+    {
+      "heading": "Async boundaries and view notifications · 3",
+      "start": 215,
+      "duration": 26.3,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Async boundaries and view notifications · 3",
+          "start": 215,
+          "duration": 2.975
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Server rendering has a related but separate stability contract. Pending asynchronous work that must complete before serialization may need PendingTasks. A render notification tells Angular that a view changed; it does not automatically describe every server-side task. Keep browser clipboard actions out of server execution and document environment-dependent APIs.",
+          "start": 219.1,
+          "duration": 20.825
+        }
+      ]
+    },
+    {
+      "heading": "Use render hooks for DOM timing",
+      "start": 241.3,
+      "duration": 25.54,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use render hooks for DOM timing",
+          "start": 241.3,
+          "duration": 2.711
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "NgZone onStable and related observables do not emit in a zoneless application. They are the wrong boundary for deciding that a view is ready. Use the supported render callbacks when a DOM operation truly depends on the rendered view. afterNextRender handles a one-time operation; a post-render effect can react to dependencies after rendering.",
+          "start": 245.136,
+          "duration": 20.329
+        }
+      ]
+    },
+    {
+      "heading": "Use render hooks for DOM timing · 2",
+      "start": 266.84,
+      "duration": 26.52,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use render hooks for DOM timing · 2",
+          "start": 266.84,
+          "duration": 3.29
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Separate geometry reads from style writes when doing coordinated DOM work. A write followed by a read can force layout repeatedly. Render phases help organize that work, but the best improvement can be removing the measurement entirely. Ask what the measurement is trying to guarantee, whether it survives translation and font loading, and whether CSS already expresses the requirement.",
+          "start": 271.255,
+          "duration": 20.73
+        }
+      ]
+    },
+    {
+      "heading": "Use render hooks for DOM timing · 3",
+      "start": 293.36,
+      "duration": 24.5,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use render hooks for DOM timing · 3",
+          "start": 293.36,
+          "duration": 2.895
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Render callbacks do not execute during server rendering. That is useful for browser-only DOM work, but it also means the initial server output should not depend on a callback that never ran. Give the component a sensible CSS-first state and use browser work as an enhancement where necessary. Test the measured result in a real browser if you make a layout claim.",
+          "start": 297.38,
+          "duration": 19.105
+        }
+      ]
+    },
+    {
+      "heading": "Prefer a layout that handles both labels",
+      "start": 317.86,
+      "duration": 22.06,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Prefer a layout that handles both labels",
+          "start": 317.86,
+          "duration": 2.139
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Locking a button to the width of Copy does not stop the longer label Copied from making it grow. Translations can reverse which label is longer, and a loaded font can change both widths. Measuring once before those changes is fragile. Place both labels in the same grid cell so the intrinsic width accommodates the larger one.",
+          "start": 321.124,
+          "duration": 17.421
+        }
+      ]
+    },
+    {
+      "heading": "Prefer a layout that handles both labels · 2",
+      "start": 339.92,
+      "duration": 23.88,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Prefer a layout that handles both labels · 2",
+          "start": 339.92,
+          "duration": 2.872
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Hide the inactive label with visibility hidden. It continues to participate in layout but is removed from normal rendering and the accessibility tree. Display none would remove its contribution to width; opacity zero would leave it in the accessibility tree unless other measures were taken. The choice of hiding mechanism is part of both layout and naming behavior.",
+          "start": 343.917,
+          "duration": 18.508
+        }
+      ]
+    },
+    {
+      "heading": "Prefer a layout that handles both labels · 3",
+      "start": 363.8,
+      "duration": 23.88,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Prefer a layout that handles both labels · 3",
+          "start": 363.8,
+          "duration": 3.207
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Verify the button's bounding rectangle before and after the status change with representative translated labels. Check the accessible name contains the visible label only. This is a concrete example of performance work that removes a layout read, a style mutation, a zone subscription, and timing assumptions while improving the user experience.",
+          "start": 368.132,
+          "duration": 18.173
+        }
+      ]
+    },
+    {
+      "heading": "Timers and promises have resource lifetimes",
+      "start": 387.68,
+      "duration": 22.82,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Timers and promises have resource lifetimes",
+          "start": 387.68,
+          "duration": 1.905
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Every timer has an owner and an end condition. Starting a new reset timer without cancelling the previous one lets an earlier click reset a later success message. Clear the old timer when beginning the next operation and before installing a new one. Clear it on destruction so callbacks do not update a component that no longer exists.",
+          "start": 390.71,
+          "duration": 18.415
+        }
+      ]
+    },
+    {
+      "heading": "Timers and promises have resource lifetimes · 2",
+      "start": 410.5,
+      "duration": 26.54,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Timers and promises have resource lifetimes · 2",
+          "start": 410.5,
+          "duration": 2.708
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Promises introduce another edge case. Two clipboard requests can finish out of order. A first request can settle after a second one, creating a stale announcement or another reset timer. A completion can also arrive after destruction. Clearing a timer alone does not cancel an already pending promise. Use a request sequence and a destroyed-state check when the UI must ignore stale completions.",
+          "start": 414.333,
+          "duration": 21.332
+        }
+      ]
+    },
+    {
+      "heading": "Timers and promises have resource lifetimes · 3",
+      "start": 437.04,
+      "duration": 22.92,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Timers and promises have resource lifetimes · 3",
+          "start": 437.04,
+          "duration": 2.917
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The source correction improves the timer behavior for ordinary sequential completions, but it does not fully guard those overlapping promise cases. We will provide an additional hardened teaching example and verify the sequence guard. State the limitation rather than presenting the minimal correction as a complete concurrency solution.",
+          "start": 441.083,
+          "duration": 17.502
+        }
+      ]
+    },
+    {
+      "heading": "Errors and announcements are part of completion",
+      "start": 459.96,
+      "duration": 22.98,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Errors and announcements are part of completion",
+          "start": 459.96,
+          "duration": 2.515
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The clipboard API can reject because permission was denied, the environment is unsupported, or the page is not a secure context. Catch failures and provide useful feedback. Do not show Copied before the operation succeeds. Do not leave a rejected promise unhandled while the UI silently remains unchanged.",
+          "start": 463.6,
+          "duration": 17.965
+        }
+      ]
+    },
+    {
+      "heading": "Errors and announcements are part of completion · 2",
+      "start": 482.94,
+      "duration": 26.96,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Errors and announcements are part of completion · 2",
+          "start": 482.94,
+          "duration": 3.387
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A changing button label is not a dependable status announcement for screen readers. A live announcer can communicate success or failure without moving focus. Success is ordinarily polite. An assertive failure announcement should be justified by urgency and interruption cost; it is not automatically required for every rejected clipboard request. Expose translatable messages to the application.",
+          "start": 487.452,
+          "duration": 21.073
+        }
+      ]
+    },
+    {
+      "heading": "Errors and announcements are part of completion · 3",
+      "start": 509.9,
+      "duration": 26.02,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Errors and announcements are part of completion · 3",
+          "start": 509.9,
+          "duration": 3.414
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Keep the final state coherent when a later operation fails. Clear or replace stale success, avoid allowing an old completion to overwrite a newer failure, and keep the button operable for retry. Tests should cover success, failure, overlap, reset, and destruction. These are correctness cases that prevent seemingly random performance or rendering reports.",
+          "start": 514.439,
+          "duration": 20.106
+        }
+      ]
+    },
+    {
+      "heading": "Test notifications instead of forcing every render",
+      "start": 535.92,
+      "duration": 24.18,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Test notifications instead of forcing every render",
+          "start": 535.92,
+          "duration": 2.71
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A test that manually runs detectChanges after an asynchronous plain-field assignment can hide the production defect. For notification-sensitive cases, use zoneless change detection and wait for the fixture to become stable. Complete a controlled promise, then assert the visible label without forcing a render that Angular did not schedule.",
+          "start": 539.755,
+          "duration": 18.97
+        }
+      ]
+    },
+    {
+      "heading": "Test notifications instead of forcing every render · 2",
+      "start": 560.1,
+      "duration": 26.72,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Test notifications instead of forcing every render · 2",
+          "start": 560.1,
+          "duration": 3.159
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Mock the clipboard boundary so success and failure are deterministic. Control pending requests independently to finish them out of order. Use a short configurable reset delay in the hardened teaching example to verify the timer path without a slow test. Destroy the fixture while a request is pending, then complete it and confirm no new timer or announcement is created.",
+          "start": 564.384,
+          "duration": 21.061
+        }
+      ]
+    },
+    {
+      "heading": "Test notifications instead of forcing every render · 3",
+      "start": 586.82,
+      "duration": 23.56,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Test notifications instead of forcing every render · 3",
+          "start": 586.82,
+          "duration": 3.268
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Real browser tests are necessary for intrinsic layout and accessible names. A DOM emulator cannot prove that the two labels have the same outer button width or that native focus behaves correctly. Compile-time validation remains useful for types, but use the appropriate runtime evidence for every claim.",
+          "start": 591.213,
+          "duration": 17.792
+        }
+      ]
+    },
+    {
+      "heading": "Audit a library systematically",
+      "start": 610.38,
+      "duration": 24.5,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Audit a library systematically",
+          "start": 610.38,
+          "duration": 1.544
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Search for zone lifecycle subscriptions, plain fields written by timers or promises, direct DOM measurements, subscriptions without cleanup, and effects that allocate resources without an inverse operation. These searches identify candidates; they do not prove that every match is a defect. Review each candidate according to its ownership and notification path.",
+          "start": 613.049,
+          "duration": 20.456
+        }
+      ]
+    },
+    {
+      "heading": "Audit a library systematically · 2",
+      "start": 634.88,
+      "duration": 25.74,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Audit a library systematically · 2",
+          "start": 634.88,
+          "duration": 2.404
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Run representative consumers without zone.js and interact with components through their actual templates. Include asynchronous data, input changes, multiple instances, and destruction. Add regression tests where behavior fails. A debug check for unnotified binding changes can help find gaps, but do not fix failures by forcing global change detection after every callback.",
+          "start": 638.409,
+          "duration": 20.836
+        }
+      ]
+    },
+    {
+      "heading": "Audit a library systematically · 3",
+      "start": 660.62,
+      "duration": 27.24,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Audit a library systematically · 3",
+          "start": 660.62,
+          "duration": 2.319
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Profile only after the behavior is correct. Look for repeated expensive derivations, layout thrashing, unnecessary allocations, and excessive renders using measured traces. A signal is not a performance certificate, and a faster benchmark that dropped needed updates is misleading. In the question walkthrough, explain both why the original fails and why the corrected mechanism supplies the missing notification.",
+          "start": 664.064,
+          "duration": 22.421
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Scenario",
+      "start": 687.86,
+      "duration": 14.32,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Scenario",
+          "start": 687.86,
+          "duration": 1.97
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "We now review PERF-001: A component that only works with zone.js. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+          "start": 690.955,
+          "duration": 9.85
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Scenario",
+      "start": 702.18,
+      "duration": 21.84,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Scenario",
+          "start": 702.18,
+          "duration": 1.791
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`@acme/ui`'s copy button works in every older product. A team that created a new, zoneless application reports: \"The label usually never changes to 'Copied', and the button's width is never locked.\" A second team (still on zone.js) reports that clicking twice quickly makes \"Copied\" disappear too early.",
+          "start": 705.096,
+          "duration": 17.549
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Scenario · block 1 · page 1",
+      "start": 724.02,
+      "duration": 18.02,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Scenario · block 1 · page 1",
+          "start": 724.02,
+          "duration": 3.794
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 3. Focus on CopyButtonComponent, text. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 728.939,
+          "duration": 11.726
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Scenario · block 2 · page 2",
+      "start": 742.04,
+      "duration": 16.94,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Scenario · block 2 · page 2",
+          "start": 742.04,
+          "duration": 3.61
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 2 of 3. Focus on host. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 746.775,
+          "duration": 10.83
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Scenario · block 3 · page 3",
+      "start": 758.98,
+      "duration": 18.44,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Scenario · block 3 · page 3",
+          "start": 758.98,
+          "duration": 3.578
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 3 of 3. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 763.683,
+          "duration": 12.362
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Interview question",
+      "start": 777.42,
+      "duration": 18.542,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Interview question",
+          "start": 777.42,
+          "duration": 1.786
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Why does it work with zone.js and not without? Fix it so it works in both kinds of application, and fix the second team's bug. What else would you change?",
+          "start": 780.331,
+          "duration": 8.981
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Why it depends on zone.js",
+      "start": 795.962,
+      "duration": 18.705,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Why it depends on zone.js",
+          "start": 795.962,
+          "duration": 3.124
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Zone-based Angular uses patched asynchronous activity as a broad check trigger. This can make plain fields appear to work, but it is not a guarantee for every promise, native asynchronous API, or callback outside the zone.",
+          "start": 800.211,
+          "duration": 13.081
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Why it depends on zone.js",
+      "start": 814.667,
+      "duration": 18.68,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Why it depends on zone.js",
+          "start": 814.667,
+          "duration": 3.034
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A zoneless application (the default for new Angular applications) only runs change detection when something tells it to: a template event listener, a signal read by a template changing, `markForCheck()`, the `async` pipe, or `setInput`. Here:",
+          "start": 818.826,
+          "duration": 13.146
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Why it depends on zone.js",
+      "start": 833.347,
+      "duration": 31.48,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Why it depends on zone.js",
+          "start": 833.347,
+          "duration": 2.899
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The click handler schedules a check, but `copied = true` happens after the `await`, normally once that check has already run. Nothing schedules another, so \"Copied\" usually never appears. Whether it does depends on timing and on unrelated activity elsewhere on the page, which makes the bug intermittent and hard to reproduce. The reset in `setTimeout` has the same problem. - `NgZone` is a no-op in zoneless applications, so `onStable` never emits, and the width is never locked.",
+          "start": 837.371,
+          "duration": 26.081
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Why it depends on zone.js",
+      "start": 864.827,
+      "duration": 10.42,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Why it depends on zone.js",
+          "start": 864.827,
+          "duration": 2.97
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A shared library must work in both kinds of application, and new ones are zoneless.",
+          "start": 868.922,
+          "duration": 4.95
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Why it depends on zone.js",
+      "start": 875.247,
+      "duration": 16.16,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Why it depends on zone.js",
+          "start": 875.247,
+          "duration": 2.928
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: state that the template reads lives in signals, which schedule rendering in both modes, and DOM work after rendering uses `afterNextRender` or `afterRenderEffect`, never zone events.",
+          "start": 879.3,
+          "duration": 10.732
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · The second team's bug: overlapping timers",
+      "start": 891.407,
+      "duration": 19.18,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · The second team's bug: overlapping timers",
+          "start": 891.407,
+          "duration": 3.336
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Each click starts a new timer and never cancels the previous one. Clicking at 0 s and 1.5 s resets the label at 2 s, half a second after the second click. The timer also survives the component being destroyed.",
+          "start": 895.868,
+          "duration": 13.344
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · The second team's bug: overlapping timers",
+      "start": 910.587,
+      "duration": 10.04,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · The second team's bug: overlapping timers",
+          "start": 910.587,
+          "duration": 3.591
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: clear the previous timer on each click, and on destroy.",
+          "start": 915.303,
+          "duration": 3.949
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Better than measuring: let CSS size the button",
+      "start": 920.627,
+      "duration": 26.92,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Better than measuring: let CSS size the button",
+          "start": 920.627,
+          "duration": 4.499
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Measuring the width of \"Copy\" and using it as `min-width` would not even work: \"Copied\" is longer, so the button grows anyway. Stack both labels in the same grid cell and hide the inactive one with `visibility: hidden`. The button is always as wide as the longer label, with no JavaScript, no layout reads, and correct behaviour when the labels are translated.",
+          "start": 926.251,
+          "duration": 19.921
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Answer · block 1 · page 1",
+      "start": 947.547,
+      "duration": 21.34,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Answer · block 1 · page 1",
+          "start": 947.547,
+          "duration": 3.454
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 4. Read this part in the context of Fixed version. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 952.126,
+          "duration": 15.386
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Answer · block 2 · page 2",
+      "start": 968.887,
+      "duration": 23.26,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Answer · block 2 · page 2",
+          "start": 968.887,
+          "duration": 4.007
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 2 of 4. Focus on CopyButtonComponent, text, copyLabel, copiedLabel. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 974.019,
+          "duration": 16.753
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Answer · block 3 · page 3",
+      "start": 992.147,
+      "duration": 20.26,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Answer · block 3 · page 3",
+          "start": 992.147,
+          "duration": 3.618
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 3 of 4. Focus on async. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 996.89,
+          "duration": 14.142
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Answer · block 4 · page 4",
+      "start": 1012.407,
+      "duration": 21.34,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Answer · block 4 · page 4",
+          "start": 1012.407,
+          "duration": 3.454
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 4 of 4. Read this part in the context of Fixed version. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1016.986,
+          "duration": 15.386
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Other fixes in this version",
+      "start": 1033.747,
+      "duration": 33.18,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Other fixes in this version",
+          "start": 1033.747,
+          "duration": 3.002
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Errors are handled. `writeText` rejects when permission is denied or the page is not a secure context. The original left an unhandled rejection and no feedback. The change is announced. A button's label changing is not reliably announced by screen readers, so the result is announced through the CDK `LiveAnnouncer`. Labels are inputs, so applications can translate them. - `visibility: hidden` also removes the inactive label from the accessibility tree, so the button's accessible name is always the visible label.",
+          "start": 1037.874,
+          "duration": 27.678
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · How to make this hold across the library",
+      "start": 1066.927,
+      "duration": 16.62,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · How to make this hold across the library",
+          "start": 1066.927,
+          "duration": 4.034
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Run the library's own test suite with `provideZonelessChangeDetection()`. A component that only works because zone.js happens to trigger change detection will then fail in tests instead of in a product.",
+          "start": 1072.086,
+          "duration": 10.086
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Follow-up 1",
+      "start": 1083.547,
+      "duration": 42.718,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Follow-up 1",
+          "start": 1083.547,
+          "duration": 2.366
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Which Angular APIs schedule change detection in a zoneless application? Which do not?",
+          "start": 1087.038,
+          "duration": 5.291
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Important notifications include a template-consumed signal changing, markForCheck, component setInput, bound template or host listeners, and async-pipe emissions. Attaching an already dirty view also participates. A raw promise, timeout, or plain field assignment is not a notification on its own. NgZone.run does not substitute for a zoneless notification, although it can remain relevant to zone-based consumers. Test async updates without manually forcing every render.",
+          "start": 1097.683,
+          "duration": 27.207
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Follow-up 2",
+      "start": 1126.265,
+      "duration": 42.356,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Follow-up 2",
+          "start": 1126.265,
+          "duration": 2.04
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "A third-party chart library calls back outside Angular. What do you do with the data it provides?",
+          "start": 1129.43,
+          "duration": 5.975
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Adapt the callback to a signal consumed by the template, an observable exposed through the async pipe, or a controlled markForCheck path. Keep subscription cleanup and stale callback handling tied to destruction. Avoid copying the data into an unobserved field and hoping another event triggers a render. If callbacks are extremely frequent, batch according to the UI's needs and profile the result, while preserving the final state. Retain zone-boundary optimizations where they matter for zone-based consumers.",
+          "start": 1140.727,
+          "duration": 26.519
+        }
+      ]
+    },
+    {
+      "heading": "PERF-001 · Follow-up 3",
+      "start": 1168.621,
+      "duration": 44.653,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "PERF-001 · Follow-up 3",
+          "start": 1168.621,
+          "duration": 2.442
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How would you find every component in a large library that only works with zone.js?",
+          "start": 1172.188,
+          "duration": 6.506
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Search for zone lifecycle observables, plain fields written by promises or timers, subscriptions without teardown, and constructor DOM reads. Treat matches as review candidates. Run consumer hosts zoneless and exercise async completion, input updates, repeated interaction, and destruction. Add regression tests for missing notifications instead of forcing global change detection. Use profiling after correctness to find excessive work, and test supported framework ranges before claiming library-wide compatibility.",
+          "start": 1183.81,
+          "duration": 28.089
+        }
+      ]
+    },
+    {
+      "heading": "Implementation clarification · Notifications are explicit",
+      "start": 1213.274,
+      "duration": 15.14,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Implementation clarification · Notifications are explicit",
+          "start": 1213.274,
+          "duration": 2.447
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Zone-based rendering is not a guarantee for every asynchronous API. In the tested zoneless flow, state consumed by a template must notify Angular.",
+          "start": 1216.846,
+          "duration": 10.193
+        }
+      ]
+    },
+    {
+      "heading": "Implementation clarification · Overlapping requests",
+      "start": 1228.414,
+      "duration": 15.78,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Implementation clarification · Overlapping requests",
+          "start": 1228.414,
+          "duration": 2.013
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The minimal source correction clears a timer but does not ignore stale promise completions or completions after destruction. The supplemental example adds a sequence guard and lifetime check.",
+          "start": 1231.552,
+          "duration": 11.267
+        }
+      ]
+    },
+    {
+      "heading": "Final review checklist",
+      "start": 1244.194,
+      "duration": 32.8,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Final review checklist",
+          "start": 1244.194,
+          "duration": 1.17
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Review the lesson by answering each main question and follow-up aloud. For Angular Performance: Zoneless Rendering and Resource Lifetimes, connect each reported symptom to its mechanism, explain the corrected public contract, and name a regression check that exercises the consumer path. State compatibility and accessibility limitations clearly. The linked transcript, complete code, source questions, and verification report let you repeat the exercises at your own pace.",
+          "start": 1246.489,
+          "duration": 25.748
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "That's the end of lesson 7.",
+          "start": 1273.278,
+          "duration": 2.341
+        }
+      ]
+    }
+  ],
+  "rawDuration": 1527.456,
+  "playbackRate": 1.2,
+  "preservedInterviewPauses": 4
+}

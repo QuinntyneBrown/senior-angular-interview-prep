@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Angular Component APIs: Native Semantics and Consumer Contracts</title><link rel="stylesheet" href="../assets/slides.css"><style>section{padding:125px 130px 140px}h2{font-size:48px;margin-bottom:25px}.kicker{font-size:23px;margin-bottom:15px}section>p,li{font-size:37px;line-height:1.45}li{margin-bottom:22px}pre.code{font-size:22px;line-height:1.38;padding:22px 30px;white-space:pre-wrap;overflow-wrap:anywhere}.question{font-size:37px;line-height:1.35}section>p.small{font-size:24px}</style></head><body data-lesson-number="component-api" data-lesson-title="Angular Component APIs: Native Semantics and Consumer Contracts" data-parts="Foundations|API-001|API-002|API-003|API-004|Recap">
+<section id="slide-000" data-part="0"><div class="kicker">Foundations</div><h2>Design from consumer tasks</h2><ul><li>Welcome to the component API lesson.</li><li>Our four questions concern a button that saves twice, an input wrapper that hides native capabilities, a card with too much configuration, and a checkbox that violates the forms contract.</li><li>They share a root concern: a shared component should make the supported task clear and preserve the behavior consumers reasonably expect.</li></ul></section>
+<section id="slide-001" data-part="0" data-cue="Design from consumer tasks · 2"><div class="kicker">Foundations</div><h2>Design from consumer tasks · 2</h2><ul><li>Begin with a representative consumer template.</li><li>What does the team bind, which events do they handle, and where does state live?</li><li>Then examine the actual host element and any internal native element.</li></ul></section>
+<section id="slide-002" data-part="0" data-cue="Design from consumer tasks · 3"><div class="kicker">Foundations</div><h2>Design from consumer tasks · 3</h2><ul><li>A senior answer considers the interface as well as individual bugs.</li><li>Explain the smallest useful contract, show how to use it, identify unsupported combinations, and describe the migration from today's behavior.</li><li>Compatibility includes native events, form state, projected content, styling hooks, and test APIs, not just exported TypeScript names.</li></ul></section>
+<section id="slide-003" data-part="0" data-cue="Inputs express allowed states"><div class="kicker">Foundations</div><h2>Inputs express allowed states</h2><ul><li>Use input types that express supported values.</li><li>A string input for button kind accepts values the stylesheet cannot represent.</li><li>A union of primary, secondary, and danger tells the compiler and editor what is supported.</li></ul></section>
+<section id="slide-004" data-part="0" data-cue="Inputs express allowed states · 2"><div class="kicker">Foundations</div><h2>Inputs express allowed states · 2</h2><pre class="code" data-lang="ts">type ButtonKind = 'primary' | 'secondary' | 'danger';
+readonly kind = input&lt;ButtonKind&gt;('primary');
+readonly disabled = input(false, { transform: booleanAttribute });
+readonly type = input&lt;'button' | 'submit' | 'reset'&gt;('button');
+// Teaching excerpt; imports are in the complete example.</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-005" data-part="0" data-cue="Inputs express allowed states · 3"><div class="kicker">Foundations</div><h2>Inputs express allowed states · 3</h2><ul><li>Inputs are data coming from the consumer.</li><li>Avoid silently copying them into an unrelated local field that only initializes once.</li><li>If the value is derived, use a derivation.</li></ul></section>
+<section id="slide-006" data-part="0" data-cue="Native events and component outputs"><div class="kicker">Foundations</div><h2>Native events and component outputs</h2><ul><li>A native click bubbles from an internal button through the component host.</li><li>If a component also emits an output called click, a consumer can receive an unexpected second notification.</li><li>Before inventing an event, ask whether the native event already expresses the action.</li></ul></section>
+<section id="slide-007" data-part="0" data-cue="Native events and component outputs · 2"><div class="kicker">Foundations</div><h2>Native events and component outputs · 2</h2><ul><li>Reserve component outputs for domain transitions that are not already represented by native events.</li><li>A selected value change or a dismissal request can be useful.</li><li>Avoid names that collide with native events such as input, change, focus, blur, or keydown unless the component intentionally documents that contract and its interaction with bubbling.</li></ul></section>
+<section id="slide-008" data-part="0" data-cue="Native events and component outputs · 3"><div class="kicker">Foundations</div><h2>Native events and component outputs · 3</h2><ul><li>Do not distinguish keyboard and pointer activation by guessing from an event detail without considering assistive technology.</li><li>Consumers may legitimately need a native MouseEvent or KeyboardEvent for specialized behavior, but business logic should ordinarily respond to activation independently of the device.</li><li>Keep telemetry requirements separate from whether the action succeeds.</li></ul></section>
+<section id="slide-009" data-part="0" data-cue="The native host can be the API"><div class="kicker">Foundations</div><h2>The native host can be the API</h2><ul><li>An attribute directive on a native input can style and enhance it while retaining autocomplete, inputmode, maxlength, name, id, validation, browser autofill, labels, and forms integration.</li><li>Consumers do not need a wrapper to forward every property.</li><li>A component with an attribute selector can also enhance a native element when a template is needed.</li></ul></section>
+<section id="slide-010" data-part="0" data-cue="The native host can be the API · 2"><div class="kicker">Foundations</div><h2>The native host can be the API · 2</h2><pre class="code" data-lang="html">&lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;
+&lt;input uiInput id=&quot;email&quot; type=&quot;email&quot;
+       autocomplete=&quot;email&quot; inputmode=&quot;email&quot;
+       maxlength=&quot;120&quot; [formControl]=&quot;email&quot;&gt;
+&lt;!-- Native capabilities remain on the actual input. --&gt;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-011" data-part="0" data-cue="The native host can be the API · 3"><div class="kicker">Foundations</div><h2>The native host can be the API · 3</h2><ul><li>Shared behavior can be factored through directives and the directive composition API.</li><li>Inputs and outputs from host directives are exposed explicitly, and composition is established statically.</li><li>This helps reuse focus or disabled logic, but it cannot automatically forward every arbitrary native attribute into a hidden descendant.</li></ul></section>
+<section id="slide-012" data-part="0" data-cue="Composition for rich content"><div class="kicker">Foundations</div><h2>Composition for rich content</h2><ul><li>A card with separate inputs for every badge, action, heading, image, and body style accumulates combinations the library must maintain.</li><li>Content projection lets consumers supply real HTML and application components within documented slots.</li><li>The library owns layout and style while the application owns content, heading level, links, and business actions.</li></ul></section>
+<section id="slide-013" data-part="0" data-cue="Composition for rich content · 2"><div class="kicker">Foundations</div><h2>Composition for rich content · 2</h2><ul><li>Projection preserves Angular bindings and native semantics better than passing an HTML string.</li><li>Angular sanitization helps protect unsafe bindings, but sanitization does not turn arbitrary innerHTML into a well-designed content API.</li><li>A body string cannot conveniently carry application directives or typed interactions.</li></ul></section>
+<section id="slide-014" data-part="0" data-cue="Composition for rich content · 3"><div class="kicker">Foundations</div><h2>Composition for rich content · 3</h2><ul><li>Configuration remains valuable for uniform repeated data.</li><li>A table's column definitions are naturally data driven, and a menu can often be generated from a typed item model.</li><li>Offer template customization at the points where the structure truly varies.</li></ul></section>
+<section id="slide-015" data-part="0" data-cue="Forms have two data directions"><div class="kicker">Foundations</div><h2>Forms have two data directions</h2><ul><li>A ControlValueAccessor adapts a custom control to Angular Forms.</li><li>The forms model calls writeValue to update the view.</li><li>The component calls the registered onChange callback after a user change to update the forms model.</li></ul></section>
+<section id="slide-016" data-part="0" data-cue="Forms have two data directions · 2"><div class="kicker">Foundations</div><h2>Forms have two data directions · 2</h2><pre class="code" data-lang="ts">writeValue(value: boolean | null): void {
+  this.checked.set(value ?? false);
+}
+registerOnChange(fn: (value: boolean) =&gt; void): void {
+  this.onChange = fn;
+}
+// User path only:
+onUserChange(value: boolean): void {
+  this.checked.set(value);
+  this.onChange(value);
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-017" data-part="0" data-cue="Forms have two data directions · 3"><div class="kicker">Foundations</div><h2>Forms have two data directions · 3</h2><ul><li>Test through a real FormControl host.</li><li>A programmatic value write should update the view while the form stays pristine.</li><li>A user change should update the value and dirty state.</li></ul></section>
+<section id="slide-018" data-part="0" data-cue="Signal forms are a separate integration contract"><div class="kicker">Foundations</div><h2>Signal forms are a separate integration contract</h2><ul><li>Reactive forms use ControlValueAccessor.</li><li>Signal-based forms have their own custom-control interfaces and bindings.</li><li>Do not assume that a value accessor automatically implements every signal-forms capability.</li></ul></section>
+<section id="slide-019" data-part="0" data-cue="Signal forms are a separate integration contract · 2"><div class="kicker">Foundations</div><h2>Signal forms are a separate integration contract · 2</h2><ul><li>For a value control, the signal-forms interface exposes a writable model value with supported state inputs.</li><li>Checkbox-like controls use the corresponding checked control contract.</li><li>The form field binding coordinates the form model with that control.</li></ul></section>
+<section id="slide-020" data-part="0" data-cue="Signal forms are a separate integration contract · 3"><div class="kicker">Foundations</div><h2>Signal forms are a separate integration contract · 3</h2><ul><li>Version support matters because these interfaces can differ across Angular releases.</li><li>Our complete examples use the installed framework version.</li><li>A library claiming support for older majors must test its public interfaces against those majors.</li></ul></section>
+<section id="slide-021" data-part="0" data-cue="Migrate with examples and compatibility tests"><div class="kicker">Foundations</div><h2>Migrate with examples and compatibility tests</h2><ul><li>Removing an output can change what an existing consumer receives.</li><li>Adding a union can reject values that compiled yesterday.</li><li>Moving a wrapper to a native attribute selector changes the template.</li></ul></section>
+<section id="slide-022" data-part="0" data-cue="Migrate with examples and compatibility tests · 2"><div class="kicker">Foundations</div><h2>Migrate with examples and compatibility tests · 2</h2><ul><li>Document the consumer-facing form in examples that compile.</li><li>Show native events, labels, forms binding, projected slots, and disabled behavior.</li><li>A component harness should expose meaningful tasks instead of internal classes so a markup refactor does not break every product's tests.</li></ul></section>
+<section id="slide-023" data-part="0" data-cue="Migrate with examples and compatibility tests · 3"><div class="kicker">Foundations</div><h2>Migrate with examples and compatibility tests · 3</h2><ul><li>During the questions, trace a reported bug from the consumer template to the actual element or callback.</li><li>Identify whether the problem is coercion, event duplication, hidden capabilities, excessive configuration, or reversed data flow.</li><li>Then propose a correction and a test that would have failed before it.</li></ul></section>
+<section id="slide-024" data-part="1" data-cue="API-001 · Scenario"><div class="kicker">Interview walkthrough</div><h2>API-001 · Scenario</h2><ul><li>We now review API-001: A button that saves twice and ignores disabled.</li><li>Inspect the consumer contract and identify the mechanism behind each reported defect.</li></ul></section>
+<section id="slide-025" data-part="1" data-cue="API-001 · Scenario"><div class="kicker">Interview walkthrough</div><h2>API-001 · Scenario</h2><ul><li>Two bug reports against @acme/ui's button:</li></ul></section>
+<section id="slide-026" data-part="1" data-cue="API-001 · Scenario"><div class="kicker">Interview walkthrough</div><h2>API-001 · Scenario</h2><ul><li>&quot;Every click on Save sends two requests.&quot; - &quot;&lt;ui-button disabled&gt; is not disabled.&quot; (from a team whose application does not use strict template type checking)</li></ul></section>
+<section id="slide-027" data-part="1" data-cue="API-001 · Scenario"><div class="kicker">Interview walkthrough</div><h2>API-001 · Scenario</h2><ul><li>A third team says a typo in kind shipped to production unnoticed.</li></ul></section>
+<section id="slide-028" data-part="1" data-cue="API-001 · Scenario · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>API-001 · Scenario · block 1 · page 1</h2><pre class="code" data-lang="ts">import { Component, input, output } from '@angular/core';
+
+@Component({
+  selector: 'ui-button',
+  template: `
+    &lt;button
+      type=&quot;button&quot;
+      [class]=&quot;'ui-button ui-button--' + kind()&quot;
+      [disabled]=&quot;disabled()&quot;
+      (click)=&quot;click.emit($event)&quot;&gt;
+      &lt;ng-content /&gt;
+    &lt;/button&gt;
+  `,
+})</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-029" data-part="1" data-cue="API-001 · Scenario · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>API-001 · Scenario · block 2 · page 2</h2><pre class="code" data-lang="ts">export class ButtonComponent {
+  readonly kind = input('primary');
+  readonly disabled = input(false);
+  readonly click = output&lt;MouseEvent&gt;();
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-030" data-part="1" data-cue="API-001 · Scenario · block 3 · page 1"><div class="kicker">Interview walkthrough</div><h2>API-001 · Scenario · block 3 · page 1</h2><pre class="code" data-lang="html">&lt;ui-button kind=&quot;primay&quot; (click)=&quot;save()&quot;&gt;Save&lt;/ui-button&gt;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-031" data-part="1" data-cue="API-001 · Interview question"><div class="kicker">Interview walkthrough</div><h2>API-001 · Interview question</h2><p class="question">Explain each report, and fix the component's API. For each change, say whether existing consumers would notice.</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-032" data-part="1" data-cue="API-001 · 1. Saving twice: an output named after a native event"><div class="kicker">Interview walkthrough</div><h2>API-001 · 1. Saving twice: an output named after a native event</h2><ul><li>(click) on &lt;ui-button&gt; subscribes to both the component's click output and the native click DOM event on the host element.</li><li>The inner &lt;button&gt;'s native click bubbles up to the host, so save() runs once for the bubbled DOM event and once for the output.</li></ul></section>
+<section id="slide-033" data-part="1" data-cue="API-001 · 1. Saving twice: an output named after a native event"><div class="kicker">Interview walkthrough</div><h2>API-001 · 1. Saving twice: an output named after a native event</h2><ul><li>It gets worse: a click on any part of the host outside the inner button (padding, a gap) fires the native event even when the button is disabled.</li></ul></section>
+<section id="slide-034" data-part="1" data-cue="API-001 · 1. Saving twice: an output named after a native event"><div class="kicker">Interview walkthrough</div><h2>API-001 · 1. Saving twice: an output named after a native event</h2><ul><li>Fix: never name an output after a native DOM event.</li><li>Here the output is not needed at all: native click events from the inner &lt;button&gt; already bubble to the host, and a disabled &lt;button&gt; does not dispatch click events, so (click) on &lt;ui-button&gt; just works.</li><li>If a custom event is needed, give it a distinct name (pressed).</li></ul></section>
+<section id="slide-035" data-part="1" data-cue="API-001 · 2. `disabled` with no value is falsy"><div class="kicker">Interview walkthrough</div><h2>API-001 · 2. disabled with no value is falsy</h2><ul><li>For a static attribute with no value, Angular passes the empty string '' to the input. '' is falsy, so [disabled]=&quot;disabled()&quot; leaves the button enabled.</li><li>Applications with strict template checking get a compile error instead (a string is not a boolean), which is better, but HTML-style boolean attributes should simply work.</li></ul></section>
+<section id="slide-036" data-part="1" data-cue="API-001 · 2. `disabled` with no value is falsy"><div class="kicker">Interview walkthrough</div><h2>API-001 · 2. disabled with no value is falsy</h2><ul><li>Fix: input(false, { transform: booleanAttribute }), which maps '', 'true' and true to true, and 'false', false, null and undefined to false. numberAttribute does the same for numeric inputs.</li></ul></section>
+<section id="slide-037" data-part="1" data-cue="API-001 · 3. `kind` accepts any string"><div class="kicker">Interview walkthrough</div><h2>API-001 · 3. kind accepts any string</h2><ul><li>input('primary') infers string. &quot;primay&quot; compiles, produces the class ui-button--primay, and renders an unstyled button.</li></ul></section>
+<section id="slide-038" data-part="1" data-cue="API-001 · 3. `kind` accepts any string"><div class="kicker">Interview walkthrough</div><h2>API-001 · 3. kind accepts any string</h2><ul><li>Fix: a union type, exported so consumers can use it in their own code:</li></ul></section>
+<section id="slide-039" data-part="1" data-cue="API-001 · Answer · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>API-001 · Answer · block 1 · page 1</h2><pre class="code" data-lang="ts">export type ButtonKind = 'primary' | 'secondary' | 'danger';
+readonly kind = input&lt;ButtonKind&gt;('primary');</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-040" data-part="1" data-cue="API-001 · 4. Consumers cannot choose `type`"><div class="kicker">Interview walkthrough</div><h2>API-001 · 4. Consumers cannot choose type</h2><ul><li>type=&quot;button&quot; is hard-coded, so &lt;ui-button&gt; can never submit a form.</li><li>Add a type input that defaults to 'button'. (API-002 looks at a design that avoids wrapping the native element.)</li></ul></section>
+<section id="slide-041" data-part="1" data-cue="API-001 · Answer · block 2 · page 1"><div class="kicker">Interview walkthrough</div><h2>API-001 · Answer · block 2 · page 1</h2><pre class="code" data-lang="ts">import { Component, booleanAttribute, input } from '@angular/core';
+
+export type ButtonKind = 'primary' | 'secondary' | 'danger';
+export type ButtonType = 'button' | 'submit' | 'reset';
+
+@Component({
+  selector: 'ui-button',
+  styles: `:host { display: inline-block; }`,
+  template: `
+    &lt;button
+      class=&quot;ui-button&quot;
+      [class]=&quot;'ui-button--' + kind()&quot;
+      [type]=&quot;type()&quot;
+      [disabled]=&quot;disabled()&quot;&gt;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-042" data-part="1" data-cue="API-001 · Answer · block 3 · page 2"><div class="kicker">Interview walkthrough</div><h2>API-001 · Answer · block 3 · page 2</h2><pre class="code" data-lang="ts">      &lt;ng-content /&gt;
+    &lt;/button&gt;
+  `,
+})
+export class ButtonComponent {
+  readonly kind = input&lt;ButtonKind&gt;('primary');
+  readonly type = input&lt;ButtonType&gt;('button');
+  readonly disabled = input(false, { transform: booleanAttribute });
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-043" data-part="1" data-cue="API-001 · Fixed version"><div class="kicker">Interview walkthrough</div><h2>API-001 · Fixed version</h2><ul><li>Combining a static class with a [class] binding is safe: Angular merges them.</li></ul></section>
+<section id="slide-044" data-part="1" data-cue="API-001 · Will consumers notice? · comparison 1"><div class="kicker">Interview walkthrough</div><h2>API-001 · Will consumers notice? · comparison 1</h2><ul><li>Change: Removing the click output.</li><li>Effect on existing consumers: (click) keeps working, once.</li><li>Anyone who called .click.emit() on the component directly breaks; that was never documented..</li></ul></section>
+<section id="slide-045" data-part="1" data-cue="API-001 · Will consumers notice? · comparison 2"><div class="kicker">Interview walkthrough</div><h2>API-001 · Will consumers notice? · comparison 2</h2><ul><li>Change: booleanAttribute on disabled.</li><li>Effect on existing consumers: Widens accepted values.</li><li>Non-breaking..</li></ul></section>
+<section id="slide-046" data-part="1" data-cue="API-001 · Will consumers notice? · comparison 3"><div class="kicker">Interview walkthrough</div><h2>API-001 · Will consumers notice? · comparison 3</h2><ul><li>Change: kind narrowed to a union.</li><li>Effect on existing consumers: Technically breaking: call sites passing other strings stop compiling.</li><li>Every such call site was already a bug, but it is still a compile failure on upgrade, so call it out in the changelog, or ship it in a major..</li></ul></section>
+<section id="slide-047" data-part="1" data-cue="API-001 · Will consumers notice? · comparison 4"><div class="kicker">Interview walkthrough</div><h2>API-001 · Will consumers notice? · comparison 4</h2><ul><li>Change: New type input with the old default.</li><li>Effect on existing consumers: Non-breaking..</li></ul></section>
+<section id="slide-048" data-part="1" data-cue="API-001 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>API-001 · Follow-up 1</h2><p class="question">What other output names would you ban in a component library, and how would you enforce it?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-048-answer" data-part="1" data-cue="Flag outputs that collide with native DOM events such as click, input, change, f"><div class="kicker">Interview walkthrough</div><h2>API-001 · Follow-up 1 · Answer</h2><ul><li>Flag outputs that collide with native DOM events such as click, input, change, focus, blur, keydown, and submit.</li><li>A library lint rule can inspect output declarations and aliases against a maintained event-name set, with reviewed exceptions for intentional contracts.</li><li>Prefer domain names such as selectionChange or dismissed when a new event is needed.</li></ul></section>
+<section id="slide-049" data-part="1" data-cue="API-001 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>API-001 · Follow-up 2</h2><p class="question">A team needs to know how the button was activated (mouse, keyboard). Does that justify an output?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-049-answer" data-part="1" data-cue="A consumer can handle the native event when device details are truly needed. Tha"><div class="kicker">Interview walkthrough</div><h2>API-001 · Follow-up 2 · Answer</h2><ul><li>A consumer can handle the native event when device details are truly needed.</li><li>That does not by itself justify emitting another click event.</li><li>Keyboard and assistive-technology activation do not always map cleanly to a simple mouse-versus-keyboard label, so avoid making business behavior depend on a guessed source.</li></ul></section>
+<section id="slide-050" data-part="1" data-cue="API-001 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>API-001 · Follow-up 3</h2><p class="question">Should `kind` be renamed to `variant` to match the rest of the library? How would you do it without breaking anyone (see VER-002)?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-050-answer" data-part="1" data-cue="Introduce variant as the preferred input while preserving kind for a published d"><div class="kicker">Interview walkthrough</div><h2>API-001 · Follow-up 3 · Answer</h2><ul><li>Introduce variant as the preferred input while preserving kind for a published deprecation period.</li><li>Distinguish unset from an explicit primary value and resolve variant first, then kind, then the default.</li><li>Warn only on actual old usage in development, provide editor hints and a template migration, and remove the old name in the announced major.</li></ul></section>
+<section id="slide-051" data-part="2" data-cue="API-002 · Scenario"><div class="kicker">Interview walkthrough</div><h2>API-002 · Scenario</h2><ul><li>We now review API-002: A wrapper that hides the native element.</li><li>Inspect the consumer contract and identify the mechanism behind each reported defect.</li></ul></section>
+<section id="slide-052" data-part="2" data-cue="API-002 · Scenario"><div class="kicker">Interview walkthrough</div><h2>API-002 · Scenario</h2><ul><li>@acme/ui has a text input component.</li><li>Its backlog has grown to 23 open feature requests, all similar: &quot;please add autocomplete&quot;, &quot;add inputmode&quot;, &quot;add maxlength&quot;, &quot;expose (blur)&quot;, &quot;we need to call focus()&quot;, &quot;aria-label on &lt;ui-input&gt; does nothing&quot;, &quot;our &lt;label for&gt; doesn't focus it&quot;, &quot;it doesn't work with formControlName&quot;.</li></ul></section>
+<section id="slide-053" data-part="2" data-cue="API-002 · Scenario · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>API-002 · Scenario · block 1 · page 1</h2><pre class="code" data-lang="ts">import { Component, input, model } from '@angular/core';
+
+@Component({
+  selector: 'ui-input',
+  template: `
+    &lt;input
+      class=&quot;ui-input&quot;
+      [type]=&quot;type()&quot;
+      [placeholder]=&quot;placeholder()&quot;
+      [value]=&quot;value()&quot;
+      (input)=&quot;value.set($any($event.target).value)&quot; /&gt;
+  `,
+})
+export class InputComponent {</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-054" data-part="2" data-cue="API-002 · Scenario · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>API-002 · Scenario · block 2 · page 2</h2><pre class="code" data-lang="ts">  readonly type = input('text');
+  readonly placeholder = input('');
+  readonly value = model('');
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-055" data-part="2" data-cue="API-002 · Scenario · block 3 · page 1"><div class="kicker">Interview walkthrough</div><h2>API-002 · Scenario · block 3 · page 1</h2><pre class="code" data-lang="html">&lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;
+&lt;ui-input id=&quot;email&quot; aria-label=&quot;Email&quot; type=&quot;email&quot; [(value)]=&quot;email&quot; /&gt;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-056" data-part="2" data-cue="API-002 · Interview question"><div class="kicker">Interview walkthrough</div><h2>API-002 · Interview question</h2><p class="question">What is the underlying design problem behind all 23 requests? Propose a different design, and explain its trade-offs and how you would migrate to it.</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-057" data-part="2" data-cue="API-002 · The problem: the component owns the native element"><div class="kicker">Interview walkthrough</div><h2>API-002 · The problem: the component owns the native element</h2><ul><li>The real &lt;input&gt; is hidden inside the component's template, so every native capability (over a hundred attributes, properties, events and methods) is unavailable unless the library re-exposes it by hand.</li><li>Each request is a symptom; adding inputs one by one never ends, and every forwarded attribute is more API to maintain.</li></ul></section>
+<section id="slide-058" data-part="2" data-cue="API-002 · The problem: the component owns the native element"><div class="kicker">Interview walkthrough</div><h2>API-002 · The problem: the component owns the native element</h2><ul><li>Worse, attributes on the host go to the wrong element. id and aria-label land on &lt;ui-input&gt;, which has no role and cannot take focus. &lt;label for=&quot;email&quot;&gt; points at the host, so clicking the label does nothing and the input has no accessible name. formControlName has no value accessor to bind to.</li></ul></section>
+<section id="slide-059" data-part="2" data-cue="API-002 · The alternative: put the library on the native element"><div class="kicker">Interview walkthrough</div><h2>API-002 · The alternative: put the library on the native element</h2><ul><li>Use an attribute selector, so the consumer writes the native element and the library enhances it:</li></ul></section>
+<section id="slide-060" data-part="2" data-cue="API-002 · Answer · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>API-002 · Answer · block 1 · page 1</h2><pre class="code" data-lang="ts">import { Directive, booleanAttribute, input } from '@angular/core';
+
+@Directive({
+  selector: 'input[uiInput], textarea[uiInput]',
+  host: {
+    class: 'ui-input',
+    '[class.ui-input--invalid]': 'invalid()',
+    '[attr.aria-invalid]': 'invalid() || null',
+  },
+})
+export class InputDirective {
+  readonly invalid = input(false, { transform: booleanAttribute });
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-061" data-part="2" data-cue="API-002 · Answer · block 2 · page 1"><div class="kicker">Interview walkthrough</div><h2>API-002 · Answer · block 2 · page 1</h2><pre class="code" data-lang="html">&lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;
+&lt;input uiInput id=&quot;email&quot; type=&quot;email&quot; autocomplete=&quot;email&quot; [formControl]=&quot;email&quot; /&gt;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-062" data-part="2" data-cue="API-002 · The alternative: put the library on the native element"><div class="kicker">Interview walkthrough</div><h2>API-002 · The alternative: put the library on the native element</h2><ul><li>Every native attribute, event and method now works, with no library code: autocomplete, inputmode, (blur), focus(), &lt;label for&gt;, aria-*.</li><li>Angular Forms' built-in value accessors apply to the native input, so formControl, formControlName and ngModel work too.</li><li>The library adds only what it owns: styling hooks and state.</li></ul></section>
+<section id="slide-063" data-part="2" data-cue="API-002 · The alternative: put the library on the native element"><div class="kicker">Interview walkthrough</div><h2>API-002 · The alternative: put the library on the native element</h2><ul><li>The same applies to buttons and links: button[uiButton], a[uiButton] keeps native semantics, type, disabled and href, and avoids the bugs in API-001.</li></ul></section>
+<section id="slide-064" data-part="2" data-cue="API-002 · Trade-offs"><div class="kicker">Interview walkthrough</div><h2>API-002 · Trade-offs</h2><ul><li>No surrounding markup. &lt;input&gt; is a void element: the directive cannot render a label, an icon or an error message around it.</li><li>Those belong to a container component, for example &lt;ui-form-field&gt; that projects a label, the input, a hint and an error, and connects their ids (it can find the directive with contentChild(InputDirective)).</li></ul></section>
+<section id="slide-065" data-part="2" data-cue="API-002 · Migration"><div class="kicker">Interview walkthrough</div><h2>API-002 · Migration</h2><ul><li>Replacing &lt;ui-input&gt; with &lt;input uiInput&gt; is a breaking change for every call site:</li></ul></section>
+<section id="slide-066" data-part="2" data-cue="API-002 · Migration · item 1"><div class="kicker">Interview walkthrough</div><h2>API-002 · Migration · item 1</h2><ul><li>1.</li><li>Minor: ship uiInput and &lt;ui-form-field&gt; alongside the old component, and mark &lt;ui-input&gt; deprecated in documentation, JSDoc (@deprecated, which editors show with a strike-through) and the changelog.</li></ul></section>
+<section id="slide-067" data-part="2" data-cue="API-002 · Migration · item 2"><div class="kicker">Interview walkthrough</div><h2>API-002 · Migration · item 2</h2><ul><li>2.</li><li>Migration: an ng update schematic that rewrites the common patterns, and a list of call sites it could not convert.</li></ul></section>
+<section id="slide-068" data-part="2" data-cue="API-002 · Migration · item 3"><div class="kicker">Interview walkthrough</div><h2>API-002 · Migration · item 3</h2><ul><li>3.</li><li>Next major: remove &lt;ui-input&gt;.</li><li>Freeze its feature requests in the meantime, so effort goes into the replacement.</li></ul></section>
+<section id="slide-069" data-part="2" data-cue="API-002 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>API-002 · Follow-up 1</h2><p class="question">How would `&lt;ui-form-field&gt;` give the input its `aria-describedby` without the consumer writing ids by hand?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-069-answer" data-part="2" data-cue="Let the form field and projected control communicate through a small injected co"><div class="kicker">Interview walkthrough</div><h2>API-002 · Follow-up 1 · Answer</h2><ul><li>Let the form field and projected control communicate through a small injected contract.</li><li>The field owns unique identifiers for helper and error text; the control directive merges them with any consumer-provided descriptions on the native element.</li><li>Register and unregister as content changes, and keep invalid and label state synchronized.</li></ul></section>
+<section id="slide-070" data-part="2" data-cue="API-002 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>API-002 · Follow-up 2</h2><p class="question">When is wrapping the native element still the better choice?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-070-answer" data-part="2" data-cue="Wrapping is appropriate for a genuinely composite widget with coordinated elemen"><div class="kicker">Interview walkthrough</div><h2>API-002 · Follow-up 2 · Answer</h2><ul><li>Wrapping is appropriate for a genuinely composite widget with coordinated elements, such as a date picker with a popup trigger or a control whose internal structure is intrinsic to its behavior.</li><li>It can also enforce a carefully documented layout contract.</li><li>The cost is forwarding native capabilities, focus, labels, and forms integration.</li></ul></section>
+<section id="slide-071" data-part="2" data-cue="API-002 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>API-002 · Follow-up 3</h2><p class="question">Could `hostDirectives` help share behaviour between `uiInput` and other controls?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-071-answer" data-part="2" data-cue="Host directives can compose reusable behavior statically and expose selected inp"><div class="kicker">Interview walkthrough</div><h2>API-002 · Follow-up 3 · Answer</h2><ul><li>Host directives can compose reusable behavior statically and expose selected inputs and outputs explicitly.</li><li>They can help share focus, disabled state, or other host-level logic across native controls.</li><li>They do not automatically forward arbitrary attributes to an internal input and do not replace the form-field relationship contract.</li></ul></section>
+<section id="slide-072" data-part="3" data-cue="API-003 · Scenario"><div class="kicker">Interview walkthrough</div><h2>API-003 · Scenario</h2><ul><li>We now review API-003: A card with an input for everything.</li><li>Inspect the consumer contract and identify the mechanism behind each reported defect.</li></ul></section>
+<section id="slide-073" data-part="3" data-cue="API-003 · Scenario"><div class="kicker">Interview walkthrough</div><h2>API-003 · Scenario</h2><ul><li>@acme/ui's card started with a title and a body.</li><li>A year later it looks like this, and the open requests include: &quot;make the title a link&quot;, &quot;two badges&quot;, &quot;a link inside the body&quot;, &quot;a menu instead of buttons&quot;, and &quot;our page needs an h2, not an h3&quot;.</li><li>Three teams have copied the card into their own code to get around it.</li></ul></section>
+<section id="slide-074" data-part="3" data-cue="API-003 · Scenario · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>API-003 · Scenario · block 1 · page 1</h2><pre class="code" data-lang="ts">import { Component, input } from '@angular/core';
+
+export interface CardAction {
+  label: string;
+  handler: () =&gt; void;
+}
+
+@Component({
+  selector: 'ui-card',
+  template: `
+    &lt;article class=&quot;ui-card&quot;&gt;
+      @if (image()) {
+        &lt;img class=&quot;ui-card__image&quot; [src]=&quot;image()&quot; /&gt;
+      }</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-075" data-part="3" data-cue="API-003 · Scenario · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>API-003 · Scenario · block 2 · page 2</h2><pre class="code" data-lang="ts">      &lt;div class=&quot;ui-card__header&quot;&gt;
+        @if (icon()) {
+          &lt;span class=&quot;ui-icon&quot;&gt;{{ icon() }}&lt;/span&gt;
+        }
+        &lt;h3 class=&quot;ui-card__title&quot;&gt;{{ title() }}&lt;/h3&gt;
+        @if (subtitle()) {
+          &lt;p class=&quot;ui-card__subtitle&quot;&gt;{{ subtitle() }}&lt;/p&gt;
+        }
+        @if (badge()) {
+          &lt;span class=&quot;ui-badge&quot;&gt;{{ badge() }}&lt;/span&gt;
+        }
+      &lt;/div&gt;
+      &lt;p class=&quot;ui-card__body&quot; [innerHTML]=&quot;body()&quot;&gt;&lt;/p&gt;
+      &lt;div class=&quot;ui-card__actions&quot;&gt;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-076" data-part="3" data-cue="API-003 · Scenario · block 3 · page 3"><div class="kicker">Interview walkthrough</div><h2>API-003 · Scenario · block 3 · page 3</h2><pre class="code" data-lang="ts">        @for (action of actions(); track action.label) {
+          &lt;button type=&quot;button&quot; (click)=&quot;action.handler()&quot;&gt;{{ action.label }}&lt;/button&gt;
+        }
+      &lt;/div&gt;
+    &lt;/article&gt;
+  `,
+})
+export class CardComponent {
+  readonly title = input.required&lt;string&gt;();
+  readonly subtitle = input&lt;string&gt;();
+  readonly icon = input&lt;string&gt;();
+  readonly image = input&lt;string&gt;();
+  readonly badge = input&lt;string&gt;();
+  readonly body = input('');</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-077" data-part="3" data-cue="API-003 · Scenario · block 4 · page 4"><div class="kicker">Interview walkthrough</div><h2>API-003 · Scenario · block 4 · page 4</h2><pre class="code" data-lang="ts">  readonly actions = input&lt;CardAction[]&gt;([]);
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-078" data-part="3" data-cue="API-003 · Interview question"><div class="kicker">Interview walkthrough</div><h2>API-003 · Interview question</h2><p class="question">What is wrong with this API, beyond the individual bugs? Redesign it, and plan the migration for the teams already using it.</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-079" data-part="3" data-cue="API-003 · 1. Configuration does not scale; composition does"><div class="kicker">Interview walkthrough</div><h2>API-003 · 1. Configuration does not scale; composition does</h2><ul><li>Each input describes one fixed piece of content.</li><li>Every new layout needs a new input, the inputs interact in ways nobody tested, and anything the inputs cannot express (a link title, a menu, two badges) forces teams to fork.</li><li>Forks are the worst outcome for a design system: they stop receiving fixes and drift visually.</li></ul></section>
+<section id="slide-080" data-part="3" data-cue="API-003 · 1. Configuration does not scale; composition does"><div class="kicker">Interview walkthrough</div><h2>API-003 · 1. Configuration does not scale; composition does</h2><ul><li>The card's real job is layout and styling of regions: media, header, body, actions.</li><li>What goes in each region belongs to the consumer.</li></ul></section>
+<section id="slide-081" data-part="3" data-cue="API-003 · 2. Individual bugs the configuration style caused"><div class="kicker">Interview walkthrough</div><h2>API-003 · 2. Individual bugs the configuration style caused</h2><ul><li>Fixed heading level. h3 is right on some pages and wrong on others.</li><li>Heading levels describe the page's outline; a reusable component cannot know it.</li><li>A wrong level breaks navigation by headings, which is how many screen-reader users skim a page.</li></ul></section>
+<section id="slide-082" data-part="3" data-cue="API-003 · Answer · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>API-003 · Answer · block 1 · page 1</h2><pre class="code" data-lang="ts">import { Component, Directive, computed, contentChild } from '@angular/core';
+
+@Directive({ selector: '[uiCardTitle]', host: { class: 'ui-card__title' } })
+export class CardTitleDirective {}
+
+@Directive({ selector: '[uiCardSubtitle]', host: { class: 'ui-card__subtitle' } })
+export class CardSubtitleDirective {}
+
+@Directive({ selector: '[uiCardMedia]', host: { class: 'ui-card__media' } })
+export class CardMediaDirective {}
+
+@Component({
+  selector: 'ui-card-actions',
+  host: { class: 'ui-card__actions' },</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-083" data-part="3" data-cue="API-003 · Answer · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>API-003 · Answer · block 2 · page 2</h2><pre class="code" data-lang="ts">  template: `&lt;ng-content /&gt;`,
+})
+export class CardActionsComponent {}
+
+@Component({
+  selector: 'ui-card',
+  host: { class: 'ui-card' },
+  template: `
+    &lt;ng-content select=&quot;[uiCardMedia]&quot; /&gt;
+    @if (hasHeader()) {
+      &lt;div class=&quot;ui-card__header&quot;&gt;
+        &lt;ng-content select=&quot;[uiCardTitle]&quot; /&gt;
+        &lt;ng-content select=&quot;[uiCardSubtitle]&quot; /&gt;
+      &lt;/div&gt;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-084" data-part="3" data-cue="API-003 · Answer · block 3 · page 3"><div class="kicker">Interview walkthrough</div><h2>API-003 · Answer · block 3 · page 3</h2><pre class="code" data-lang="ts">    }
+    &lt;div class=&quot;ui-card__body&quot;&gt;
+      &lt;ng-content /&gt;
+    &lt;/div&gt;
+    &lt;ng-content select=&quot;ui-card-actions&quot; /&gt;
+  `,
+})
+export class CardComponent {
+  private readonly title = contentChild(CardTitleDirective);
+  protected readonly hasHeader = computed(() =&gt; this.title() !== undefined);
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-085" data-part="3" data-cue="API-003 · Answer · block 4 · page 1"><div class="kicker">Interview walkthrough</div><h2>API-003 · Answer · block 4 · page 1</h2><pre class="code" data-lang="html">&lt;ui-card&gt;
+  &lt;img uiCardMedia src=&quot;/img/order.jpg&quot; alt=&quot;&quot; /&gt;
+  &lt;h2 uiCardTitle&gt;&lt;a href=&quot;/orders/42&quot;&gt;Order #42&lt;/a&gt;&lt;/h2&gt;
+  &lt;p uiCardSubtitle&gt;Shipped 3 June&lt;/p&gt;
+  &lt;p&gt;Two items. &lt;a href=&quot;/help/returns&quot;&gt;Returns policy&lt;/a&gt;&lt;/p&gt;
+  &lt;ui-card-actions&gt;
+    &lt;button uiButton type=&quot;button&quot;&gt;Track&lt;/button&gt;
+    &lt;ui-menu-button label=&quot;More actions&quot; /&gt;
+  &lt;/ui-card-actions&gt;
+&lt;/ui-card&gt;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-086" data-part="3" data-cue="API-003 · Redesigned API"><div class="kicker">Interview walkthrough</div><h2>API-003 · Redesigned API</h2><ul><li>Every request is now satisfied without a library change: the consumer picks the heading level, the link, the badge count and the action controls, and writes the alt text.</li></ul></section>
+<section id="slide-087" data-part="3" data-cue="API-003 · Redesigned API"><div class="kicker">Interview walkthrough</div><h2>API-003 · Redesigned API</h2><ul><li>The marker directives are more than selectors: they apply the styling class, they appear in autocomplete and documentation, and the card can query them (as hasHeader does) to avoid rendering empty wrappers.</li></ul></section>
+<section id="slide-088" data-part="3" data-cue="API-003 · Trade-offs to state"><div class="kicker">Interview walkthrough</div><h2>API-003 · Trade-offs to state</h2><ul><li>Less enforced consistency.</li><li>Consumers can now put anything in a region.</li><li>Mitigate with marker directives, good documentation examples, and visual review, rather than by taking control back.</li></ul></section>
+<section id="slide-089" data-part="3" data-cue="API-003 · Migration"><div class="kicker">Interview walkthrough</div><h2>API-003 · Migration</h2><ul><li>Removing seven inputs is breaking.</li><li>Ship the slot API in a minor release and keep the old inputs working (the template can render the legacy markup when title() is set and project otherwise).</li><li>Mark the inputs @deprecated with a pointer to the slot equivalent, provide an ng update schematic for the simple cases, and remove them in the next major.</li></ul></section>
+<section id="slide-090" data-part="3" data-cue="API-003 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>API-003 · Follow-up 1</h2><p class="question">When would you still choose a configuration (data-driven) API, for example for a data table's columns?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-090-answer" data-part="3" data-cue="Choose data configuration for uniform repeated structures where a schema is usef"><div class="kicker">Interview walkthrough</div><h2>API-003 · Follow-up 1 · Answer</h2><ul><li>Choose data configuration for uniform repeated structures where a schema is useful, such as column identifiers, sorting rules, widths, and value accessors.</li><li>Use templates or projection for rich content that varies structurally.</li><li>A table can combine typed column metadata with cell templates.</li></ul></section>
+<section id="slide-091" data-part="3" data-cue="API-003 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>API-003 · Follow-up 2</h2><p class="question">How would you make the entire card clickable while keeping the title link and action buttons accessible?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-091-answer" data-part="3" data-cue="Use a real title link as the primary navigation action and separate action butto"><div class="kicker">Interview walkthrough</div><h2>API-003 · Follow-up 2 · Answer</h2><ul><li>Use a real title link as the primary navigation action and separate action buttons.</li><li>A stretched-link technique can enlarge the title link's hit area while carefully preserving interactive controls above it.</li><li>Avoid nesting buttons or links inside another interactive element and avoid a container click handler that hijacks text selection or child actions.</li></ul></section>
+<section id="slide-092" data-part="3" data-cue="API-003 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>API-003 · Follow-up 3</h2><p class="question">How do you document slots so consumers discover them in their editor?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-092-answer" data-part="3" data-cue="Export named slot directives with clear selectors and JSDoc, include compile-che"><div class="kicker">Interview walkthrough</div><h2>API-003 · Follow-up 3 · Answer</h2><ul><li>Export named slot directives with clear selectors and JSDoc, include compile-checked examples, and describe which slots are optional or repeatable.</li><li>Editors can discover directives and their inputs more reliably than an undocumented attribute convention.</li><li>Document heading responsibility, image alternatives, empty slots, and layout behavior.</li></ul></section>
+<section id="slide-093" data-part="4" data-cue="API-004 · Scenario"><div class="kicker">Interview walkthrough</div><h2>API-004 · Scenario</h2><ul><li>We now review API-004: A checkbox that makes every form dirty.</li><li>Inspect the consumer contract and identify the mechanism behind each reported defect.</li></ul></section>
+<section id="slide-094" data-part="4" data-cue="API-004 · Scenario"><div class="kicker">Interview walkthrough</div><h2>API-004 · Scenario</h2><ul><li>@acme/ui's checkbox supports reactive forms.</li><li>Product teams report four bugs:</li></ul></section>
+<section id="slide-095" data-part="4" data-cue="API-004 · Scenario · item 1"><div class="kicker">Interview walkthrough</div><h2>API-004 · Scenario · item 1</h2><ul><li>1. &quot;After form.reset(), our 'You have unsaved changes' banner appears.&quot;</li></ul></section>
+<section id="slide-096" data-part="4" data-cue="API-004 · Scenario · item 2"><div class="kicker">Interview walkthrough</div><h2>API-004 · Scenario · item 2</h2><ul><li>2. &quot;form.patchValue({ terms: true }) doesn't tick the box until something else happens.&quot;</li></ul></section>
+<section id="slide-097" data-part="4" data-cue="API-004 · Scenario · item 3"><div class="kicker">Interview walkthrough</div><h2>API-004 · Scenario · item 3</h2><ul><li>3. &quot;control.disable() does nothing.&quot;</li></ul></section>
+<section id="slide-098" data-part="4" data-cue="API-004 · Scenario · item 4"><div class="kicker">Interview walkthrough</div><h2>API-004 · Scenario · item 4</h2><ul><li>4. &quot;Our 'show errors after the user leaves the field' logic never shows errors for checkboxes.&quot;</li></ul></section>
+<section id="slide-099" data-part="4" data-cue="API-004 · Scenario · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>API-004 · Scenario · block 1 · page 1</h2><pre class="code" data-lang="ts">import { ChangeDetectionStrategy, Component, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+
+@Component({
+  selector: 'ui-checkbox',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() =&gt; CheckboxComponent), multi: true },
+  ],
+  template: `
+    &lt;label class=&quot;ui-checkbox&quot;&gt;
+      &lt;input type=&quot;checkbox&quot; [checked]=&quot;checked&quot; (change)=&quot;toggle()&quot; /&gt;
+      &lt;ng-content /&gt;
+    &lt;/label&gt;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-100" data-part="4" data-cue="API-004 · Scenario · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>API-004 · Scenario · block 2 · page 2</h2><pre class="code" data-lang="ts">  `,
+})
+export class CheckboxComponent implements ControlValueAccessor {
+  checked = false;
+  private onChange: (value: boolean) =&gt; void = () =&gt; {};
+
+  writeValue(value: boolean): void {
+    this.checked = value;
+    this.onChange(value);
+  }
+
+  registerOnChange(fn: (value: boolean) =&gt; void): void {
+    this.onChange = fn;
+  }</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-101" data-part="4" data-cue="API-004 · Scenario · block 3 · page 3"><div class="kicker">Interview walkthrough</div><h2>API-004 · Scenario · block 3 · page 3</h2><pre class="code" data-lang="ts">
+  registerOnTouched(): void {}
+
+  toggle(): void {
+    this.checked = !this.checked;
+    this.onChange(this.checked);
+  }
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-102" data-part="4" data-cue="API-004 · Interview question"><div class="kicker">Interview walkthrough</div><h2>API-004 · Interview question</h2><p class="question">Match each bug to its cause and fix the component. Explain the contract between Angular Forms and a `ControlValueAccessor`: which direction does each method carry data?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-103" data-part="4" data-cue="API-004 · The contract · comparison 1"><div class="kicker">Interview walkthrough</div><h2>API-004 · The contract · comparison 1</h2><ul><li>Method: writeValue(value).</li><li>Direction: Model to view.</li><li>Meaning: &quot;The form's value changed; display it.&quot; Must not report back..</li></ul></section>
+<section id="slide-104" data-part="4" data-cue="API-004 · The contract · comparison 2"><div class="kicker">Interview walkthrough</div><h2>API-004 · The contract · comparison 2</h2><ul><li>Method: registerOnChange(fn).</li><li>Direction: View to model.</li><li>Meaning: Call fn(value) only when the user changes the value..</li></ul></section>
+<section id="slide-105" data-part="4" data-cue="API-004 · The contract · comparison 3"><div class="kicker">Interview walkthrough</div><h2>API-004 · The contract · comparison 3</h2><ul><li>Method: registerOnTouched(fn).</li><li>Direction: View to model.</li><li>Meaning: Call fn() when the user has interacted and left (usually on blur)..</li></ul></section>
+<section id="slide-106" data-part="4" data-cue="API-004 · The contract · comparison 4"><div class="kicker">Interview walkthrough</div><h2>API-004 · The contract · comparison 4</h2><ul><li>Method: setDisabledState(disabled).</li><li>Direction: Model to view.</li><li>Meaning: Reflect the control's disabled state..</li></ul></section>
+<section id="slide-107" data-part="4" data-cue="API-004 · Bug 1: `writeValue` calls `onChange`"><div class="kicker">Interview walkthrough</div><h2>API-004 · Bug 1: writeValue calls onChange</h2><ul><li>reset() writes the value to the view, and the component reports it straight back as if the user had changed it.</li><li>The forms API treats a view change as user input and marks the control dirty, so the form is dirty immediately after a reset.</li><li>It can also cause loops with code that reacts to value changes.</li></ul></section>
+<section id="slide-108" data-part="4" data-cue="API-004 · Bug 1: `writeValue` calls `onChange`"><div class="kicker">Interview walkthrough</div><h2>API-004 · Bug 1: writeValue calls onChange</h2><ul><li>Fix: writeValue only updates what is displayed.</li></ul></section>
+<section id="slide-109" data-part="4" data-cue="API-004 · Bug 2: `OnPush` and a plain field"><div class="kicker">Interview walkthrough</div><h2>API-004 · Bug 2: OnPush and a plain field</h2><ul><li>writeValue is called by the forms API, outside any template event of this component.</li><li>Under OnPush, setting a plain field does not mark the component for checking, so the box stays as it was until something else triggers a check.</li><li>In a zoneless application it may never update.</li></ul></section>
+<section id="slide-110" data-part="4" data-cue="API-004 · Bug 2: `OnPush` and a plain field"><div class="kicker">Interview walkthrough</div><h2>API-004 · Bug 2: OnPush and a plain field</h2><ul><li>Fix: hold the state in a signal.</li><li>Setting a signal read by the template schedules the update.</li></ul></section>
+<section id="slide-111" data-part="4" data-cue="API-004 · Bug 3: no `setDisabledState`"><div class="kicker">Interview walkthrough</div><h2>API-004 · Bug 3: no setDisabledState</h2><ul><li>Angular Forms calls setDisabledState whenever the control's disabled state changes (and, since Angular 15, also on initialisation).</li><li>The method is optional in the interface, so leaving it out compiles, and disabling does nothing.</li></ul></section>
+<section id="slide-112" data-part="4" data-cue="API-004 · Bug 4: touched is never reported"><div class="kicker">Interview walkthrough</div><h2>API-004 · Bug 4: touched is never reported</h2><ul><li>registerOnTouched throws the callback away, so the control never becomes touched.</li><li>Any &quot;show errors after the user leaves the field&quot; rule never fires.</li></ul></section>
+<section id="slide-113" data-part="4" data-cue="API-004 · Bug 4: touched is never reported"><div class="kicker">Interview walkthrough</div><h2>API-004 · Bug 4: touched is never reported</h2><ul><li>Fix: keep the callback and call it on blur.</li></ul></section>
+<section id="slide-114" data-part="4" data-cue="API-004 · Also: `reset()` writes `null`"><div class="kicker">Interview walkthrough</div><h2>API-004 · Also: reset() writes null</h2><ul><li>form.reset() with no value writes null, which the boolean signature hides. checked = null happens to render as unticked, but anything comparing with === false breaks.</li><li>Accept boolean | null and coerce.</li></ul></section>
+<section id="slide-115" data-part="4" data-cue="API-004 · Answer · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>API-004 · Answer · block 1 · page 1</h2><pre class="code" data-lang="ts">import { ChangeDetectionStrategy, Component, forwardRef, signal } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+
+@Component({
+  selector: 'ui-checkbox',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() =&gt; CheckboxComponent), multi: true },
+  ],
+  template: `
+    &lt;label class=&quot;ui-checkbox&quot;&gt;
+      &lt;input
+        type=&quot;checkbox&quot;
+        [checked]=&quot;checked()&quot;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-116" data-part="4" data-cue="API-004 · Answer · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>API-004 · Answer · block 2 · page 2</h2><pre class="code" data-lang="ts">        [disabled]=&quot;disabled()&quot;
+        (change)=&quot;onUserChange($event)&quot;
+        (blur)=&quot;onTouched()&quot; /&gt;
+      &lt;ng-content /&gt;
+    &lt;/label&gt;
+  `,
+})
+export class CheckboxComponent implements ControlValueAccessor {
+  protected readonly checked = signal(false);
+  protected readonly disabled = signal(false);
+  private onChange: (value: boolean) =&gt; void = () =&gt; {};
+  protected onTouched: () =&gt; void = () =&gt; {};
+
+  writeValue(value: boolean | null): void {</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-117" data-part="4" data-cue="API-004 · Answer · block 3 · page 3"><div class="kicker">Interview walkthrough</div><h2>API-004 · Answer · block 3 · page 3</h2><pre class="code" data-lang="ts">    this.checked.set(value === true);
+  }
+
+  registerOnChange(fn: (value: boolean) =&gt; void): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () =&gt; void): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled.set(isDisabled);
+  }</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-118" data-part="4" data-cue="API-004 · Answer · block 4 · page 4"><div class="kicker">Interview walkthrough</div><h2>API-004 · Answer · block 4 · page 4</h2><pre class="code" data-lang="ts">
+  protected onUserChange(event: Event): void {
+    const value = (event.target as HTMLInputElement).checked;
+    this.checked.set(value);
+    this.onChange(value);
+  }
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-119" data-part="4" data-cue="API-004 · Fixed version"><div class="kicker">Interview walkthrough</div><h2>API-004 · Fixed version</h2><ul><li>The value comes from the native input's checked property rather than toggling the stored value, so the component can never disagree with what the user sees.</li></ul></section>
+<section id="slide-120" data-part="4" data-cue="API-004 · What a strong candidate also mentions"><div class="kicker">Interview walkthrough</div><h2>API-004 · What a strong candidate also mentions</h2><ul><li>Use outside forms.</li><li>Some teams do not use Angular Forms.</li><li>Offering a checked model() as well is useful, but then forms and the model must write the same signal, and the documentation must say &quot;use one or the other on a given instance&quot;.</li></ul></section>
+<section id="slide-121" data-part="4" data-cue="API-004 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>API-004 · Follow-up 1</h2><p class="question">Why does `onChange` during `writeValue` mark the control dirty? Which flag does the forms API set?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-121-answer" data-part="4" data-cue="Forms registers a view-to-model callback that marks the control pending dirty fo"><div class="kicker">Interview walkthrough</div><h2>API-004 · Follow-up 1 · Answer</h2><ul><li>Forms registers a view-to-model callback that marks the control pending dirty for a user change, then commits dirty state according to the update policy.</li><li>Calling that callback during writeValue falsely takes the user-change path during a programmatic write.</li><li>With updateOn blur, the pending state may commit later, so timing differs. writeValue should update only the view.</li></ul></section>
+<section id="slide-122" data-part="4" data-cue="API-004 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>API-004 · Follow-up 2</h2><p class="question">How would you build a `ui-radio-group` that works with `formControlName` on the group?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-122-answer" data-part="4" data-cue="Put the value accessor on the group so it represents one selected value. Individ"><div class="kicker">Interview walkthrough</div><h2>API-004 · Follow-up 2 · Answer</h2><ul><li>Put the value accessor on the group so it represents one selected value.</li><li>Individual radio items report user selection to the group, while the group handles writeValue, onChange, touched behavior, and disabled propagation.</li><li>Use native radio semantics or a complete radiogroup keyboard pattern, unique grouping names, and an accessible group label.</li></ul></section>
+<section id="slide-123" data-part="4" data-cue="API-004 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>API-004 · Follow-up 3</h2><p class="question">What changes if the application uses Angular's signal-based forms instead of reactive forms?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-123-answer" data-part="4" data-cue="Signal forms use their own custom-control interfaces rather than assuming Contro"><div class="kicker">Interview walkthrough</div><h2>API-004 · Follow-up 3 · Answer</h2><ul><li>Signal forms use their own custom-control interfaces rather than assuming ControlValueAccessor is the adapter.</li><li>For a checkbox-like control, inspect the checked-control interface and field binding for the supported Angular version; value controls use the value-control interface.</li></ul></section>
+<section id="slide-124" data-part="5" data-cue="Final review checklist"><div class="kicker">Recap and clarifications</div><h2>Final review checklist</h2><ul><li>Review the lesson by answering each main question and follow-up aloud.</li><li>For Angular Component APIs: Native Semantics and Consumer Contracts, connect each reported symptom to its mechanism, explain the corrected public contract, and name a regression check that exercises the consumer path.</li><li>State compatibility and accessibility limitations clearly.</li></ul></section>
+<script src="../assets/slides.js"></script></body></html>

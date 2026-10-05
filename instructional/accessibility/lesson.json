@@ -1,0 +1,44 @@
+{
+  "topic": "accessibility",
+  "title": "Accessible Angular Components: Names, Focus, and Interaction",
+  "goals": "Build named keyboard-operable controls, dialogs, tabs, form fields, notifications, and a single-select listbox with explicit focus and selection behavior.",
+  "sources": [
+    {
+      "id": "A11Y-001",
+      "title": "An icon button that keyboard and screen-reader users cannot use",
+      "file": "a11y-001-an-icon-button-nobody-can-use.md",
+      "followups": 3
+    },
+    {
+      "id": "A11Y-002",
+      "title": "A modal dialog that is not modal",
+      "file": "a11y-002-a-modal-that-is-not-modal.md",
+      "followups": 3
+    },
+    {
+      "id": "A11Y-003",
+      "title": "Tabs that only work with a mouse",
+      "file": "a11y-003-tabs-without-the-tabs-pattern.md",
+      "followups": 3
+    },
+    {
+      "id": "A11Y-004",
+      "title": "A form field where nothing is connected",
+      "file": "a11y-004-a-form-field-with-nothing-connected.md",
+      "followups": 3
+    },
+    {
+      "id": "A11Y-005",
+      "title": "Toasts that vanish before anyone can use them",
+      "file": "a11y-005-toasts-nobody-hears.md",
+      "followups": 3
+    },
+    {
+      "id": "A11Y-006",
+      "title": "Live coding: build an accessible listbox",
+      "file": "a11y-006-live-coding-accessible-listbox.md",
+      "followups": 3
+    }
+  ],
+  "pauses": 24
+}

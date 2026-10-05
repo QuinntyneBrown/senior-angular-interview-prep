@@ -1,0 +1,1002 @@
+[
+  {
+    "id": "slide-000",
+    "title": "Design from consumer tasks",
+    "prose": "Welcome to the component API lesson. Our four questions concern a button that saves twice, an input wrapper that hides native capabilities, a card with too much configuration, and a checkbox that violates the forms contract. They share a root concern: a shared component should make the supported task clear and preserve the behavior consumers reasonably expect.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-001",
+    "title": "Design from consumer tasks · 2",
+    "prose": "Begin with a representative consumer template. What does the team bind, which events do they handle, and where does state live? Then examine the actual host element and any internal native element. A label, a disabled attribute, or an identifier on a wrapper does not automatically reach the internal control. An API that appears convenient can force dozens of forwarding inputs as soon as another team needs a native capability.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-002",
+    "title": "Design from consumer tasks · 3",
+    "prose": "A senior answer considers the interface as well as individual bugs. Explain the smallest useful contract, show how to use it, identify unsupported combinations, and describe the migration from today's behavior. Compatibility includes native events, form state, projected content, styling hooks, and test APIs, not just exported TypeScript names.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-003",
+    "title": "Inputs express allowed states",
+    "prose": "Use input types that express supported values. A string input for button kind accepts values the stylesheet cannot represent. A union of primary, secondary, and danger tells the compiler and editor what is supported. Defaults should be intentional, and required inputs should be reserved for values without which the component cannot function meaningfully.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-004",
+    "title": "Inputs express allowed states · 2",
+    "prose": "Boolean attributes need careful handling. In HTML, disabled with no value expresses presence. A plain string read as an empty value is falsy in JavaScript, which can make an apparently disabled wrapper remain clickable. Angular's booleanAttribute transform gives predictable attribute-style coercion. Explain which values it accepts and test both static attributes and bound booleans.",
+    "code": "type ButtonKind = 'primary' | 'secondary' | 'danger';\nreadonly kind = input<ButtonKind>('primary');\nreadonly disabled = input(false, { transform: booleanAttribute });\nreadonly type = input<'button' | 'submit' | 'reset'>('button');\n// Teaching excerpt; imports are in the complete example.",
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-005",
+    "title": "Inputs express allowed states · 3",
+    "prose": "Inputs are data coming from the consumer. Avoid silently copying them into an unrelated local field that only initializes once. If the value is derived, use a derivation. If the child commits local state, a model can express a two-way contract. If the parent must approve a proposed change, keep a controlled input and emit a request rather than committing first. The signals lesson develops that distinction in depth.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-006",
+    "title": "Native events and component outputs",
+    "prose": "A native click bubbles from an internal button through the component host. If a component also emits an output called click, a consumer can receive an unexpected second notification. Before inventing an event, ask whether the native event already expresses the action. Ordinary button activation usually needs no custom click output.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-007",
+    "title": "Native events and component outputs · 2",
+    "prose": "Reserve component outputs for domain transitions that are not already represented by native events. A selected value change or a dismissal request can be useful. Avoid names that collide with native events such as input, change, focus, blur, or keydown unless the component intentionally documents that contract and its interaction with bubbling. A lint rule can enforce the library's event naming policy.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-008",
+    "title": "Native events and component outputs · 3",
+    "prose": "Do not distinguish keyboard and pointer activation by guessing from an event detail without considering assistive technology. Consumers may legitimately need a native MouseEvent or KeyboardEvent for specialized behavior, but business logic should ordinarily respond to activation independently of the device. Keep telemetry requirements separate from whether the action succeeds. Test one activation produces one consumer action, and test disabled behavior through the real native control.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-009",
+    "title": "The native host can be the API",
+    "prose": "An attribute directive on a native input can style and enhance it while retaining autocomplete, inputmode, maxlength, name, id, validation, browser autofill, labels, and forms integration. Consumers do not need a wrapper to forward every property. A component with an attribute selector can also enhance a native element when a template is needed.",
+    "code": null,
+    "language": "html",
+    "part": 0
+  },
+  {
+    "id": "slide-010",
+    "title": "The native host can be the API · 2",
+    "prose": "A wrapper can still be appropriate for a genuinely composite control, an overlay-based picker, or a widget whose focusable element needs coordinated internal structure. The trade-off should be explicit. If the wrapper hides the native element, it needs a clear forwarding and focus contract. A request for twenty-three new inputs often signals that the abstraction boundary is in the wrong place rather than that twenty-three more inputs are needed.",
+    "code": "<label for=\"email\">Email</label>\n<input uiInput id=\"email\" type=\"email\"\n       autocomplete=\"email\" inputmode=\"email\"\n       maxlength=\"120\" [formControl]=\"email\">\n<!-- Native capabilities remain on the actual input. -->",
+    "language": "html",
+    "part": 0
+  },
+  {
+    "id": "slide-011",
+    "title": "The native host can be the API · 3",
+    "prose": "Shared behavior can be factored through directives and the directive composition API. Inputs and outputs from host directives are exposed explicitly, and composition is established statically. This helps reuse focus or disabled logic, but it cannot automatically forward every arbitrary native attribute into a hidden descendant. Choose the host element first, then use composition to share behavior at that boundary.",
+    "code": null,
+    "language": "html",
+    "part": 0
+  },
+  {
+    "id": "slide-012",
+    "title": "Composition for rich content",
+    "prose": "A card with separate inputs for every badge, action, heading, image, and body style accumulates combinations the library must maintain. Content projection lets consumers supply real HTML and application components within documented slots. The library owns layout and style while the application owns content, heading level, links, and business actions.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-013",
+    "title": "Composition for rich content · 2",
+    "prose": "Projection preserves Angular bindings and native semantics better than passing an HTML string. Angular sanitization helps protect unsafe bindings, but sanitization does not turn arbitrary innerHTML into a well-designed content API. A body string cannot conveniently carry application directives or typed interactions. Make image alternatives and headings explicit consumer responsibilities when the content is projected.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-014",
+    "title": "Composition for rich content · 3",
+    "prose": "Configuration remains valuable for uniform repeated data. A table's column definitions are naturally data driven, and a menu can often be generated from a typed item model. Offer template customization at the points where the structure truly varies. Avoid replacing every configuration object with dozens of unstructured slots; explain the consistency versus flexibility trade-off.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-015",
+    "title": "Forms have two data directions",
+    "prose": "A ControlValueAccessor adapts a custom control to Angular Forms. The forms model calls writeValue to update the view. The component calls the registered onChange callback after a user change to update the forms model. These are opposite directions. Calling onChange from writeValue creates a feedback path and can mark a programmatic reset as a user edit.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-016",
+    "title": "Forms have two data directions · 2",
+    "prose": "The registered onTouched callback reports the appropriate touch interaction, commonly blur for a single input. The disabled-state hook must update the actual interactive element. Signals or markForCheck make model-to-view updates observable under OnPush and zoneless change detection. Normalize null when reset can supply it, and document whether a checkbox supports an indeterminate state separately from its value.",
+    "code": "writeValue(value: boolean | null): void {\n  this.checked.set(value ?? false);\n}\nregisterOnChange(fn: (value: boolean) => void): void {\n  this.onChange = fn;\n}\n// User path only:\nonUserChange(value: boolean): void {\n  this.checked.set(value);\n  this.onChange(value);\n}",
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-017",
+    "title": "Forms have two data directions · 3",
+    "prose": "Test through a real FormControl host. A programmatic value write should update the view while the form stays pristine. A user change should update the value and dirty state. Blur should make it touched. Disabling the control should prevent user interaction. These tests verify the contract; a test that only invokes toggle on the component misses the connection to the forms engine.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-018",
+    "title": "Signal forms are a separate integration contract",
+    "prose": "Reactive forms use ControlValueAccessor. Signal-based forms have their own custom-control interfaces and bindings. Do not assume that a value accessor automatically implements every signal-forms capability. Check the API for the supported Angular version and choose the integration explicitly.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-019",
+    "title": "Signal forms are a separate integration contract · 2",
+    "prose": "For a value control, the signal-forms interface exposes a writable model value with supported state inputs. Checkbox-like controls use the corresponding checked control contract. The form field binding coordinates the form model with that control. Disabled, readonly, touched, validation, and accessibility state need to remain coherent. If the library supports both forms systems, document and test each integration rather than forcing them to write the same state through two competing paths.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-020",
+    "title": "Signal forms are a separate integration contract · 3",
+    "prose": "Version support matters because these interfaces can differ across Angular releases. Our complete examples use the installed framework version. A library claiming support for older majors must test its public interfaces against those majors. This is a compatibility claim, not something a successful build on one version can prove.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-021",
+    "title": "Migrate with examples and compatibility tests",
+    "prose": "Removing an output can change what an existing consumer receives. Adding a union can reject values that compiled yesterday. Moving a wrapper to a native attribute selector changes the template. These improvements need a release and migration strategy. Inventory current usage, publish the preferred API, retain compatibility where practical, and give teams a clear removal window.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-022",
+    "title": "Migrate with examples and compatibility tests · 2",
+    "prose": "Document the consumer-facing form in examples that compile. Show native events, labels, forms binding, projected slots, and disabled behavior. A component harness should expose meaningful tasks instead of internal classes so a markup refactor does not break every product's tests. Treat that harness as a supported API with its own compatibility obligations.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-023",
+    "title": "Migrate with examples and compatibility tests · 3",
+    "prose": "During the questions, trace a reported bug from the consumer template to the actual element or callback. Identify whether the problem is coercion, event duplication, hidden capabilities, excessive configuration, or reversed data flow. Then propose a correction and a test that would have failed before it. This makes the answer reviewable rather than a list of preferred patterns.",
+    "code": null,
+    "language": "ts",
+    "part": 0
+  },
+  {
+    "id": "slide-024",
+    "title": "API-001 · Scenario",
+    "prose": "We now review API-001: A button that saves twice and ignores disabled. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-025",
+    "title": "API-001 · Scenario",
+    "prose": "Two bug reports against `@acme/ui`'s button:",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-026",
+    "title": "API-001 · Scenario",
+    "prose": "\"Every click on Save sends two requests.\" - \"`<ui-button disabled>` is not disabled.\" (from a team whose application does not use strict template type checking)",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-027",
+    "title": "API-001 · Scenario",
+    "prose": "A third team says a typo in `kind` shipped to production unnoticed.",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-028",
+    "title": "API-001 · Scenario · block 1 · page 1",
+    "prose": "This is the original code, part 1 of 2. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+    "code": "import { Component, input, output } from '@angular/core';\n\n@Component({\n  selector: 'ui-button',\n  template: `\n    <button\n      type=\"button\"\n      [class]=\"'ui-button ui-button--' + kind()\"\n      [disabled]=\"disabled()\"\n      (click)=\"click.emit($event)\">\n      <ng-content />\n    </button>\n  `,\n})",
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-029",
+    "title": "API-001 · Scenario · block 2 · page 2",
+    "prose": "This is the original code, part 2 of 2. Focus on ButtonComponent, kind, disabled, click. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+    "code": "export class ButtonComponent {\n  readonly kind = input('primary');\n  readonly disabled = input(false);\n  readonly click = output<MouseEvent>();\n}",
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-030",
+    "title": "API-001 · Scenario · block 3 · page 1",
+    "prose": "This is the original code, part 1 of 1. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+    "code": "<ui-button kind=\"primay\" (click)=\"save()\">Save</ui-button>",
+    "language": "html",
+    "part": 1
+  },
+  {
+    "id": "slide-031",
+    "title": "API-001 · Interview question",
+    "prose": "**Interviewer:** Explain each report, and fix the component's API. For each change, say whether existing consumers would notice.\n\n[pause 5s]",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-032",
+    "title": "API-001 · 1. Saving twice: an output named after a native event",
+    "prose": "`(click)` on `<ui-button>` subscribes to both the component's `click` output and the native `click` DOM event on the host element. The inner `<button>`'s native click bubbles up to the host, so `save()` runs once for the bubbled DOM event and once for the output.",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-033",
+    "title": "API-001 · 1. Saving twice: an output named after a native event",
+    "prose": "It gets worse: a click on any part of the host outside the inner button (padding, a gap) fires the native event even when the button is disabled.",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-034",
+    "title": "API-001 · 1. Saving twice: an output named after a native event",
+    "prose": "Fix: never name an output after a native DOM event. Here the output is not needed at all: native `click` events from the inner `<button>` already bubble to the host, and a disabled `<button>` does not dispatch click events, so `(click)` on `<ui-button>` just works. If a custom event is needed, give it a distinct name (`pressed`).",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-035",
+    "title": "API-001 · 2. `disabled` with no value is falsy",
+    "prose": "For a static attribute with no value, Angular passes the empty string `''` to the input. `''` is falsy, so `[disabled]=\"disabled()\"` leaves the button enabled. Applications with strict template checking get a compile error instead (a string is not a boolean), which is better, but HTML-style boolean attributes should simply work.",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-036",
+    "title": "API-001 · 2. `disabled` with no value is falsy",
+    "prose": "Fix: `input(false, { transform: booleanAttribute })`, which maps `''`, `'true'` and `true` to `true`, and `'false'`, `false`, `null` and `undefined` to `false`. `numberAttribute` does the same for numeric inputs.",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-037",
+    "title": "API-001 · 3. `kind` accepts any string",
+    "prose": "`input('primary')` infers `string`. `\"primay\"` compiles, produces the class `ui-button--primay`, and renders an unstyled button.",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-038",
+    "title": "API-001 · 3. `kind` accepts any string",
+    "prose": "Fix: a union type, exported so consumers can use it in their own code:",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-039",
+    "title": "API-001 · Answer · block 1 · page 1",
+    "prose": "This is the answer code, part 1 of 1. Focus on ButtonKind, kind. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+    "code": "export type ButtonKind = 'primary' | 'secondary' | 'danger';\nreadonly kind = input<ButtonKind>('primary');",
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-040",
+    "title": "API-001 · 4. Consumers cannot choose `type`",
+    "prose": "`type=\"button\"` is hard-coded, so `<ui-button>` can never submit a form. Add a `type` input that defaults to `'button'`. (API-002 looks at a design that avoids wrapping the native element.)",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-041",
+    "title": "API-001 · Answer · block 2 · page 1",
+    "prose": "This is the answer code, part 1 of 2. Focus on ButtonKind, ButtonType. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+    "code": "import { Component, booleanAttribute, input } from '@angular/core';\n\nexport type ButtonKind = 'primary' | 'secondary' | 'danger';\nexport type ButtonType = 'button' | 'submit' | 'reset';\n\n@Component({\n  selector: 'ui-button',\n  styles: `:host { display: inline-block; }`,\n  template: `\n    <button\n      class=\"ui-button\"\n      [class]=\"'ui-button--' + kind()\"\n      [type]=\"type()\"\n      [disabled]=\"disabled()\">",
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-042",
+    "title": "API-001 · Answer · block 3 · page 2",
+    "prose": "This is the answer code, part 2 of 2. Focus on ButtonComponent, kind, type, disabled. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+    "code": "      <ng-content />\n    </button>\n  `,\n})\nexport class ButtonComponent {\n  readonly kind = input<ButtonKind>('primary');\n  readonly type = input<ButtonType>('button');\n  readonly disabled = input(false, { transform: booleanAttribute });\n}",
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-043",
+    "title": "API-001 · Fixed version",
+    "prose": "Combining a static `class` with a `[class]` binding is safe: Angular merges them.",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-044",
+    "title": "API-001 · Will consumers notice? · comparison 1",
+    "prose": "Change: Removing the `click` output. Effect on existing consumers: `(click)` keeps working, once. Anyone who called `.click.emit()` on the component directly breaks; that was never documented..",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-045",
+    "title": "API-001 · Will consumers notice? · comparison 2",
+    "prose": "Change: `booleanAttribute` on `disabled`. Effect on existing consumers: Widens accepted values. Non-breaking..",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-046",
+    "title": "API-001 · Will consumers notice? · comparison 3",
+    "prose": "Change: `kind` narrowed to a union. Effect on existing consumers: Technically breaking: call sites passing other strings stop compiling. Every such call site was already a bug, but it is still a compile failure on upgrade, so call it out in the changelog, or ship it in a major..",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-047",
+    "title": "API-001 · Will consumers notice? · comparison 4",
+    "prose": "Change: New `type` input with the old default. Effect on existing consumers: Non-breaking..",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-048",
+    "title": "API-001 · Follow-up 1",
+    "prose": "**Interviewer:** What other output names would you ban in a component library, and how would you enforce it?\n\n[pause 5s]\n\nFlag outputs that collide with native DOM events such as click, input, change, focus, blur, keydown, and submit. A library lint rule can inspect output declarations and aliases against a maintained event-name set, with reviewed exceptions for intentional contracts. Prefer domain names such as selectionChange or dismissed when a new event is needed. Most native activation needs no wrapper output. Test bubbling and output behavior from the consumer host rather than only checking the declaration name.",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-049",
+    "title": "API-001 · Follow-up 2",
+    "prose": "**Interviewer:** A team needs to know how the button was activated (mouse, keyboard). Does that justify an output?\n\n[pause 5s]\n\nA consumer can handle the native event when device details are truly needed. That does not by itself justify emitting another click event. Keyboard and assistive-technology activation do not always map cleanly to a simple mouse-versus-keyboard label, so avoid making business behavior depend on a guessed source. If a domain event needs additional context, define a distinct typed payload and document its semantics. Verify one activation still produces one action.",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-050",
+    "title": "API-001 · Follow-up 3",
+    "prose": "**Interviewer:** Should `kind` be renamed to `variant` to match the rest of the library? How would you do it without breaking anyone (see VER-002)?\n\n[pause 5s]\n\nIntroduce variant as the preferred input while preserving kind for a published deprecation period. Distinguish unset from an explicit primary value and resolve variant first, then kind, then the default. Warn only on actual old usage in development, provide editor hints and a template migration, and remove the old name in the announced major. Test both names together and direct component-reference uses because changing the input getter's default can be observable even when rendering is unchanged.",
+    "code": null,
+    "language": "ts",
+    "part": 1
+  },
+  {
+    "id": "slide-051",
+    "title": "API-002 · Scenario",
+    "prose": "We now review API-002: A wrapper that hides the native element. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+    "code": null,
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-052",
+    "title": "API-002 · Scenario",
+    "prose": "`@acme/ui` has a text input component. Its backlog has grown to 23 open feature requests, all similar: \"please add `autocomplete`\", \"add `inputmode`\", \"add `maxlength`\", \"expose `(blur)`\", \"we need to call `focus()`\", \"`aria-label` on `<ui-input>` does nothing\", \"our `<label for>` doesn't focus it\", \"it doesn't work with `formControlName`\".",
+    "code": null,
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-053",
+    "title": "API-002 · Scenario · block 1 · page 1",
+    "prose": "This is the original code, part 1 of 2. Focus on InputComponent. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+    "code": "import { Component, input, model } from '@angular/core';\n\n@Component({\n  selector: 'ui-input',\n  template: `\n    <input\n      class=\"ui-input\"\n      [type]=\"type()\"\n      [placeholder]=\"placeholder()\"\n      [value]=\"value()\"\n      (input)=\"value.set($any($event.target).value)\" />\n  `,\n})\nexport class InputComponent {",
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-054",
+    "title": "API-002 · Scenario · block 2 · page 2",
+    "prose": "This is the original code, part 2 of 2. Focus on type, placeholder, value. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+    "code": "  readonly type = input('text');\n  readonly placeholder = input('');\n  readonly value = model('');\n}",
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-055",
+    "title": "API-002 · Scenario · block 3 · page 1",
+    "prose": "This is the original code, part 1 of 1. Focus on aria-label. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+    "code": "<label for=\"email\">Email</label>\n<ui-input id=\"email\" aria-label=\"Email\" type=\"email\" [(value)]=\"email\" />",
+    "language": "html",
+    "part": 2
+  },
+  {
+    "id": "slide-056",
+    "title": "API-002 · Interview question",
+    "prose": "**Interviewer:** What is the underlying design problem behind all 23 requests? Propose a different design, and explain its trade-offs and how you would migrate to it.\n\n[pause 5s]",
+    "code": null,
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-057",
+    "title": "API-002 · The problem: the component owns the native element",
+    "prose": "The real `<input>` is hidden inside the component's template, so every native capability (over a hundred attributes, properties, events and methods) is unavailable unless the library re-exposes it by hand. Each request is a symptom; adding inputs one by one never ends, and every forwarded attribute is more API to maintain.",
+    "code": null,
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-058",
+    "title": "API-002 · The problem: the component owns the native element",
+    "prose": "Worse, attributes on the host go to the wrong element. `id` and `aria-label` land on `<ui-input>`, which has no role and cannot take focus. `<label for=\"email\">` points at the host, so clicking the label does nothing and the input has no accessible name. `formControlName` has no value accessor to bind to.",
+    "code": null,
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-059",
+    "title": "API-002 · The alternative: put the library on the native element",
+    "prose": "Use an attribute selector, so the consumer writes the native element and the library enhances it:",
+    "code": null,
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-060",
+    "title": "API-002 · Answer · block 1 · page 1",
+    "prose": "This is the answer code, part 1 of 1. Focus on InputDirective, invalid. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+    "code": "import { Directive, booleanAttribute, input } from '@angular/core';\n\n@Directive({\n  selector: 'input[uiInput], textarea[uiInput]',\n  host: {\n    class: 'ui-input',\n    '[class.ui-input--invalid]': 'invalid()',\n    '[attr.aria-invalid]': 'invalid() || null',\n  },\n})\nexport class InputDirective {\n  readonly invalid = input(false, { transform: booleanAttribute });\n}",
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-061",
+    "title": "API-002 · Answer · block 2 · page 1",
+    "prose": "This is the answer code, part 1 of 1. Read this part in the context of The alternative: put the library on the native element. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+    "code": "<label for=\"email\">Email</label>\n<input uiInput id=\"email\" type=\"email\" autocomplete=\"email\" [formControl]=\"email\" />",
+    "language": "html",
+    "part": 2
+  },
+  {
+    "id": "slide-062",
+    "title": "API-002 · The alternative: put the library on the native element",
+    "prose": "Every native attribute, event and method now works, with no library code: `autocomplete`, `inputmode`, `(blur)`, `focus()`, `<label for>`, `aria-*`. Angular Forms' built-in value accessors apply to the native input, so `formControl`, `formControlName` and `ngModel` work too. The library adds only what it owns: styling hooks and state.",
+    "code": null,
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-063",
+    "title": "API-002 · The alternative: put the library on the native element",
+    "prose": "The same applies to buttons and links: `button[uiButton], a[uiButton]` keeps native semantics, `type`, `disabled` and `href`, and avoids the bugs in API-001.",
+    "code": null,
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-064",
+    "title": "API-002 · Trade-offs",
+    "prose": "No surrounding markup. `<input>` is a void element: the directive cannot render a label, an icon or an error message around it. Those belong to a container component, for example `<ui-form-field>` that projects a label, the input, a hint and an error, and connects their ids (it can find the directive with `contentChild(InputDirective)`). This is the split Angular Material uses between `mat-form-field` and `matInput`. Styles. A directive has no stylesheet of its own. Styles ship as a global stylesheet or with the form-field component, keyed on `.ui-input`. Shared namespace. Directive inputs sit beside native attributes on the same element. Choose names that will not collide with future HTML attributes, or prefix them. Less control. Consumers can now put any attribute on the input, including ones that conflict with the design system. That is usually the right trade for a shared library: the platform's API is better documented and more stable than anything the library could write.",
+    "code": null,
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-065",
+    "title": "API-002 · Migration",
+    "prose": "Replacing `<ui-input>` with `<input uiInput>` is a breaking change for every call site:",
+    "code": null,
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-066",
+    "title": "API-002 · Migration · item 1",
+    "prose": "1. Minor: ship `uiInput` and `<ui-form-field>` alongside the old component, and mark `<ui-input>` deprecated in documentation, JSDoc (`@deprecated`, which editors show with a strike-through) and the changelog.",
+    "code": null,
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-067",
+    "title": "API-002 · Migration · item 2",
+    "prose": "2. Migration: an `ng update` schematic that rewrites the common patterns, and a list of call sites it could not convert.",
+    "code": null,
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-068",
+    "title": "API-002 · Migration · item 3",
+    "prose": "3. Next major: remove `<ui-input>`. Freeze its feature requests in the meantime, so effort goes into the replacement.",
+    "code": null,
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-069",
+    "title": "API-002 · Follow-up 1",
+    "prose": "**Interviewer:** How would `<ui-form-field>` give the input its `aria-describedby` without the consumer writing ids by hand?\n\n[pause 5s]\n\nLet the form field and projected control communicate through a small injected contract. The field owns unique identifiers for helper and error text; the control directive merges them with any consumer-provided descriptions on the native element. Register and unregister as content changes, and keep invalid and label state synchronized. Do not overwrite the consumer's existing aria-describedby values. Test multiple fields and dynamic helper or error content through a host.",
+    "code": null,
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-070",
+    "title": "API-002 · Follow-up 2",
+    "prose": "**Interviewer:** When is wrapping the native element still the better choice?\n\n[pause 5s]\n\nWrapping is appropriate for a genuinely composite widget with coordinated elements, such as a date picker with a popup trigger or a control whose internal structure is intrinsic to its behavior. It can also enforce a carefully documented layout contract. The cost is forwarding native capabilities, focus, labels, and forms integration. If the wrapper mainly adds a border to one input, an attribute directive usually gives a smaller and more adaptable API. Choose according to the task and supported customization, not stylistic preference.",
+    "code": null,
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-071",
+    "title": "API-002 · Follow-up 3",
+    "prose": "**Interviewer:** Could `hostDirectives` help share behaviour between `uiInput` and other controls?\n\n[pause 5s]\n\nHost directives can compose reusable behavior statically and expose selected inputs and outputs explicitly. They can help share focus, disabled state, or other host-level logic across native controls. They do not automatically forward arbitrary attributes to an internal input and do not replace the form-field relationship contract. Check construction and input precedence when composing directives. Document the exposed API so consumers know which capabilities belong to the public control.",
+    "code": null,
+    "language": "ts",
+    "part": 2
+  },
+  {
+    "id": "slide-072",
+    "title": "API-003 · Scenario",
+    "prose": "We now review API-003: A card with an input for everything. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+    "code": null,
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-073",
+    "title": "API-003 · Scenario",
+    "prose": "`@acme/ui`'s card started with a title and a body. A year later it looks like this, and the open requests include: \"make the title a link\", \"two badges\", \"a link inside the body\", \"a menu instead of buttons\", and \"our page needs an `h2`, not an `h3`\". Three teams have copied the card into their own code to get around it.",
+    "code": null,
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-074",
+    "title": "API-003 · Scenario · block 1 · page 1",
+    "prose": "This is the original code, part 1 of 4. Focus on CardAction. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+    "code": "import { Component, input } from '@angular/core';\n\nexport interface CardAction {\n  label: string;\n  handler: () => void;\n}\n\n@Component({\n  selector: 'ui-card',\n  template: `\n    <article class=\"ui-card\">\n      @if (image()) {\n        <img class=\"ui-card__image\" [src]=\"image()\" />\n      }",
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-075",
+    "title": "API-003 · Scenario · block 2 · page 2",
+    "prose": "This is the original code, part 2 of 4. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+    "code": "      <div class=\"ui-card__header\">\n        @if (icon()) {\n          <span class=\"ui-icon\">{{ icon() }}</span>\n        }\n        <h3 class=\"ui-card__title\">{{ title() }}</h3>\n        @if (subtitle()) {\n          <p class=\"ui-card__subtitle\">{{ subtitle() }}</p>\n        }\n        @if (badge()) {\n          <span class=\"ui-badge\">{{ badge() }}</span>\n        }\n      </div>\n      <p class=\"ui-card__body\" [innerHTML]=\"body()\"></p>\n      <div class=\"ui-card__actions\">",
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-076",
+    "title": "API-003 · Scenario · block 3 · page 3",
+    "prose": "This is the original code, part 3 of 4. Focus on CardComponent, title, subtitle, icon. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+    "code": "        @for (action of actions(); track action.label) {\n          <button type=\"button\" (click)=\"action.handler()\">{{ action.label }}</button>\n        }\n      </div>\n    </article>\n  `,\n})\nexport class CardComponent {\n  readonly title = input.required<string>();\n  readonly subtitle = input<string>();\n  readonly icon = input<string>();\n  readonly image = input<string>();\n  readonly badge = input<string>();\n  readonly body = input('');",
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-077",
+    "title": "API-003 · Scenario · block 4 · page 4",
+    "prose": "This is the original code, part 4 of 4. Focus on actions. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+    "code": "  readonly actions = input<CardAction[]>([]);\n}",
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-078",
+    "title": "API-003 · Interview question",
+    "prose": "**Interviewer:** What is wrong with this API, beyond the individual bugs? Redesign it, and plan the migration for the teams already using it.\n\n[pause 5s]",
+    "code": null,
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-079",
+    "title": "API-003 · 1. Configuration does not scale; composition does",
+    "prose": "Each input describes one fixed piece of content. Every new layout needs a new input, the inputs interact in ways nobody tested, and anything the inputs cannot express (a link title, a menu, two badges) forces teams to fork. Forks are the worst outcome for a design system: they stop receiving fixes and drift visually.",
+    "code": null,
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-080",
+    "title": "API-003 · 1. Configuration does not scale; composition does",
+    "prose": "The card's real job is layout and styling of regions: media, header, body, actions. What goes in each region belongs to the consumer.",
+    "code": null,
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-081",
+    "title": "API-003 · 2. Individual bugs the configuration style caused",
+    "prose": "Fixed heading level. `h3` is right on some pages and wrong on others. Heading levels describe the page's outline; a reusable component cannot know it. A wrong level breaks navigation by headings, which is how many screen-reader users skim a page. Image without `alt`. The `img` has no `alt`, so some screen readers read the file name. The card cannot know whether the image is decorative (`alt=\"\"`) or meaningful. - `[innerHTML]` body. Angular sanitizes it, but the sanitizer silently strips content teams expect (styles, many attributes), and it encourages teams to reach for `bypassSecurityTrustHtml`, which opens an injection risk. Projected content needs neither. Actions as data. A `{ label, handler }` list cannot express links, menus, icons or `aria-label`. Each new need becomes another field.",
+    "code": null,
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-082",
+    "title": "API-003 · Answer · block 1 · page 1",
+    "prose": "This is the answer code, part 1 of 3. Focus on CardTitleDirective, CardSubtitleDirective, CardMediaDirective. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+    "code": "import { Component, Directive, computed, contentChild } from '@angular/core';\n\n@Directive({ selector: '[uiCardTitle]', host: { class: 'ui-card__title' } })\nexport class CardTitleDirective {}\n\n@Directive({ selector: '[uiCardSubtitle]', host: { class: 'ui-card__subtitle' } })\nexport class CardSubtitleDirective {}\n\n@Directive({ selector: '[uiCardMedia]', host: { class: 'ui-card__media' } })\nexport class CardMediaDirective {}\n\n@Component({\n  selector: 'ui-card-actions',\n  host: { class: 'ui-card__actions' },",
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-083",
+    "title": "API-003 · Answer · block 2 · page 2",
+    "prose": "This is the answer code, part 2 of 3. Focus on CardActionsComponent. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+    "code": "  template: `<ng-content />`,\n})\nexport class CardActionsComponent {}\n\n@Component({\n  selector: 'ui-card',\n  host: { class: 'ui-card' },\n  template: `\n    <ng-content select=\"[uiCardMedia]\" />\n    @if (hasHeader()) {\n      <div class=\"ui-card__header\">\n        <ng-content select=\"[uiCardTitle]\" />\n        <ng-content select=\"[uiCardSubtitle]\" />\n      </div>",
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-084",
+    "title": "API-003 · Answer · block 3 · page 3",
+    "prose": "This is the answer code, part 3 of 3. Focus on CardComponent, title, hasHeader. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+    "code": "    }\n    <div class=\"ui-card__body\">\n      <ng-content />\n    </div>\n    <ng-content select=\"ui-card-actions\" />\n  `,\n})\nexport class CardComponent {\n  private readonly title = contentChild(CardTitleDirective);\n  protected readonly hasHeader = computed(() => this.title() !== undefined);\n}",
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-085",
+    "title": "API-003 · Answer · block 4 · page 1",
+    "prose": "This is the answer code, part 1 of 1. Read this part in the context of Redesigned API. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+    "code": "<ui-card>\n  <img uiCardMedia src=\"/img/order.jpg\" alt=\"\" />\n  <h2 uiCardTitle><a href=\"/orders/42\">Order #42</a></h2>\n  <p uiCardSubtitle>Shipped 3 June</p>\n  <p>Two items. <a href=\"/help/returns\">Returns policy</a></p>\n  <ui-card-actions>\n    <button uiButton type=\"button\">Track</button>\n    <ui-menu-button label=\"More actions\" />\n  </ui-card-actions>\n</ui-card>",
+    "language": "html",
+    "part": 3
+  },
+  {
+    "id": "slide-086",
+    "title": "API-003 · Redesigned API",
+    "prose": "Every request is now satisfied without a library change: the consumer picks the heading level, the link, the badge count and the action controls, and writes the `alt` text.",
+    "code": null,
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-087",
+    "title": "API-003 · Redesigned API",
+    "prose": "The marker directives are more than selectors: they apply the styling class, they appear in autocomplete and documentation, and the card can query them (as `hasHeader` does) to avoid rendering empty wrappers.",
+    "code": null,
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-088",
+    "title": "API-003 · Trade-offs to state",
+    "prose": "Less enforced consistency. Consumers can now put anything in a region. Mitigate with marker directives, good documentation examples, and visual review, rather than by taking control back. Projection rules. `select` matches only elements written directly inside `<ui-card>` in the consumer's template. Content wrapped in another element or an `<ng-container>` needs `ngProjectAs`. Projected content is always created by the parent, even inside an `@if` in the card (see A11Y-002). Not everything should be a slot. Values the card must interpret (for example an `elevation` that maps to tokens) stay as typed inputs.",
+    "code": null,
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-089",
+    "title": "API-003 · Migration",
+    "prose": "Removing seven inputs is breaking. Ship the slot API in a minor release and keep the old inputs working (the template can render the legacy markup when `title()` is set and project otherwise). Mark the inputs `@deprecated` with a pointer to the slot equivalent, provide an `ng update` schematic for the simple cases, and remove them in the next major.",
+    "code": null,
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-090",
+    "title": "API-003 · Follow-up 1",
+    "prose": "**Interviewer:** When would you still choose a configuration (data-driven) API, for example for a data table's columns?\n\n[pause 5s]\n\nChoose data configuration for uniform repeated structures where a schema is useful, such as column identifiers, sorting rules, widths, and value accessors. Use templates or projection for rich content that varies structurally. A table can combine typed column metadata with cell templates. The decision depends on whether consumers need to describe data or compose UI. Keep the configuration type narrow and avoid callbacks for every possible piece of markup.",
+    "code": null,
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-091",
+    "title": "API-003 · Follow-up 2",
+    "prose": "**Interviewer:** How would you make the entire card clickable while keeping the title link and action buttons accessible?\n\n[pause 5s]\n\nUse a real title link as the primary navigation action and separate action buttons. A stretched-link technique can enlarge the title link's hit area while carefully preserving interactive controls above it. Avoid nesting buttons or links inside another interactive element and avoid a container click handler that hijacks text selection or child actions. Show clear focus and hover states and test keyboard traversal. In some cards, keeping only the title clickable is the simplest accessible design.",
+    "code": null,
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-092",
+    "title": "API-003 · Follow-up 3",
+    "prose": "**Interviewer:** How do you document slots so consumers discover them in their editor?\n\n[pause 5s]\n\nExport named slot directives with clear selectors and JSDoc, include compile-checked examples, and describe which slots are optional or repeatable. Editors can discover directives and their inputs more reliably than an undocumented attribute convention. Document heading responsibility, image alternatives, empty slots, and layout behavior. Projection selectors alone do not create typed slot metadata or lazy instantiation. Use a template contract when the library needs context or deferred creation.",
+    "code": null,
+    "language": "ts",
+    "part": 3
+  },
+  {
+    "id": "slide-093",
+    "title": "API-004 · Scenario",
+    "prose": "We now review API-004: A checkbox that makes every form dirty. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-094",
+    "title": "API-004 · Scenario",
+    "prose": "`@acme/ui`'s checkbox supports reactive forms. Product teams report four bugs:",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-095",
+    "title": "API-004 · Scenario · item 1",
+    "prose": "1. \"After `form.reset()`, our 'You have unsaved changes' banner appears.\"",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-096",
+    "title": "API-004 · Scenario · item 2",
+    "prose": "2. \"`form.patchValue({ terms: true })` doesn't tick the box until something else happens.\"",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-097",
+    "title": "API-004 · Scenario · item 3",
+    "prose": "3. \"`control.disable()` does nothing.\"",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-098",
+    "title": "API-004 · Scenario · item 4",
+    "prose": "4. \"Our 'show errors after the user leaves the field' logic never shows errors for checkboxes.\"",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-099",
+    "title": "API-004 · Scenario · block 1 · page 1",
+    "prose": "This is the original code, part 1 of 3. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+    "code": "import { ChangeDetectionStrategy, Component, forwardRef } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\n@Component({\n  selector: 'ui-checkbox',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  providers: [\n    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CheckboxComponent), multi: true },\n  ],\n  template: `\n    <label class=\"ui-checkbox\">\n      <input type=\"checkbox\" [checked]=\"checked\" (change)=\"toggle()\" />\n      <ng-content />\n    </label>",
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-100",
+    "title": "API-004 · Scenario · block 2 · page 2",
+    "prose": "This is the original code, part 2 of 3. Focus on CheckboxComponent, onChange. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+    "code": "  `,\n})\nexport class CheckboxComponent implements ControlValueAccessor {\n  checked = false;\n  private onChange: (value: boolean) => void = () => {};\n\n  writeValue(value: boolean): void {\n    this.checked = value;\n    this.onChange(value);\n  }\n\n  registerOnChange(fn: (value: boolean) => void): void {\n    this.onChange = fn;\n  }",
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-101",
+    "title": "API-004 · Scenario · block 3 · page 3",
+    "prose": "This is the original code, part 3 of 3. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+    "code": "\n  registerOnTouched(): void {}\n\n  toggle(): void {\n    this.checked = !this.checked;\n    this.onChange(this.checked);\n  }\n}",
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-102",
+    "title": "API-004 · Interview question",
+    "prose": "**Interviewer:** Match each bug to its cause and fix the component. Explain the contract between Angular Forms and a `ControlValueAccessor`: which direction does each method carry data?\n\n[pause 5s]",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-103",
+    "title": "API-004 · The contract · comparison 1",
+    "prose": "Method: `writeValue(value)`. Direction: Model to view. Meaning: \"The form's value changed; display it.\" Must not report back..",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-104",
+    "title": "API-004 · The contract · comparison 2",
+    "prose": "Method: `registerOnChange(fn)`. Direction: View to model. Meaning: Call `fn(value)` only when the user changes the value..",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-105",
+    "title": "API-004 · The contract · comparison 3",
+    "prose": "Method: `registerOnTouched(fn)`. Direction: View to model. Meaning: Call `fn()` when the user has interacted and left (usually on blur)..",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-106",
+    "title": "API-004 · The contract · comparison 4",
+    "prose": "Method: `setDisabledState(disabled)`. Direction: Model to view. Meaning: Reflect the control's disabled state..",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-107",
+    "title": "API-004 · Bug 1: `writeValue` calls `onChange`",
+    "prose": "`reset()` writes the value to the view, and the component reports it straight back as if the user had changed it. The forms API treats a view change as user input and marks the control dirty, so the form is dirty immediately after a reset. It can also cause loops with code that reacts to value changes.",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-108",
+    "title": "API-004 · Bug 1: `writeValue` calls `onChange`",
+    "prose": "Fix: `writeValue` only updates what is displayed.",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-109",
+    "title": "API-004 · Bug 2: `OnPush` and a plain field",
+    "prose": "`writeValue` is called by the forms API, outside any template event of this component. Under `OnPush`, setting a plain field does not mark the component for checking, so the box stays as it was until something else triggers a check. In a zoneless application it may never update.",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-110",
+    "title": "API-004 · Bug 2: `OnPush` and a plain field",
+    "prose": "Fix: hold the state in a signal. Setting a signal read by the template schedules the update.",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-111",
+    "title": "API-004 · Bug 3: no `setDisabledState`",
+    "prose": "Angular Forms calls `setDisabledState` whenever the control's disabled state changes (and, since Angular 15, also on initialisation). The method is optional in the interface, so leaving it out compiles, and disabling does nothing.",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-112",
+    "title": "API-004 · Bug 4: touched is never reported",
+    "prose": "`registerOnTouched` throws the callback away, so the control never becomes `touched`. Any \"show errors after the user leaves the field\" rule never fires.",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-113",
+    "title": "API-004 · Bug 4: touched is never reported",
+    "prose": "Fix: keep the callback and call it on `blur`.",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-114",
+    "title": "API-004 · Also: `reset()` writes `null`",
+    "prose": "`form.reset()` with no value writes `null`, which the `boolean` signature hides. `checked = null` happens to render as unticked, but anything comparing with `=== false` breaks. Accept `boolean | null` and coerce.",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-115",
+    "title": "API-004 · Answer · block 1 · page 1",
+    "prose": "This is the answer code, part 1 of 4. Read this part in the context of Fixed version. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+    "code": "import { ChangeDetectionStrategy, Component, forwardRef, signal } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\n@Component({\n  selector: 'ui-checkbox',\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  providers: [\n    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CheckboxComponent), multi: true },\n  ],\n  template: `\n    <label class=\"ui-checkbox\">\n      <input\n        type=\"checkbox\"\n        [checked]=\"checked()\"",
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-116",
+    "title": "API-004 · Answer · block 2 · page 2",
+    "prose": "This is the answer code, part 2 of 4. Focus on CheckboxComponent, checked, disabled, onChange. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+    "code": "        [disabled]=\"disabled()\"\n        (change)=\"onUserChange($event)\"\n        (blur)=\"onTouched()\" />\n      <ng-content />\n    </label>\n  `,\n})\nexport class CheckboxComponent implements ControlValueAccessor {\n  protected readonly checked = signal(false);\n  protected readonly disabled = signal(false);\n  private onChange: (value: boolean) => void = () => {};\n  protected onTouched: () => void = () => {};\n\n  writeValue(value: boolean | null): void {",
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-117",
+    "title": "API-004 · Answer · block 3 · page 3",
+    "prose": "This is the answer code, part 3 of 4. Read this part in the context of Fixed version. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+    "code": "    this.checked.set(value === true);\n  }\n\n  registerOnChange(fn: (value: boolean) => void): void {\n    this.onChange = fn;\n  }\n\n  registerOnTouched(fn: () => void): void {\n    this.onTouched = fn;\n  }\n\n  setDisabledState(isDisabled: boolean): void {\n    this.disabled.set(isDisabled);\n  }",
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-118",
+    "title": "API-004 · Answer · block 4 · page 4",
+    "prose": "This is the answer code, part 4 of 4. Focus on onUserChange. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+    "code": "\n  protected onUserChange(event: Event): void {\n    const value = (event.target as HTMLInputElement).checked;\n    this.checked.set(value);\n    this.onChange(value);\n  }\n}",
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-119",
+    "title": "API-004 · Fixed version",
+    "prose": "The value comes from the native input's `checked` property rather than toggling the stored value, so the component can never disagree with what the user sees.",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-120",
+    "title": "API-004 · What a strong candidate also mentions",
+    "prose": "Use outside forms. Some teams do not use Angular Forms. Offering a `checked` `model()` as well is useful, but then forms and the model must write the same signal, and the documentation must say \"use one or the other on a given instance\". Validators. `Validators.requiredTrue` works without extra code. A component with built-in validation would also provide `NG_VALIDATORS`. Indeterminate state for \"select all\" checkboxes is a property (`indeterminate`), not an attribute, and needs its own input. Tests that use real forms. Each bug above is caught by a test that binds a real `FormControl` and calls `reset()`, `patchValue()` and `disable()`. Testing the component in isolation would miss all four.",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-121",
+    "title": "API-004 · Follow-up 1",
+    "prose": "**Interviewer:** Why does `onChange` during `writeValue` mark the control dirty? Which flag does the forms API set?\n\n[pause 5s]\n\nForms registers a view-to-model callback that marks the control pending dirty for a user change, then commits dirty state according to the update policy. Calling that callback during writeValue falsely takes the user-change path during a programmatic write. With updateOn blur, the pending state may commit later, so timing differs. writeValue should update only the view. Test reset leaves the form pristine and verify genuine user interaction marks it dirty.",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-122",
+    "title": "API-004 · Follow-up 2",
+    "prose": "**Interviewer:** How would you build a `ui-radio-group` that works with `formControlName` on the group?\n\n[pause 5s]\n\nPut the value accessor on the group so it represents one selected value. Individual radio items report user selection to the group, while the group handles writeValue, onChange, touched behavior, and disabled propagation. Use native radio semantics or a complete radiogroup keyboard pattern, unique grouping names, and an accessible group label. Object values may need a comparison contract. Programmatic writes must not emit user changes, and moving focus within the group should follow the chosen touched policy.",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-123",
+    "title": "API-004 · Follow-up 3",
+    "prose": "**Interviewer:** What changes if the application uses Angular's signal-based forms instead of reactive forms?\n\n[pause 5s]\n\nSignal forms use their own custom-control interfaces rather than assuming ControlValueAccessor is the adapter. For a checkbox-like control, inspect the checked-control interface and field binding for the supported Angular version; value controls use the value-control interface. Expose the expected model and state signals, and test disabled, touched, validation, and labels through that integration. If supporting reactive forms too, document both adapters and avoid simultaneous competing writers to the same state.",
+    "code": null,
+    "language": "ts",
+    "part": 4
+  },
+  {
+    "id": "slide-124",
+    "title": "Final review checklist",
+    "prose": "Review the lesson by answering each main question and follow-up aloud. For Angular Component APIs: Native Semantics and Consumer Contracts, connect each reported symptom to its mechanism, explain the corrected public contract, and name a regression check that exercises the consumer path. State compatibility and accessibility limitations clearly. The linked transcript, complete code, source questions, and verification report let you repeat the exercises at your own pace.",
+    "code": null,
+    "language": "ts",
+    "part": 5
+  }
+]

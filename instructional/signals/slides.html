@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Angular Signals · Instructional Lesson</title><link rel="stylesheet" href="../assets/slides.css"><style>section{padding:125px 130px 140px}h2{font-size:52px;margin-bottom:25px}.kicker{font-size:23px;margin-bottom:15px}li{font-size:35px;margin-bottom:24px}pre.code{font-size:25px;line-height:1.38;padding:22px 30px}.question{font-size:42px;line-height:1.35}.small{font-size:24px}</style></head><body data-lesson-number="Signals" data-lesson-title="State Ownership and Component Contracts" data-parts="Foundations|SIG-001 Selection|SIG-002 Switch|SIG-003 Effects|SIG-004 Table|Recap">
+<section id="slide-000" data-part="0"><div class="kicker">Foundations</div><h2>Learning goals and the review method</h2><ul><li>Welcome to this instructional lesson on Angular signals for senior engineers building a shared component library.</li><li>We will first build a working mental model, then review four real scenarios from this repository: a chip selection that drifts, a switch that ignores its parent, effects that leak resources, and a table that mutates consumer data.</li><li>You will see the faulty code, hear the question, have time to think, and compare your answer with a detailed explanation.</li></ul></section>
+<section id="slide-001" data-part="0" data-cue="Learning goals and the review method · 2"><div class="kicker">Foundations</div><h2>Learning goals and the review method · 2</h2><ul><li>These questions are not mainly about remembering function names.</li><li>They test whether you can identify who owns a value, what invalidates a derivation, when a resource is acquired and released, and how a component behaves when another team uses it differently from your own application.</li><li>A senior answer connects the reported symptom to a precise mechanism.</li></ul></section>
+<section id="slide-002" data-part="0" data-cue="Learning goals and the review method · 3"><div class="kicker">Foundations</div><h2>Learning goals and the review method · 3</h2><ul><li>Use four steps in each review.</li><li>First, trace the state from the parent through the input to the rendered template.</li><li>Second, identify every write and the event that causes it.</li></ul></section>
+<section id="slide-003" data-part="0" data-cue="Writable signals and tracked reads"><div class="kicker">Foundations</div><h2>Writable signals and tracked reads</h2><ul><li>A signal is a value container with a getter function.</li><li>Calling the getter reads the current value.</li><li>In a reactive context, Angular also records that read as a dependency.</li></ul></section>
+<section id="slide-004" data-part="0" data-cue="Writable signals and tracked reads · 2"><div class="kicker">Foundations</div><h2>Writable signals and tracked reads · 2</h2><pre class="code" data-lang="ts">const count = signal(0);
+count.set(3);
+count.update(value =&gt; value + 1);
+const label = computed(() =&gt; `Count: ${count()}`);</pre><p class="small muted">Teaching excerpt · see complete foundations and controlled examples</p></section>
+<section id="slide-005" data-part="0" data-cue="Writable signals and tracked reads · 3"><div class="kicker">Foundations</div><h2>Writable signals and tracked reads · 3</h2><ul><li>The template reads count by calling it.</li><li>It does not receive a snapshot that we must manually refresh.</li><li>Angular knows that this view depends on the signal.</li></ul></section>
+<section id="slide-006" data-part="0" data-cue="Equality and immutable collection updates"><div class="kicker">Foundations</div><h2>Equality and immutable collection updates</h2><ul><li>Signals use referential equality by default, through Object dot is.</li><li>For primitive values that is usually intuitive.</li><li>Setting false to false does not notify consumers.</li></ul></section>
+<section id="slide-007" data-part="0" data-cue="Equality and immutable collection updates · 2"><div class="kicker">Foundations</div><h2>Equality and immutable collection updates · 2</h2><pre class="code" data-lang="ts">// Same reference: no signal notification.
+items.update(list =&gt; { list.push('A'); return list; });
+
+// New reference: observable state transition.
+items.update(list =&gt; [...list, 'B']);
+items.update(list =&gt; list.filter(value =&gt; value !== 'A'));</pre><p class="small muted">Teaching excerpt · see complete foundations and controlled examples</p></section>
+<section id="slide-008" data-part="0" data-cue="Equality and immutable collection updates · 3"><div class="kicker">Foundations</div><h2>Equality and immutable collection updates · 3</h2><ul><li>Immutability also defines an ownership boundary.</li><li>A component receiving an array should not sort it in place, append to it, or change consumer-owned records while calculating a view.</li><li>Otherwise a table can unexpectedly change an export elsewhere in the application.</li></ul></section>
+<section id="slide-009" data-part="0" data-cue="Computed values are cached derivations"><div class="kicker">Foundations</div><h2>Computed values are cached derivations</h2><ul><li>A computed is a read-only signal whose value is derived from other signals.</li><li>Its computation is lazy: it runs when a consumer first reads it.</li><li>Its result is memoized until a dependency changes.</li></ul></section>
+<section id="slide-010" data-part="0" data-cue="Computed values are cached derivations · 2"><div class="kicker">Foundations</div><h2>Computed values are cached derivations · 2</h2><pre class="code" data-lang="ts">const quantity = signal(2);
+const unitPrice = signal(12);
+const total = computed(() =&gt; quantity() * unitPrice());
+
+// total is derived; it is not another writable store.</pre><p class="small muted">Teaching excerpt · see complete foundations and controlled examples</p></section>
+<section id="slide-011" data-part="0" data-cue="Computed values are cached derivations · 3"><div class="kicker">Foundations</div><h2>Computed values are cached derivations · 3</h2><ul><li>Keep a derivation pure.</li><li>Do not emit an output, mutate an input array, or register an event listener while evaluating a computed.</li><li>Consumers can read the result at times you do not control, and memoization means the computation is not an event handler.</li></ul></section>
+<section id="slide-012" data-part="0" data-cue="Dynamic dependencies and narrow derivations"><div class="kicker">Foundations</div><h2>Dynamic dependencies and narrow derivations</h2><ul><li>Dependencies are determined by the signals actually read during the latest execution, not by all the signals mentioned in the source code.</li><li>In the conditional example, the detailed view reads the price only when showDetails is true.</li><li>When it is false, the computation returns a simple label without reading price.</li></ul></section>
+<section id="slide-013" data-part="0" data-cue="Dynamic dependencies and narrow derivations · 2"><div class="kicker">Foundations</div><h2>Dynamic dependencies and narrow derivations · 2</h2><pre class="code" data-lang="ts">const showDetails = signal(false);
+const price = signal(12);
+const label = computed(() =&gt;
+  showDetails() ? `Price: ${price()}` : 'Hidden'
+);
+// price is tracked only in the branch that reads it.</pre><p class="small muted">Teaching excerpt · see complete foundations and controlled examples</p></section>
+<section id="slide-014" data-part="0" data-cue="Dynamic dependencies and narrow derivations · 3"><div class="kicker">Foundations</div><h2>Dynamic dependencies and narrow derivations · 3</h2><ul><li>Do not assume that equality prevents the expensive computation itself.</li><li>Angular must obtain the new computed result before it can compare that result with the old one.</li><li>If sorting thousands of records is the costly part, a result equality function does not eliminate the sort.</li></ul></section>
+<section id="slide-015" data-part="0" data-cue="Inputs and construction order"><div class="kicker">Foundations</div><h2>Inputs and construction order</h2><ul><li>An input signal represents data supplied by Angular's binding system.</li><li>Input declarations belong in component initialization, but consuming the eventual bound value during construction is different.</li><li>Field initializers and constructors run before Angular has assigned the inputs for the first render.</li></ul></section>
+<section id="slide-016" data-part="0" data-cue="Inputs and construction order · 2"><div class="kicker">Foundations</div><h2>Inputs and construction order · 2</h2><pre class="code" data-lang="ts">readonly options = input&lt;readonly Option[]&gt;([]);
+
+// Snapshot taken before the parent assigns inputs:
+readonly selected = signal(
+  this.options().filter(option =&gt; option.selected)
+);
+// Declare dependencies instead of taking a snapshot.</pre><p class="small muted">Teaching excerpt · see complete foundations and controlled examples</p></section>
+<section id="slide-017" data-part="0" data-cue="Inputs and construction order · 3"><div class="kicker">Foundations</div><h2>Inputs and construction order · 3</h2><ul><li>The correct design depends on the meaning of the value.</li><li>If selection is entirely determined by options, use a computed.</li><li>If the user can edit selection but changes to options must reset or reconcile it, consider linkedSignal.</li></ul></section>
+<section id="slide-018" data-part="0" data-cue="Linked signals for writable dependent state"><div class="kicker">Foundations</div><h2>Linked signals for writable dependent state</h2><ul><li>A linked signal combines writable state with a dependency that determines when it should be recomputed.</li><li>Unlike a computed, the user can change its value.</li><li>Unlike an ordinary independent signal, it also knows that a source change affects the validity of that value.</li></ul></section>
+<section id="slide-019" data-part="0" data-cue="Linked signals for writable dependent state · 2"><div class="kicker">Foundations</div><h2>Linked signals for writable dependent state · 2</h2><pre class="code" data-lang="ts">readonly selected = linkedSignal({
+  source: this.options,
+  computation: (options, previous) =&gt; {
+    if (!previous) return initialSelection(options);
+    const valid = new Set(options.map(o =&gt; o.value));
+    return previous.value.filter(v =&gt; valid.has(v));
+  },
+});</pre><p class="small muted">Teaching excerpt · see complete foundations and controlled examples</p></section>
+<section id="slide-020" data-part="0" data-cue="Linked signals for writable dependent state · 3"><div class="kicker">Foundations</div><h2>Linked signals for writable dependent state · 3</h2><ul><li>The source must itself communicate changes through signals.</li><li>Mutating an options array in place without publishing a new value does not reliably trigger reconciliation.</li><li>Conversely, a parent that creates a fresh but equivalent array on every check can cause unnecessary recomputation.</li></ul></section>
+<section id="slide-021" data-part="0" data-cue="Models and two-way component binding"><div class="kicker">Foundations</div><h2>Models and two-way component binding</h2><ul><li>A model input is a writable signal exposed as a component input.</li><li>Angular also creates a corresponding change output.</li><li>A checked model creates checkedChange, allowing a parent to use the conventional two-way binding syntax.</li></ul></section>
+<section id="slide-022" data-part="0" data-cue="Models and two-way component binding · 2"><div class="kicker">Foundations</div><h2>Models and two-way component binding · 2</h2><pre class="code" data-lang="ts">readonly checked = model(false);
+flip(): void {
+  this.checked.update(value =&gt; !value);
+}
+// Angular supplies the checkedChange output.
+// A local commit is different from a request.</pre><p class="small muted">Teaching excerpt · see complete foundations and controlled examples</p></section>
+<section id="slide-023" data-part="0" data-cue="Models and two-way component binding · 3"><div class="kicker">Foundations</div><h2>Models and two-way component binding · 3</h2><ul><li>A rejected change exposes the difference.</li><li>If the model flips to true while the parent keeps its one-way bound false unchanged, Angular has no changed parent value to write back.</li><li>The switch can remain on.</li></ul></section>
+<section id="slide-024" data-part="0" data-cue="Choosing a controlled component contract"><div class="kicker">Foundations</div><h2>Choosing a controlled component contract</h2><ul><li>In the controlled example, the switch reads checked from an input and emits a requested value from a separate output.</li><li>Clicking does not change an internal checked signal.</li><li>If the parent accepts, it updates checked and the view changes.</li></ul></section>
+<section id="slide-025" data-part="0" data-cue="Choosing a controlled component contract · 2"><div class="kicker">Foundations</div><h2>Choosing a controlled component contract · 2</h2><pre class="code" data-lang="ts">readonly checked = input(false);
+readonly checkedChangeRequest = output&lt;boolean&gt;();
+
+requestFlip(): void {
+  this.checkedChangeRequest.emit(!this.checked());
+}
+// Render checked(); only the parent commits a value.</pre><p class="small muted">Teaching excerpt · see complete foundations and controlled examples</p></section>
+<section id="slide-026" data-part="0" data-cue="Choosing a controlled component contract · 3"><div class="kicker">Foundations</div><h2>Choosing a controlled component contract · 3</h2><ul><li>Boolean syntax, disabled behavior, accessible names, and forms integration are part of the same contract.</li><li>A model does not accept an input transform like booleanAttribute.</li><li>Document property binding for its boolean value.</li></ul></section>
+<section id="slide-027" data-part="0" data-cue="Effects connect state to external systems"><div class="kicker">Foundations</div><h2>Effects connect state to external systems</h2><ul><li>Use an effect when reactive state must synchronize with a non-reactive system, such as a browser storage API, a charting library, or an imperative event registration.</li><li>It tracks signal reads and reruns when those dependencies change.</li><li>That is different from calculating another piece of application state.</li></ul></section>
+<section id="slide-028" data-part="0" data-cue="Effects connect state to external systems · 2"><div class="kicker">Foundations</div><h2>Effects connect state to external systems · 2</h2><pre class="code" data-lang="ts">// Feedback loop: reads and writes its own dependency.
+effect(() =&gt; {
+  selected.set(selected().filter(isValid));
+});
+
+// Derive application state; use effects at API boundaries.</pre><p class="small muted">Teaching excerpt · see complete foundations and controlled examples</p></section>
+<section id="slide-029" data-part="0" data-cue="Effects connect state to external systems · 3"><div class="kicker">Foundations</div><h2>Effects connect state to external systems · 3</h2><ul><li>Effects also have lifecycle requirements.</li><li>When a new run replaces an external resource, the old resource must be released.</li><li>If an effect installs a document listener every time a popover opens, closing the popover should release that listener.</li></ul></section>
+<section id="slide-030" data-part="0" data-cue="Cleanup is part of resource ownership"><div class="kicker">Foundations</div><h2>Cleanup is part of resource ownership</h2><ul><li>An effect callback receives a cleanup registration function.</li><li>Register the action that undoes what this run created.</li><li>Angular invokes that cleanup before the next run and when the effect is destroyed.</li></ul></section>
+<section id="slide-031" data-part="0" data-cue="Cleanup is part of resource ownership · 2"><div class="kicker">Foundations</div><h2>Cleanup is part of resource ownership · 2</h2><pre class="code" data-lang="ts">effect(onCleanup =&gt; {
+  if (!this.open()) return;
+  const handler = (event: KeyboardEvent) =&gt; {
+    if (event.key === 'Escape') this.open.set(false);
+  };
+  document.addEventListener('keydown', handler);
+  onCleanup(() =&gt;
+    document.removeEventListener('keydown', handler)
+  );
+});</pre><p class="small muted">Teaching excerpt · see complete foundations and controlled examples</p></section>
+<section id="slide-032" data-part="0" data-cue="Cleanup is part of resource ownership · 3"><div class="kicker">Foundations</div><h2>Cleanup is part of resource ownership · 3</h2><ul><li>A one-time listener is not the same lifetime.</li><li>With once enabled, the first keydown event removes the listener, even if that key was not Escape.</li><li>A user pressing Tab before Escape would disable the desired close behavior.</li></ul></section>
+<section id="slide-033" data-part="0" data-cue="DOM work after rendering"><div class="kicker">Foundations</div><h2>DOM work after rendering</h2><ul><li>Ordinary effects are not a general guarantee that the final browser layout is ready to measure.</li><li>DOM placement may depend on elements created by a conditional template, changes in other components, styles, and layout.</li><li>When work specifically depends on rendered DOM, afterRenderEffect provides a post-render integration point.</li></ul></section>
+<section id="slide-034" data-part="0" data-cue="DOM work after rendering · 2"><div class="kicker">Foundations</div><h2>DOM work after rendering · 2</h2><pre class="code" data-lang="ts">afterRenderEffect({
+  earlyRead: () =&gt; this.anchor().getBoundingClientRect(),
+  write: measured =&gt; {
+    const rect = measured();
+    this.panel().style.top = `${rect.bottom}px`;
+  },
+});
+// Partial excerpt: see full popover example.</pre><p class="small muted">Teaching excerpt · see complete foundations and controlled examples</p></section>
+<section id="slide-035" data-part="0" data-cue="DOM work after rendering · 3"><div class="kicker">Foundations</div><h2>DOM work after rendering · 3</h2><ul><li>This is still only a minimal positioning example.</li><li>Scrolling, resizing, clipping containers, viewport edges, stacked overlays, and focus restoration require more design.</li><li>A shared library should usually build on an established positioning and overlay system rather than ship a few coordinate assignments as a complete solution.</li></ul></section>
+<section id="slide-036" data-part="0" data-cue="Row identity and accessible derived views"><div class="kicker">Foundations</div><h2>Row identity and accessible derived views</h2><ul><li>Signals do not replace DOM identity.</li><li>When a list is sorted, tracking by index associates a view with a position.</li><li>The record occupying that position can change while local state stays with the reused view.</li></ul></section>
+<section id="slide-037" data-part="0" data-cue="Row identity and accessible derived views · 2"><div class="kicker">Foundations</div><h2>Row identity and accessible derived views · 2</h2><pre class="code" data-lang="ts">readonly sortedRows = computed(() =&gt;
+  this.rows().toSorted(this.compare())
+);
+
+// Template contracts:
+// @for (row of sortedRows(); track row.id)
+// &lt;th [attr.aria-sort]=&quot;direction&quot;&gt;
+//   &lt;button type=&quot;button&quot;&gt;Name&lt;/button&gt;
+// &lt;/th&gt;</pre><p class="small muted">Teaching excerpt · see complete foundations and controlled examples</p></section>
+<section id="slide-038" data-part="0" data-cue="Row identity and accessible derived views · 3"><div class="kicker">Foundations</div><h2>Row identity and accessible derived views · 3</h2><ul><li>Accessibility also changes the implementation.</li><li>A click handler on a table header does not provide a keyboard-operable control.</li><li>Use a real button in the header.</li></ul></section>
+<section id="slide-039" data-part="0" data-cue="How to prove the correction"><div class="kicker">Foundations</div><h2>How to prove the correction</h2><ul><li>Before we begin the questions, turn each claim into a concrete observation.</li><li>For immutable selection updates, inspect both the selected values and the rendered pressed state after a click.</li><li>For linked selection, remove an option and confirm that invalid selections disappear while valid user choices remain.</li></ul></section>
+<section id="slide-040" data-part="0" data-cue="How to prove the correction · 2"><div class="kicker">Foundations</div><h2>How to prove the correction · 2</h2><ul><li>For cleanup, open and close the popover repeatedly and confirm that the active listener count returns to zero.</li><li>Destroy it while open and confirm cleanup again.</li><li>For positioning, measure the anchor in an actual browser and compare the panel's assigned coordinates after rendering.</li></ul></section>
+<section id="slide-041" data-part="0" data-cue="How to prove the correction · 3"><div class="kicker">Foundations</div><h2>How to prove the correction · 3</h2><ul><li>Compilation is necessary but does not prove these behaviors.</li><li>Strict template checking catches invalid bindings and missing members, but it cannot establish event lifetime or browser layout.</li><li>A mocked rectangle does not prove that real layout occurs at the right time either.</li></ul></section>
+<section id="slide-042" data-part="1" data-cue="SIG-001 · Scenario"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Scenario</h2><ul><li>We now turn to SIG-001.</li><li>Inspect state ownership, reactive dependencies, resource lifetimes, and the consumer contract.</li></ul></section>
+<section id="slide-043" data-part="1" data-cue="SIG-001 · Scenario"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Scenario</h2><ul><li>You maintain @acme/ui, the component library that every Acme product team builds on.</li><li>A teammate opens a pull request for a new multi-select chip group.</li><li>Product teams pass the options in, and some options arrive pre-selected.</li></ul></section>
+<section id="slide-044" data-part="1" data-cue="SIG-001 · Scenario · code 1/4"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Scenario · code 1/4</h2><pre class="code" data-lang="ts">import { Component, computed, effect, input, output, signal } from '@angular/core';
+
+export interface ChipOption {
+  value: string;
+  label: string;
+  selected?: boolean;
+}
+
+@Component({
+  selector: 'ui-chip-group',
+  template: `
+    @for (option of options(); track option.value) {
+      &lt;button
+        type=&quot;button&quot;</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-045" data-part="1" data-cue="SIG-001 · Scenario · code 2/4"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Scenario · code 2/4</h2><pre class="code" data-lang="ts">        class=&quot;ui-chip&quot;
+        [attr.aria-pressed]=&quot;selectedSet().has(option.value)&quot;
+        (click)=&quot;toggle(option.value)&quot;&gt;
+        {{ option.label }}
+      &lt;/button&gt;
+    }
+  `,
+})
+export class ChipGroupComponent {
+  readonly options = input&lt;ChipOption[]&gt;([]);
+  readonly selectionChange = output&lt;string[]&gt;();
+
+  readonly selected = signal&lt;string[]&gt;(
+    this.options().filter(option =&gt; option.selected).map(option =&gt; option.value),</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-046" data-part="1" data-cue="SIG-001 · Scenario · code 3/4"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Scenario · code 3/4</h2><pre class="code" data-lang="ts">  );
+  readonly selectedSet = computed(() =&gt; new Set(this.selected()));
+
+  constructor() {
+    // Drop selections whose option no longer exists.
+    effect(() =&gt; {
+      const values = this.options().map(option =&gt; option.value);
+      this.selected.set(this.selected().filter(value =&gt; values.includes(value)));
+    });
+  }
+
+  toggle(value: string): void {
+    this.selected.update(list =&gt; {
+      const index = list.indexOf(value);</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-047" data-part="1" data-cue="SIG-001 · Scenario · code 4/4"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Scenario · code 4/4</h2><pre class="code" data-lang="ts">      if (index === -1) list.push(value);
+      else list.splice(index, 1);
+      return list;
+    });
+    this.selectionChange.emit(this.selected());
+  }
+}</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-048" data-part="1" data-cue="SIG-001 · Interview question"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Interview question</h2><p class="question">What problems do you see, and how would you fix each one? There are at least three. One of them freezes the page as soon as the component renders.</p><p class="small muted">Pause the video, answer aloud, then compare the explanation.</p></section>
+<section id="slide-049" data-part="1" data-cue="SIG-001 · 1. The initial selection is read before the input has a value"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · 1. The initial selection is read before the input has a value</h2><ul><li>Field initializers run inside the constructor, before Angular has set any input. this.options() returns the default, [], so the initial selection is always empty.</li><li>Options the consumer marks selected: true never appear selected, and nothing reports an error.</li></ul></section>
+<section id="slide-050" data-part="1" data-cue="SIG-001 · 1. The initial selection is read before the input has a value"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · 1. The initial selection is read before the input has a value</h2><ul><li>If someone later makes the input required to &quot;fix&quot; it, the same line fails louder: reading a required input before it is set throws NG0950 at runtime, and recent Angular compilers reject it at build time with NG8118.</li></ul></section>
+<section id="slide-051" data-part="1" data-cue="SIG-001 · 1. The initial selection is read before the input has a value"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · 1. The initial selection is read before the input has a value</h2><ul><li>Fix: never read an input during construction.</li><li>Derive the initial selection from the input reactively (see issue 3).</li></ul></section>
+<section id="slide-052" data-part="1" data-cue="SIG-001 · 2. `toggle` mutates the array, so nothing updates"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · 2. toggle mutates the array, so nothing updates</h2><ul><li>update returns the same array it was given.</li><li>Signals compare values with Object.is, so the signal sees no change and notifies nobody. selectedSet keeps its cached value, aria-pressed never changes, and the screen is out of step with the state.</li></ul></section>
+<section id="slide-053" data-part="1" data-cue="SIG-001 · 2. `toggle` mutates the array, so nothing updates"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · 2. toggle mutates the array, so nothing updates</h2><ul><li>There is a second problem in the same lines: selectionChange emits the internal array.</li><li>A consumer that sorts or pushes into the array it receives corrupts the component's state.</li></ul></section>
+<section id="slide-054" data-part="1" data-cue="SIG-001 · 2. `toggle` mutates the array, so nothing updates"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · 2. toggle mutates the array, so nothing updates</h2><ul><li>Fix: return a new array from update, and type public arrays as readonly to reject mutations in typed consumer code:</li></ul></section>
+<section id="slide-055" data-part="1" data-cue="SIG-001 · Answer · code 1/1"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Answer · code 1/1</h2><pre class="code" data-lang="ts">this.selected.update(list =&gt;
+  list.includes(value) ? list.filter(v =&gt; v !== value) : [...list, value],
+);</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-056" data-part="1" data-cue="SIG-001 · 3. The `effect` never stops running"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · 3. The effect never stops running</h2><ul><li>The effect reads selected() and writes selected with the result of filter, which is always a new array.</li><li>Writing a new value to a signal the effect depends on schedules the effect again, so it runs forever and the page freezes as soon as the component renders. (This is easy to miss in review because each line looks reasonable.)</li></ul></section>
+<section id="slide-057" data-part="1" data-cue="SIG-001 · 3. The `effect` never stops running"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · 3. The effect never stops running</h2><ul><li>Even without the loop, copying one signal into another is the job of a derived signal, not an effect:</li></ul></section>
+<section id="slide-058" data-part="1" data-cue="SIG-001 · 3. The `effect` never stops running"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · 3. The effect never stops running</h2><ul><li>Effects run on their own schedule, so other code (a computed, a parent's binding) can briefly read selections that point at options that no longer exist.</li><li>Writing signals inside effects makes the data flow hard to follow, and loops like this one are easy to create.</li></ul></section>
+<section id="slide-059" data-part="1" data-cue="SIG-001 · 3. The `effect` never stops running"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · 3. The effect never stops running</h2><ul><li>Fix: linkedSignal.</li><li>It is writable, like signal, but it recalculates whenever its source changes, and it receives the previous value so it can keep selections that are still valid.</li></ul></section>
+<section id="slide-060" data-part="1" data-cue="SIG-001 · Answer · code 1/4"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Answer · code 1/4</h2><pre class="code" data-lang="ts">import { Component, computed, input, linkedSignal, output } from '@angular/core';
+
+export interface ChipOption {
+  value: string;
+  label: string;
+  selected?: boolean;
+}
+
+@Component({
+  selector: 'ui-chip-group',
+  host: { role: 'group' },
+  template: `
+    @for (option of options(); track option.value) {
+      &lt;button</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-061" data-part="1" data-cue="SIG-001 · Answer · code 2/4"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Answer · code 2/4</h2><pre class="code" data-lang="ts">        type=&quot;button&quot;
+        class=&quot;ui-chip&quot;
+        [attr.aria-pressed]=&quot;selectedSet().has(option.value)&quot;
+        (click)=&quot;toggle(option.value)&quot;&gt;
+        {{ option.label }}
+      &lt;/button&gt;
+    }
+  `,
+})
+export class ChipGroupComponent {
+  readonly options = input.required&lt;readonly ChipOption[]&gt;();
+  readonly selectionChange = output&lt;readonly string[]&gt;();
+
+  readonly selected = linkedSignal&lt;readonly ChipOption[], readonly string[]&gt;({</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-062" data-part="1" data-cue="SIG-001 · Answer · code 3/4"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Answer · code 3/4</h2><pre class="code" data-lang="ts">    source: this.options,
+    computation: (options, previous) =&gt; {
+      if (!previous) {
+        return options.filter(option =&gt; option.selected).map(option =&gt; option.value);
+      }
+      const values = new Set(options.map(option =&gt; option.value));
+      return previous.value.filter(value =&gt; values.has(value));
+    },
+  });
+  readonly selectedSet = computed(() =&gt; new Set(this.selected()));
+
+  toggle(value: string): void {
+    this.selected.update(list =&gt;
+      list.includes(value) ? list.filter(v =&gt; v !== value) : [...list, value],</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-063" data-part="1" data-cue="SIG-001 · Answer · code 4/4"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Answer · code 4/4</h2><pre class="code" data-lang="ts">    );
+    this.selectionChange.emit(this.selected());
+  }
+}</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-064" data-part="1" data-cue="SIG-001 · What a strong candidate also mentions"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · What a strong candidate also mentions</h2><ul><li>The group needs an accessible name. role=&quot;group&quot; is announced, but without aria-label or aria-labelledby a screen-reader user hears &quot;group&quot; and nothing else.</li><li>Add an input for the label.</li><li>Pruning is a behaviour change consumers must know about.</li></ul></section>
+<section id="slide-065" data-part="1" data-cue="SIG-001 · Runtime boundary"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Runtime boundary</h2><pre class="code" data-lang="ts">this.selectionChange.emit([...this.selected()]);</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-066" data-part="1" data-cue="SIG-001 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Follow-up 1</h2><p class="question">When is an effect the right tool in a library component? Give one example.</p><p class="small muted">Pause the video, answer aloud, then compare the explanation.</p></section>
+<section id="slide-066-answer" data-part="1" data-cue="An effect is appropriate when a signal must synchronize with an imperative, non-"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Follow-up 1 · Answer</h2><ul><li>An effect is appropriate when a signal must synchronize with an imperative, non-reactive API.</li><li>For example, a chart component may pass a newly derived data series to a third-party chart instance.</li><li>The effect reads the series and calls the chart update method; cleanup releases any resource created for that run.</li></ul></section>
+<section id="slide-067" data-part="1" data-cue="SIG-001 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Follow-up 2</h2><p class="question">A consumer passes a new array with the same options on every change detection. What happens to linkedSignal, and how would you protect against it?</p><p class="small muted">Pause the video, answer aloud, then compare the explanation.</p></section>
+<section id="slide-067-answer" data-part="1" data-cue="A new reference can invalidate the source, causing the linked computation to rec"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Follow-up 2 · Answer</h2><ul><li>A new reference can invalidate the source, causing the linked computation to reconcile again.</li><li>Our fixed chip implementation preserves previous values that remain valid, so equivalent options do not intentionally reset the user's selection.</li><li>However, filter still allocates a new selection array, which can produce unnecessary downstream notifications.</li></ul></section>
+<section id="slide-068" data-part="1" data-cue="SIG-001 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Follow-up 3</h2><p class="question">Should selectionChange fire when pruning removes a selection? Argue both sides.</p><p class="small muted">Pause the video, answer aloud, then compare the explanation.</p></section>
+<section id="slide-068-answer" data-part="1" data-cue="If selectionChange means a user committed a selection change, automatic pruning "><div class="kicker">Interview walkthrough</div><h2>SIG-001 · Follow-up 3 · Answer</h2><ul><li>If selectionChange means a user committed a selection change, automatic pruning should not emit that event.</li><li>The consumer initiated an options change, and an echoed output could create redundant updates or feedback loops.</li><li>This convention is easy to understand when all outputs represent interactions.</li></ul></section>
+<section id="slide-069" data-part="2" data-cue="SIG-002 · Scenario"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · Scenario</h2><ul><li>We now turn to SIG-002.</li><li>Inspect state ownership, reactive dependencies, resource lifetimes, and the consumer contract.</li></ul></section>
+<section id="slide-070" data-part="2" data-cue="SIG-002 · Scenario"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · Scenario</h2><ul><li>A product team reports a bug against @acme/ui: &quot;When we reset our settings form, the switches still show the old values.</li><li>Here is the switch component they are using:</li></ul></section>
+<section id="slide-071" data-part="2" data-cue="SIG-002 · Scenario · code 1/2"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · Scenario · code 1/2</h2><pre class="code" data-lang="ts">import { Component, OnInit, input, output, signal } from '@angular/core';
+
+@Component({
+  selector: 'ui-switch',
+  template: `
+    &lt;button type=&quot;button&quot; role=&quot;switch&quot; [attr.aria-checked]=&quot;isOn()&quot; (click)=&quot;flip()&quot;&gt;
+      &lt;ng-content /&gt;
+    &lt;/button&gt;
+  `,
+})
+export class SwitchComponent implements OnInit {
+  readonly checked = input(false);
+  readonly checkedChange = output&lt;boolean&gt;();
+  protected readonly isOn = signal(false);</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-072" data-part="2" data-cue="SIG-002 · Scenario · code 2/2"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · Scenario · code 2/2</h2><pre class="code" data-lang="ts">
+  ngOnInit(): void {
+    this.isOn.set(this.checked());
+  }
+
+  flip(): void {
+    this.isOn.set(!this.isOn());
+    this.checkedChange.emit(this.isOn());
+  }
+}</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-073" data-part="2" data-cue="SIG-002 · Scenario"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · Scenario</h2><ul><li>The team uses it like this:</li></ul></section>
+<section id="slide-074" data-part="2" data-cue="SIG-002 · Scenario · code 1/1"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · Scenario · code 1/1</h2><pre class="code" data-lang="html">&lt;ui-switch [(checked)]=&quot;settings.emailAlerts&quot;&gt;Email alerts&lt;/ui-switch&gt;
+&lt;button type=&quot;button&quot; (click)=&quot;settings.emailAlerts = false&quot;&gt;Reset&lt;/button&gt;</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-075" data-part="2" data-cue="SIG-002 · Interview question"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · Interview question</h2><p class="question">Why does the reset not work? Fix the component, then tell me what other problems a consumer could run into with your fixed version.</p><p class="small muted">Pause the video, answer aloud, then compare the explanation.</p></section>
+<section id="slide-076" data-part="2" data-cue="SIG-002 · 1. Two sources of truth, synchronised once"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · 1. Two sources of truth, synchronised once</h2><ul><li>isOn copies checked once, in ngOnInit.</li><li>After that the component ignores its input.</li><li>Reset changes settings.emailAlerts, Angular passes the new value to checked, and nothing reads it: the switch keeps showing isOn.</li></ul></section>
+<section id="slide-077" data-part="2" data-cue="SIG-002 · 1. Two sources of truth, synchronised once"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · 1. Two sources of truth, synchronised once</h2><ul><li>The pattern &quot;copy an input into local state&quot; is the root cause, and it is common in libraries because the component needs to change the value itself and accept changes from outside.</li></ul></section>
+<section id="slide-078" data-part="2" data-cue="SIG-002 · 1. Two sources of truth, synchronised once"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · 1. Two sources of truth, synchronised once</h2><ul><li>Fix: model().</li><li>A model is a writable signal that is also an input and an output.</li><li>The parent writes it through the binding, the component writes it with set or update, and every write from inside emits checkedChange, so [(checked)] works with no extra code.</li></ul></section>
+<section id="slide-079" data-part="2" data-cue="SIG-002 · Answer · code 1/2"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · Answer · code 1/2</h2><pre class="code" data-lang="ts">import { Component, model } from '@angular/core';
+
+@Component({
+  selector: 'ui-switch',
+  template: `
+    &lt;button type=&quot;button&quot; role=&quot;switch&quot; [attr.aria-checked]=&quot;checked()&quot; (click)=&quot;flip()&quot;&gt;
+      &lt;ng-content /&gt;
+    &lt;/button&gt;
+  `,
+})
+export class SwitchComponent {
+  readonly checked = model(false);
+
+  flip(): void {</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-080" data-part="2" data-cue="SIG-002 · Answer · code 2/2"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · Answer · code 2/2</h2><pre class="code" data-lang="ts">    this.checked.update(on =&gt; !on);
+  }
+}</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-081" data-part="2" data-cue="SIG-002 · 1. Two sources of truth, synchronised once"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · 1. Two sources of truth, synchronised once</h2><ul><li>This is also non-breaking for consumers: the public names checked and checkedChange are unchanged.</li></ul></section>
+<section id="slide-082" data-part="2" data-cue="SIG-002 · 2. A rejected change leaves the switch out of sync"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · 2. A rejected change leaves the switch out of sync</h2><ul><li>This is the problem with the fixed version that strong candidates find.</li><li>Suppose a consumer binds one way and decides in the handler whether to accept the change:</li></ul></section>
+<section id="slide-083" data-part="2" data-cue="SIG-002 · Answer · code 1/1"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · Answer · code 1/1</h2><pre class="code" data-lang="html">&lt;ui-switch [checked]=&quot;allowed&quot; (checkedChange)=&quot;request($event)&quot;&gt;Share data&lt;/ui-switch&gt;</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-084" data-part="2" data-cue="SIG-002 · 2. A rejected change leaves the switch out of sync"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · 2. A rejected change leaves the switch out of sync</h2><ul><li>The user clicks.</li><li>The model flips itself to true and emits.</li><li>The parent refuses and leaves allowed as false.</li></ul></section>
+<section id="slide-085" data-part="2" data-cue="SIG-002 · 2. A rejected change leaves the switch out of sync"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · 2. A rejected change leaves the switch out of sync</h2><ul><li>There is no single right answer, but a library must pick one and document it:</li></ul></section>
+<section id="slide-086" data-part="2" data-cue="SIG-002 · 2. A rejected change leaves the switch out of sync"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · 2. A rejected change leaves the switch out of sync</h2><ul><li>Document ordinary two-way binding as an immediate-commit contract.</li><li>A parent that must approve or reject a request needs a controlled contract.</li><li>An immediate change-and-revert can leave the local model out of sync.</li></ul></section>
+<section id="slide-087" data-part="2" data-cue="SIG-002 · 3. `&lt;ui-switch checked&gt;` does not work"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · 3. &lt;ui-switch checked&gt; does not work</h2><ul><li>Consumers expect HTML-like boolean attributes.</li><li>A plain input(false) would need the booleanAttribute transform for &lt;ui-switch checked&gt; to mean true, but model() does not accept a transform.</li><li>With strict templates the static attribute is a type error (a string '' is not a boolean), which is at least caught at build time.</li></ul></section>
+<section id="slide-088" data-part="2" data-cue="SIG-002 · What a strong candidate also mentions"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · What a strong candidate also mentions</h2><ul><li>A disabled state.</li><li>A switch with no disabled input forces consumers to wrap it or block clicks themselves.</li><li>Use the native disabled attribute on the &lt;button&gt;, so it leaves the tab order and assistive technology reports it.</li></ul></section>
+<section id="slide-089" data-part="2" data-cue="SIG-002 · Strict parent authority"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · Strict parent authority</h2><pre class="code" data-lang="ts">readonly checked = input(false);
+readonly checkedChangeRequest = output&lt;boolean&gt;();
+
+requestFlip(): void {
+  this.checkedChangeRequest.emit(!this.checked());
+}
+// Render checked(); only the parent commits a value.</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-090" data-part="2" data-cue="SIG-002 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · Follow-up 1</h2><p class="question">Would moving the copy into ngOnChanges have fixed the reset bug? What would still be wrong?</p><p class="small muted">Pause the video, answer aloud, then compare the explanation.</p></section>
+<section id="slide-090-answer" data-part="2" data-cue="It can fix the case where the parent actually changes the input, because each ne"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · Follow-up 1 · Answer</h2><ul><li>It can fix the case where the parent actually changes the input, because each new bound value is copied into local state.</li><li>It does not remove the two sources of truth.</li><li>If the component changes its local state and the parent rejects the proposed value without changing its binding, there may be no input change and no lifecycle callback to undo the local state.</li></ul></section>
+<section id="slide-091" data-part="2" data-cue="SIG-002 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · Follow-up 2</h2><p class="question">How would you write a test that proves the rejected-change behavior you chose?</p><p class="small muted">Pause the video, answer aloud, then compare the explanation.</p></section>
+<section id="slide-091-answer" data-part="2" data-cue="Mount a parent host with checked false and an event handler that records the pro"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · Follow-up 2 · Answer</h2><ul><li>Mount a parent host with checked false and an event handler that records the proposed true value but refuses to update accepted state.</li><li>Click the actual button.</li><li>Assert that the request was received, the parent remains false, and the rendered checked state also remains false under the controlled contract.</li></ul></section>
+<section id="slide-092" data-part="2" data-cue="SIG-002 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · Follow-up 3</h2><p class="question">When would you choose input plus output over model, even for a value the component can change itself?</p><p class="small muted">Pause the video, answer aloud, then compare the explanation.</p></section>
+<section id="slide-092-answer" data-part="2" data-cue="Choose input plus output when the component proposes changes but another owner d"><div class="kicker">Interview walkthrough</div><h2>SIG-002 · Follow-up 3 · Answer</h2><ul><li>Choose input plus output when the component proposes changes but another owner decides whether to commit them.</li><li>Examples include a server-authorized setting, a confirmation step, or a component whose value is part of a larger transactional form.</li><li>The output can carry a request while the read-only input represents accepted state.</li></ul></section>
+<section id="slide-093" data-part="3" data-cue="SIG-003 · Scenario"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · Scenario</h2><ul><li>We now turn to SIG-003.</li><li>Inspect state ownership, reactive dependencies, resource lifetimes, and the consumer contract.</li></ul></section>
+<section id="slide-094" data-part="3" data-cue="SIG-003 · Scenario"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · Scenario</h2><ul><li>A popover in @acme/ui opens below an anchor element and closes on Escape.</li><li>Product teams report two bugs: &quot;pages get slower the more often users open popovers&quot;, and &quot;the popover sometimes appears in the wrong place&quot;.</li><li>Here is the component:</li></ul></section>
+<section id="slide-095" data-part="3" data-cue="SIG-003 · Scenario · code 1/3"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · Scenario · code 1/3</h2><pre class="code" data-lang="ts">import { Component, DOCUMENT, ElementRef, effect, inject, input, model, viewChild } from '@angular/core';
+
+@Component({
+  selector: 'ui-popover',
+  styles: `.ui-popover__panel { position: fixed; }`,
+  template: `
+    @if (open()) {
+      &lt;div #panel class=&quot;ui-popover__panel&quot;&gt;
+        &lt;ng-content /&gt;
+      &lt;/div&gt;
+    }
+  `,
+})
+export class PopoverComponent {</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-096" data-part="3" data-cue="SIG-003 · Scenario · code 2/3"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · Scenario · code 2/3</h2><pre class="code" data-lang="ts">  readonly open = model(false);
+  readonly anchor = input.required&lt;HTMLElement&gt;();
+  private readonly panel = viewChild&lt;ElementRef&lt;HTMLElement&gt;&gt;('panel');
+  private readonly document = inject(DOCUMENT);
+
+  constructor() {
+    effect(() =&gt; {
+      if (this.open()) {
+        this.document.addEventListener('keydown', event =&gt; {
+          if (event.key === 'Escape') this.open.set(false);
+        });
+      }
+    });
+</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-097" data-part="3" data-cue="SIG-003 · Scenario · code 3/3"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · Scenario · code 3/3</h2><pre class="code" data-lang="ts">    effect(() =&gt; {
+      const panel = this.panel();
+      if (!panel) return;
+      const rect = this.anchor().getBoundingClientRect();
+      panel.nativeElement.style.top = `${rect.bottom}px`;
+      panel.nativeElement.style.left = `${rect.left}px`;
+    });
+  }
+}</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-098" data-part="3" data-cue="SIG-003 · Interview question"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · Interview question</h2><p class="question">Explain both bugs, then fix the component. Also tell me what you would still be unhappy about before shipping it to forty product teams.</p><p class="small muted">Pause the video, answer aloud, then compare the explanation.</p></section>
+<section id="slide-099" data-part="3" data-cue="SIG-003 · 1. &quot;Pages get slower&quot;: a listener leak"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · 1. &quot;Pages get slower&quot;: a listener leak</h2><ul><li>Every time open becomes true, the first effect adds a new keydown listener, and nothing ever removes one.</li><li>After five opens there are five listeners.</li><li>They also outlive the component: each closure holds this, so a destroyed popover and everything it references stay in memory for the life of the page.</li></ul></section>
+<section id="slide-100" data-part="3" data-cue="SIG-003 · 1. &quot;Pages get slower&quot;: a listener leak"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · 1. &quot;Pages get slower&quot;: a listener leak</h2><ul><li>Fix: register cleanup.</li><li>An effect's callback receives onCleanup.</li><li>The cleanup runs before the effect runs again and when the effect is destroyed, which happens automatically when the component is destroyed.</li></ul></section>
+<section id="slide-101" data-part="3" data-cue="SIG-003 · 2. &quot;Wrong place&quot;: measuring the DOM in an `effect`"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · 2. &quot;Wrong place&quot;: measuring the DOM in an effect</h2><ul><li>effect() is for synchronising state with something outside Angular's templates.</li><li>It is not timed to the DOM: it runs during change detection, so the measurement can happen against a layout that is not final.</li><li>Reading layout (getBoundingClientRect) and then writing styles in the same callback, for many popovers, also forces the browser to recalculate layout repeatedly.</li></ul></section>
+<section id="slide-102" data-part="3" data-cue="SIG-003 · 2. &quot;Wrong place&quot;: measuring the DOM in an `effect`"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · 2. &quot;Wrong place&quot;: measuring the DOM in an effect</h2><ul><li>Fix: afterRenderEffect.</li><li>It runs after Angular has updated the DOM, splits work into phases (earlyRead, write, mixedReadWrite, read) so reads and writes from many components are batched, and never runs during server-side rendering, where there is no layout to measure.</li></ul></section>
+<section id="slide-103" data-part="3" data-cue="SIG-003 · Answer · code 1/4"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · Answer · code 1/4</h2><pre class="code" data-lang="ts">import {
+  Component,
+  DOCUMENT,
+  ElementRef,
+  afterRenderEffect,
+  effect,
+  inject,
+  input,
+  model,
+  viewChild,
+} from '@angular/core';
+
+@Component({
+  selector: 'ui-popover',</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-104" data-part="3" data-cue="SIG-003 · Answer · code 2/4"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · Answer · code 2/4</h2><pre class="code" data-lang="ts">  styles: `.ui-popover__panel { position: fixed; }`,
+  template: `
+    @if (open()) {
+      &lt;div #panel class=&quot;ui-popover__panel&quot;&gt;
+        &lt;ng-content /&gt;
+      &lt;/div&gt;
+    }
+  `,
+})
+export class PopoverComponent {
+  readonly open = model(false);
+  readonly anchor = input.required&lt;HTMLElement&gt;();
+  private readonly panel = viewChild&lt;ElementRef&lt;HTMLElement&gt;&gt;('panel');
+  private readonly document = inject(DOCUMENT);</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-105" data-part="3" data-cue="SIG-003 · Answer · code 3/4"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · Answer · code 3/4</h2><pre class="code" data-lang="ts">
+  constructor() {
+    effect(onCleanup =&gt; {
+      if (!this.open()) return;
+      const onKeydown = (event: KeyboardEvent) =&gt; {
+        if (event.key !== 'Escape') return;
+        this.open.set(false);
+        this.anchor().focus();
+      };
+      this.document.addEventListener('keydown', onKeydown);
+      onCleanup(() =&gt; this.document.removeEventListener('keydown', onKeydown));
+    });
+
+    afterRenderEffect({</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-106" data-part="3" data-cue="SIG-003 · Answer · code 4/4"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · Answer · code 4/4</h2><pre class="code" data-lang="ts">      earlyRead: () =&gt; {
+        const panel = this.panel()?.nativeElement;
+        return panel ? { panel, rect: this.anchor().getBoundingClientRect() } : null;
+      },
+      write: measured =&gt; {
+        const value = measured();
+        if (!value) return;
+        value.panel.style.top = `${value.rect.bottom}px`;
+        value.panel.style.left = `${value.rect.left}px`;
+      },
+    });
+  }
+}</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-107" data-part="3" data-cue="SIG-003 · Fixed version"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · Fixed version</h2><ul><li>Closing on Escape now also returns focus to the anchor.</li><li>Without that, keyboard users lose their place when the panel disappears.</li></ul></section>
+<section id="slide-108" data-part="3" data-cue="SIG-003 · What a strong candidate is still unhappy about"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · What a strong candidate is still unhappy about</h2><ul><li>Position only updates when signals change.</li><li>Scrolling, resizing, or the anchor moving leaves the panel behind.</li><li>A shared library should use a tested positioning engine, such as the CDK Overlay, or CSS anchor positioning where the supported browsers allow it, rather than hand-rolled coordinates.</li></ul></section>
+<section id="slide-109" data-part="3" data-cue="SIG-003 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · Follow-up 1</h2><p class="question">Why is once true on the listener not a fix?</p><p class="small muted">Pause the video, answer aloud, then compare the explanation.</p></section>
+<section id="slide-109-answer" data-part="3" data-cue="Once removes the listener after the first keydown event, not after the first Esc"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · Follow-up 1 · Answer</h2><ul><li>Once removes the listener after the first keydown event, not after the first Escape key.</li><li>Pressing Tab or an arrow key can remove the handler while the popover is still open, so the next Escape does nothing.</li><li>It also does not necessarily release a listener that never receives an event after the component closes or is destroyed.</li></ul></section>
+<section id="slide-110" data-part="3" data-cue="SIG-003 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · Follow-up 2</h2><p class="question">When is a plain effect the right tool in a component library? Give an example.</p><p class="small muted">Pause the video, answer aloud, then compare the explanation.</p></section>
+<section id="slide-110-answer" data-part="3" data-cue="The open-state keyboard registration itself is a reasonable example. It connects"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · Follow-up 2 · Answer</h2><ul><li>The open-state keyboard registration itself is a reasonable example.</li><li>It connects reactive open state to a document event listener and does not depend on final element geometry.</li><li>Another example is persisting a documented user preference to browser storage, provided the implementation handles browser availability, failures, and the correct lifetime.</li></ul></section>
+<section id="slide-111" data-part="3" data-cue="SIG-003 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · Follow-up 3</h2><p class="question">How would you make Escape close only the topmost layer across popovers, menus, and dialogs from different teams?</p><p class="small muted">Pause the video, answer aloud, then compare the explanation.</p></section>
+<section id="slide-111-answer" data-part="3" data-cue="Introduce a shared layer coordinator or use the overlay infrastructure already p"><div class="kicker">Interview walkthrough</div><h2>SIG-003 · Follow-up 3 · Answer</h2><ul><li>Introduce a shared layer coordinator or use the overlay infrastructure already provided by the component library.</li><li>Each active layer registers a token, its ordering, an Escape handler, and the focus-restoration target.</li><li>One shared keyboard dispatcher asks the topmost eligible layer to handle Escape, rather than every component independently subscribing and closing itself.</li></ul></section>
+<section id="slide-112" data-part="4" data-cue="SIG-004 · Scenario"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Scenario</h2><ul><li>We now turn to SIG-004.</li><li>Inspect state ownership, reactive dependencies, resource lifetimes, and the consumer contract.</li></ul></section>
+<section id="slide-113" data-part="4" data-cue="SIG-004 · Scenario"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Scenario</h2><ul><li>@acme/ui ships a data table.</li><li>One product team reports: &quot;After a user sorts the table, our 'Export CSV' button exports rows in the sorted order, and our row numbers are wrong.</li><li>Another team reports that the table re-renders every row whenever anything on their page changes.</li></ul></section>
+<section id="slide-114" data-part="4" data-cue="SIG-004 · Scenario · code 1/4"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Scenario · code 1/4</h2><pre class="code" data-lang="ts">import { Component, computed, input, signal } from '@angular/core';
+
+export interface Column&lt;T&gt; {
+  key: keyof T &amp; string;
+  header: string;
+}
+
+type Direction = 'asc' | 'desc';
+
+@Component({
+  selector: 'ui-table',
+  template: `
+    &lt;table&gt;
+      &lt;thead&gt;</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-115" data-part="4" data-cue="SIG-004 · Scenario · code 2/4"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Scenario · code 2/4</h2><pre class="code" data-lang="ts">        &lt;tr&gt;
+          @for (column of columns(); track column.key) {
+            &lt;th (click)=&quot;sortBy(column.key)&quot;&gt;{{ column.header }}&lt;/th&gt;
+          }
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        @for (row of view().rows; track $index) {
+          &lt;tr&gt;
+            @for (column of columns(); track column.key) {
+              &lt;td&gt;{{ row[column.key] }}&lt;/td&gt;
+            }
+          &lt;/tr&gt;
+        }</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-116" data-part="4" data-cue="SIG-004 · Scenario · code 3/4"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Scenario · code 3/4</h2><pre class="code" data-lang="ts">      &lt;/tbody&gt;
+    &lt;/table&gt;
+  `,
+})
+export class TableComponent&lt;T extends object&gt; {
+  readonly rows = input.required&lt;T[]&gt;();
+  readonly columns = input.required&lt;Column&lt;T&gt;[]&gt;();
+  readonly sort = signal&lt;{ key: keyof T &amp; string; direction: Direction } | null&gt;(null);
+
+  readonly view = computed(() =&gt; {
+    const sort = this.sort();
+    const rows = this.rows();
+    if (sort) {
+      rows.sort((a, b) =&gt; {</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-117" data-part="4" data-cue="SIG-004 · Scenario · code 4/4"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Scenario · code 4/4</h2><pre class="code" data-lang="ts">        const result = String(a[sort.key]).localeCompare(String(b[sort.key]));
+        return sort.direction === 'asc' ? result : -result;
+      });
+    }
+    return { rows, count: rows.length };
+  });
+
+  sortBy(key: keyof T &amp; string): void {
+    const current = this.sort();
+    const direction: Direction = current?.key === key &amp;&amp; current.direction === 'asc' ? 'desc' : 'asc';
+    this.sort.set({ key, direction });
+  }
+}</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-118" data-part="4" data-cue="SIG-004 · Interview question"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Interview question</h2><p class="question">What is causing each reported bug, and what else would you change before this table is used across the organization? There are at least four issues.</p><p class="small muted">Pause the video, answer aloud, then compare the explanation.</p></section>
+<section id="slide-119" data-part="4" data-cue="SIG-004 · 1. `sort()` mutates the consumer's array"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · 1. sort() mutates the consumer's array</h2><ul><li>Array.prototype.sort sorts in place and returns the same array.</li><li>The computed therefore reorders the array the product team passed in, which is why their export and row numbers follow the table's sort order.</li><li>A component must never modify data it receives through an input; the consumer owns it.</li></ul></section>
+<section id="slide-120" data-part="4" data-cue="SIG-004 · 1. `sort()` mutates the consumer's array"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · 1. sort() mutates the consumer's array</h2><ul><li>There is a second effect: this.rows() returns the same reference after sorting, so if the consumer keeps that reference in its own signal, its own computeds see no change even though the contents moved.</li></ul></section>
+<section id="slide-121" data-part="4" data-cue="SIG-004 · 1. `sort()` mutates the consumer's array"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · 1. sort() mutates the consumer's array</h2><ul><li>Fix: sort a copy, with toSorted (ES2023) or [...rows].sort(...).</li></ul></section>
+<section id="slide-122" data-part="4" data-cue="SIG-004 · 2. `track $index` ties DOM rows to positions, not records"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · 2. track $index ties DOM rows to positions, not records</h2><ul><li>After sorting, row 0 holds a different record but Angular reuses the same &lt;tr&gt;.</li><li>Any state inside a row (a focused checkbox, an expanded detail, a running animation) stays with the position and now belongs to the wrong record.</li><li>It also means every row is re-bound on every sort.</li></ul></section>
+<section id="slide-123" data-part="4" data-cue="SIG-004 · 2. `track $index` ties DOM rows to positions, not records"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · 2. track $index ties DOM rows to positions, not records</h2><ul><li>Fix: let the consumer say how to identify a row, for example a trackBy input: trackBy = input&lt;(row: T) =&gt; unknown&gt;(row =&gt; row), and use track trackBy()(row).</li></ul></section>
+<section id="slide-124" data-part="4" data-cue="SIG-004 · 3. Expensive work on every new array, and one oversized `computed`"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · 3. Expensive work on every new array, and one oversized computed</h2><ul><li>The second report usually comes from a binding like [rows]=&quot;getOpenOrders()&quot;.</li><li>That expression creates a new array on every change detection pass, so rows changes every time, the computed re-runs, and the whole table is re-sorted.</li><li>With new row objects after every fetch, track $index (issue 2) cannot tell which rows are the same records either.</li></ul></section>
+<section id="slide-125" data-part="4" data-cue="SIG-004 · 3. Expensive work on every new array, and one oversized `computed`"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · 3. Expensive work on every new array, and one oversized computed</h2><ul><li>The table cannot stop a consumer from passing a new array, but it can avoid making it worse:</li></ul></section>
+<section id="slide-126" data-part="4" data-cue="SIG-004 · 3. Expensive work on every new array, and one oversized `computed`"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · 3. Expensive work on every new array, and one oversized computed</h2><ul><li>Keep each computed narrow. view bundles the rows and the count into a new object, so anything that reads view().count updates whenever the rows do.</li><li>Separate sortedRows and rowCount computeds update independently.</li><li>Use the equal option when a recomputation often produces an equivalent value that should not notify readers.</li></ul></section>
+<section id="slide-127" data-part="4" data-cue="SIG-004 · 4. Sorting is not accessible"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · 4. Sorting is not accessible</h2><ul><li>A click handler on &lt;th&gt; cannot be reached by keyboard and is not announced as interactive.</li><li>The header needs a real &lt;button type=&quot;button&quot;&gt; inside it.</li><li>The current sort is invisible to assistive technology.</li></ul></section>
+<section id="slide-128" data-part="4" data-cue="SIG-004 · 5. Locale-unaware and type-unaware comparison"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · 5. Locale-unaware and type-unaware comparison</h2><ul><li>String(value).localeCompare sorts 10 before 9, sorts dates as text, and uses the browser's default locale.</li><li>A shared table should accept a comparator per column and default to Intl.Collator with numeric: true.</li></ul></section>
+<section id="slide-129" data-part="4" data-cue="SIG-004 · Answer · code 1/5"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Answer · code 1/5</h2><pre class="code" data-lang="ts">import { Component, computed, input, signal } from '@angular/core';
+
+export interface Column&lt;T&gt; {
+  key: keyof T &amp; string;
+  header: string;
+  compare?: (a: T, b: T) =&gt; number;
+}
+
+type Direction = 'ascending' | 'descending';
+
+const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+
+@Component({
+  selector: 'ui-table',</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-130" data-part="4" data-cue="SIG-004 · Answer · code 2/5"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Answer · code 2/5</h2><pre class="code" data-lang="ts">  template: `
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          @for (column of columns(); track column.key) {
+            &lt;th scope=&quot;col&quot; [attr.aria-sort]=&quot;sort()?.key === column.key ? sort()?.direction : null&quot;&gt;
+              &lt;button type=&quot;button&quot; (click)=&quot;sortBy(column.key)&quot;&gt;{{ column.header }}&lt;/button&gt;
+            &lt;/th&gt;
+          }
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        @for (row of sortedRows(); track trackBy()(row)) {
+          &lt;tr&gt;</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-131" data-part="4" data-cue="SIG-004 · Answer · code 3/5"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Answer · code 3/5</h2><pre class="code" data-lang="ts">            @for (column of columns(); track column.key) {
+              &lt;td&gt;{{ row[column.key] }}&lt;/td&gt;
+            }
+          &lt;/tr&gt;
+        }
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  `,
+})
+export class TableComponent&lt;T extends object&gt; {
+  readonly rows = input.required&lt;readonly T[]&gt;();
+  readonly columns = input.required&lt;readonly Column&lt;T&gt;[]&gt;();
+  readonly trackBy = input&lt;(row: T) =&gt; unknown&gt;(row =&gt; row);
+  readonly sort = signal&lt;{ key: keyof T &amp; string; direction: Direction } | null&gt;(null);</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-132" data-part="4" data-cue="SIG-004 · Answer · code 4/5"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Answer · code 4/5</h2><pre class="code" data-lang="ts">
+  readonly sortedRows = computed(() =&gt; {
+    const sort = this.sort();
+    const rows = this.rows();
+    if (!sort) return rows;
+    const column = this.columns().find(c =&gt; c.key === sort.key);
+    const compare =
+      column?.compare ?? ((a: T, b: T) =&gt; collator.compare(String(a[sort.key]), String(b[sort.key])));
+    const sign = sort.direction === 'ascending' ? 1 : -1;
+    return rows.toSorted((a, b) =&gt; sign * compare(a, b));
+  });
+
+  sortBy(key: keyof T &amp; string): void {
+    const current = this.sort();</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-133" data-part="4" data-cue="SIG-004 · Answer · code 5/5"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Answer · code 5/5</h2><pre class="code" data-lang="ts">    const direction: Direction =
+      current?.key === key &amp;&amp; current.direction === 'ascending' ? 'descending' : 'ascending';
+    this.sort.set({ key, direction });
+  }
+}</pre><p class="small muted">Excerpt · complete component in examples.md</p></section>
+<section id="slide-134" data-part="4" data-cue="SIG-004 · Fixed version"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Fixed version</h2><ul><li>readonly T[] in the input type documents the contract (&quot;the table will not change your array&quot;) and makes the compiler reject any future in-place sort.</li></ul></section>
+<section id="slide-135" data-part="4" data-cue="SIG-004 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Follow-up 1</h2><p class="question">The consumer passes a new array on every fetch, but most records are identical. How would you avoid rebuilding every row?</p><p class="small muted">Pause the video, answer aloud, then compare the explanation.</p></section>
+<section id="slide-135-answer" data-part="4" data-cue="Track each row with a stable unique record identifier supplied by the consumer. "><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Follow-up 1 · Answer</h2><ul><li>Track each row with a stable unique record identifier supplied by the consumer.</li><li>Angular can then preserve the view associated with that record even if the array and record objects are newly allocated.</li><li>Tracking by object identity alone loses that benefit when the fetch replaces objects; tracking by index can attach local state to the wrong record after sorting.</li></ul></section>
+<section id="slide-136" data-part="4" data-cue="SIG-004 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Follow-up 2</h2><p class="question">Should the sort state be internal, a model, or both? What does each choice mean for teams that sort on the server?</p><p class="small muted">Pause the video, answer aloud, then compare the explanation.</p></section>
+<section id="slide-136-answer" data-part="4" data-cue="Internal sort state is convenient for an entirely client-side table: the compone"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Follow-up 2 · Answer</h2><ul><li>Internal sort state is convenient for an entirely client-side table: the component owns the interaction and derives the displayed rows locally.</li><li>A model can expose that state for two-way use while retaining convenient local defaults.</li><li>Server sorting needs a clearer boundary.</li></ul></section>
+<section id="slide-137" data-part="4" data-cue="SIG-004 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Follow-up 3</h2><p class="question">How would you announce Sorted by name, ascending after a user activates a header?</p><p class="small muted">Pause the video, answer aloud, then compare the explanation.</p></section>
+<section id="slide-137-answer" data-part="4" data-cue="Keep a real button in the header so keyboard users can activate sorting, and exp"><div class="kicker">Interview walkthrough</div><h2>SIG-004 · Follow-up 3 · Answer</h2><ul><li>Keep a real button in the header so keyboard users can activate sorting, and expose the current direction with aria sort on the relevant header cell.</li><li>If a supplemental announcement is needed, use a polite live region or the component library's LiveAnnouncer to report the accepted result, such as Sorted by name, ascending.</li><li>Announce after the state has actually changed, not merely when a request was emitted, especially for server sorting.</li></ul></section>
+<section id="slide-138" data-part="5" data-cue="Final review checklist · 1"><div class="kicker">Recap</div><h2>Final review checklist · 1</h2><ul><li>You have now examined every main question and follow-up in the signals topic.</li><li>The APIs are useful because they express different kinds of ownership.</li><li>Signal stores a writable fact.</li></ul></section>
+<section id="slide-139" data-part="5" data-cue="Final review checklist · 2"><div class="kicker">Recap</div><h2>Final review checklist · 2</h2><ul><li>When you answer these questions in an interview, lead with the observed defect and its mechanism.</li><li>For the chip group, explain construction order, reference equality, and the feedback loop.</li><li>For the switch, trace the two stored values and then discuss accepted versus requested changes.</li></ul></section>
+<section id="slide-140" data-part="5" data-cue="Final review checklist · 3"><div class="kicker">Recap</div><h2>Final review checklist · 3</h2><ul><li>Finally, treat a shared component library as a contract with other teams.</li><li>Document whether outputs represent interactions or effective state, what boolean syntax is accepted, what identifies a row, and what happens when options disappear.</li><li>Keep minimal instructional fixes distinct from production overlay, forms, and accessibility requirements.</li></ul></section>
+<script src="../assets/slides.js"></script></body></html>

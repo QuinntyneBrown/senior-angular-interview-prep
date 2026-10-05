@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Design Tokens: Themes, Accessibility, and Public Contracts</title><link rel="stylesheet" href="../assets/slides.css"><style>section{padding:125px 130px 140px}h2{font-size:48px;margin-bottom:25px}.kicker{font-size:23px;margin-bottom:15px}section>p,li{font-size:37px;line-height:1.45}li{margin-bottom:22px}pre.code{font-size:22px;line-height:1.38;padding:22px 30px;white-space:pre-wrap;overflow-wrap:anywhere}.question{font-size:37px;line-height:1.35}section>p.small{font-size:24px}</style></head><body data-lesson-number="design-tokens" data-lesson-title="Design Tokens: Themes, Accessibility, and Public Contracts" data-parts="Foundations|TOK-001|TOK-002|TOK-003|TOK-004|Recap">
+<section id="slide-000" data-part="0"><div class="kicker">Foundations</div><h2>A design system is a contract between teams</h2><ul><li>Welcome to the design tokens lesson.</li><li>We will review four questions: raw values and token layers, renaming a public token, dark mode and forced colors, and controls that break when text grows.</li><li>Before looking at those defects, we need to understand what tokens promise.</li></ul></section>
+<section id="slide-001" data-part="0" data-cue="A design system is a contract between teams · 2"><div class="kicker">Foundations</div><h2>A design system is a contract between teams · 2</h2><ul><li>The consumer of a shared library should be able to change a supported theme without copying a component's stylesheet.</li><li>If every component chooses its own blue, radius, and spacing, a brand refresh becomes a search through unrelated code.</li><li>More subtly, a dark theme can change a background without changing its foreground.</li></ul></section>
+<section id="slide-002" data-part="0" data-cue="A design system is a contract between teams · 3"><div class="kicker">Foundations</div><h2>A design system is a contract between teams · 3</h2><ul><li>In an interview, do not stop at replacing hexadecimal values with variables.</li><li>Explain the source of truth, the token layers, the override boundary, and how you test the result.</li><li>A senior answer also considers existing consumers.</li></ul></section>
+<section id="slide-003" data-part="0" data-cue="Primitive, semantic, and component layers"><div class="kicker">Foundations</div><h2>Primitive, semantic, and component layers</h2><ul><li>Primitive tokens describe a palette or scale: a blue step, a spacing increment, or a radius.</li><li>They are reusable ingredients.</li><li>Semantic tokens describe intent: action background, content on an action, surface border, or disabled foreground.</li></ul></section>
+<section id="slide-004" data-part="0" data-cue="Primitive, semantic, and component layers · 2"><div class="kicker">Foundations</div><h2>Primitive, semantic, and component layers · 2</h2><pre class="code" data-lang="css">:root {
+  --ui-blue-600: #2457c5;
+  --ui-color-action: var(--ui-blue-600);
+  --ui-color-on-action: #fff;
+}
+.ui-button {
+  background: var(--ui-button-bg, var(--ui-color-action));
+  color: var(--ui-color-on-action);
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-005" data-part="0" data-cue="Primitive, semantic, and component layers · 3"><div class="kicker">Foundations</div><h2>Primitive, semantic, and component layers · 3</h2><ul><li>The example separates a palette value from its purpose.</li><li>In dark mode, the semantic role can point to another primitive while the component still consumes the same name.</li><li>Define foreground and background roles as a pair and verify their contrast for every relevant state.</li></ul></section>
+<section id="slide-006" data-part="0" data-cue="Inheritance and override placement"><div class="kicker">Foundations</div><h2>Inheritance and override placement</h2><ul><li>CSS custom properties participate in the cascade and ordinarily inherit.</li><li>A product can set a token on a theme container and descendants can consume the inherited value.</li><li>This is an important part of a scoped theme: two regions on one page can use different semantic mappings without a global JavaScript toggle.</li></ul></section>
+<section id="slide-007" data-part="0" data-cue="Inheritance and override placement · 2"><div class="kicker">Foundations</div><h2>Inheritance and override placement · 2</h2><ul><li>Be careful where you declare defaults.</li><li>If a component declares its public override property directly on its host, that declaration wins over an inherited value on an ancestor.</li><li>The consumer may have set the documented property correctly and still see no change.</li></ul></section>
+<section id="slide-008" data-part="0" data-cue="Inheritance and override placement · 3"><div class="kicker">Foundations</div><h2>Inheritance and override placement · 3</h2><ul><li>Debug this in the browser's computed styles.</li><li>Check the property on the theme ancestor and on the component host, then inspect the actual background declaration.</li><li>A variable's existence does not prove the component reads it.</li></ul></section>
+<section id="slide-009" data-part="0" data-cue="Renaming a token without losing overrides"><div class="kicker">Foundations</div><h2>Renaming a token without losing overrides</h2><ul><li>Renaming a public token is a migration.</li><li>During the compatibility period, the new name should win when supplied, the old name should still work when the new one is absent, and the library default should remain last.</li><li>Put that order in the consuming declaration.</li></ul></section>
+<section id="slide-010" data-part="0" data-cue="Renaming a token without losing overrides · 2"><div class="kicker">Foundations</div><h2>Renaming a token without losing overrides · 2</h2><pre class="code" data-lang="css">.ui-button {
+  background: var(--ui-button-background,
+    var(--ui-button-bg, var(--ui-color-action)));
+}
+/* New name, then deprecated name, then default. */</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-011" data-part="0" data-cue="Renaming a token without losing overrides · 3"><div class="kicker">Foundations</div><h2>Renaming a token without losing overrides · 3</h2><ul><li>The eventual removal belongs in a release that follows your compatibility policy.</li><li>Forty teams will not all migrate on the same day.</li><li>Agree on a support window, supply automated help where possible, and collect evidence of remaining uses.</li></ul></section>
+<section id="slide-012" data-part="0" data-cue="System themes and application preferences"><div class="kicker">Foundations</div><h2>System themes and application preferences</h2><ul><li>A theme library should not assume that every application starts in a browser or stores a preference in local storage.</li><li>Server rendering, hydration, embedded applications, and scoped themes have different requirements.</li><li>Let CSS handle a system color preference where possible.</li></ul></section>
+<section id="slide-013" data-part="0" data-cue="System themes and application preferences · 2"><div class="kicker">Foundations</div><h2>System themes and application preferences · 2</h2><ul><li>The light-dark function selects a value according to the used color scheme.</li><li>A root that supports light and dark can follow the system preference, while a scoped explicit scheme can choose one.</li><li>For older supported browsers, provide light defaults and a prefers-color-scheme media query, then explicit theme overrides.</li></ul></section>
+<section id="slide-014" data-part="0" data-cue="System themes and application preferences · 3"><div class="kicker">Foundations</div><h2>System themes and application preferences · 3</h2><ul><li>A stored explicit choice needs to be restored before first paint if the application wants to avoid a flash.</li><li>A library can document how the application sets an attribute during server rendering or initial page setup.</li><li>It should not silently choose a storage policy or overwrite body classes.</li></ul></section>
+<section id="slide-015" data-part="0" data-cue="Forced colors and non-color state"><div class="kicker">Foundations</div><h2>Forced colors and non-color state</h2><ul><li>Forced-colors mode changes the rules.</li><li>The browser can replace author colors with system colors chosen by the user.</li><li>A selected chip that differs only by a blue background may become indistinguishable from an unselected chip.</li></ul></section>
+<section id="slide-016" data-part="0" data-cue="Forced colors and non-color state · 2"><div class="kicker">Foundations</div><h2>Forced colors and non-color state · 2</h2><ul><li>Use system colors deliberately where a custom indicator needs them.</li><li>Highlight and HighlightText form a system-selected pair; GrayText can express disabled text.</li><li>Avoid turning off forced color adjustment for a whole component simply to preserve a brand palette.</li></ul></section>
+<section id="slide-017" data-part="0" data-cue="Forced colors and non-color state · 3"><div class="kicker">Foundations</div><h2>Forced colors and non-color state · 3</h2><ul><li>Browser emulation in CI can check that outlines, selected markers, and disabled states remain rendered.</li><li>Automated checks are valuable, but they do not replace testing on an actual high contrast configuration with assistive technology.</li><li>Treat a forced-colors screenshot as evidence of the tested browser state, not a certification of every platform.</li></ul></section>
+<section id="slide-018" data-part="0" data-cue="Text growth, reflow, and target size"><div class="kicker">Foundations</div><h2>Text growth, reflow, and target size</h2><ul><li>Relative font units help controls follow the user's preferred default text size.</li><li>A rem is relative to the root font size.</li><li>Avoid setting a fixed root size that defeats that preference.</li></ul></section>
+<section id="slide-019" data-part="0" data-cue="Text growth, reflow, and target size · 2"><div class="kicker">Foundations</div><h2>Text growth, reflow, and target size · 2</h2><pre class="code" data-lang="css">.ui-icon-button {
+  min-inline-size: 2.75rem;
+  min-block-size: 2.75rem;
+  padding: .5rem;
+  font-size: .875rem;
+  line-height: 1.5;
+}
+/* The icon can be smaller than its button. */</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-020" data-part="0" data-cue="Text growth, reflow, and target size · 3"><div class="kicker">Foundations</div><h2>Text growth, reflow, and target size · 3</h2><ul><li>Separate icon size from hit target size.</li><li>A small icon can sit in a much larger native button.</li><li>WCAG's minimum target criterion is twenty-four CSS pixels with defined exceptions; many systems choose larger touch targets.</li></ul></section>
+<section id="slide-021" data-part="0" data-cue="A repeatable review and verification method"><div class="kicker">Foundations</div><h2>A repeatable review and verification method</h2><ul><li>Review tokens from the consumer outward.</li><li>Identify the supported override, follow its fallback chain, then examine every visual state that consumes it.</li><li>Include light, dark, explicit preferences, inherited scoped overrides, forced colors, disabled states, focus, enlarged text, and long labels.</li></ul></section>
+<section id="slide-022" data-part="0" data-cue="A repeatable review and verification method · 2"><div class="kicker">Foundations</div><h2>A repeatable review and verification method · 2</h2><ul><li>Centralize authoring where designers and engineers can review the same decisions, and generate platform artifacts rather than manually synchronizing values.</li><li>The generated CSS, native platform constants, documentation, and previews should preserve semantic names.</li><li>Validate references and types so a missing alias or mismatched unit fails before publication.</li></ul></section>
+<section id="slide-023" data-part="0" data-cue="A repeatable review and verification method · 3"><div class="kicker">Foundations</div><h2>A repeatable review and verification method · 3</h2><ul><li>As we read the questions, connect every proposed correction to a failure mechanism and a regression test.</li><li>Explain who owns an override and what existing consumers will observe.</li><li>That combination demonstrates senior judgment: the design is coherent, the implementation respects CSS behavior, and the rollout protects teams who depend on it.</li></ul></section>
+<section id="slide-024" data-part="1" data-cue="TOK-001 · Scenario"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · Scenario</h2><ul><li>We now review TOK-001: A button that cannot be themed.</li><li>Inspect the consumer contract and identify the mechanism behind each reported defect.</li></ul></section>
+<section id="slide-025" data-part="1" data-cue="TOK-001 · Scenario"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · Scenario</h2><ul><li>@acme/ui is adding a dark theme and a second brand for an acquired company.</li><li>The button below does not change in either theme.</li><li>A product team also complains that they had to write .ui-button { background: ... } in their global stylesheet to restyle a button for a campaign page, and it broke after the last library release.</li></ul></section>
+<section id="slide-026" data-part="1" data-cue="TOK-001 · Scenario"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · Scenario</h2><ul><li>The tokens file:</li></ul></section>
+<section id="slide-027" data-part="1" data-cue="TOK-001 · Scenario · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · Scenario · block 1 · page 1</h2><pre class="code" data-lang="css">:root {
+  --color-blue-500: #0b5fff;
+  --color-blue-700: #0842b3;
+  --color-red-500: #d92d20;
+  --color-red-700: #a51f15;
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-028" data-part="1" data-cue="TOK-001 · Scenario"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · Scenario</h2><ul><li>The button's stylesheet:</li></ul></section>
+<section id="slide-029" data-part="1" data-cue="TOK-001 · Scenario · block 2 · page 1"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · Scenario · block 2 · page 1</h2><pre class="code" data-lang="css">.ui-button {
+  background: #0b5fff;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font: 600 14px/20px &quot;Inter&quot;, sans-serif;
+}
+
+.ui-button:hover {
+  background: var(--color-blue-700);
+}
+
+.ui-button--danger {</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-030" data-part="1" data-cue="TOK-001 · Scenario · block 3 · page 2"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · Scenario · block 3 · page 2</h2><pre class="code" data-lang="css">  background: var(--color-red-500);
+}
+
+.ui-button--danger:hover {
+  background: var(--color-red-700);
+}
+
+.ui-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(11, 95, 255, 0.4);
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-031" data-part="1" data-cue="TOK-001 · Interview question"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · Interview question</h2><p class="question">Why can't this button be themed, and what token structure would you put in place? Then tell me how product teams should customise it, and what is wrong with the focus style.</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-032" data-part="1" data-cue="TOK-001 · 1. Raw values bypass the token system"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · 1. Raw values bypass the token system</h2><ul><li>#0b5fff, white, 8px 16px, 4px and the font shorthand are written directly into the component.</li><li>A theme can only change custom properties, so these values never change.</li><li>Each one is also a copy of a decision made elsewhere, which drifts silently the next time the design team adjusts it.</li></ul></section>
+<section id="slide-033" data-part="1" data-cue="TOK-001 · 2. Components use palette tokens, which have no meaning"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · 2. Components use palette tokens, which have no meaning</h2><ul><li>--color-blue-700 names a colour, not a purpose.</li><li>A dark theme cannot sensibly redefine &quot;blue-700&quot;, and the acquired brand's primary colour is not blue at all.</li><li>Themes need something to remap that describes intent.</li></ul></section>
+<section id="slide-034" data-part="1" data-cue="TOK-001 · 2. Components use palette tokens, which have no meaning · comparison 1"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · 2. Components use palette tokens, which have no meaning · comparison 1</h2><ul><li>Layer: Primitive (palette).</li><li>Example: --ui-palette-blue-500: #0b5fff.</li><li>Who uses it: Only the semantic layer.</li></ul></section>
+<section id="slide-035" data-part="1" data-cue="TOK-001 · 2. Components use palette tokens, which have no meaning · comparison 2"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · 2. Components use palette tokens, which have no meaning · comparison 2</h2><ul><li>Layer: Semantic.</li><li>Example: --ui-color-action-primary: var(--ui-palette-blue-500).</li><li>Who uses it: Components; themes remap these.</li></ul></section>
+<section id="slide-036" data-part="1" data-cue="TOK-001 · 2. Components use palette tokens, which have no meaning · comparison 3"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · 2. Components use palette tokens, which have no meaning · comparison 3</h2><ul><li>Layer: Component.</li><li>Example: --ui-button-background.</li><li>Who uses it: Consumers who need a documented override.</li></ul></section>
+<section id="slide-037" data-part="1" data-cue="TOK-001 · 2. Components use palette tokens, which have no meaning"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · 2. Components use palette tokens, which have no meaning</h2><ul><li>A dark theme or a second brand then redefines the semantic layer only:</li></ul></section>
+<section id="slide-038" data-part="1" data-cue="TOK-001 · Answer · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · Answer · block 1 · page 1</h2><pre class="code" data-lang="css">:root {
+  --ui-palette-blue-300: #6b9bff;
+  --ui-palette-blue-500: #0b5fff;
+  --ui-palette-blue-700: #0842b3;
+  --ui-palette-neutral-0: #ffffff;
+  --ui-palette-neutral-950: #0b0d12;
+
+  --ui-color-action-primary: var(--ui-palette-blue-500);
+  --ui-color-action-primary-hover: var(--ui-palette-blue-700);
+  --ui-color-on-action-primary: var(--ui-palette-neutral-0);
+  --ui-color-focus-ring: var(--ui-palette-blue-700);
+}
+
+[data-ui-theme='dark'] {</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-039" data-part="1" data-cue="TOK-001 · Answer · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · Answer · block 2 · page 2</h2><pre class="code" data-lang="css">  --ui-color-action-primary: var(--ui-palette-blue-300);
+  --ui-color-action-primary-hover: var(--ui-palette-blue-500);
+  --ui-color-on-action-primary: var(--ui-palette-neutral-950);
+  --ui-color-focus-ring: var(--ui-palette-blue-300);
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-040" data-part="1" data-cue="TOK-001 · 2. Components use palette tokens, which have no meaning"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · 2. Components use palette tokens, which have no meaning</h2><ul><li>The names are also prefixed (--ui-).</li><li>Unprefixed names such as --color-blue-500 collide with custom properties that product applications already define.</li></ul></section>
+<section id="slide-041" data-part="1" data-cue="TOK-001 · 3. Consumers had to style private markup"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · 3. Consumers had to style private markup</h2><ul><li>The campaign team targeted .ui-button, an internal class.</li><li>Internal class names and DOM structure are not public API, so a refactor broke them, and the library had no way to know.</li><li>The fix is to give consumers a documented hook: component-level tokens that the component reads with a fallback to the semantic token.</li></ul></section>
+<section id="slide-042" data-part="1" data-cue="TOK-001 · Answer · block 3 · page 1"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · Answer · block 3 · page 1</h2><pre class="code" data-lang="css">.ui-button {
+  --_background: var(--ui-button-background, var(--ui-color-action-primary));
+  --_background-hover: var(--ui-button-background-hover, var(--ui-color-action-primary-hover));
+  --_foreground: var(--ui-button-foreground, var(--ui-color-on-action-primary));
+
+  background: var(--_background);
+  color: var(--_foreground);
+  padding: var(--ui-space-2) var(--ui-space-4);
+  border: none;
+  border-radius: var(--ui-radius-control);
+  font: var(--ui-font-label);
+}
+
+.ui-button:hover {</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-043" data-part="1" data-cue="TOK-001 · Answer · block 4 · page 2"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · Answer · block 4 · page 2</h2><pre class="code" data-lang="css">  background: var(--_background-hover);
+}
+
+.ui-button--danger {
+  --_background: var(--ui-button-danger-background, var(--ui-color-action-danger));
+  --_background-hover: var(--ui-button-danger-background-hover, var(--ui-color-action-danger-hover));
+  --_foreground: var(--ui-button-danger-foreground, var(--ui-color-on-action-danger));
+}
+
+.ui-button:focus-visible {
+  outline: var(--ui-focus-ring-width) solid var(--ui-color-focus-ring);
+  outline-offset: var(--ui-focus-ring-offset);
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-044" data-part="1" data-cue="TOK-001 · 3. Consumers had to style private markup"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · 3. Consumers had to style private markup</h2><ul><li>The campaign team now writes .campaign ui-button { --ui-button-background: ... }.</li><li>That name is listed in the button's documentation and covered by the library's versioning policy, so renaming it later is a breaking change the library manages deliberately (see TOK-002).</li></ul></section>
+<section id="slide-045" data-part="1" data-cue="TOK-001 · 3. Consumers had to style private markup"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · 3. Consumers had to style private markup</h2><ul><li>The underscore properties (--_background) are private working variables.</li><li>They let the danger variant change the defaults without overwriting the public tokens a consumer may have set.</li></ul></section>
+<section id="slide-046" data-part="1" data-cue="TOK-001 · 4. The focus style fails in two ways"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · 4. The focus style fails in two ways</h2><ul><li>outline: none plus box-shadow.</li><li>In forced-colors mode (Windows contrast themes) the browser removes box-shadow, so keyboard users see no focus indicator at all.</li><li>An outline survives forced colors because the browser repaints it in a system colour. - :focus instead of :focus-visible.</li></ul></section>
+<section id="slide-047" data-part="1" data-cue="TOK-001 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · Follow-up 1</h2><p class="question">Where should token values be authored so that web, iOS and Android stay in step? What would you generate from that source?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-047-answer" data-part="1" data-cue="Use a versioned token source shared by design and engineering, with typed values"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · Follow-up 1 · Answer</h2><ul><li>Use a versioned token source shared by design and engineering, with typed values, semantic aliases, descriptions, and ownership.</li><li>Generate CSS custom properties, native platform constants, design-tool artifacts, and documentation from it.</li><li>Validate alias references and platform transformations in CI.</li></ul></section>
+<section id="slide-048" data-part="1" data-cue="TOK-001 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · Follow-up 2</h2><p class="question">A team wants a &quot;slightly lighter&quot; primary button on one page. Do you add a component token, a variant, or say no? What decides it?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-048-answer" data-part="1" data-cue="Ask whether the request represents a recurring supported role or a one-page exce"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · Follow-up 2 · Answer</h2><ul><li>Ask whether the request represents a recurring supported role or a one-page exception.</li><li>A reusable action variant deserves a named semantic contract and state rules.</li><li>A supported component customization may justify a component token.</li></ul></section>
+<section id="slide-049" data-part="1" data-cue="TOK-001 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>TOK-001 · Follow-up 3</h2><p class="question">How would you stop raw hex values from being merged into the library again?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-049-answer" data-part="1" data-cue="Lint component styles to reject raw colors outside the approved primitive token "><div class="kicker">Interview walkthrough</div><h2>TOK-001 · Follow-up 3 · Answer</h2><ul><li>Lint component styles to reject raw colors outside the approved primitive token source.</li><li>Use an allowlist for deliberate values such as transparent and system colors, and require review for exceptions.</li><li>Validate generated token references, run theme previews and contrast checks, and teach the role-based naming model in contribution guidance.</li></ul></section>
+<section id="slide-050" data-part="2" data-cue="TOK-002 · Scenario"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · Scenario</h2><ul><li>We now review TOK-002: Renaming a public token in a minor release.</li><li>Inspect the consumer contract and identify the mechanism behind each reported defect.</li></ul></section>
+<section id="slide-051" data-part="2" data-cue="TOK-002 · Scenario"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · Scenario</h2><ul><li>A pull request to @acme/ui is titled &quot;chore(button): rename token for consistency&quot; and is labelled for the next minor release.</li><li>The description says: &quot;Renamed --ui-button-bg to --ui-button-background to match our naming guidelines.</li><li>Also moved the default onto :host so it shows up in DevTools.&quot;</li></ul></section>
+<section id="slide-052" data-part="2" data-cue="TOK-002 · Scenario"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · Scenario</h2><ul><li>Before:</li></ul></section>
+<section id="slide-053" data-part="2" data-cue="TOK-002 · Scenario · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · Scenario · block 1 · page 1</h2><pre class="code" data-lang="css">.ui-button {
+  background: var(--ui-button-bg, var(--ui-color-action-primary));
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-054" data-part="2" data-cue="TOK-002 · Scenario"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · Scenario</h2><ul><li>After:</li></ul></section>
+<section id="slide-055" data-part="2" data-cue="TOK-002 · Scenario · block 2 · page 1"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · Scenario · block 2 · page 1</h2><pre class="code" data-lang="css">:host {
+  --ui-button-background: var(--ui-color-action-primary);
+}
+
+.ui-button {
+  background: var(--ui-button-background);
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-056" data-part="2" data-cue="TOK-002 · Scenario"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · Scenario</h2><ul><li>The button documentation lists --ui-button-bg as a supported customisation token.</li><li>Product teams use it like this:</li></ul></section>
+<section id="slide-057" data-part="2" data-cue="TOK-002 · Scenario · block 3 · page 1"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · Scenario · block 3 · page 1</h2><pre class="code" data-lang="css">.checkout ui-button {
+  --ui-button-bg: var(--ui-color-success);
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-058" data-part="2" data-cue="TOK-002 · Interview question"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · Interview question</h2><p class="question">Would you approve this pull request? Explain exactly what breaks for consumers, including consumers who switch to the new name, and describe how you would ship the rename safely.</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-059" data-part="2" data-cue="TOK-002 · Answer"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · Answer</h2><ul><li>No.</li><li>The change is breaking in two separate ways, and the second one also breaks the new name.</li></ul></section>
+<section id="slide-060" data-part="2" data-cue="TOK-002 · 1. The old name silently stops working"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · 1. The old name silently stops working</h2><ul><li>Every product team that sets --ui-button-bg now gets the default colour.</li><li>CSS does not fail: an unused custom property is valid, nothing is logged, and no build or type check catches it.</li><li>The documented token was public API, so removing it requires a major release, and should come after a deprecation period, not in a minor.</li></ul></section>
+<section id="slide-061" data-part="2" data-cue="TOK-002 · 2. Declaring the token on `:host` blocks consumer overrides"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · 2. Declaring the token on :host blocks consumer overrides</h2><ul><li>With emulated encapsulation, :host compiles to an attribute selector such as [_nghost-abc], with the specificity of a class (0,1,0).</li><li>Two consequences:</li></ul></section>
+<section id="slide-062" data-part="2" data-cue="TOK-002 · 2. Declaring the token on `:host` blocks consumer overrides"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · 2. Declaring the token on :host blocks consumer overrides</h2><ul><li>Inheritance is cut off. .checkout ui-button { --ui-button-background: ... } is fine, but a team that sets the token on an ancestor (.checkout { --ui-button-background: ... }) relies on inheritance, and the host element now declares its own value, which wins over anything inherited.</li><li>Theming a whole region stops working.</li></ul></section>
+<section id="slide-063" data-part="2" data-cue="TOK-002 · 2. Declaring the token on `:host` blocks consumer overrides"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · 2. Declaring the token on :host blocks consumer overrides</h2><ul><li>So even teams that migrate to the new name find it does not work reliably.</li></ul></section>
+<section id="slide-064" data-part="2" data-cue="TOK-002 · 2. Declaring the token on `:host` blocks consumer overrides"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · 2. Declaring the token on :host blocks consumer overrides</h2><ul><li>Rule: a component reads its public tokens with a fallback and never declares them on its host.</li></ul></section>
+<section id="slide-065" data-part="2" data-cue="TOK-002 · How to ship the rename safely"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · How to ship the rename safely</h2><ul><li>Minor release: add the new name and keep the old one working.</li></ul></section>
+<section id="slide-066" data-part="2" data-cue="TOK-002 · Answer · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · Answer · block 1 · page 1</h2><pre class="code" data-lang="css">.ui-button {
+  background: var(--ui-button-background, var(--ui-button-bg, var(--ui-color-action-primary)));
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-067" data-part="2" data-cue="TOK-002 · How to ship the rename safely"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · How to ship the rename safely</h2><ul><li>The new name wins when set; otherwise the old name applies; otherwise the semantic default.</li><li>Order matters: reversing the first two would let a forgotten old declaration override a team's new one.</li></ul></section>
+<section id="slide-068" data-part="2" data-cue="TOK-002 · How to ship the rename safely"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · How to ship the rename safely</h2><ul><li>Then make the deprecation visible, because CSS cannot warn on its own:</li></ul></section>
+<section id="slide-069" data-part="2" data-cue="TOK-002 · How to ship the rename safely"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · How to ship the rename safely</h2><ul><li>Mark --ui-button-bg as deprecated in the documentation and the changelog, with the replacement and the major version that removes it.</li><li>Keep a machine-readable list of deprecated tokens (for example deprecations.json with old name, new name and removal version).</li></ul></section>
+<section id="slide-070" data-part="2" data-cue="TOK-002 · How to ship the rename safely"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · How to ship the rename safely</h2><ul><li>Next major release: remove the old name.</li><li>The ng update migration rewrites --ui-button-bg to --ui-button-background, and the release notes list the removal under breaking changes.</li></ul></section>
+<section id="slide-071" data-part="2" data-cue="TOK-002 · How to ship the rename safely"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · How to ship the rename safely</h2><ul><li>Tests: add visual or computed-style tests for all three cases: old name set, new name set, neither set.</li><li>These are the behaviours the release promises.</li></ul></section>
+<section id="slide-072" data-part="2" data-cue="TOK-002 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · Follow-up 1</h2><p class="question">A team says &quot;just use `!important` in your fallback&quot;. Why is that worse?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-072-answer" data-part="2" data-cue="Important changes cascade priority; it does not repair the fallback order or a d"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · Follow-up 1 · Answer</h2><ul><li>Important changes cascade priority; it does not repair the fallback order or a default declared on the wrong element.</li><li>Inherited values still do not compete as direct declarations on the child.</li><li>Escalating specificity makes scoped themes harder to override and creates an arms race between library and product CSS.</li></ul></section>
+<section id="slide-073" data-part="2" data-cue="TOK-002 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · Follow-up 2</h2><p class="question">How long should a deprecation period be for a library used by forty teams? What evidence would you collect before removing the old token?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-073-answer" data-part="2" data-cue="Choose a published window long enough for the slowest supported release cadence,"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · Follow-up 2 · Answer</h2><ul><li>Choose a published window long enough for the slowest supported release cadence, with a removal major and named migration owners.</li><li>For forty teams, collect repository scans, actual theme override uses, CI build results, and completion confirmations.</li><li>Include applications that upgrade infrequently.</li></ul></section>
+<section id="slide-074" data-part="2" data-cue="TOK-002 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · Follow-up 3</h2><p class="question">Could registering the property with `@property` help here? What would `inherits` need to be?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-074-answer" data-part="2" data-cue="Property registration can describe syntax and an initial value, but it cannot fi"><div class="kicker">Interview walkthrough</div><h2>TOK-002 · Follow-up 3 · Answer</h2><ul><li>Property registration can describe syntax and an initial value, but it cannot fix an incorrect cascade or decide which deprecated name wins.</li><li>For a token intended to flow from theme containers into descendants, inherits normally needs to be true.</li><li>A registered initial value can also make a variable present when it used to be missing, changing fallback behavior.</li></ul></section>
+<section id="slide-075" data-part="3" data-cue="TOK-003 · Scenario"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Scenario</h2><ul><li>We now review TOK-003: Dark mode that flashes, crashes and disappears.</li><li>Inspect the consumer contract and identify the mechanism behind each reported defect.</li></ul></section>
+<section id="slide-076" data-part="3" data-cue="TOK-003 · Scenario"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Scenario</h2><ul><li>@acme/ui ships a theme service and theme-aware components.</li><li>Three bug reports arrive in the same week:</li></ul></section>
+<section id="slide-077" data-part="3" data-cue="TOK-003 · Scenario · item 1"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Scenario · item 1</h2><ul><li>1. &quot;Our server-rendered app crashes on startup since we added the theme service.&quot;</li></ul></section>
+<section id="slide-078" data-part="3" data-cue="TOK-003 · Scenario · item 2"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Scenario · item 2</h2><ul><li>2. &quot;Our page loads white, then flashes dark.</li><li>And our body classes disappear.&quot;</li></ul></section>
+<section id="slide-079" data-part="3" data-cue="TOK-003 · Scenario · item 3"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Scenario · item 3</h2><ul><li>3. &quot;With Windows contrast themes on, users cannot tell which filter chips are selected.&quot;</li></ul></section>
+<section id="slide-080" data-part="3" data-cue="TOK-003 · Scenario · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Scenario · block 1 · page 1</h2><pre class="code" data-lang="ts">import { Injectable, effect, signal } from '@angular/core';
+
+@Injectable({ providedIn: 'root' })
+export class ThemeService {
+  readonly theme = signal&lt;'light' | 'dark'&gt;(
+    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+  );
+
+  constructor() {
+    effect(() =&gt; {
+      document.body.className = `theme-${this.theme()}`;
+    });
+  }
+</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-081" data-part="3" data-cue="TOK-003 · Scenario · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Scenario · block 2 · page 2</h2><pre class="code" data-lang="ts">  toggle(): void {
+    this.theme.update(theme =&gt; (theme === 'dark' ? 'light' : 'dark'));
+  }
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-082" data-part="3" data-cue="TOK-003 · Scenario · block 3 · page 1"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Scenario · block 3 · page 1</h2><pre class="code" data-lang="css">.theme-light {
+  --ui-color-surface: #ffffff;
+  --ui-color-on-surface: #1a1c21;
+  --ui-color-selected: #dce6ff;
+}
+
+.theme-dark {
+  --ui-color-surface: #0b0d12;
+  --ui-color-on-surface: #e6e8ee;
+  --ui-color-selected: #1d3a7a;
+}
+
+.ui-chip {
+  border: none;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-083" data-part="3" data-cue="TOK-003 · Scenario · block 4 · page 2"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Scenario · block 4 · page 2</h2><pre class="code" data-lang="css">  background: var(--ui-color-surface);
+  color: var(--ui-color-on-surface);
+}
+
+.ui-chip[aria-pressed='true'] {
+  background: var(--ui-color-selected);
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-084" data-part="3" data-cue="TOK-003 · Interview question"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Interview question</h2><p class="question">Explain the cause of each report and redesign the theming approach. Keep in mind this is a library: it cannot assume how each application boots, renders or stores preferences.</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-085" data-part="3" data-cue="TOK-003 · Report 1: global browser objects crash server rendering"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Report 1: global browser objects crash server rendering</h2><ul><li>window and document do not exist during server-side rendering, so window.matchMedia throws a ReferenceError as soon as the service is created.</li><li>Because the service is providedIn: 'root' and injected early, the whole application fails.</li><li>A library cannot assume it only runs in a browser.</li></ul></section>
+<section id="slide-086" data-part="3" data-cue="TOK-003 · Report 1: global browser objects crash server rendering"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Report 1: global browser objects crash server rendering</h2><ul><li>Fix: inject DOCUMENT, and do not read browser-only APIs during construction.</li></ul></section>
+<section id="slide-087" data-part="3" data-cue="TOK-003 · Report 2: the flash, and the lost classes"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Report 2: the flash, and the lost classes</h2><ul><li>The flash.</li><li>No theme applies until JavaScript has loaded, bootstrapped, and run the effect.</li><li>Until then the page has no theme class, so the light defaults show, then switch.</li></ul></section>
+<section id="slide-088" data-part="3" data-cue="TOK-003 · Report 2: the flash, and the lost classes"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Report 2: the flash, and the lost classes</h2><ul><li>Fix: let CSS handle the system preference, and use JavaScript only for an explicit choice.</li></ul></section>
+<section id="slide-089" data-part="3" data-cue="TOK-003 · Answer · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Answer · block 1 · page 1</h2><pre class="code" data-lang="css">:root {
+  color-scheme: light dark;
+  --ui-color-surface: light-dark(#ffffff, #0b0d12);
+  --ui-color-on-surface: light-dark(#1a1c21, #e6e8ee);
+  --ui-color-selected: light-dark(#dce6ff, #1d3a7a);
+}
+
+:root[data-ui-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-ui-theme='dark'] {
+  color-scheme: dark;
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-090" data-part="3" data-cue="TOK-003 · Report 2: the flash, and the lost classes"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Report 2: the flash, and the lost classes</h2><ul><li>light-dark() picks a value based on the element's used color-scheme.</li><li>With no attribute, the browser follows the OS preference before any script runs, so there is no flash and no stale value. color-scheme also makes scrollbars and native form controls match the theme.</li></ul></section>
+<section id="slide-091" data-part="3" data-cue="TOK-003 · Answer · block 2 · page 1"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Answer · block 2 · page 1</h2><pre class="code" data-lang="ts">import { DOCUMENT, Injectable, effect, inject, signal } from '@angular/core';
+
+export type ThemePreference = 'light' | 'dark' | 'system';
+
+@Injectable({ providedIn: 'root' })
+export class ThemeService {
+  private readonly root = inject(DOCUMENT).documentElement;
+  readonly preference = signal&lt;ThemePreference&gt;('system');
+
+  constructor() {
+    effect(() =&gt; {
+      const preference = this.preference();
+      if (preference === 'system') this.root.removeAttribute('data-ui-theme');
+      else this.root.setAttribute('data-ui-theme', preference);</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-092" data-part="3" data-cue="TOK-003 · Answer · block 3 · page 2"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Answer · block 3 · page 2</h2><pre class="code" data-lang="ts">    });
+  }
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-093" data-part="3" data-cue="TOK-003 · Report 2: the flash, and the lost classes"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Report 2: the flash, and the lost classes</h2><ul><li>The service touches only its own attribute on &lt;html&gt;, works on the server, and exposes the preference as a signal.</li><li>Persisting the choice is the application's decision; the library documents how to restore it before first paint (for example, an inline script in index.html that sets data-ui-theme from storage, or setting it during server rendering from a cookie).</li></ul></section>
+<section id="slide-094" data-part="3" data-cue="TOK-003 · Report 3: state shown by colour alone"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Report 3: state shown by colour alone</h2><ul><li>In forced-colors mode the browser replaces author background colours with system colours (for a &lt;button&gt;, ButtonFace).</li><li>Both chips now look identical.</li><li>This also fails WCAG 1.4.1 (Use of Color) in normal mode for users who cannot distinguish the two background colours.</li></ul></section>
+<section id="slide-095" data-part="3" data-cue="TOK-003 · Report 3: state shown by colour alone"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Report 3: state shown by colour alone</h2><ul><li>Fix: convey state with something other than colour, and opt into system colours deliberately:</li></ul></section>
+<section id="slide-096" data-part="3" data-cue="TOK-003 · Answer · block 4 · page 1"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Answer · block 4 · page 1</h2><pre class="code" data-lang="css">.ui-chip {
+  border: 1px solid transparent;
+}
+
+.ui-chip[aria-pressed='true']::before {
+  content: '✓ ' / '';
+}
+
+@media (forced-colors: active) {
+  .ui-chip[aria-pressed='true'] {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+  }</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-097" data-part="3" data-cue="TOK-003 · Answer · block 5 · page 2"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Answer · block 5 · page 2</h2><pre class="code" data-lang="css">}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-098" data-part="3" data-cue="TOK-003 · Report 3: state shown by colour alone"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Report 3: state shown by colour alone</h2><ul><li>The transparent border becomes visible in forced-colors mode, because the browser repaints border colours with a system colour, so every chip keeps an outline.</li></ul></section>
+<section id="slide-099" data-part="3" data-cue="TOK-003 · What a strong candidate also mentions"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · What a strong candidate also mentions</h2><ul><li>Contrast is a property of token pairs.</li><li>Define tokens as pairs (surface and on-surface, selected and on-selected) and test every pair in every theme for 4.5:1 text contrast in CI, rather than checking components one by one.</li><li>Themes can apply to a region, not just the page.</li></ul></section>
+<section id="slide-100" data-part="3" data-cue="TOK-003 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Follow-up 1</h2><p class="question">Which browsers support `light-dark()`? What is your fallback for applications that must support older ones?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-100-answer" data-part="3" data-cue="Check the maintained support tables for the browser versions your applications a"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Follow-up 1 · Answer</h2><ul><li>Check the maintained support tables for the browser versions your applications actually support.</li><li>The function is available in modern engines, but older supported versions may need light defaults, a prefers-color-scheme media query, and explicit attribute overrides.</li><li>Use feature detection with supports where appropriate.</li></ul></section>
+<section id="slide-101" data-part="3" data-cue="TOK-003 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Follow-up 2</h2><p class="question">How would you test the forced-colors behaviour in CI?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-101-answer" data-part="3" data-cue="Use browser automation to emulate forced colors and inspect selected markers, fo"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Follow-up 2 · Answer</h2><ul><li>Use browser automation to emulate forced colors and inspect selected markers, focus outlines, disabled states, and computed system colors.</li><li>Capture representative screenshots with stable fonts and data.</li><li>Assert the selected state is conveyed by a non-color cue and that keyboard focus remains visible.</li></ul></section>
+<section id="slide-102" data-part="3" data-cue="TOK-003 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Follow-up 3</h2><p class="question">A product team wants a third &quot;high contrast&quot; theme. What does your token structure need for that to be a remapping rather than a fork?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-102-answer" data-part="3" data-cue="Add another semantic mapping rather than duplicating component CSS. Components c"><div class="kicker">Interview walkthrough</div><h2>TOK-003 · Follow-up 3 · Answer</h2><ul><li>Add another semantic mapping rather than duplicating component CSS.</li><li>Components continue to consume surface, foreground, action, border, and focus roles.</li><li>Define the high contrast mapping centrally, including interaction states, and verify paired contrast values.</li></ul></section>
+<section id="slide-103" data-part="4" data-cue="TOK-004 · Scenario"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · Scenario</h2><ul><li>We now review TOK-004: Size tokens that break zoom and text spacing.</li><li>Inspect the consumer contract and identify the mechanism behind each reported defect.</li></ul></section>
+<section id="slide-104" data-part="4" data-cue="TOK-004 · Scenario"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · Scenario</h2><ul><li>An accessibility audit of a product built on @acme/ui reports three failures:</li></ul></section>
+<section id="slide-105" data-part="4" data-cue="TOK-004 · Scenario"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · Scenario</h2><ul><li>With the browser's default font size set to 24px, button labels do not grow.</li><li>With text spacing increased (a common user stylesheet or bookmarklet), labels are cut off.</li><li>On a narrow phone, the icon buttons in the toolbar are hard to hit.</li></ul></section>
+<section id="slide-106" data-part="4" data-cue="TOK-004 · Scenario"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · Scenario</h2><ul><li>The relevant tokens and component styles:</li></ul></section>
+<section id="slide-107" data-part="4" data-cue="TOK-004 · Scenario · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · Scenario · block 1 · page 1</h2><pre class="code" data-lang="css">:root {
+  --ui-font-size-label: 14px;
+  --ui-line-height-label: 20px;
+  --ui-control-height: 32px;
+  --ui-icon-button-size: 20px;
+}
+
+.ui-button {
+  height: var(--ui-control-height);
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: var(--ui-font-size-label);
+  line-height: var(--ui-line-height-label);
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-108" data-part="4" data-cue="TOK-004 · Scenario · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · Scenario · block 2 · page 2</h2><pre class="code" data-lang="css">
+.ui-icon-button {
+  width: var(--ui-icon-button-size);
+  height: var(--ui-icon-button-size);
+  padding: 0;
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-109" data-part="4" data-cue="TOK-004 · Interview question"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · Interview question</h2><p class="question">Explain each failure and fix the tokens and styles. Which WCAG success criteria are involved?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-110" data-part="4" data-cue="TOK-004 · 1. Pixel font sizes ignore the user's font-size setting"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · 1. Pixel font sizes ignore the user's font-size setting</h2><ul><li>px font sizes stay the same when a user raises the browser's default font size.</li><li>Browser zoom scales them, but many users with low vision rely on the font-size setting instead, and it is the only option in some environments. rem is relative to the root font size, which follows the user's setting.</li></ul></section>
+<section id="slide-111" data-part="4" data-cue="TOK-004 · 1. Pixel font sizes ignore the user's font-size setting"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · 1. Pixel font sizes ignore the user's font-size setting</h2><ul><li>Fix: express font sizes in rem (0.875rem is 14px at the default 16px) and line heights as unitless ratios, so they scale with the text.</li></ul></section>
+<section id="slide-112" data-part="4" data-cue="TOK-004 · 2. Fixed heights with hidden overflow cut off text"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · 2. Fixed heights with hidden overflow cut off text</h2><ul><li>WCAG 1.4.12 (Text Spacing) requires that no content is lost when users increase line height, letter spacing, word spacing and paragraph spacing. 1.4.4 (Resize Text) requires text to scale to 200% without loss of content.</li><li>A fixed height with overflow: hidden and nowrap guarantees clipping in both cases, and also with long translations.</li></ul></section>
+<section id="slide-113" data-part="4" data-cue="TOK-004 · 2. Fixed heights with hidden overflow cut off text"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · 2. Fixed heights with hidden overflow cut off text</h2><ul><li>Fix: size controls with min-height and padding, not height, and let labels wrap unless there is a documented reason not to.</li></ul></section>
+<section id="slide-114" data-part="4" data-cue="TOK-004 · 3. The icon buttons are too small to hit"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · 3. The icon buttons are too small to hit</h2><ul><li>20 × 20 CSS pixels is below the WCAG 2.2 minimum of 24 × 24 (2.5.8 Target Size (Minimum), level AA), unless enough spacing surrounds each target.</li><li>Many design systems choose 44 × 44 for touch anyway.</li><li>The icon can stay small; the clickable area should not.</li></ul></section>
+<section id="slide-115" data-part="4" data-cue="TOK-004 · 3. The icon buttons are too small to hit"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · 3. The icon buttons are too small to hit</h2><ul><li>Fix: separate the icon size token from the target size token.</li></ul></section>
+<section id="slide-116" data-part="4" data-cue="TOK-004 · Answer · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · Answer · block 1 · page 1</h2><pre class="code" data-lang="css">:root {
+  --ui-font-size-label: 0.875rem;
+  --ui-line-height-label: 1.43;
+  --ui-control-min-height: 2.5rem;
+  --ui-icon-size: 1.25rem;
+  --ui-target-size: 2.75rem;
+}
+
+.ui-button {
+  min-height: var(--ui-control-min-height);
+  padding-block: var(--ui-space-2);
+  font-size: var(--ui-font-size-label);
+  line-height: var(--ui-line-height-label);
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-117" data-part="4" data-cue="TOK-004 · Answer · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · Answer · block 2 · page 2</h2><pre class="code" data-lang="css">
+.ui-icon-button {
+  display: inline-grid;
+  place-items: center;
+  min-width: var(--ui-target-size);
+  min-height: var(--ui-target-size);
+  padding: 0;
+}
+
+.ui-icon-button svg {
+  width: var(--ui-icon-size);
+  height: var(--ui-icon-size);
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-118" data-part="4" data-cue="TOK-004 · What a strong candidate also mentions"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · What a strong candidate also mentions</h2><ul><li>Renaming --ui-control-height is a breaking change for teams who set it.</li><li>Keep it as a deprecated alias that feeds --ui-control-min-height (see TOK-002), and call out in the changelog that buttons may now grow taller than before.</li><li>Visual regression tests at 200% text size and with the WCAG text-spacing values applied would have caught this before release.</li></ul></section>
+<section id="slide-119" data-part="4" data-cue="TOK-004 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · Follow-up 1</h2><p class="question">Should spacing tokens be in `rem` too? What changes visually when a user increases font size?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-119-answer" data-part="4" data-cue="Spacing can use rem when it should grow with text, such as control padding that "><div class="kicker">Interview walkthrough</div><h2>TOK-004 · Follow-up 1 · Answer</h2><ul><li>Spacing can use rem when it should grow with text, such as control padding that protects a larger label.</li><li>But not every dimension needs the same scaling policy.</li><li>Borders may stay in pixels, and dense data layouts may use a distinct spacing contract.</li></ul></section>
+<section id="slide-120" data-part="4" data-cue="TOK-004 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · Follow-up 2</h2><p class="question">How would you automate the text-spacing check?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-120-answer" data-part="4" data-cue="Apply the WCAG text-spacing values to a representative rendered fixture: line he"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · Follow-up 2 · Answer</h2><ul><li>Apply the WCAG text-spacing values to a representative rendered fixture: line height one point five, paragraph spacing two em, letter spacing point one two em, and word spacing point one six em.</li><li>Verify text remains visible, labels can wrap, operations remain available, and containers do not clip essential content.</li><li>Inspect geometry and screenshots, including long translations.</li></ul></section>
+<section id="slide-121" data-part="4" data-cue="TOK-004 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>TOK-004 · Follow-up 3</h2><p class="question">A dense data grid needs 24px rows. How do you meet target-size requirements there?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-121-answer" data-part="4" data-cue="Measure the actual targets and spacing. A twenty-four-pixel row height does not "><div class="kicker">Interview walkthrough</div><h2>TOK-004 · Follow-up 3 · Answer</h2><ul><li>Measure the actual targets and spacing.</li><li>A twenty-four-pixel row height does not guarantee a twenty-four by twenty-four clickable area.</li><li>Make the control's target large enough or meet the criterion's specific spacing exception, considering neighboring targets and overlapping hit areas.</li></ul></section>
+<section id="slide-122" data-part="5" data-cue="Final review checklist"><div class="kicker">Recap and clarifications</div><h2>Final review checklist</h2><ul><li>Review the lesson by answering each main question and follow-up aloud.</li><li>For Design Tokens: Themes, Accessibility, and Public Contracts, connect each reported symptom to its mechanism, explain the corrected public contract, and name a regression check that exercises the consumer path.</li><li>State compatibility and accessibility limitations clearly.</li></ul></section>
+<script src="../assets/slides.js"></script></body></html>

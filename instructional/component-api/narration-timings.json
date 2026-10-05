@@ -1,0 +1,2474 @@
+{
+  "duration": 2873.997917,
+  "chunks": [
+    {
+      "heading": null,
+      "start": 0,
+      "duration": 9.5,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Senior Angular interview preparation, lesson 4. Angular Component APIs: Native Semantics and Consumer Contracts.",
+          "start": 0,
+          "duration": 7.292
+        }
+      ]
+    },
+    {
+      "heading": "Design from consumer tasks",
+      "start": 9.5,
+      "duration": 23.98,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Design from consumer tasks",
+          "start": 9.5,
+          "duration": 1.364
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Welcome to the component API lesson. Our four questions concern a button that saves twice, an input wrapper that hides native capabilities, a card with too much configuration, and a checkbox that violates the forms contract. They share a root concern: a shared component should make the supported task clear and preserve the behavior consumers reasonably expect.",
+          "start": 11.989,
+          "duration": 20.116
+        }
+      ]
+    },
+    {
+      "heading": "Design from consumer tasks · 2",
+      "start": 33.48,
+      "duration": 27.18,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Design from consumer tasks · 2",
+          "start": 33.48,
+          "duration": 1.898
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Begin with a representative consumer template. What does the team bind, which events do they handle, and where does state live? Then examine the actual host element and any internal native element. A label, a disabled attribute, or an identifier on a wrapper does not automatically reach the internal control. An API that appears convenient can force dozens of forwarding inputs as soon as another team needs a native capability.",
+          "start": 36.503,
+          "duration": 22.782
+        }
+      ]
+    },
+    {
+      "heading": "Design from consumer tasks · 3",
+      "start": 60.66,
+      "duration": 25.1,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Design from consumer tasks · 3",
+          "start": 60.66,
+          "duration": 2.466
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A senior answer considers the interface as well as individual bugs. Explain the smallest useful contract, show how to use it, identify unsupported combinations, and describe the migration from today's behavior. Compatibility includes native events, form state, projected content, styling hooks, and test APIs, not just exported TypeScript names.",
+          "start": 64.251,
+          "duration": 20.134
+        }
+      ]
+    },
+    {
+      "heading": "Inputs express allowed states",
+      "start": 85.76,
+      "duration": 24.12,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Inputs express allowed states",
+          "start": 85.76,
+          "duration": 1.517
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use input types that express supported values. A string input for button kind accepts values the stylesheet cannot represent. A union of primary, secondary, and danger tells the compiler and editor what is supported. Defaults should be intentional, and required inputs should be reserved for values without which the component cannot function meaningfully.",
+          "start": 88.403,
+          "duration": 20.102
+        }
+      ]
+    },
+    {
+      "heading": "Inputs express allowed states · 2",
+      "start": 109.88,
+      "duration": 28.16,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Inputs express allowed states · 2",
+          "start": 109.88,
+          "duration": 2.406
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Boolean attributes need careful handling. In HTML, disabled with no value expresses presence. A plain string read as an empty value is falsy in JavaScript, which can make an apparently disabled wrapper remain clickable. Angular's booleanAttribute transform gives predictable attribute-style coercion. Explain which values it accepts and test both static attributes and bound booleans.",
+          "start": 113.411,
+          "duration": 23.254
+        }
+      ]
+    },
+    {
+      "heading": "Inputs express allowed states · 3",
+      "start": 138.04,
+      "duration": 29.92,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Inputs express allowed states · 3",
+          "start": 138.04,
+          "duration": 2.193
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Inputs are data coming from the consumer. Avoid silently copying them into an unrelated local field that only initializes once. If the value is derived, use a derivation. If the child commits local state, a model can express a two-way contract. If the parent must approve a proposed change, keep a controlled input and emit a request rather than committing first. The signals lesson develops that distinction in depth.",
+          "start": 141.358,
+          "duration": 25.227
+        }
+      ]
+    },
+    {
+      "heading": "Native events and component outputs",
+      "start": 167.96,
+      "duration": 22.04,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Native events and component outputs",
+          "start": 167.96,
+          "duration": 1.745
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A native click bubbles from an internal button through the component host. If a component also emits an output called click, a consumer can receive an unexpected second notification. Before inventing an event, ask whether the native event already expresses the action. Ordinary button activation usually needs no custom click output.",
+          "start": 170.83,
+          "duration": 17.795
+        }
+      ]
+    },
+    {
+      "heading": "Native events and component outputs · 2",
+      "start": 190,
+      "duration": 26.54,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Native events and component outputs · 2",
+          "start": 190,
+          "duration": 2.439
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Reserve component outputs for domain transitions that are not already represented by native events. A selected value change or a dismissal request can be useful. Avoid names that collide with native events such as input, change, focus, blur, or keydown unless the component intentionally documents that contract and its interaction with bubbling. A lint rule can enforce the library's event naming policy.",
+          "start": 193.564,
+          "duration": 21.601
+        }
+      ]
+    },
+    {
+      "heading": "Native events and component outputs · 3",
+      "start": 216.54,
+      "duration": 30.8,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Native events and component outputs · 3",
+          "start": 216.54,
+          "duration": 2.713
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Do not distinguish keyboard and pointer activation by guessing from an event detail without considering assistive technology. Consumers may legitimately need a native MouseEvent or KeyboardEvent for specialized behavior, but business logic should ordinarily respond to activation independently of the device. Keep telemetry requirements separate from whether the action succeeds. Test one activation produces one consumer action, and test disabled behavior through the real native control.",
+          "start": 220.378,
+          "duration": 25.587
+        }
+      ]
+    },
+    {
+      "heading": "The native host can be the API",
+      "start": 247.34,
+      "duration": 23.76,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The native host can be the API",
+          "start": 247.34,
+          "duration": 3.086
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "An attribute directive on a native input can style and enhance it while retaining autocomplete, inputmode, maxlength, name, id, validation, browser autofill, labels, and forms integration. Consumers do not need a wrapper to forward every property. A component with an attribute selector can also enhance a native element when a template is needed.",
+          "start": 251.551,
+          "duration": 18.174
+        }
+      ]
+    },
+    {
+      "heading": "The native host can be the API · 2",
+      "start": 271.1,
+      "duration": 27.72,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The native host can be the API · 2",
+          "start": 271.1,
+          "duration": 3.467
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A wrapper can still be appropriate for a genuinely composite control, an overlay-based picker, or a widget whose focusable element needs coordinated internal structure. The trade-off should be explicit. If the wrapper hides the native element, it needs a clear forwarding and focus contract. A request for twenty-three new inputs often signals that the abstraction boundary is in the wrong place rather than that twenty-three more inputs are needed.",
+          "start": 275.693,
+          "duration": 21.752
+        }
+      ]
+    },
+    {
+      "heading": "The native host can be the API · 3",
+      "start": 298.82,
+      "duration": 27.72,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The native host can be the API · 3",
+          "start": 298.82,
+          "duration": 3.8
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Shared behavior can be factored through directives and the directive composition API. Inputs and outputs from host directives are exposed explicitly, and composition is established statically. This helps reuse focus or disabled logic, but it cannot automatically forward every arbitrary native attribute into a hidden descendant. Choose the host element first, then use composition to share behavior at that boundary.",
+          "start": 303.745,
+          "duration": 21.42
+        }
+      ]
+    },
+    {
+      "heading": "Composition for rich content",
+      "start": 326.54,
+      "duration": 25.42,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Composition for rich content",
+          "start": 326.54,
+          "duration": 1.608
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A card with separate inputs for every badge, action, heading, image, and body style accumulates combinations the library must maintain. Content projection lets consumers supply real HTML and application components within documented slots. The library owns layout and style while the application owns content, heading level, links, and business actions.",
+          "start": 329.273,
+          "duration": 21.312
+        }
+      ]
+    },
+    {
+      "heading": "Composition for rich content · 2",
+      "start": 351.96,
+      "duration": 30.1,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Composition for rich content · 2",
+          "start": 351.96,
+          "duration": 2.509
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Projection preserves Angular bindings and native semantics better than passing an HTML string. Angular sanitization helps protect unsafe bindings, but sanitization does not turn arbitrary innerHTML into a well-designed content API. A body string cannot conveniently carry application directives or typed interactions. Make image alternatives and headings explicit consumer responsibilities when the content is projected.",
+          "start": 355.594,
+          "duration": 25.091
+        }
+      ]
+    },
+    {
+      "heading": "Composition for rich content · 3",
+      "start": 382.06,
+      "duration": 26.6,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Composition for rich content · 3",
+          "start": 382.06,
+          "duration": 2.41
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Configuration remains valuable for uniform repeated data. A table's column definitions are naturally data driven, and a menu can often be generated from a typed item model. Offer template customization at the points where the structure truly varies. Avoid replacing every configuration object with dozens of unstructured slots; explain the consistency versus flexibility trade-off.",
+          "start": 385.595,
+          "duration": 21.69
+        }
+      ]
+    },
+    {
+      "heading": "Forms have two data directions",
+      "start": 408.66,
+      "duration": 23.24,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Forms have two data directions",
+          "start": 408.66,
+          "duration": 1.548
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A ControlValueAccessor adapts a custom control to Angular Forms. The forms model calls writeValue to update the view. The component calls the registered onChange callback after a user change to update the forms model. These are opposite directions. Calling onChange from writeValue creates a feedback path and can mark a programmatic reset as a user edit.",
+          "start": 411.333,
+          "duration": 19.192
+        }
+      ]
+    },
+    {
+      "heading": "Forms have two data directions · 2",
+      "start": 431.9,
+      "duration": 27.38,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Forms have two data directions · 2",
+          "start": 431.9,
+          "duration": 2.561
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The registered onTouched callback reports the appropriate touch interaction, commonly blur for a single input. The disabled-state hook must update the actual interactive element. Signals or markForCheck make model-to-view updates observable under OnPush and zoneless change detection. Normalize null when reset can supply it, and document whether a checkbox supports an indeterminate state separately from its value.",
+          "start": 435.586,
+          "duration": 22.319
+        }
+      ]
+    },
+    {
+      "heading": "Forms have two data directions · 3",
+      "start": 459.28,
+      "duration": 24.98,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Forms have two data directions · 3",
+          "start": 459.28,
+          "duration": 2.281
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Test through a real FormControl host. A programmatic value write should update the view while the form stays pristine. A user change should update the value and dirty state. Blur should make it touched. Disabling the control should prevent user interaction. These tests verify the contract; a test that only invokes toggle on the component misses the connection to the forms engine.",
+          "start": 462.686,
+          "duration": 20.199
+        }
+      ]
+    },
+    {
+      "heading": "Signal forms are a separate integration contract",
+      "start": 484.26,
+      "duration": 21.8,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Signal forms are a separate integration contract",
+          "start": 484.26,
+          "duration": 2.757
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Reactive forms use ControlValueAccessor. Signal-based forms have their own custom-control interfaces and bindings. Do not assume that a value accessor automatically implements every signal-forms capability. Check the API for the supported Angular version and choose the integration explicitly.",
+          "start": 488.143,
+          "duration": 16.542
+        }
+      ]
+    },
+    {
+      "heading": "Signal forms are a separate integration contract · 2",
+      "start": 506.06,
+      "duration": 34.2,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Signal forms are a separate integration contract · 2",
+          "start": 506.06,
+          "duration": 3.523
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "For a value control, the signal-forms interface exposes a writable model value with supported state inputs. Checkbox-like controls use the corresponding checked control contract. The form field binding coordinates the form model with that control. Disabled, readonly, touched, validation, and accessibility state need to remain coherent. If the library supports both forms systems, document and test each integration rather than forcing them to write the same state through two competing paths.",
+          "start": 510.708,
+          "duration": 28.177
+        }
+      ]
+    },
+    {
+      "heading": "Signal forms are a separate integration contract · 3",
+      "start": 540.26,
+      "duration": 23.66,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Signal forms are a separate integration contract · 3",
+          "start": 540.26,
+          "duration": 3.283
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Version support matters because these interfaces can differ across Angular releases. Our complete examples use the installed framework version. A library claiming support for older majors must test its public interfaces against those majors. This is a compatibility claim, not something a successful build on one version can prove.",
+          "start": 544.668,
+          "duration": 17.877
+        }
+      ]
+    },
+    {
+      "heading": "Migrate with examples and compatibility tests",
+      "start": 563.92,
+      "duration": 27.12,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Migrate with examples and compatibility tests",
+          "start": 563.92,
+          "duration": 2.308
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Removing an output can change what an existing consumer receives. Adding a union can reject values that compiled yesterday. Moving a wrapper to a native attribute selector changes the template. These improvements need a release and migration strategy. Inventory current usage, publish the preferred API, retain compatibility where practical, and give teams a clear removal window.",
+          "start": 567.353,
+          "duration": 22.312
+        }
+      ]
+    },
+    {
+      "heading": "Migrate with examples and compatibility tests · 2",
+      "start": 591.04,
+      "duration": 26.8,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Migrate with examples and compatibility tests · 2",
+          "start": 591.04,
+          "duration": 3.136
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Document the consumer-facing form in examples that compile. Show native events, labels, forms binding, projected slots, and disabled behavior. A component harness should expose meaningful tasks instead of internal classes so a markup refactor does not break every product's tests. Treat that harness as a supported API with its own compatibility obligations.",
+          "start": 595.301,
+          "duration": 21.164
+        }
+      ]
+    },
+    {
+      "heading": "Migrate with examples and compatibility tests · 3",
+      "start": 617.84,
+      "duration": 26.04,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Migrate with examples and compatibility tests · 3",
+          "start": 617.84,
+          "duration": 2.853
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "During the questions, trace a reported bug from the consumer template to the actual element or callback. Identify whether the problem is coercion, event duplication, hidden capabilities, excessive configuration, or reversed data flow. Then propose a correction and a test that would have failed before it. This makes the answer reviewable rather than a list of preferred patterns.",
+          "start": 621.818,
+          "duration": 20.687
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Scenario",
+      "start": 643.88,
+      "duration": 15.52,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Scenario",
+          "start": 643.88,
+          "duration": 2.367
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "We now review API-001: A button that saves twice and ignores disabled. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+          "start": 647.373,
+          "duration": 10.652
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Scenario",
+      "start": 659.4,
+      "duration": 7.88,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Scenario",
+          "start": 659.4,
+          "duration": 2.306
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Two bug reports against `@acme/ui`'s button:",
+          "start": 662.831,
+          "duration": 3.074
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Scenario",
+      "start": 667.28,
+      "duration": 13.68,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Scenario",
+          "start": 667.28,
+          "duration": 2.033
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "\"Every click on Save sends two requests.\" - \"`<ui-button disabled>` is not disabled.\" (from a team whose application does not use strict template type checking)",
+          "start": 670.438,
+          "duration": 9.147
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Scenario",
+      "start": 680.96,
+      "duration": 9.14,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Scenario",
+          "start": 680.96,
+          "duration": 2.213
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A third team says a typo in `kind` shipped to production unnoticed.",
+          "start": 684.298,
+          "duration": 4.427
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Scenario · block 1 · page 1",
+      "start": 690.1,
+      "duration": 18.44,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Scenario · block 1 · page 1",
+          "start": 690.1,
+          "duration": 3.826
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 2. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 695.051,
+          "duration": 12.114
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Scenario · block 2 · page 2",
+      "start": 708.54,
+      "duration": 19.12,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Scenario · block 2 · page 2",
+          "start": 708.54,
+          "duration": 4.155
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 2 of 2. Focus on ButtonComponent, kind, disabled, click. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 713.82,
+          "duration": 12.465
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Scenario · block 3 · page 1",
+      "start": 727.66,
+      "duration": 18.54,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Scenario · block 3 · page 1",
+          "start": 727.66,
+          "duration": 3.85
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 1. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 732.635,
+          "duration": 12.19
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Interview question",
+      "start": 746.2,
+      "duration": 17.922,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Interview question",
+          "start": 746.2,
+          "duration": 2.717
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Explain each report, and fix the component's API. For each change, say whether existing consumers would notice.",
+          "start": 750.043,
+          "duration": 7.429
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · 1. Saving twice: an output named after a native event",
+      "start": 764.122,
+      "duration": 21.604,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · 1. Saving twice: an output named after a native event",
+          "start": 764.122,
+          "duration": 4.36
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`(click)` on `<ui-button>` subscribes to both the component's `click` output and the native `click` DOM event on the host element. The inner `<button>`'s native click bubbles up to the host, so `save()` runs once for the bubbled DOM event and once for the output.",
+          "start": 769.607,
+          "duration": 14.744
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · 1. Saving twice: an output named after a native event",
+      "start": 785.726,
+      "duration": 15.76,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · 1. Saving twice: an output named after a native event",
+          "start": 785.726,
+          "duration": 4.626
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "It gets worse: a click on any part of the host outside the inner button (padding, a gap) fires the native event even when the button is disabled.",
+          "start": 791.477,
+          "duration": 8.634
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · 1. Saving twice: an output named after a native event",
+      "start": 801.486,
+      "duration": 26.08,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · 1. Saving twice: an output named after a native event",
+          "start": 801.486,
+          "duration": 4.593
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: never name an output after a native DOM event. Here the output is not needed at all: native `click` events from the inner `<button>` already bubble to the host, and a disabled `<button>` does not dispatch click events, so `(click)` on `<ui-button>` just works. If a custom event is needed, give it a distinct name (`pressed`).",
+          "start": 807.204,
+          "duration": 18.987
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · 2. `disabled` with no value is falsy",
+      "start": 827.566,
+      "duration": 25.62,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · 2. `disabled` with no value is falsy",
+          "start": 827.566,
+          "duration": 4.08
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "For a static attribute with no value, Angular passes the empty string `''` to the input. `''` is falsy, so `[disabled]=\"disabled()\"` leaves the button enabled. Applications with strict template checking get a compile error instead (a string is not a boolean), which is better, but HTML-style boolean attributes should simply work.",
+          "start": 832.771,
+          "duration": 19.04
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · 2. `disabled` with no value is falsy",
+      "start": 853.186,
+      "duration": 18.96,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · 2. `disabled` with no value is falsy",
+          "start": 853.186,
+          "duration": 4.817
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: `input(false, { transform: booleanAttribute })`, which maps `''`, `'true'` and `true` to `true`, and `'false'`, `false`, `null` and `undefined` to `false`. `numberAttribute` does the same for numeric inputs.",
+          "start": 859.128,
+          "duration": 11.643
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · 3. `kind` accepts any string",
+      "start": 872.146,
+      "duration": 13.78,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · 3. `kind` accepts any string",
+          "start": 872.146,
+          "duration": 4.7
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`input('primary')` infers `string`. `\"primay\"` compiles, produces the class `ui-button--primay`, and renders an unstyled button.",
+          "start": 877.971,
+          "duration": 6.58
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · 3. `kind` accepts any string",
+      "start": 885.926,
+      "duration": 10.6,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · 3. `kind` accepts any string",
+          "start": 885.926,
+          "duration": 3.375
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: a union type, exported so consumers can use it in their own code:",
+          "start": 890.426,
+          "duration": 4.725
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Answer · block 1 · page 1",
+      "start": 896.526,
+      "duration": 21.2,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Answer · block 1 · page 1",
+          "start": 896.526,
+          "duration": 4.007
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 1. Focus on ButtonKind, kind. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 901.658,
+          "duration": 14.693
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · 4. Consumers cannot choose `type`",
+      "start": 917.726,
+      "duration": 17.5,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · 4. Consumers cannot choose `type`",
+          "start": 917.726,
+          "duration": 3.409
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`type=\"button\"` is hard-coded, so `<ui-button>` can never submit a form. Add a `type` input that defaults to `'button'`. (API-002 looks at a design that avoids wrapping the native element.)",
+          "start": 922.26,
+          "duration": 11.591
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Answer · block 2 · page 1",
+      "start": 935.226,
+      "duration": 21.78,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Answer · block 2 · page 1",
+          "start": 935.226,
+          "duration": 4.131
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 2. Focus on ButtonKind, ButtonType. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 940.482,
+          "duration": 15.149
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Answer · block 3 · page 2",
+      "start": 957.006,
+      "duration": 23.24,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Answer · block 3 · page 2",
+          "start": 957.006,
+          "duration": 4.291
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 2 of 2. Focus on ButtonComponent, kind, type, disabled. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 962.422,
+          "duration": 16.449
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Fixed version",
+      "start": 980.246,
+      "duration": 9.84,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Fixed version",
+          "start": 980.246,
+          "duration": 2.569
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Combining a static `class` with a `[class]` binding is safe: Angular merges them.",
+          "start": 983.94,
+          "duration": 4.771
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Will consumers notice? · comparison 1",
+      "start": 990.086,
+      "duration": 18.04,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Will consumers notice? · comparison 1",
+          "start": 990.086,
+          "duration": 4.383
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Change: Removing the `click` output. Effect on existing consumers: `(click)` keeps working, once. Anyone who called `.click.emit()` on the component directly breaks; that was never documented..",
+          "start": 995.594,
+          "duration": 11.157
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Will consumers notice? · comparison 2",
+      "start": 1008.126,
+      "duration": 14.16,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Will consumers notice? · comparison 2",
+          "start": 1008.126,
+          "duration": 5.344
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Change: `booleanAttribute` on `disabled`. Effect on existing consumers: Widens accepted values. Non-breaking..",
+          "start": 1014.595,
+          "duration": 6.316
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Will consumers notice? · comparison 3",
+      "start": 1022.286,
+      "duration": 21.52,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Will consumers notice? · comparison 3",
+          "start": 1022.286,
+          "duration": 3.486
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Change: `kind` narrowed to a union. Effect on existing consumers: Technically breaking: call sites passing other strings stop compiling. Every such call site was already a bug, but it is still a compile failure on upgrade, so call it out in the changelog, or ship it in a major..",
+          "start": 1026.897,
+          "duration": 15.534
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Will consumers notice? · comparison 4",
+      "start": 1043.806,
+      "duration": 11.98,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Will consumers notice? · comparison 4",
+          "start": 1043.806,
+          "duration": 4.345
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Change: New `type` input with the old default. Effect on existing consumers: Non-breaking..",
+          "start": 1049.276,
+          "duration": 5.135
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Follow-up 1",
+      "start": 1055.786,
+      "duration": 44.124,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Follow-up 1",
+          "start": 1055.786,
+          "duration": 2.453
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "What other output names would you ban in a component library, and how would you enforce it?",
+          "start": 1059.364,
+          "duration": 6.317
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Flag outputs that collide with native DOM events such as click, input, change, focus, blur, keydown, and submit. A library lint rule can inspect output declarations and aliases against a maintained event-name set, with reviewed exceptions for intentional contracts. Prefer domain names such as selectionChange or dismissed when a new event is needed. Most native activation needs no wrapper output. Test bubbling and output behavior from the consumer host rather than only checking the declaration name.",
+          "start": 1070.849,
+          "duration": 27.686
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Follow-up 2",
+      "start": 1099.91,
+      "duration": 41.314,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Follow-up 2",
+          "start": 1099.91,
+          "duration": 2.479
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "A team needs to know how the button was activated (mouse, keyboard). Does that justify an output?",
+          "start": 1103.514,
+          "duration": 6.227
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A consumer can handle the native event when device details are truly needed. That does not by itself justify emitting another click event. Keyboard and assistive-technology activation do not always map cleanly to a simple mouse-versus-keyboard label, so avoid making business behavior depend on a guessed source. If a domain event needs additional context, define a distinct typed payload and document its semantics. Verify one activation still produces one action.",
+          "start": 1115.068,
+          "duration": 24.781
+        }
+      ]
+    },
+    {
+      "heading": "API-001 · Follow-up 3",
+      "start": 1141.224,
+      "duration": 44.709,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-001 · Follow-up 3",
+          "start": 1141.224,
+          "duration": 2.376
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Should `kind` be renamed to `variant` to match the rest of the library? How would you do it without breaking anyone (see VER-002)?",
+          "start": 1144.725,
+          "duration": 8.82
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Introduce variant as the preferred input while preserving kind for a published deprecation period. Distinguish unset from an explicit primary value and resolve variant first, then kind, then the default. Warn only on actual old usage in development, provide editor hints and a template migration, and remove the old name in the announced major. Test both names together and direct component-reference uses because changing the input getter's default can be observable even when rendering is unchanged.",
+          "start": 1158.761,
+          "duration": 25.797
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · Scenario",
+      "start": 1185.933,
+      "duration": 14.72,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · Scenario",
+          "start": 1185.933,
+          "duration": 2.291
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "We now review API-002: A wrapper that hides the native element. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+          "start": 1189.349,
+          "duration": 9.929
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · Scenario",
+      "start": 1200.653,
+      "duration": 22.32,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · Scenario",
+          "start": 1200.653,
+          "duration": 2.086
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`@acme/ui` has a text input component. Its backlog has grown to 23 open feature requests, all similar: \"please add `autocomplete`\", \"add `inputmode`\", \"add `maxlength`\", \"expose `(blur)`\", \"we need to call `focus()`\", \"`aria-label` on `<ui-input>` does nothing\", \"our `<label for>` doesn't focus it\", \"it doesn't work with `formControlName`\".",
+          "start": 1203.864,
+          "duration": 17.734
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · Scenario · block 1 · page 1",
+      "start": 1222.973,
+      "duration": 17.68,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · Scenario · block 1 · page 1",
+          "start": 1222.973,
+          "duration": 4.048
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 2. Focus on InputComponent. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1228.146,
+          "duration": 11.132
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · Scenario · block 2 · page 2",
+      "start": 1240.653,
+      "duration": 18.38,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · Scenario · block 2 · page 2",
+          "start": 1240.653,
+          "duration": 4.054
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 2 of 2. Focus on type, placeholder, value. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1245.832,
+          "duration": 11.826
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · Scenario · block 3 · page 1",
+      "start": 1259.033,
+      "duration": 17.62,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · Scenario · block 3 · page 1",
+          "start": 1259.033,
+          "duration": 4.031
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 1. Focus on aria-label. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1264.189,
+          "duration": 11.089
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · Interview question",
+      "start": 1276.653,
+      "duration": 18.73,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · Interview question",
+          "start": 1276.653,
+          "duration": 2.382
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "What is the underlying design problem behind all 23 requests? Propose a different design, and explain its trade-offs and how you would migrate to it.",
+          "start": 1280.161,
+          "duration": 8.572
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · The problem: the component owns the native element",
+      "start": 1295.383,
+      "duration": 26.364,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · The problem: the component owns the native element",
+          "start": 1295.383,
+          "duration": 4.65
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The real `<input>` is hidden inside the component's template, so every native capability (over a hundred attributes, properties, events and methods) is unavailable unless the library re-exposes it by hand. Each request is a symptom; adding inputs one by one never ends, and every forwarded attribute is more API to maintain.",
+          "start": 1301.158,
+          "duration": 19.214
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · The problem: the component owns the native element",
+      "start": 1321.747,
+      "duration": 25.5,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · The problem: the component owns the native element",
+          "start": 1321.747,
+          "duration": 4.397
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Worse, attributes on the host go to the wrong element. `id` and `aria-label` land on `<ui-input>`, which has no role and cannot take focus. `<label for=\"email\">` points at the host, so clicking the label does nothing and the input has no accessible name. `formControlName` has no value accessor to bind to.",
+          "start": 1327.269,
+          "duration": 18.603
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · The alternative: put the library on the native element",
+      "start": 1347.247,
+      "duration": 11.9,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · The alternative: put the library on the native element",
+          "start": 1347.247,
+          "duration": 4.387
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use an attribute selector, so the consumer writes the native element and the library enhances it:",
+          "start": 1352.759,
+          "duration": 5.013
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · Answer · block 1 · page 1",
+      "start": 1359.147,
+      "duration": 21.6,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · Answer · block 1 · page 1",
+          "start": 1359.147,
+          "duration": 4.093
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 1. Focus on InputDirective, invalid. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1364.365,
+          "duration": 15.007
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · Answer · block 2 · page 1",
+      "start": 1380.747,
+      "duration": 23.64,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · Answer · block 2 · page 1",
+          "start": 1380.747,
+          "duration": 3.731
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 1. Read this part in the context of The alternative: put the library on the native element. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1385.603,
+          "duration": 17.409
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · The alternative: put the library on the native element",
+      "start": 1404.387,
+      "duration": 28.08,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · The alternative: put the library on the native element",
+          "start": 1404.387,
+          "duration": 5.684
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Every native attribute, event and method now works, with no library code: `autocomplete`, `inputmode`, `(blur)`, `focus()`, `<label for>`, `aria-*`. Angular Forms' built-in value accessors apply to the native input, so `formControl`, `formControlName` and `ngModel` work too. The library adds only what it owns: styling hooks and state.",
+          "start": 1411.196,
+          "duration": 19.896
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · The alternative: put the library on the native element",
+      "start": 1432.467,
+      "duration": 17.18,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · The alternative: put the library on the native element",
+          "start": 1432.467,
+          "duration": 4.893
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The same applies to buttons and links: `button[uiButton], a[uiButton]` keeps native semantics, `type`, `disabled` and `href`, and avoids the bugs in API-001.",
+          "start": 1438.485,
+          "duration": 9.787
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · Trade-offs",
+      "start": 1449.647,
+      "duration": 61.12,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · Trade-offs",
+          "start": 1449.647,
+          "duration": 2.081
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "No surrounding markup. `<input>` is a void element: the directive cannot render a label, an icon or an error message around it. Those belong to a container component, for example `<ui-form-field>` that projects a label, the input, a hint and an error, and connects their ids (it can find the directive with `contentChild(InputDirective)`). This is the split Angular Material uses between `mat-form-field` and `matInput`. Styles. A directive has no stylesheet of its own. Styles ship as a global stylesheet or with the form-field component, keyed on `.ui-input`. Shared namespace. Directive inputs sit beside native attributes on the same element. Choose names that will not collide with future HTML attributes, or prefix them. Less control. Consumers can now put any attribute on the input, including ones that conflict with the design system. That is usually the right trade for a shared library: the platform's API is better documented and more stable than anything the library could write.",
+          "start": 1452.853,
+          "duration": 56.539
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · Migration",
+      "start": 1510.767,
+      "duration": 9.94,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · Migration",
+          "start": 1510.767,
+          "duration": 2.126
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Replacing `<ui-input>` with `<input uiInput>` is a breaking change for every call site:",
+          "start": 1514.018,
+          "duration": 5.314
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · Migration · item 1",
+      "start": 1520.707,
+      "duration": 17.46,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · Migration · item 1",
+          "start": 1520.707,
+          "duration": 3.453
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Minor: ship `uiInput` and `<ui-form-field>` alongside the old component, and mark `<ui-input>` deprecated in documentation, JSDoc (`@deprecated`, which editors show with a strike-through) and the changelog.",
+          "start": 1525.285,
+          "duration": 11.507
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · Migration · item 2",
+      "start": 1538.167,
+      "duration": 11.82,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · Migration · item 2",
+          "start": 1538.167,
+          "duration": 2.893
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Migration: an `ng update` schematic that rewrites the common patterns, and a list of call sites it could not convert.",
+          "start": 1542.185,
+          "duration": 6.427
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · Migration · item 3",
+      "start": 1549.987,
+      "duration": 12.78,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · Migration · item 3",
+          "start": 1549.987,
+          "duration": 3.304
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Next major: remove `<ui-input>`. Freeze its feature requests in the meantime, so effort goes into the replacement.",
+          "start": 1554.416,
+          "duration": 6.976
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · Follow-up 1",
+      "start": 1562.767,
+      "duration": 42.761,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · Follow-up 1",
+          "start": 1562.767,
+          "duration": 2.533
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How would `<ui-form-field>` give the input its `aria-describedby` without the consumer writing ids by hand?",
+          "start": 1566.425,
+          "duration": 6.615
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Let the form field and projected control communicate through a small injected contract. The field owns unique identifiers for helper and error text; the control directive merges them with any consumer-provided descriptions on the native element. Register and unregister as content changes, and keep invalid and label state synchronized. Do not overwrite the consumer's existing aria-describedby values. Test multiple fields and dynamic helper or error content through a host.",
+          "start": 1578.461,
+          "duration": 25.692
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · Follow-up 2",
+      "start": 1605.528,
+      "duration": 42.569,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · Follow-up 2",
+          "start": 1605.528,
+          "duration": 2.37
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "When is wrapping the native element still the better choice?",
+          "start": 1609.023,
+          "duration": 3.517
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Wrapping is appropriate for a genuinely composite widget with coordinated elements, such as a date picker with a popup trigger or a control whose internal structure is intrinsic to its behavior. It can also enforce a carefully documented layout contract. The cost is forwarding native capabilities, focus, labels, and forms integration. If the wrapper mainly adds a border to one input, an attribute directive usually gives a smaller and more adaptable API. Choose according to the task and supported customization, not stylistic preference.",
+          "start": 1617.94,
+          "duration": 28.782
+        }
+      ]
+    },
+    {
+      "heading": "API-002 · Follow-up 3",
+      "start": 1648.097,
+      "duration": 43.781,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-002 · Follow-up 3",
+          "start": 1648.097,
+          "duration": 2.813
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Could `hostDirectives` help share behaviour between `uiInput` and other controls?",
+          "start": 1652.035,
+          "duration": 4.575
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Host directives can compose reusable behavior statically and expose selected inputs and outputs explicitly. They can help share focus, disabled state, or other host-level logic across native controls. They do not automatically forward arbitrary attributes to an internal input and do not replace the form-field relationship contract. Check construction and input precedence when composing directives. Document the exposed API so consumers know which capabilities belong to the public control.",
+          "start": 1661.976,
+          "duration": 28.527
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · Scenario",
+      "start": 1691.878,
+      "duration": 15.38,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · Scenario",
+          "start": 1691.878,
+          "duration": 2.415
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "We now review API-003: A card with an input for everything. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+          "start": 1695.418,
+          "duration": 10.465
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · Scenario",
+      "start": 1707.258,
+      "duration": 23.16,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · Scenario",
+          "start": 1707.258,
+          "duration": 1.797
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`@acme/ui`'s card started with a title and a body. A year later it looks like this, and the open requests include: \"make the title a link\", \"two badges\", \"a link inside the body\", \"a menu instead of buttons\", and \"our page needs an `h2`, not an `h3`\". Three teams have copied the card into their own code to get around it.",
+          "start": 1710.18,
+          "duration": 18.863
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · Scenario · block 1 · page 1",
+      "start": 1730.418,
+      "duration": 17.82,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · Scenario · block 1 · page 1",
+          "start": 1730.418,
+          "duration": 4.085
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 4. Focus on CardAction. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1735.628,
+          "duration": 11.235
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · Scenario · block 2 · page 2",
+      "start": 1748.238,
+      "duration": 18.7,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · Scenario · block 2 · page 2",
+          "start": 1748.238,
+          "duration": 3.888
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 2 of 4. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1753.251,
+          "duration": 12.312
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · Scenario · block 3 · page 3",
+      "start": 1766.938,
+      "duration": 20.08,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · Scenario · block 3 · page 3",
+          "start": 1766.938,
+          "duration": 4.395
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 3 of 4. Focus on CardComponent, title, subtitle, icon. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1772.458,
+          "duration": 13.185
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · Scenario · block 4 · page 4",
+      "start": 1787.018,
+      "duration": 17.62,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · Scenario · block 4 · page 4",
+          "start": 1787.018,
+          "duration": 4.032
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 4 of 4. Focus on actions. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1792.175,
+          "duration": 11.088
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · Interview question",
+      "start": 1804.638,
+      "duration": 17.809,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · Interview question",
+          "start": 1804.638,
+          "duration": 2.252
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "What is wrong with this API, beyond the individual bugs? Redesign it, and plan the migration for the teams already using it.",
+          "start": 1808.015,
+          "duration": 7.782
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · 1. Configuration does not scale; composition does",
+      "start": 1822.447,
+      "duration": 27.164,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · 1. Configuration does not scale; composition does",
+          "start": 1822.447,
+          "duration": 4.438
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Each input describes one fixed piece of content. Every new layout needs a new input, the inputs interact in ways nobody tested, and anything the inputs cannot express (a link title, a menu, two badges) forces teams to fork. Forks are the worst outcome for a design system: they stop receiving fixes and drift visually.",
+          "start": 1828.01,
+          "duration": 20.226
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · 1. Configuration does not scale; composition does",
+      "start": 1849.611,
+      "duration": 15.72,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · 1. Configuration does not scale; composition does",
+          "start": 1849.611,
+          "duration": 4.533
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The card's real job is layout and styling of regions: media, header, body, actions. What goes in each region belongs to the consumer.",
+          "start": 1855.269,
+          "duration": 8.687
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · 2. Individual bugs the configuration style caused",
+      "start": 1865.331,
+      "duration": 53.96,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · 2. Individual bugs the configuration style caused",
+          "start": 1865.331,
+          "duration": 4.541
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fixed heading level. `h3` is right on some pages and wrong on others. Heading levels describe the page's outline; a reusable component cannot know it. A wrong level breaks navigation by headings, which is how many screen-reader users skim a page. Image without `alt`. The `img` has no `alt`, so some screen readers read the file name. The card cannot know whether the image is decorative (`alt=\"\"`) or meaningful. - `[innerHTML]` body. Angular sanitizes it, but the sanitizer silently strips content teams expect (styles, many attributes), and it encourages teams to reach for `bypassSecurityTrustHtml`, which opens an injection risk. Projected content needs neither. Actions as data. A `{ label, handler }` list cannot express links, menus, icons or `aria-label`. Each new need becomes another field.",
+          "start": 1870.997,
+          "duration": 46.919
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · Answer · block 1 · page 1",
+      "start": 1919.291,
+      "duration": 24.32,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · Answer · block 1 · page 1",
+          "start": 1919.291,
+          "duration": 4.594
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 3. Focus on CardTitleDirective, CardSubtitleDirective, CardMediaDirective. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1925.01,
+          "duration": 17.226
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · Answer · block 2 · page 2",
+      "start": 1943.611,
+      "duration": 21.24,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · Answer · block 2 · page 2",
+          "start": 1943.611,
+          "duration": 4.089
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 2 of 3. Focus on CardActionsComponent. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1948.825,
+          "duration": 14.651
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · Answer · block 3 · page 3",
+      "start": 1964.851,
+      "duration": 22.56,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · Answer · block 3 · page 3",
+          "start": 1964.851,
+          "duration": 4.224
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 3 of 3. Focus on CardComponent, title, hasHeader. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1970.2,
+          "duration": 15.836
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · Answer · block 4 · page 1",
+      "start": 1987.411,
+      "duration": 22.76,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · Answer · block 4 · page 1",
+          "start": 1987.411,
+          "duration": 3.86
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 1. Read this part in the context of Redesigned API. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1992.396,
+          "duration": 16.4
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · Redesigned API",
+      "start": 2010.171,
+      "duration": 15.26,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · Redesigned API",
+          "start": 2010.171,
+          "duration": 3.023
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Every request is now satisfied without a library change: the consumer picks the heading level, the link, the badge count and the action controls, and writes the `alt` text.",
+          "start": 2014.319,
+          "duration": 9.737
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · Redesigned API",
+      "start": 2025.431,
+      "duration": 16.92,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · Redesigned API",
+          "start": 2025.431,
+          "duration": 3.165
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The marker directives are more than selectors: they apply the styling class, they appear in autocomplete and documentation, and the card can query them (as `hasHeader` does) to avoid rendering empty wrappers.",
+          "start": 2029.721,
+          "duration": 11.255
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · Trade-offs to state",
+      "start": 2042.351,
+      "duration": 40.46,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · Trade-offs to state",
+          "start": 2042.351,
+          "duration": 2.949
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Less enforced consistency. Consumers can now put anything in a region. Mitigate with marker directives, good documentation examples, and visual review, rather than by taking control back. Projection rules. `select` matches only elements written directly inside `<ui-card>` in the consumer's template. Content wrapped in another element or an `<ng-container>` needs `ngProjectAs`. Projected content is always created by the parent, even inside an `@if` in the card (see A11Y-002). Not everything should be a slot. Values the card must interpret (for example an `elevation` that maps to tokens) stay as typed inputs.",
+          "start": 2046.425,
+          "duration": 35.011
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · Migration",
+      "start": 2082.811,
+      "duration": 23.84,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · Migration",
+          "start": 2082.811,
+          "duration": 1.884
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Removing seven inputs is breaking. Ship the slot API in a minor release and keep the old inputs working (the template can render the legacy markup when `title()` is set and project otherwise). Mark the inputs `@deprecated` with a pointer to the slot equivalent, provide an `ng update` schematic for the simple cases, and remove them in the next major.",
+          "start": 2085.82,
+          "duration": 19.456
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · Follow-up 1",
+      "start": 2106.651,
+      "duration": 41.383,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · Follow-up 1",
+          "start": 2106.651,
+          "duration": 2.485
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "When would you still choose a configuration (data-driven) API, for example for a data table's columns?",
+          "start": 2110.261,
+          "duration": 6.581
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Choose data configuration for uniform repeated structures where a schema is useful, such as column identifiers, sorting rules, widths, and value accessors. Use templates or projection for rich content that varies structurally. A table can combine typed column metadata with cell templates. The decision depends on whether consumers need to describe data or compose UI. Keep the configuration type narrow and avoid callbacks for every possible piece of markup.",
+          "start": 2122.172,
+          "duration": 24.487
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · Follow-up 2",
+      "start": 2148.034,
+      "duration": 42.841,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · Follow-up 2",
+          "start": 2148.034,
+          "duration": 2.438
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How would you make the entire card clickable while keeping the title link and action buttons accessible?",
+          "start": 2151.597,
+          "duration": 6.032
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use a real title link as the primary navigation action and separate action buttons. A stretched-link technique can enlarge the title link's hit area while carefully preserving interactive controls above it. Avoid nesting buttons or links inside another interactive element and avoid a container click handler that hijacks text selection or child actions. Show clear focus and hover states and test keyboard traversal. In some cards, keeping only the title clickable is the simplest accessible design.",
+          "start": 2163.038,
+          "duration": 26.462
+        }
+      ]
+    },
+    {
+      "heading": "API-003 · Follow-up 3",
+      "start": 2190.875,
+      "duration": 43.479,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-003 · Follow-up 3",
+          "start": 2190.875,
+          "duration": 2.789
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How do you document slots so consumers discover them in their editor?",
+          "start": 2194.789,
+          "duration": 5.074
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Export named slot directives with clear selectors and JSDoc, include compile-checked examples, and describe which slots are optional or repeatable. Editors can discover directives and their inputs more reliably than an undocumented attribute convention. Document heading responsibility, image alternatives, empty slots, and layout behavior. Projection selectors alone do not create typed slot metadata or lazy instantiation. Use a template contract when the library needs context or deferred creation.",
+          "start": 2205.091,
+          "duration": 27.888
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Scenario",
+      "start": 2234.354,
+      "duration": 15.22,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Scenario",
+          "start": 2234.354,
+          "duration": 2.385
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "We now review API-004: A checkbox that makes every form dirty. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+          "start": 2237.864,
+          "duration": 10.335
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Scenario",
+      "start": 2249.574,
+      "duration": 10.06,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Scenario",
+          "start": 2249.574,
+          "duration": 2.52
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`@acme/ui`'s checkbox supports reactive forms. Product teams report four bugs:",
+          "start": 2253.219,
+          "duration": 5.04
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Scenario · item 1",
+      "start": 2259.634,
+      "duration": 9.72,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Scenario · item 1",
+          "start": 2259.634,
+          "duration": 3.249
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "\"After `form.reset()`, our 'You have unsaved changes' banner appears.\".",
+          "start": 2264.008,
+          "duration": 3.971
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Scenario · item 2",
+      "start": 2269.354,
+      "duration": 10.54,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Scenario · item 2",
+          "start": 2269.354,
+          "duration": 3.146
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "\"`form.patchValue({ terms: true })` doesn't tick the box until something else happens.\".",
+          "start": 2273.625,
+          "duration": 4.894
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Scenario · item 3",
+      "start": 2279.894,
+      "duration": 8.32,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Scenario · item 3",
+          "start": 2279.894,
+          "duration": 3.742
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "\"`control.disable()` does nothing.\".",
+          "start": 2284.761,
+          "duration": 2.078
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Scenario · item 4",
+      "start": 2288.214,
+      "duration": 11.46,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Scenario · item 4",
+          "start": 2288.214,
+          "duration": 3.36
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "\"Our 'show errors after the user leaves the field' logic never shows errors for checkboxes.\".",
+          "start": 2292.699,
+          "duration": 5.6
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Scenario · block 1 · page 1",
+      "start": 2299.674,
+      "duration": 18.36,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Scenario · block 1 · page 1",
+          "start": 2299.674,
+          "duration": 3.807
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 3. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 2304.606,
+          "duration": 12.053
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Scenario · block 2 · page 2",
+      "start": 2318.034,
+      "duration": 18.62,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Scenario · block 2 · page 2",
+          "start": 2318.034,
+          "duration": 4.116
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 2 of 3. Focus on CheckboxComponent, onChange. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 2323.275,
+          "duration": 12.004
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Scenario · block 3 · page 3",
+      "start": 2336.654,
+      "duration": 18.96,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Scenario · block 3 · page 3",
+          "start": 2336.654,
+          "duration": 3.95
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 3 of 3. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 2341.729,
+          "duration": 12.51
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Interview question",
+      "start": 2355.614,
+      "duration": 20.419,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Interview question",
+          "start": 2355.614,
+          "duration": 2.518
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Match each bug to its cause and fix the component. Explain the contract between Angular Forms and a `ControlValueAccessor`: which direction does each method carry data?",
+          "start": 2359.257,
+          "duration": 10.126
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · The contract · comparison 1",
+      "start": 2376.033,
+      "duration": 13.683,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · The contract · comparison 1",
+          "start": 2376.033,
+          "duration": 4.009
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Method: `writeValue(value)`. Direction: Model to view. Meaning: \"The form's value changed; display it.\" Must not report back..",
+          "start": 2381.167,
+          "duration": 7.174
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · The contract · comparison 2",
+      "start": 2389.716,
+      "duration": 15.24,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · The contract · comparison 2",
+          "start": 2389.716,
+          "duration": 4.9
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Method: `registerOnChange(fn)`. Direction: View to model. Meaning: Call `fn(value)` only when the user changes the value..",
+          "start": 2395.741,
+          "duration": 7.84
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · The contract · comparison 3",
+      "start": 2404.956,
+      "duration": 15.14,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · The contract · comparison 3",
+          "start": 2404.956,
+          "duration": 4.359
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Method: `registerOnTouched(fn)`. Direction: View to model. Meaning: Call `fn()` when the user has interacted and left (usually on blur)..",
+          "start": 2410.44,
+          "duration": 8.281
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · The contract · comparison 4",
+      "start": 2420.096,
+      "duration": 13,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · The contract · comparison 4",
+          "start": 2420.096,
+          "duration": 4.773
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Method: `setDisabledState(disabled)`. Direction: Model to view. Meaning: Reflect the control's disabled state..",
+          "start": 2425.994,
+          "duration": 5.727
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Bug 1: `writeValue` calls `onChange`",
+      "start": 2433.096,
+      "duration": 22.62,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Bug 1: `writeValue` calls `onChange`",
+          "start": 2433.096,
+          "duration": 3.401
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`reset()` writes the value to the view, and the component reports it straight back as if the user had changed it. The forms API treats a view change as user input and marks the control dirty, so the form is dirty immediately after a reset. It can also cause loops with code that reacts to value changes.",
+          "start": 2437.622,
+          "duration": 16.719
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Bug 1: `writeValue` calls `onChange`",
+      "start": 2455.716,
+      "duration": 10.06,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Bug 1: `writeValue` calls `onChange`",
+          "start": 2455.716,
+          "duration": 4.536
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: `writeValue` only updates what is displayed.",
+          "start": 2461.377,
+          "duration": 3.024
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Bug 2: `OnPush` and a plain field",
+      "start": 2465.776,
+      "duration": 22.04,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Bug 2: `OnPush` and a plain field",
+          "start": 2465.776,
+          "duration": 3.909
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`writeValue` is called by the forms API, outside any template event of this component. Under `OnPush`, setting a plain field does not mark the component for checking, so the box stays as it was until something else triggers a check. In a zoneless application it may never update.",
+          "start": 2470.81,
+          "duration": 15.631
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Bug 2: `OnPush` and a plain field",
+      "start": 2487.816,
+      "duration": 12.12,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Bug 2: `OnPush` and a plain field",
+          "start": 2487.816,
+          "duration": 4.169
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: hold the state in a signal. Setting a signal read by the template schedules the update.",
+          "start": 2493.11,
+          "duration": 5.451
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Bug 3: no `setDisabledState`",
+      "start": 2499.936,
+      "duration": 19.78,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Bug 3: no `setDisabledState`",
+          "start": 2499.936,
+          "duration": 3.703
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Angular Forms calls `setDisabledState` whenever the control's disabled state changes (and, since Angular 15, also on initialisation). The method is optional in the interface, so leaving it out compiles, and disabling does nothing.",
+          "start": 2504.764,
+          "duration": 13.577
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Bug 4: touched is never reported",
+      "start": 2519.716,
+      "duration": 15.78,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Bug 4: touched is never reported",
+          "start": 2519.716,
+          "duration": 4.297
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`registerOnTouched` throws the callback away, so the control never becomes `touched`. Any \"show errors after the user leaves the field\" rule never fires.",
+          "start": 2525.138,
+          "duration": 8.983
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Bug 4: touched is never reported",
+      "start": 2535.496,
+      "duration": 9.32,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Bug 4: touched is never reported",
+          "start": 2535.496,
+          "duration": 3.751
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: keep the callback and call it on `blur`.",
+          "start": 2540.372,
+          "duration": 3.069
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Also: `reset()` writes `null`",
+      "start": 2544.816,
+      "duration": 19.66,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Also: `reset()` writes `null`",
+          "start": 2544.816,
+          "duration": 3.51
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`form.reset()` with no value writes `null`, which the `boolean` signature hides. `checked = null` happens to render as unticked, but anything comparing with `=== false` breaks. Accept `boolean | null` and coerce.",
+          "start": 2549.451,
+          "duration": 13.65
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Answer · block 1 · page 1",
+      "start": 2564.476,
+      "duration": 21.96,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Answer · block 1 · page 1",
+          "start": 2564.476,
+          "duration": 3.829
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 4. Read this part in the context of Fixed version. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2569.43,
+          "duration": 15.631
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Answer · block 2 · page 2",
+      "start": 2586.436,
+      "duration": 23.22,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Answer · block 2 · page 2",
+          "start": 2586.436,
+          "duration": 4.214
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 2 of 4. Focus on CheckboxComponent, checked, disabled, onChange. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2591.775,
+          "duration": 16.506
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Answer · block 3 · page 3",
+      "start": 2609.656,
+      "duration": 22.76,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Answer · block 3 · page 3",
+          "start": 2609.656,
+          "duration": 3.986
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 3 of 4. Read this part in the context of Fixed version. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2614.767,
+          "duration": 16.274
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Answer · block 4 · page 4",
+      "start": 2632.416,
+      "duration": 21.04,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Answer · block 4 · page 4",
+          "start": 2632.416,
+          "duration": 4.045
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 4 of 4. Focus on onUserChange. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2637.586,
+          "duration": 14.495
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Fixed version",
+      "start": 2653.456,
+      "duration": 12.82,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Fixed version",
+          "start": 2653.456,
+          "duration": 2.189
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The value comes from the native input's `checked` property rather than toggling the stored value, so the component can never disagree with what the user sees.",
+          "start": 2656.77,
+          "duration": 8.131
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · What a strong candidate also mentions",
+      "start": 2666.276,
+      "duration": 45.56,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · What a strong candidate also mentions",
+          "start": 2666.276,
+          "duration": 3.851
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use outside forms. Some teams do not use Angular Forms. Offering a `checked` `model()` as well is useful, but then forms and the model must write the same signal, and the documentation must say \"use one or the other on a given instance\". Validators. `Validators.requiredTrue` works without extra code. A component with built-in validation would also provide `NG_VALIDATORS`. Indeterminate state for \"select all\" checkboxes is a property (`indeterminate`), not an attribute, and needs its own input. Tests that use real forms. Each bug above is caught by a test that binds a real `FormControl` and calls `reset()`, `patchValue()` and `disable()`. Testing the component in isolation would miss all four.",
+          "start": 2671.252,
+          "duration": 39.209
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Follow-up 1",
+      "start": 2711.836,
+      "duration": 42.103,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Follow-up 1",
+          "start": 2711.836,
+          "duration": 2.409
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Why does `onChange` during `writeValue` mark the control dirty? Which flag does the forms API set?",
+          "start": 2715.37,
+          "duration": 7.066
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Forms registers a view-to-model callback that marks the control pending dirty for a user change, then commits dirty state according to the update policy. Calling that callback during writeValue falsely takes the user-change path during a programmatic write. With updateOn blur, the pending state may commit later, so timing differs. writeValue should update only the view. Test reset leaves the form pristine and verify genuine user interaction marks it dirty.",
+          "start": 2727.78,
+          "duration": 24.784
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Follow-up 2",
+      "start": 2753.939,
+      "duration": 43.177,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Follow-up 2",
+          "start": 2753.939,
+          "duration": 2.486
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How would you build a `ui-radio-group` that works with `formControlName` on the group?",
+          "start": 2757.55,
+          "duration": 4.781
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Put the value accessor on the group so it represents one selected value. Individual radio items report user selection to the group, while the group handles writeValue, onChange, touched behavior, and disabled propagation. Use native radio semantics or a complete radiogroup keyboard pattern, unique grouping names, and an accessible group label. Object values may need a comparison contract. Programmatic writes must not emit user changes, and moving focus within the group should follow the chosen touched policy.",
+          "start": 2767.685,
+          "duration": 28.056
+        }
+      ]
+    },
+    {
+      "heading": "API-004 · Follow-up 3",
+      "start": 2797.116,
+      "duration": 44.301,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "API-004 · Follow-up 3",
+          "start": 2797.116,
+          "duration": 2.76
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "What changes if the application uses Angular's signal-based forms instead of reactive forms?",
+          "start": 2801.001,
+          "duration": 5.187
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Signal forms use their own custom-control interfaces rather than assuming ControlValueAccessor is the adapter. For a checkbox-like control, inspect the checked-control interface and field binding for the supported Angular version; value controls use the value-control interface. Expose the expected model and state signals, and test disabled, touched, validation, and labels through that integration. If supporting reactive forms too, document both adapters and avoid simultaneous competing writers to the same state.",
+          "start": 2811.638,
+          "duration": 28.404
+        }
+      ]
+    },
+    {
+      "heading": "Final review checklist",
+      "start": 2841.417,
+      "duration": 32.46,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Final review checklist",
+          "start": 2841.417,
+          "duration": 1.142
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Review the lesson by answering each main question and follow-up aloud. For Angular Component APIs: Native Semantics and Consumer Contracts, connect each reported symptom to its mechanism, explain the corrected public contract, and name a regression check that exercises the consumer path. State compatibility and accessibility limitations clearly. The linked transcript, complete code, source questions, and verification report let you repeat the exercises at your own pace.",
+          "start": 2843.684,
+          "duration": 25.494
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "That's the end of lesson 4.",
+          "start": 2870.219,
+          "duration": 2.283
+        }
+      ]
+    }
+  ],
+  "rawDuration": 3428.76,
+  "playbackRate": 1.2,
+  "preservedInterviewPauses": 16
+}

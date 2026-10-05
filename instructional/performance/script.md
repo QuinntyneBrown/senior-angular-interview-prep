@@ -1,0 +1,227 @@
+# Angular Performance: Zoneless Rendering and Resource Lifetimes
+
+## Correct rendering comes before optimization
+
+Welcome to the performance lesson. The question is a copy button that depends on zone.js, measures its width through a zone event, and resets its status too early after repeated clicks. We will first understand rendering notifications, then fix state, timing, layout, error feedback, and resource cleanup.
+
+## Correct rendering comes before optimization · 2
+
+Performance is not just making a component execute fewer times. A fast component that fails to show the current state is incorrect. Start by tracing the operation: the click begins a clipboard request, the promise settles, the copied state changes, a timer later resets it, and the view must reflect both transitions. Ask which API tells Angular that each transition needs rendering.
+
+## Correct rendering comes before optimization · 3
+
+A senior answer connects scheduling to observable behavior. It also questions whether the JavaScript work is needed. Measuring a button can be more complex and less reliable than allowing CSS to reserve space for both labels. Removing an unnecessary layout read improves performance and simplifies correctness at the same time.
+
+## Zone-based and zoneless change detection
+
+Zone-based applications use patched asynchronous activity as a broad indication that something may have changed. This can make plain fields appear to update after timers or promises. It is not a universal guarantee: work outside the zone, unpatched APIs, and native asynchronous behavior can still require explicit notification. Avoid teaching that every promise completion automatically fixes every state update.
+
+## Zone-based and zoneless change detection · 2
+
+Zoneless rendering relies on Angular notifications. Signals read by a template notify when they change. Bound template and host listeners, component setInput, markForCheck, and the async pipe are other important paths. A plain field assignment in an arbitrary asynchronous callback is not a notification. Neither is a raw timer merely because it ran.
+
+## Zone-based and zoneless change detection · 3
+
+OnPush is compatible with this model when the component observes its inputs and notifications correctly. It does not make all mutable state observable. Some dynamic-host library components require additional care for children with different assumptions. Test the behavior in a zoneless consumer rather than treating an OnPush annotation as proof of compatibility.
+
+## Async boundaries and view notifications
+
+A click listener can schedule a render before its awaited work finishes. If the handler later writes a plain copied field, that earlier render does not promise another check after the write. An unrelated event may make the label appear, which creates the misleading impression that the code usually works. Tests should isolate the completion and observe whether it schedules its own update.
+
+## Async boundaries and view notifications · 2
+
+Use a signal for state consumed by the template or explicitly mark a suitable view for checking. For observable data, the async pipe connects emissions to rendering. For third-party callbacks, adapt data at the boundary instead of requiring product teams to click somewhere else to refresh. NgZone.run is not itself a zoneless notification mechanism, although retaining run and runOutsideAngular can still matter for zone-based consumers.
+
+## Async boundaries and view notifications · 3
+
+Server rendering has a related but separate stability contract. Pending asynchronous work that must complete before serialization may need PendingTasks. A render notification tells Angular that a view changed; it does not automatically describe every server-side task. Keep browser clipboard actions out of server execution and document environment-dependent APIs.
+
+## Use render hooks for DOM timing
+
+NgZone onStable and related observables do not emit in a zoneless application. They are the wrong boundary for deciding that a view is ready. Use the supported render callbacks when a DOM operation truly depends on the rendered view. afterNextRender handles a one-time operation; a post-render effect can react to dependencies after rendering.
+
+## Use render hooks for DOM timing · 2
+
+Separate geometry reads from style writes when doing coordinated DOM work. A write followed by a read can force layout repeatedly. Render phases help organize that work, but the best improvement can be removing the measurement entirely. Ask what the measurement is trying to guarantee, whether it survives translation and font loading, and whether CSS already expresses the requirement.
+
+## Use render hooks for DOM timing · 3
+
+Render callbacks do not execute during server rendering. That is useful for browser-only DOM work, but it also means the initial server output should not depend on a callback that never ran. Give the component a sensible CSS-first state and use browser work as an enhancement where necessary. Test the measured result in a real browser if you make a layout claim.
+
+## Prefer a layout that handles both labels
+
+Locking a button to the width of Copy does not stop the longer label Copied from making it grow. Translations can reverse which label is longer, and a loaded font can change both widths. Measuring once before those changes is fragile. Place both labels in the same grid cell so the intrinsic width accommodates the larger one.
+
+## Prefer a layout that handles both labels · 2
+
+Hide the inactive label with visibility hidden. It continues to participate in layout but is removed from normal rendering and the accessibility tree. Display none would remove its contribution to width; opacity zero would leave it in the accessibility tree unless other measures were taken. The choice of hiding mechanism is part of both layout and naming behavior.
+
+## Prefer a layout that handles both labels · 3
+
+Verify the button's bounding rectangle before and after the status change with representative translated labels. Check the accessible name contains the visible label only. This is a concrete example of performance work that removes a layout read, a style mutation, a zone subscription, and timing assumptions while improving the user experience.
+
+## Timers and promises have resource lifetimes
+
+Every timer has an owner and an end condition. Starting a new reset timer without cancelling the previous one lets an earlier click reset a later success message. Clear the old timer when beginning the next operation and before installing a new one. Clear it on destruction so callbacks do not update a component that no longer exists.
+
+## Timers and promises have resource lifetimes · 2
+
+Promises introduce another edge case. Two clipboard requests can finish out of order. A first request can settle after a second one, creating a stale announcement or another reset timer. A completion can also arrive after destruction. Clearing a timer alone does not cancel an already pending promise. Use a request sequence and a destroyed-state check when the UI must ignore stale completions.
+
+## Timers and promises have resource lifetimes · 3
+
+The source correction improves the timer behavior for ordinary sequential completions, but it does not fully guard those overlapping promise cases. We will provide an additional hardened teaching example and verify the sequence guard. State the limitation rather than presenting the minimal correction as a complete concurrency solution.
+
+## Errors and announcements are part of completion
+
+The clipboard API can reject because permission was denied, the environment is unsupported, or the page is not a secure context. Catch failures and provide useful feedback. Do not show Copied before the operation succeeds. Do not leave a rejected promise unhandled while the UI silently remains unchanged.
+
+## Errors and announcements are part of completion · 2
+
+A changing button label is not a dependable status announcement for screen readers. A live announcer can communicate success or failure without moving focus. Success is ordinarily polite. An assertive failure announcement should be justified by urgency and interruption cost; it is not automatically required for every rejected clipboard request. Expose translatable messages to the application.
+
+## Errors and announcements are part of completion · 3
+
+Keep the final state coherent when a later operation fails. Clear or replace stale success, avoid allowing an old completion to overwrite a newer failure, and keep the button operable for retry. Tests should cover success, failure, overlap, reset, and destruction. These are correctness cases that prevent seemingly random performance or rendering reports.
+
+## Test notifications instead of forcing every render
+
+A test that manually runs detectChanges after an asynchronous plain-field assignment can hide the production defect. For notification-sensitive cases, use zoneless change detection and wait for the fixture to become stable. Complete a controlled promise, then assert the visible label without forcing a render that Angular did not schedule.
+
+## Test notifications instead of forcing every render · 2
+
+Mock the clipboard boundary so success and failure are deterministic. Control pending requests independently to finish them out of order. Use a short configurable reset delay in the hardened teaching example to verify the timer path without a slow test. Destroy the fixture while a request is pending, then complete it and confirm no new timer or announcement is created.
+
+## Test notifications instead of forcing every render · 3
+
+Real browser tests are necessary for intrinsic layout and accessible names. A DOM emulator cannot prove that the two labels have the same outer button width or that native focus behaves correctly. Compile-time validation remains useful for types, but use the appropriate runtime evidence for every claim.
+
+## Audit a library systematically
+
+Search for zone lifecycle subscriptions, plain fields written by timers or promises, direct DOM measurements, subscriptions without cleanup, and effects that allocate resources without an inverse operation. These searches identify candidates; they do not prove that every match is a defect. Review each candidate according to its ownership and notification path.
+
+## Audit a library systematically · 2
+
+Run representative consumers without zone.js and interact with components through their actual templates. Include asynchronous data, input changes, multiple instances, and destruction. Add regression tests where behavior fails. A debug check for unnotified binding changes can help find gaps, but do not fix failures by forcing global change detection after every callback.
+
+## Audit a library systematically · 3
+
+Profile only after the behavior is correct. Look for repeated expensive derivations, layout thrashing, unnecessary allocations, and excessive renders using measured traces. A signal is not a performance certificate, and a faster benchmark that dropped needed updates is misleading. In the question walkthrough, explain both why the original fails and why the corrected mechanism supplies the missing notification.
+
+## PERF-001 · Scenario
+
+We now review PERF-001: A component that only works with zone.js. Inspect the consumer contract and identify the mechanism behind each reported defect.
+
+## PERF-001 · Scenario
+
+`@acme/ui`'s copy button works in every older product. A team that created a new, zoneless application reports: "The label usually never changes to 'Copied', and the button's width is never locked." A second team (still on zone.js) reports that clicking twice quickly makes "Copied" disappear too early.
+
+## PERF-001 · Scenario · block 1 · page 1
+
+This is the original code, part 1 of 3. Focus on CopyButtonComponent, text. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.
+
+## PERF-001 · Scenario · block 2 · page 2
+
+This is the original code, part 2 of 3. Focus on host. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.
+
+## PERF-001 · Scenario · block 3 · page 3
+
+This is the original code, part 3 of 3. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.
+
+## PERF-001 · Interview question
+
+**Interviewer:** Why does it work with zone.js and not without? Fix it so it works in both kinds of application, and fix the second team's bug. What else would you change?
+
+[pause 5s]
+
+## PERF-001 · Why it depends on zone.js
+
+Zone-based Angular uses patched asynchronous activity as a broad check trigger. This can make plain fields appear to work, but it is not a guarantee for every promise, native asynchronous API, or callback outside the zone.
+
+## PERF-001 · Why it depends on zone.js
+
+A zoneless application (the default for new Angular applications) only runs change detection when something tells it to: a template event listener, a signal read by a template changing, `markForCheck()`, the `async` pipe, or `setInput`. Here:
+
+## PERF-001 · Why it depends on zone.js
+
+The click handler schedules a check, but `copied = true` happens after the `await`, normally once that check has already run. Nothing schedules another, so "Copied" usually never appears. Whether it does depends on timing and on unrelated activity elsewhere on the page, which makes the bug intermittent and hard to reproduce. The reset in `setTimeout` has the same problem. - `NgZone` is a no-op in zoneless applications, so `onStable` never emits, and the width is never locked.
+
+## PERF-001 · Why it depends on zone.js
+
+A shared library must work in both kinds of application, and new ones are zoneless.
+
+## PERF-001 · Why it depends on zone.js
+
+Fix: state that the template reads lives in signals, which schedule rendering in both modes, and DOM work after rendering uses `afterNextRender` or `afterRenderEffect`, never zone events.
+
+## PERF-001 · The second team's bug: overlapping timers
+
+Each click starts a new timer and never cancels the previous one. Clicking at 0 s and 1.5 s resets the label at 2 s, half a second after the second click. The timer also survives the component being destroyed.
+
+## PERF-001 · The second team's bug: overlapping timers
+
+Fix: clear the previous timer on each click, and on destroy.
+
+## PERF-001 · Better than measuring: let CSS size the button
+
+Measuring the width of "Copy" and using it as `min-width` would not even work: "Copied" is longer, so the button grows anyway. Stack both labels in the same grid cell and hide the inactive one with `visibility: hidden`. The button is always as wide as the longer label, with no JavaScript, no layout reads, and correct behaviour when the labels are translated.
+
+## PERF-001 · Answer · block 1 · page 1
+
+This is the answer code, part 1 of 4. Read this part in the context of Fixed version. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.
+
+## PERF-001 · Answer · block 2 · page 2
+
+This is the answer code, part 2 of 4. Focus on CopyButtonComponent, text, copyLabel, copiedLabel. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.
+
+## PERF-001 · Answer · block 3 · page 3
+
+This is the answer code, part 3 of 4. Focus on async. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.
+
+## PERF-001 · Answer · block 4 · page 4
+
+This is the answer code, part 4 of 4. Read this part in the context of Fixed version. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.
+
+## PERF-001 · Other fixes in this version
+
+Errors are handled. `writeText` rejects when permission is denied or the page is not a secure context. The original left an unhandled rejection and no feedback. The change is announced. A button's label changing is not reliably announced by screen readers, so the result is announced through the CDK `LiveAnnouncer`. Labels are inputs, so applications can translate them. - `visibility: hidden` also removes the inactive label from the accessibility tree, so the button's accessible name is always the visible label.
+
+## PERF-001 · How to make this hold across the library
+
+Run the library's own test suite with `provideZonelessChangeDetection()`. A component that only works because zone.js happens to trigger change detection will then fail in tests instead of in a product.
+
+## PERF-001 · Follow-up 1
+
+**Interviewer:** Which Angular APIs schedule change detection in a zoneless application? Which do not?
+
+[pause 5s]
+
+Important notifications include a template-consumed signal changing, markForCheck, component setInput, bound template or host listeners, and async-pipe emissions. Attaching an already dirty view also participates. A raw promise, timeout, or plain field assignment is not a notification on its own. NgZone.run does not substitute for a zoneless notification, although it can remain relevant to zone-based consumers. Test async updates without manually forcing every render.
+
+## PERF-001 · Follow-up 2
+
+**Interviewer:** A third-party chart library calls back outside Angular. What do you do with the data it provides?
+
+[pause 5s]
+
+Adapt the callback to a signal consumed by the template, an observable exposed through the async pipe, or a controlled markForCheck path. Keep subscription cleanup and stale callback handling tied to destruction. Avoid copying the data into an unobserved field and hoping another event triggers a render. If callbacks are extremely frequent, batch according to the UI's needs and profile the result, while preserving the final state. Retain zone-boundary optimizations where they matter for zone-based consumers.
+
+## PERF-001 · Follow-up 3
+
+**Interviewer:** How would you find every component in a large library that only works with zone.js?
+
+[pause 5s]
+
+Search for zone lifecycle observables, plain fields written by promises or timers, subscriptions without teardown, and constructor DOM reads. Treat matches as review candidates. Run consumer hosts zoneless and exercise async completion, input updates, repeated interaction, and destruction. Add regression tests for missing notifications instead of forcing global change detection. Use profiling after correctness to find excessive work, and test supported framework ranges before claiming library-wide compatibility.
+
+## Implementation clarification · Notifications are explicit
+
+Zone-based rendering is not a guarantee for every asynchronous API. In the tested zoneless flow, state consumed by a template must notify Angular.
+
+## Implementation clarification · Overlapping requests
+
+The minimal source correction clears a timer but does not ignore stale promise completions or completions after destruction. The supplemental example adds a sequence guard and lifetime check.
+
+## Final review checklist
+
+Review the lesson by answering each main question and follow-up aloud. For Angular Performance: Zoneless Rendering and Resource Lifetimes, connect each reported symptom to its mechanism, explain the corrected public contract, and name a regression check that exercises the consumer path. State compatibility and accessibility limitations clearly. The linked transcript, complete code, source questions, and verification report let you repeat the exercises at your own pace.

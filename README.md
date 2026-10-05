@@ -32,7 +32,11 @@ Each question follows the same shape:
 - **Practising alone:** read the scenario, write your answer (out loud or on paper), use the hints only when stuck, then compare with the answer and the scoring table.
 - **Running a mock interview:** pick questions from different topics until the minutes add up to your slot. A 60-minute session might be two code reviews, one discussion, and the first steps of the live-coding exercise. Use the scoring tables to give consistent feedback.
 
-## Accuracy
+## Instructional lessons
+
+The [instructional video series](instructional/README.md) covers all seven topics. Each lesson teaches the foundations with code, then walks through every question and follow-up answer. Video, audio, transcripts, slides, captions, measured verification, and Azure cost estimates are included.
+
+## Content verification
 
 TypeScript examples marked for verification are compiled with the Angular compiler and strict template type checking (`npm run verify:examples`). Answers state the minimum Angular version they assume in their front matter. Corrections are welcome; see below.
 

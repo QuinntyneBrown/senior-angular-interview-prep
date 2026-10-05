@@ -1,0 +1,103 @@
+{
+  "generatedOn": "2026-10-05",
+  "seconds": 4732.609958,
+  "chapters": [
+    {
+      "title": "Introduction and foundations",
+      "seconds": 0
+    },
+    {
+      "title": "A11Y-001: An icon button that keyboard and screen-reader users cannot use",
+      "seconds": 893
+    },
+    {
+      "title": "A11Y-002: A modal dialog that is not modal",
+      "seconds": 1401.49
+    },
+    {
+      "title": "A11Y-003: Tabs that only work with a mouse",
+      "seconds": 1955.493
+    },
+    {
+      "title": "A11Y-004: A form field where nothing is connected",
+      "seconds": 2589.632
+    },
+    {
+      "title": "A11Y-005: Toasts that vanish before anyone can use them",
+      "seconds": 3138.707
+    },
+    {
+      "title": "A11Y-006: Live coding: build an accessible listbox",
+      "seconds": 3755.829
+    },
+    {
+      "title": "Final review checklist",
+      "seconds": 4699.252
+    }
+  ],
+  "width": 1920,
+  "height": 1080,
+  "videoCodec": "h264",
+  "audioCodec": "aac",
+  "subtitleCodec": "mov_text",
+  "bytes": 111811348,
+  "runtimeAssertions": 40,
+  "assertions": [
+    "Icon button has action name",
+    "Icon is hidden from accessible naming",
+    "First tab initially selected",
+    "ArrowRight moves actual DOM focus",
+    "Automatic activation updates selected state",
+    "ArrowRight wraps within group",
+    "End reaches final tab",
+    "Home reaches first tab",
+    "Multiple groups have unique identifiers",
+    "Every tab references a rendered panel",
+    "Label targets the actual input",
+    "Empty error live region exists before message",
+    "Error uses persistent live region",
+    "Error sets invalid state",
+    "Hint and error are both descriptions",
+    "Clearing error removes invalid state",
+    "Toast live regions exist before notifications",
+    "Toast updates persistent polite region",
+    "Success message reaches polite region",
+    "Notification does not steal focus",
+    "Urgent and routine messages use separate regions",
+    "Dismissal removes the visible message",
+    "Arrow navigation changes active option",
+    "Navigation does not commit selection",
+    "Navigation skips disabled option",
+    "First character searches from next option",
+    "Repeated character cycles enabled matches",
+    "Enter commits active value",
+    "Active descendant keeps DOM focus on listbox",
+    "Consumer option array remains unchanged",
+    "All-disabled list removes active reference",
+    "All-disabled navigation does not change value",
+    "Empty options have no invalid active reference",
+    "Native modal moves focus inside",
+    "Native modal prevents background focus",
+    "Real Tab cannot reach background controls, step 1",
+    "Real Tab cannot reach background controls, step 2",
+    "Real Tab cannot reach background controls, step 3",
+    "Real Tab cannot reach background controls, step 4",
+    "Escape closes modal and restores invoking focus"
+  ],
+  "consumerCompilationChecks": 0,
+  "consumerAssertions": [],
+  "checkedSlides": 220,
+  "captions": 1300,
+  "estimatedAzureDollars": 1.0665599999999995,
+  "reservedCharacters": 71104,
+  "preservedDrillPauses": 24,
+  "mainQuestions": 6,
+  "followupQuestions": 18,
+  "fullDecodePassed": true,
+  "browserPlaybackPassed": true,
+  "checkedVideoSeeks": [
+    20,
+    984.28,
+    4712.609958
+  ]
+}

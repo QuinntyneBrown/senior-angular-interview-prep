@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Accessible Angular Components: Names, Focus, and Interaction</title><link rel="stylesheet" href="../assets/slides.css"><style>section{padding:125px 130px 140px}h2{font-size:48px;margin-bottom:25px}.kicker{font-size:23px;margin-bottom:15px}section>p,li{font-size:37px;line-height:1.45}li{margin-bottom:22px}pre.code{font-size:22px;line-height:1.38;padding:22px 30px;white-space:pre-wrap;overflow-wrap:anywhere}.question{font-size:37px;line-height:1.35}section>p.small{font-size:24px}</style></head><body data-lesson-number="accessibility" data-lesson-title="Accessible Angular Components: Names, Focus, and Interaction" data-parts="Foundations|A11Y-001|A11Y-002|A11Y-003|A11Y-004|A11Y-005|A11Y-006|Recap">
+<section id="slide-000" data-part="0"><div class="kicker">Foundations</div><h2>Accessibility is observable behavior</h2><ul><li>Welcome to the accessibility lesson.</li><li>We will examine an icon button, a modal dialog, tabs, a form field, toast announcements, and a complete listbox coding exercise.</li><li>Accessibility is part of a component's behavior and public contract.</li></ul></section>
+<section id="slide-001" data-part="0" data-cue="Accessibility is observable behavior · 2"><div class="kicker">Foundations</div><h2>Accessibility is observable behavior · 2</h2><ul><li>A screenshot cannot tell you whether pressing Tab reaches the control, whether the focused item is selected, or whether an error is connected to its input.</li><li>A component can look correct while its accessibility tree tells a different story.</li><li>Start a review by inspecting the native element, then its computed role and accessible name, then its states and relationships.</li></ul></section>
+<section id="slide-002" data-part="0" data-cue="Accessibility is observable behavior · 3"><div class="kicker">Foundations</div><h2>Accessibility is observable behavior · 3</h2><ul><li>Our examples are teaching implementations.</li><li>We will verify DOM relationships, keyboard events, native dialog behavior, and focus in a real browser.</li><li>We will not treat those checks as proof of every screen reader's announcements.</li></ul></section>
+<section id="slide-003" data-part="0" data-cue="Choose native semantics before adding ARIA"><div class="kicker">Foundations</div><h2>Choose native semantics before adding ARIA</h2><ul><li>A native button already supports keyboard activation, focus, disabled behavior, and a button role.</li><li>A clickable div has none of those properties automatically.</li><li>Adding role button only changes its semantic description; it does not make Space activate it, put it in the tab order, or prevent activation while disabled.</li></ul></section>
+<section id="slide-004" data-part="0" data-cue="Choose native semantics before adding ARIA · 2"><div class="kicker">Foundations</div><h2>Choose native semantics before adding ARIA · 2</h2><ul><li>ARIA supplements semantics when a native element does not express the complete widget.</li><li>It describes roles, states, and relationships.</li><li>The application remains responsible for keeping those states synchronized with behavior.</li></ul></section>
+<section id="slide-005" data-part="0" data-cue="Choose native semantics before adding ARIA · 3"><div class="kicker">Foundations</div><h2>Choose native semantics before adding ARIA · 3</h2><ul><li>Use the WAI-ARIA Authoring Practices patterns as an interaction reference for composite widgets.</li><li>They provide expected keyboard behavior and explain focus strategies.</li><li>They are guidance rather than a blanket compliance certificate.</li></ul></section>
+<section id="slide-006" data-part="0" data-cue="Accessible names and descriptions"><div class="kicker">Foundations</div><h2>Accessible names and descriptions</h2><ul><li>An accessible name identifies a control.</li><li>For a visible text button, its content often supplies that name.</li><li>An icon-only button needs another naming source, such as aria-label or aria-labelledby.</li></ul></section>
+<section id="slide-007" data-part="0" data-cue="Accessible names and descriptions · 2"><div class="kicker">Foundations</div><h2>Accessible names and descriptions · 2</h2><pre class="code" data-lang="html">&lt;button type=&quot;button&quot; aria-label=&quot;Delete invoice&quot;&gt;
+  &lt;svg aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;/svg&gt;
+&lt;/button&gt;
+&lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;
+&lt;input id=&quot;email&quot; aria-describedby=&quot;email-help&quot;&gt;
+&lt;p id=&quot;email-help&quot;&gt;Use your work address.&lt;/p&gt;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-008" data-part="0" data-cue="Accessible names and descriptions · 3"><div class="kicker">Foundations</div><h2>Accessible names and descriptions · 3</h2><ul><li>Prefer aria-labelledby when visible text already provides the right wording, particularly when several labels contribute useful context.</li><li>Ensure every referenced identifier exists and is unique.</li><li>Generated identifiers must work across multiple instances.</li></ul></section>
+<section id="slide-009" data-part="0" data-cue="Focus is a resource with an owner"><div class="kicker">Foundations</div><h2>Focus is a resource with an owner</h2><ul><li>Focus tells the keyboard user where the next operation will happen.</li><li>Keep a visible focus indicator, avoid unnecessary positive tabindex values, and preserve a logical reading order.</li><li>When a component moves focus, it should have a clear user-facing reason.</li></ul></section>
+<section id="slide-010" data-part="0" data-cue="Focus is a resource with an owner · 2"><div class="kicker">Foundations</div><h2>Focus is a resource with an owner · 2</h2><ul><li>Before opening a modal, remember the invoking element.</li><li>On open, focus an appropriate element inside the dialog.</li><li>Contain interaction while it is modal and provide a keyboard dismissal path.</li></ul></section>
+<section id="slide-011" data-part="0" data-cue="Focus is a resource with an owner · 3"><div class="kicker">Foundations</div><h2>Focus is a resource with an owner · 3</h2><ul><li>Initial focus depends on content and risk.</li><li>A destructive confirmation commonly starts on the safe action.</li><li>A long structured explanation can start at a heading or paragraph with tabindex minus one so users can read it before acting.</li></ul></section>
+<section id="slide-012" data-part="0" data-cue="Modal dialogs and content creation"><div class="kicker">Foundations</div><h2>Modal dialogs and content creation</h2><ul><li>Use showModal on a native dialog when its behavior fits.</li><li>It places the dialog in the top layer and makes the rest of the document inert.</li><li>Merely setting the open attribute creates an open dialog without the same modal operation.</li></ul></section>
+<section id="slide-013" data-part="0" data-cue="Modal dialogs and content creation · 2"><div class="kicker">Foundations</div><h2>Modal dialogs and content creation · 2</h2><pre class="code" data-lang="ts">const dialog = document.querySelector('dialog');
+// Browser-only teaching excerpt:
+dialog?.showModal();
+// Setting the open attribute is not equivalent.
+// Heavy content can be created from a template on demand.</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-014" data-part="0" data-cue="Modal dialogs and content creation · 3"><div class="kicker">Foundations</div><h2>Modal dialogs and content creation · 3</h2><ul><li>Projection is another source of surprises.</li><li>A parent creates its projected content even if the child's ng-content appears inside a condition.</li><li>Hiding a dialog does not prevent an expensive projected form from being created or making requests.</li></ul></section>
+<section id="slide-015" data-part="0" data-cue="Composite widgets and keyboard tables"><div class="kicker">Foundations</div><h2>Composite widgets and keyboard tables</h2><ul><li>A composite widget groups several related items into a coherent keyboard interaction.</li><li>A tablist generally has one tab in the page's tab order.</li><li>Arrow keys move within it, Home and End reach the extremes, and selection determines which panel is shown.</li></ul></section>
+<section id="slide-016" data-part="0" data-cue="Composite widgets and keyboard tables · 2"><div class="kicker">Foundations</div><h2>Composite widgets and keyboard tables · 2</h2><ul><li>Automatic activation selects a tab as focus moves.</li><li>It works well when panels display immediately.</li><li>Manual activation moves focus first and selects on Enter or Space, which can avoid repeated slow requests.</li></ul></section>
+<section id="slide-017" data-part="0" data-cue="Composite widgets and keyboard tables · 3"><div class="kicker">Foundations</div><h2>Composite widgets and keyboard tables · 3</h2><ul><li>Track identity rather than assuming a static index is always enough.</li><li>Removing the final tab must not leave an inaccessible panel or no reachable tab.</li><li>Handle empty lists, disabled items if supported, right-to-left direction, and multiple groups.</li></ul></section>
+<section id="slide-018" data-part="0" data-cue="Form relationships and error timing"><div class="kicker">Foundations</div><h2>Form relationships and error timing</h2><ul><li>A visible label needs a programmatic connection to the input.</li><li>Match label for with input id, or use valid wrapping label semantics.</li><li>A custom component wrapper cannot rely on an identifier on its host automatically naming an internal input.</li></ul></section>
+<section id="slide-019" data-part="0" data-cue="Form relationships and error timing · 2"><div class="kicker">Foundations</div><h2>Form relationships and error timing · 2</h2><ul><li>Use aria-describedby for helper and error text and aria-invalid when the control is invalid according to the application's display policy.</li><li>Do not announce every validation detail before the user has had a chance to enter data.</li><li>An error shown after blur or submission usually needs a clear explanation and a route to correction.</li></ul></section>
+<section id="slide-020" data-part="0" data-cue="Form relationships and error timing · 3"><div class="kicker">Foundations</div><h2>Form relationships and error timing · 3</h2><ul><li>For live error updates, establish the live region before putting the message into it.</li><li>Some assistive technology misses a region inserted together with its first text.</li><li>Keep the name, description, visual error, and live announcement synchronized, but avoid redundant repeated speech.</li></ul></section>
+<section id="slide-021" data-part="0" data-cue="Live regions are asynchronous communication"><div class="kicker">Foundations</div><h2>Live regions are asynchronous communication</h2><ul><li>A toast's presence on screen does not mean a screen reader will announce it.</li><li>A persistent live region provides a communication channel.</li><li>Polite announcements usually wait for an appropriate pause; assertive announcements may interrupt.</li></ul></section>
+<section id="slide-022" data-part="0" data-cue="Live regions are asynchronous communication · 2"><div class="kicker">Foundations</div><h2>Live regions are asynchronous communication · 2</h2><ul><li>Separate the visible notification history from the announcement channel.</li><li>Replacing a list of toasts can cause too much content to be spoken or can repeat old messages.</li><li>Publish the specific new status through a live announcer or persistent region while leaving the visible items available for review.</li></ul></section>
+<section id="slide-023" data-part="0" data-cue="Live regions are asynchronous communication · 3"><div class="kicker">Foundations</div><h2>Live regions are asynchronous communication · 3</h2><ul><li>Rapid changes can be coalesced or interrupted depending on the platform.</li><li>A sequence such as three files uploaded, then four files uploaded, is not a reliable promise of two separate spoken sentences.</li><li>Batch progress, announce a final summary, and offer stable visible status.</li></ul></section>
+<section id="slide-024" data-part="0" data-cue="Listbox focus and selection are different"><div class="kicker">Foundations</div><h2>Listbox focus and selection are different</h2><ul><li>A single-select listbox lets a user choose one option.</li><li>The active option is the one keyboard navigation currently addresses.</li><li>The selected value is the committed choice.</li></ul></section>
+<section id="slide-025" data-part="0" data-cue="Listbox focus and selection are different · 2"><div class="kicker">Foundations</div><h2>Listbox focus and selection are different · 2</h2><pre class="code" data-lang="html">&lt;ul role=&quot;listbox&quot; tabindex=&quot;0&quot;
+    aria-label=&quot;Country&quot;
+    aria-activedescendant=&quot;country-ca&quot;&gt;
+  &lt;li role=&quot;option&quot; id=&quot;country-ca&quot;
+      aria-selected=&quot;true&quot;&gt;Canada&lt;/li&gt;
+  &lt;li role=&quot;option&quot; id=&quot;country-us&quot;
+      aria-selected=&quot;false&quot;&gt;United States&lt;/li&gt;
+&lt;/ul&gt;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-026" data-part="0" data-cue="Listbox focus and selection are different · 3"><div class="kicker">Foundations</div><h2>Listbox focus and selection are different · 3</h2><ul><li>Use roles listbox and option, an accessible name on the container, aria-selected on options, and aria-disabled where appropriate.</li><li>Disabled options remain discoverable but must not be chosen.</li><li>Keep identifiers unique across instances.</li></ul></section>
+<section id="slide-027" data-part="0" data-cue="Listbox state, typeahead, and dynamic data"><div class="kicker">Foundations</div><h2>Listbox state, typeahead, and dynamic data</h2><ul><li>The coding exercise uses a model for the selected value and a linked signal for the active index.</li><li>When options change, reconcile the active item against current data instead of keeping an index that can point past the list.</li><li>Object values may need compareWith because a refetch can return equal records with different references.</li></ul></section>
+<section id="slide-028" data-part="0" data-cue="Listbox state, typeahead, and dynamic data · 2"><div class="kicker">Foundations</div><h2>Listbox state, typeahead, and dynamic data · 2</h2><ul><li>Arrow keys, Home, and End traverse enabled options; Enter and Space commit the active item in this example.</li><li>Prevent the browser's scrolling default for handled navigation keys.</li><li>Printable characters build a short typeahead buffer, with a reset timer and modifier-key filtering.</li></ul></section>
+<section id="slide-029" data-part="0" data-cue="Listbox state, typeahead, and dynamic data · 3"><div class="kicker">Foundations</div><h2>Listbox state, typeahead, and dynamic data · 3</h2><ul><li>Virtualization adds an important constraint.</li><li>An active descendant cannot safely reference an option removed from the DOM.</li><li>A large list needs an identity and rendering strategy that keeps the active option represented, correct position and set-size metadata where required, and integration tests.</li></ul></section>
+<section id="slide-030" data-part="0" data-cue="Style from state and verify transitions"><div class="kicker">Foundations</div><h2>Style from state and verify transitions</h2><ul><li>Selection should remain recognizable without color.</li><li>A check mark or another shape can supplement background and weight.</li><li>Style from ARIA state where it reflects the actual behavioral state, so a separate CSS flag cannot drift.</li></ul></section>
+<section id="slide-031" data-part="0" data-cue="Style from state and verify transitions · 2"><div class="kicker">Foundations</div><h2>Style from state and verify transitions · 2</h2><ul><li>Build tests around transitions: focus enters, arrows move, selection commits, options change, a disabled item is skipped, and focus returns after dismissal.</li><li>Render two instances to catch duplicate identifiers.</li><li>Test empty and all-disabled data.</li></ul></section>
+<section id="slide-032" data-part="0" data-cue="Style from state and verify transitions · 3"><div class="kicker">Foundations</div><h2>Style from state and verify transitions · 3</h2><ul><li>An automated accessibility scanner catches many missing names and invalid relationships, but it does not prove the widget's full interaction pattern.</li><li>A test can pass every scanner rule and still fail to move focus with ArrowRight.</li><li>Combine structural checks, behavior tests, visual review, and manual assistive-technology checks.</li></ul></section>
+<section id="slide-033" data-part="1" data-cue="A11Y-001 · Scenario"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · Scenario</h2><ul><li>We now review A11Y-001: An icon button that keyboard and screen-reader users cannot use.</li><li>Inspect the consumer contract and identify the mechanism behind each reported defect.</li></ul></section>
+<section id="slide-034" data-part="1" data-cue="A11Y-001 · Scenario"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · Scenario</h2><ul><li>@acme/ui has shipped this icon button for a year.</li><li>It uses an icon font with ligatures, so the text delete renders as a bin icon.</li><li>Hundreds of call sites look like the usage below.</li></ul></section>
+<section id="slide-035" data-part="1" data-cue="A11Y-001 · Scenario · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · Scenario · block 1 · page 1</h2><pre class="code" data-lang="ts">import { Component, input, output } from '@angular/core';
+
+@Component({
+  selector: 'ui-icon-button',
+  template: `
+    &lt;div
+      class=&quot;ui-icon-button&quot;
+      [class.ui-icon-button--disabled]=&quot;disabled()&quot;
+      (click)=&quot;handleClick()&quot;&gt;
+      &lt;span class=&quot;ui-icon&quot;&gt;{{ icon() }}&lt;/span&gt;
+    &lt;/div&gt;
+  `,
+})
+export class IconButtonComponent {</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-036" data-part="1" data-cue="A11Y-001 · Scenario · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · Scenario · block 2 · page 2</h2><pre class="code" data-lang="ts">  readonly icon = input.required&lt;string&gt;();
+  readonly disabled = input(false);
+  readonly pressed = output&lt;void&gt;();
+
+  handleClick(): void {
+    if (!this.disabled()) this.pressed.emit();
+  }
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-037" data-part="1" data-cue="A11Y-001 · Scenario · block 3 · page 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · Scenario · block 3 · page 1</h2><pre class="code" data-lang="html">&lt;ui-icon-button icon=&quot;more_vert&quot; title=&quot;More actions&quot; (pressed)=&quot;openMenu()&quot; /&gt;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-038" data-part="1" data-cue="A11Y-001 · Interview question"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · Interview question</h2><p class="question">List the accessibility failures, fix the component, and explain how you would release the fix to hundreds of existing call sites.</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-039" data-part="1" data-cue="A11Y-001 · 1. It is not a button"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · 1. It is not a button</h2><ul><li>A &lt;div&gt; with a click handler has no role, is not in the tab order, and does not respond to Enter or Space.</li><li>Keyboard users cannot reach it; screen readers do not announce it as interactive.</li><li>Adding role=&quot;button&quot;, tabindex=&quot;0&quot; and key handlers is possible but recreates what the native element already does, usually incompletely (Space activates on key up for native buttons, for example).</li></ul></section>
+<section id="slide-040" data-part="1" data-cue="A11Y-001 · 1. It is not a button"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · 1. It is not a button</h2><ul><li>Fix: use a native &lt;button type=&quot;button&quot;&gt;. type=&quot;button&quot; matters: a button inside a &lt;form&gt; defaults to submit.</li></ul></section>
+<section id="slide-041" data-part="1" data-cue="A11Y-001 · 2. The accessible name is the ligature text"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · 2. The accessible name is the ligature text</h2><ul><li>The only text inside is more_vert, so assistive technology announces something like &quot;more underscore vert&quot;. title on the custom element does not help: it is on a host element with no role, and title is not reliably exposed or shown to keyboard and touch users anyway.</li></ul></section>
+<section id="slide-042" data-part="1" data-cue="A11Y-001 · 2. The accessible name is the ligature text"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · 2. The accessible name is the ligature text</h2><ul><li>Fix: a label input bound to aria-label on the button, and aria-hidden=&quot;true&quot; on the icon so the ligature text is never read.</li></ul></section>
+<section id="slide-043" data-part="1" data-cue="A11Y-001 · 3. Disabled is visual only"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · 3. Disabled is visual only</h2><ul><li>The class greys the button out, but nothing tells assistive technology it is unavailable.</li><li>There are two valid fixes, and the choice should be deliberate:</li></ul></section>
+<section id="slide-044" data-part="1" data-cue="A11Y-001 · 3. Disabled is visual only"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · 3. Disabled is visual only</h2><ul><li>Native disabled: removes the button from the tab order.</li><li>Simple, but users cannot discover the control or a tooltip explaining why it is disabled. - aria-disabled=&quot;true&quot;: keeps it focusable and announced as unavailable.</li><li>The component must then block activation itself.</li></ul></section>
+<section id="slide-045" data-part="1" data-cue="A11Y-001 · 3. Disabled is visual only"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · 3. Disabled is visual only</h2><ul><li>The fixed version uses aria-disabled so that disabled actions in toolbars remain discoverable.</li></ul></section>
+<section id="slide-046" data-part="1" data-cue="A11Y-001 · Answer · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · Answer · block 1 · page 1</h2><pre class="code" data-lang="ts">import { Component, booleanAttribute, input, output } from '@angular/core';
+
+@Component({
+  selector: 'ui-icon-button',
+  template: `
+    &lt;button
+      type=&quot;button&quot;
+      class=&quot;ui-icon-button&quot;
+      [attr.aria-label]=&quot;label()&quot;
+      [attr.aria-disabled]=&quot;disabled() || null&quot;
+      (click)=&quot;handleClick()&quot;&gt;
+      &lt;span class=&quot;ui-icon&quot; aria-hidden=&quot;true&quot;&gt;{{ icon() }}&lt;/span&gt;
+    &lt;/button&gt;
+  `,</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-047" data-part="1" data-cue="A11Y-001 · Answer · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · Answer · block 2 · page 2</h2><pre class="code" data-lang="ts">})
+export class IconButtonComponent {
+  readonly icon = input.required&lt;string&gt;();
+  readonly label = input.required&lt;string&gt;();
+  readonly disabled = input(false, { transform: booleanAttribute });
+  readonly pressed = output&lt;void&gt;();
+
+  handleClick(): void {
+    if (!this.disabled()) this.pressed.emit();
+  }
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-048" data-part="1" data-cue="A11Y-001 · Fixed version"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · Fixed version</h2><ul><li>Making label required turns a recurring accessibility bug into a compile error: nobody can add an icon button without a name again.</li></ul></section>
+<section id="slide-049" data-part="1" data-cue="A11Y-001 · 4. Releasing it without breaking hundreds of call sites"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · 4. Releasing it without breaking hundreds of call sites</h2><ul><li>A new required input is a breaking change: every existing &lt;ui-icon-button&gt; stops compiling.</li><li>A safe rollout:</li></ul></section>
+<section id="slide-050" data-part="1" data-cue="A11Y-001 · 4. Releasing it without breaking hundreds of call sites · item 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · 4. Releasing it without breaking hundreds of call sites · item 1</h2><ul><li>1.</li><li>Minor release: add label as optional.</li><li>When it is missing, fall back to the title attribute if present, and log a development-mode warning that names the icon, so teams can find each call site.</li></ul></section>
+<section id="slide-051" data-part="1" data-cue="A11Y-001 · 4. Releasing it without breaking hundreds of call sites · item 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · 4. Releasing it without breaking hundreds of call sites · item 2</h2><ul><li>2.</li><li>Provide a migration: an ng update schematic that rewrites title=&quot;...&quot; to label=&quot;...&quot;, and reports call sites with neither for a person to fix.</li></ul></section>
+<section id="slide-052" data-part="1" data-cue="A11Y-001 · 4. Releasing it without breaking hundreds of call sites · item 3"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · 4. Releasing it without breaking hundreds of call sites · item 3</h2><ul><li>3.</li><li>Next major: make label required.</li><li>The compiler now lists any remaining call sites.</li></ul></section>
+<section id="slide-053" data-part="1" data-cue="A11Y-001 · 4. Releasing it without breaking hundreds of call sites"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · 4. Releasing it without breaking hundreds of call sites</h2><ul><li>The other changes (native button, aria-hidden icon, aria-disabled) fix behaviour without changing the API, so they can ship immediately in a minor or patch release.</li><li>Mention them in the changelog: teams with styles targeting the internal div will notice.</li></ul></section>
+<section id="slide-054" data-part="1" data-cue="A11Y-001 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · Follow-up 1</h2><p class="question">A team wants a tooltip on every icon button. How does a tooltip relate to the accessible name, and how should it behave for keyboard users?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-054-answer" data-part="1" data-cue="A tooltip supplies supplemental explanation; the icon button still needs a name "><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · Follow-up 1 · Answer</h2><ul><li>A tooltip supplies supplemental explanation; the icon button still needs a name before it appears.</li><li>Show it on keyboard focus as well as pointer hover, allow Escape to dismiss it, and avoid moving focus into a noninteractive tooltip.</li><li>Associate useful descriptive content without making the name unexpectedly verbose.</li></ul></section>
+<section id="slide-055" data-part="1" data-cue="A11Y-001 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · Follow-up 2</h2><p class="question">When is `aria-labelledby` better than `aria-label` here?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-055-answer" data-part="1" data-cue="Use labelledby when visible text already provides the intended label or when com"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · Follow-up 2 · Answer</h2><ul><li>Use labelledby when visible text already provides the intended label or when combining a visible action with contextual text is clearer than duplicating a string.</li><li>It keeps spoken wording aligned with the visible interface and can improve localization maintenance.</li><li>The referenced elements need stable unique identifiers.</li></ul></section>
+<section id="slide-056" data-part="1" data-cue="A11Y-001 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · Follow-up 3</h2><p class="question">How would you test, automatically, that every icon button in a product has a name?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-056-answer" data-part="1" data-cue="Run an accessibility scanner in the rendered product and add a browser test that"><div class="kicker">Interview walkthrough</div><h2>A11Y-001 · Follow-up 3 · Answer</h2><ul><li>Run an accessibility scanner in the rendered product and add a browser test that queries buttons by their accessible name.</li><li>Cover states where icons or labels change and multiple component instances.</li><li>Required input typing can help library consumers, but an empty string can still pass a string type.</li></ul></section>
+<section id="slide-057" data-part="2" data-cue="A11Y-002 · Scenario"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Scenario</h2><ul><li>We now review A11Y-002: A modal dialog that is not modal.</li><li>Inspect the consumer contract and identify the mechanism behind each reported defect.</li></ul></section>
+<section id="slide-058" data-part="2" data-cue="A11Y-002 · Scenario"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Scenario</h2><ul><li>@acme/ui ships the dialog below.</li><li>It looks correct with a mouse.</li><li>A screen-reader user reports they &quot;can't tell a dialog opened, and Tab takes me to the page underneath&quot;.</li></ul></section>
+<section id="slide-059" data-part="2" data-cue="A11Y-002 · Scenario · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Scenario · block 1 · page 1</h2><pre class="code" data-lang="ts">import { Component, input, model } from '@angular/core';
+
+@Component({
+  selector: 'ui-dialog',
+  template: `
+    @if (open()) {
+      &lt;div class=&quot;ui-dialog__backdrop&quot; (click)=&quot;open.set(false)&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;ui-dialog&quot; role=&quot;dialog&quot;&gt;
+        &lt;h2 class=&quot;ui-dialog__title&quot;&gt;{{ heading() }}&lt;/h2&gt;
+        &lt;ng-content /&gt;
+        &lt;span class=&quot;ui-dialog__close&quot; (click)=&quot;open.set(false)&quot;&gt;×&lt;/span&gt;
+      &lt;/div&gt;
+    }
+  `,</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-060" data-part="2" data-cue="A11Y-002 · Scenario · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Scenario · block 2 · page 2</h2><pre class="code" data-lang="ts">})
+export class DialogComponent {
+  readonly open = model(false);
+  readonly heading = input.required&lt;string&gt;();
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-061" data-part="2" data-cue="A11Y-002 · Interview question"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Interview question</h2><p class="question">What does a modal dialog have to do for keyboard and screen-reader users, and which of those does this one do? Fix it, and explain the second team's bug.</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-062" data-part="2" data-cue="A11Y-002 · Answer"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Answer</h2><ul><li>A modal dialog must: move focus into itself when it opens, keep keyboard focus and screen-reader browsing inside, have an accessible name, close on Escape, and return focus to where the user was when it closes.</li><li>This one does none of them.</li></ul></section>
+<section id="slide-063" data-part="2" data-cue="A11Y-002 · 1. Focus stays behind"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · 1. Focus stays behind</h2><ul><li>Opening it does not move focus.</li><li>A keyboard user's next Tab goes to whatever followed the trigger, and a screen-reader user hears nothing.</li><li>The user may not know a dialog opened.</li></ul></section>
+<section id="slide-064" data-part="2" data-cue="A11Y-002 · 2. The rest of the page is still reachable"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · 2. The rest of the page is still reachable</h2><ul><li>Nothing stops Tab from leaving the dialog, and nothing hides the page behind it from assistive technology. role=&quot;dialog&quot; alone does not make anything modal.</li></ul></section>
+<section id="slide-065" data-part="2" data-cue="A11Y-002 · 3. No accessible name"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · 3. No accessible name</h2><ul><li>role=&quot;dialog&quot; with no aria-labelledby or aria-label is announced as just &quot;dialog&quot;.</li><li>The heading is right there; it needs an id and a reference.</li></ul></section>
+<section id="slide-066" data-part="2" data-cue="A11Y-002 · 4. No keyboard way to close, and focus is lost on close"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · 4. No keyboard way to close, and focus is lost on close</h2><ul><li>There is no Escape handling, and the close control is a &lt;span&gt;: not focusable, not a button, and its only text, ×, is announced as &quot;times&quot; or &quot;multiplication&quot;.</li><li>When the dialog closes, its content is destroyed while it contains focus, so focus falls back to &lt;body&gt; and the user has to find their place again.</li></ul></section>
+<section id="slide-067" data-part="2" data-cue="A11Y-002 · Fix: use the native `&lt;dialog&gt;` element"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Fix: use the native &lt;dialog&gt; element</h2><ul><li>showModal() gives most of this for free: the dialog renders in the top layer, the rest of the document becomes inert (unreachable by Tab and hidden from assistive technology), focus moves into the dialog, and Escape fires a cancel event.</li><li>The component then only needs to name it, provide a real close button, and restore focus.</li></ul></section>
+<section id="slide-068" data-part="2" data-cue="A11Y-002 · Answer · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Answer · block 1 · page 1</h2><pre class="code" data-lang="ts">import {
+  Component,
+  DOCUMENT,
+  ElementRef,
+  afterRenderEffect,
+  inject,
+  input,
+  model,
+  viewChild,
+} from '@angular/core';
+
+let nextId = 0;
+
+@Component({</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-069" data-part="2" data-cue="A11Y-002 · Answer · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Answer · block 2 · page 2</h2><pre class="code" data-lang="ts">  selector: 'ui-dialog',
+  template: `
+    &lt;dialog
+      #dialog
+      class=&quot;ui-dialog&quot;
+      [attr.aria-labelledby]=&quot;titleId&quot;
+      (cancel)=&quot;onCancel($event)&quot;
+      (close)=&quot;onClose()&quot;&gt;
+      &lt;h2 class=&quot;ui-dialog__title&quot; [id]=&quot;titleId&quot;&gt;{{ heading() }}&lt;/h2&gt;
+      &lt;ng-content /&gt;
+      &lt;button type=&quot;button&quot; class=&quot;ui-dialog__close&quot; [attr.aria-label]=&quot;closeLabel()&quot; (click)=&quot;open.set(false)&quot;&gt;
+        &lt;span aria-hidden=&quot;true&quot;&gt;×&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/dialog&gt;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-070" data-part="2" data-cue="A11Y-002 · Answer · block 3 · page 3"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Answer · block 3 · page 3</h2><pre class="code" data-lang="ts">  `,
+})
+export class DialogComponent {
+  readonly open = model(false);
+  readonly heading = input.required&lt;string&gt;();
+  readonly closeLabel = input('Close');
+
+  protected readonly titleId = `ui-dialog-title-${nextId++}`;
+  private readonly dialog = viewChild.required&lt;ElementRef&lt;HTMLDialogElement&gt;&gt;('dialog');
+  private readonly document = inject(DOCUMENT);
+  private returnFocusTo: HTMLElement | null = null;
+
+  constructor() {
+    afterRenderEffect(() =&gt; {</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-071" data-part="2" data-cue="A11Y-002 · Answer · block 4 · page 4"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Answer · block 4 · page 4</h2><pre class="code" data-lang="ts">      const dialog = this.dialog().nativeElement;
+      if (this.open() &amp;&amp; !dialog.open) {
+        const active = this.document.activeElement;
+        this.returnFocusTo = active instanceof HTMLElement ? active : null;
+        dialog.showModal();
+      } else if (!this.open() &amp;&amp; dialog.open) {
+        dialog.close();
+      }
+    });
+  }
+
+  protected onCancel(event: Event): void {
+    // Escape: keep the model as the single source of truth.
+    event.preventDefault();</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-072" data-part="2" data-cue="A11Y-002 · Answer · block 5 · page 5"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Answer · block 5 · page 5</h2><pre class="code" data-lang="ts">    this.open.set(false);
+  }
+
+  protected onClose(): void {
+    // Runs however the dialog closed, including &lt;form method=&quot;dialog&quot;&gt;.
+    this.open.set(false);
+    this.returnFocusTo?.focus();
+    this.returnFocusTo = null;
+  }
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-073" data-part="2" data-cue="A11Y-002 · Fix: use the native `&lt;dialog&gt;` element"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Fix: use the native &lt;dialog&gt; element</h2><ul><li>Design notes:</li></ul></section>
+<section id="slide-074" data-part="2" data-cue="A11Y-002 · Fix: use the native `&lt;dialog&gt;` element"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Fix: use the native &lt;dialog&gt; element</h2><ul><li>The model stays the single source of truth.</li><li>Escape is cancelled and turned into open.set(false), and the effect calls close().</li><li>Focus restoration happens in the close event handler, so it runs for every way of closing. - afterRenderEffect is used because showModal() needs the element to be rendered; it never runs during server rendering.</li></ul></section>
+<section id="slide-075" data-part="2" data-cue="A11Y-002 · 5. The second team's bug: projected content is always created"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · 5. The second team's bug: projected content is always created</h2><ul><li>&lt;ng-content&gt; inside @if does not delay anything.</li><li>Projected content belongs to the parent's template, so the parent creates it, and runs its lifecycle hooks, whether or not the dialog ever shows it.</li><li>That is why the hidden form makes HTTP requests on page load.</li></ul></section>
+<section id="slide-076" data-part="2" data-cue="A11Y-002 · 5. The second team's bug: projected content is always created"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · 5. The second team's bug: projected content is always created</h2><ul><li>For heavy or lazy content, the library should offer one of:</li></ul></section>
+<section id="slide-077" data-part="2" data-cue="A11Y-002 · 5. The second team's bug: projected content is always created"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · 5. The second team's bug: projected content is always created</h2><ul><li>A template slot: the consumer passes an &lt;ng-template&gt;, and the dialog renders it with ngTemplateOutlet only while open.</li><li>A dialog service that creates the content component on demand (the CDK Dialog does this).</li><li>Consumers can also wrap their content in @defer or their own @if.</li></ul></section>
+<section id="slide-078" data-part="2" data-cue="A11Y-002 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Follow-up 1</h2><p class="question">A team wants clicking the backdrop to close the dialog. How would you implement it with `&lt;dialog&gt;`, and should it be the default?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-078-answer" data-part="2" data-cue="Detect a pointer interaction outside the dialog's content rectangle and route it"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Follow-up 1 · Answer</h2><ul><li>Detect a pointer interaction outside the dialog's content rectangle and route it through the component's normal close request.</li><li>A dialog-target click alone can also occur in content padding, so account for geometry and pointer down/up behavior to avoid accidental closure after dragging.</li><li>Make backdrop dismissal an explicit policy rather than a universal default.</li></ul></section>
+<section id="slide-079" data-part="2" data-cue="A11Y-002 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Follow-up 2</h2><p class="question">Which element should receive focus first in a destructive confirmation dialog? Why?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-079-answer" data-part="2" data-cue="Usually focus the least destructive action so an accidental Enter does not commi"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Follow-up 2 · Answer</h2><ul><li>Usually focus the least destructive action so an accidental Enter does not commit the destructive operation.</li><li>If the dialog begins with important structured information, focus a static heading or paragraph with tabindex minus one so the content can be read first.</li><li>Choose according to the task rather than always focusing the first element in DOM order.</li></ul></section>
+<section id="slide-080" data-part="2" data-cue="A11Y-002 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Follow-up 3</h2><p class="question">How would you test focus return and background inertness in an automated test?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-080-answer" data-part="2" data-cue="In a real browser, focus the invoking button, open the modal, verify focus enter"><div class="kicker">Interview walkthrough</div><h2>A11Y-002 · Follow-up 3 · Answer</h2><ul><li>In a real browser, focus the invoking button, open the modal, verify focus enters, and press Tab and Shift Tab to ensure background controls are unreachable.</li><li>Press Escape and verify the model closes and focus returns.</li><li>Try programmatically focusing a background control while the modal is open to check native inertness.</li></ul></section>
+<section id="slide-081" data-part="3" data-cue="A11Y-003 · Scenario"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Scenario</h2><ul><li>We now review A11Y-003: Tabs that only work with a mouse.</li><li>Inspect the consumer contract and identify the mechanism behind each reported defect.</li></ul></section>
+<section id="slide-082" data-part="3" data-cue="A11Y-003 · Scenario"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Scenario</h2><ul><li>This is the first version of the @acme/ui tabs component.</li><li>It is already used on a settings page that shows two tab groups at once: &quot;Profile&quot; and &quot;Notifications&quot;.</li></ul></section>
+<section id="slide-083" data-part="3" data-cue="A11Y-003 · Scenario · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Scenario · block 1 · page 1</h2><pre class="code" data-lang="ts">import { Component, contentChildren, input, signal } from '@angular/core';
+
+@Component({
+  selector: 'ui-tab',
+  host: { class: 'ui-tab-panel', '[hidden]': '!active()' },
+  template: `&lt;ng-content /&gt;`,
+})
+export class TabComponent {
+  readonly label = input.required&lt;string&gt;();
+  readonly active = signal(false);
+}
+
+@Component({
+  selector: 'ui-tabs',</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-084" data-part="3" data-cue="A11Y-003 · Scenario · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Scenario · block 2 · page 2</h2><pre class="code" data-lang="ts">  template: `
+    &lt;div class=&quot;ui-tabs__list&quot;&gt;
+      @for (tab of tabs(); track tab; let i = $index) {
+        &lt;div
+          id=&quot;tab-{{ i }}&quot;
+          class=&quot;ui-tabs__tab&quot;
+          [class.ui-tabs__tab--active]=&quot;tab.active()&quot;
+          (click)=&quot;select(i)&quot;&gt;
+          {{ tab.label() }}
+        &lt;/div&gt;
+      }
+    &lt;/div&gt;
+    &lt;ng-content /&gt;
+  `,</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-085" data-part="3" data-cue="A11Y-003 · Scenario · block 3 · page 3"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Scenario · block 3 · page 3</h2><pre class="code" data-lang="ts">})
+export class TabsComponent {
+  readonly tabs = contentChildren(TabComponent);
+
+  select(index: number): void {
+    this.tabs().forEach((tab, i) =&gt; tab.active.set(i === index));
+  }
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-086" data-part="3" data-cue="A11Y-003 · Scenario · block 4 · page 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Scenario · block 4 · page 1</h2><pre class="code" data-lang="html">&lt;ui-tabs&gt;
+  &lt;ui-tab label=&quot;Account&quot;&gt;...&lt;/ui-tab&gt;
+  &lt;ui-tab label=&quot;Security&quot;&gt;...&lt;/ui-tab&gt;
+&lt;/ui-tabs&gt;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-087" data-part="3" data-cue="A11Y-003 · Interview question"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Interview question</h2><p class="question">Describe how tabs should behave for keyboard and screen-reader users, list what is missing, and fix the component. Point out any bug that only appears because there are two tab groups on the page.</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-088" data-part="3" data-cue="A11Y-003 · Answer"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Answer</h2><ul><li>The WAI-ARIA tabs pattern: a tablist contains tab elements, each controlling a tabpanel.</li><li>Only the selected tab is in the Tab order (a roving tabindex); arrow keys move between tabs, and Home and End jump to the first and last.</li><li>Each tab says whether it is selected, and each panel is labelled by its tab.</li></ul></section>
+<section id="slide-089" data-part="3" data-cue="A11Y-003 · 1. No roles or states"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · 1. No roles or states</h2><ul><li>Divs with click handlers expose nothing.</li><li>A screen reader announces plain text, not &quot;Security, tab, 2 of 2, selected&quot;.</li><li>Needed: role=&quot;tablist&quot; (with a label), role=&quot;tab&quot; with aria-selected and aria-controls, and role=&quot;tabpanel&quot; with aria-labelledby.</li></ul></section>
+<section id="slide-090" data-part="3" data-cue="A11Y-003 · 2. Not keyboard operable"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · 2. Not keyboard operable</h2><ul><li>The tabs are not focusable at all.</li><li>Making each one a plain &lt;button&gt; would fix reachability but produce the wrong pattern: five Tab presses to get past five tabs.</li><li>Only the selected tab should have tabindex=&quot;0&quot;; the rest get -1, and arrow keys move between them.</li></ul></section>
+<section id="slide-091" data-part="3" data-cue="A11Y-003 · 3. Duplicate ids across instances"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · 3. Duplicate ids across instances</h2><ul><li>Both groups render id=&quot;tab-0&quot; and id=&quot;tab-1&quot;.</li><li>Duplicate ids are invalid, and any aria-labelledby or aria-controls reference resolves to the first match in the document, so the second group's panels would be labelled by the first group's tabs.</li><li>Ids must be unique per instance: generate them from a counter, never from the position alone.</li></ul></section>
+<section id="slide-092" data-part="3" data-cue="A11Y-003 · 4. Nothing is selected initially"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · 4. Nothing is selected initially</h2><ul><li>No tab starts active, so every panel is hidden until a click.</li><li>With a roving tabindex, no tab would be focusable either, and the whole component would be unreachable by keyboard.</li></ul></section>
+<section id="slide-093" data-part="3" data-cue="A11Y-003 · 5. State is pushed into children imperatively"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · 5. State is pushed into children imperatively</h2><ul><li>select writes into each child's signal.</li><li>If tabs are added or removed (@if around a &lt;ui-tab&gt;), nothing updates their state.</li><li>Deriving &quot;am I selected?&quot; from one source in the parent avoids that.</li></ul></section>
+<section id="slide-094" data-part="3" data-cue="A11Y-003 · Answer · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Answer · block 1 · page 1</h2><pre class="code" data-lang="ts">import {
+  Component,
+  ElementRef,
+  InjectionToken,
+  Signal,
+  computed,
+  contentChildren,
+  forwardRef,
+  inject,
+  input,
+  model,
+  viewChildren,
+} from '@angular/core';
+</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-095" data-part="3" data-cue="A11Y-003 · Answer · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Answer · block 2 · page 2</h2><pre class="code" data-lang="ts">let nextId = 0;
+
+interface TabsContext {
+  readonly selectedTab: Signal&lt;TabComponent | undefined&gt;;
+}
+
+const TABS = new InjectionToken&lt;TabsContext&gt;('TABS');
+
+@Component({
+  selector: 'ui-tab',
+  host: {
+    class: 'ui-tab-panel',
+    role: 'tabpanel',
+    tabindex: '0',</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-096" data-part="3" data-cue="A11Y-003 · Answer · block 3 · page 3"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Answer · block 3 · page 3</h2><pre class="code" data-lang="ts">    '[id]': 'panelId',
+    '[attr.aria-labelledby]': 'tabId',
+    '[hidden]': '!selected()',
+  },
+  template: `&lt;ng-content /&gt;`,
+})
+export class TabComponent {
+  readonly label = input.required&lt;string&gt;();
+  readonly tabId = `ui-tab-${nextId}`;
+  readonly panelId = `ui-tabpanel-${nextId++}`;
+  private readonly tabs = inject(TABS);
+  readonly selected = computed(() =&gt; this.tabs.selectedTab() === this);
+}
+</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-097" data-part="3" data-cue="A11Y-003 · Answer · block 4 · page 4"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Answer · block 4 · page 4</h2><pre class="code" data-lang="ts">@Component({
+  selector: 'ui-tabs',
+  providers: [{ provide: TABS, useExisting: forwardRef(() =&gt; TabsComponent) }],
+  template: `
+    &lt;div role=&quot;tablist&quot; class=&quot;ui-tabs__list&quot; [attr.aria-label]=&quot;label()&quot; (keydown)=&quot;onKeydown($event)&quot;&gt;
+      @for (tab of tabs(); track tab; let i = $index) {
+        &lt;button
+          #tabButton
+          type=&quot;button&quot;
+          role=&quot;tab&quot;
+          class=&quot;ui-tabs__tab&quot;
+          [id]=&quot;tab.tabId&quot;
+          [attr.aria-controls]=&quot;tab.panelId&quot;
+          [attr.aria-selected]=&quot;i === activeIndex()&quot;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-098" data-part="3" data-cue="A11Y-003 · Answer · block 5 · page 5"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Answer · block 5 · page 5</h2><pre class="code" data-lang="ts">          [tabIndex]=&quot;i === activeIndex() ? 0 : -1&quot;
+          (click)=&quot;selectedIndex.set(i)&quot;&gt;
+          {{ tab.label() }}
+        &lt;/button&gt;
+      }
+    &lt;/div&gt;
+    &lt;ng-content /&gt;
+  `,
+})
+export class TabsComponent implements TabsContext {
+  readonly label = input.required&lt;string&gt;();
+  readonly selectedIndex = model(0);
+  readonly tabs = contentChildren(TabComponent);
+</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-099" data-part="3" data-cue="A11Y-003 · Answer · block 6 · page 6"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Answer · block 6 · page 6</h2><pre class="code" data-lang="ts">  // Clamp, so removing the last tab never leaves nothing selected and nothing focusable.
+  readonly activeIndex = computed(() =&gt; Math.max(0, Math.min(this.selectedIndex(), this.tabs().length - 1)));
+  readonly selectedTab = computed(() =&gt; this.tabs()[this.activeIndex()]);
+  private readonly buttons = viewChildren&lt;ElementRef&lt;HTMLButtonElement&gt;&gt;('tabButton');
+
+  protected onKeydown(event: KeyboardEvent): void {
+    const count = this.tabs().length;
+    if (count === 0) return;
+    const current = this.activeIndex();
+    let next: number;
+    switch (event.key) {
+      case 'ArrowRight':
+        next = (current + 1) % count;
+        break;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-100" data-part="3" data-cue="A11Y-003 · Answer · block 7 · page 7"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Answer · block 7 · page 7</h2><pre class="code" data-lang="ts">      case 'ArrowLeft':
+        next = (current - 1 + count) % count;
+        break;
+      case 'Home':
+        next = 0;
+        break;
+      case 'End':
+        next = count - 1;
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+    this.selectedIndex.set(next);</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-101" data-part="3" data-cue="A11Y-003 · Answer · block 8 · page 8"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Answer · block 8 · page 8</h2><pre class="code" data-lang="ts">    this.buttons()[next]?.nativeElement.focus();
+  }
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-102" data-part="3" data-cue="A11Y-003 · Fixed version"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Fixed version</h2><ul><li>This uses automatic activation: moving with the arrow keys also selects the tab.</li><li>That suits panels that render instantly.</li><li>If showing a panel is slow (it fetches data), use manual activation instead: arrows move focus, and Enter or Space selects.</li></ul></section>
+<section id="slide-103" data-part="3" data-cue="A11Y-003 · Fixed version"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Fixed version</h2><ul><li>The panel has tabindex=&quot;0&quot; so keyboard users can reach a panel that has no focusable content.</li><li>If every panel always starts with a focusable element, that can be dropped.</li></ul></section>
+<section id="slide-104" data-part="3" data-cue="A11Y-003 · What a strong candidate also mentions"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · What a strong candidate also mentions</h2><ul><li>Right-to-left layouts reverse the meaning of the left and right arrow keys.</li><li>Read the direction (for example with the CDK Directionality) instead of hard-coding it. - selectedIndex as a model() lets consumers control the selected tab, for example to sync it with the URL.</li><li>The label input is required, so a tablist is never nameless.</li></ul></section>
+<section id="slide-105" data-part="3" data-cue="A11Y-003 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Follow-up 1</h2><p class="question">When would you choose manual activation over automatic activation?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-105-answer" data-part="3" data-cue="Use manual activation when showing a panel is slow or costly, such as a network "><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Follow-up 1 · Answer</h2><ul><li>Use manual activation when showing a panel is slow or costly, such as a network request or heavy render.</li><li>Arrows move focus, while Enter or Space commits selection.</li><li>Automatic activation is appropriate when panel changes are immediate and moving through tabs remains responsive.</li></ul></section>
+<section id="slide-106" data-part="3" data-cue="A11Y-003 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Follow-up 2</h2><p class="question">The tabs overflow on a phone. What happens to keyboard and screen-reader behaviour if you add scroll buttons?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-106-answer" data-part="3" data-cue="Keep tab roles, selection, panel relationships, and the one-tab-stop strategy in"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Follow-up 2 · Answer</h2><ul><li>Keep tab roles, selection, panel relationships, and the one-tab-stop strategy intact.</li><li>Scroll the focused tab into view and make scroll controls named native buttons if they are needed.</li><li>The extra controls should not cause the arrow handler to treat them as tabs or hide selected tabs from assistive technology.</li></ul></section>
+<section id="slide-107" data-part="3" data-cue="A11Y-003 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Follow-up 3</h2><p class="question">Would you build this on the CDK's `FocusKeyManager`? What would it give you and what would it cost?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-107-answer" data-part="3" data-cue="FocusKeyManager can manage active items, wrapping, orientation, disabled skippin"><div class="kicker">Interview walkthrough</div><h2>A11Y-003 · Follow-up 3 · Answer</h2><ul><li>FocusKeyManager can manage active items, wrapping, orientation, disabled skipping, and typeahead depending on configuration.</li><li>It can reduce bespoke traversal code.</li><li>You still own tab semantics, selected state, panels, identifiers, rendering, and automatic versus manual activation.</li></ul></section>
+<section id="slide-108" data-part="4" data-cue="A11Y-004 · Scenario"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · Scenario</h2><ul><li>We now review A11Y-004: A form field where nothing is connected.</li><li>Inspect the consumer contract and identify the mechanism behind each reported defect.</li></ul></section>
+<section id="slide-109" data-part="4" data-cue="A11Y-004 · Scenario"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · Scenario</h2><ul><li>Every form in every Acme product uses this text field from @acme/ui.</li><li>It looks right.</li><li>A screen-reader user testing the sign-up form says: &quot;I hear 'edit text, blank' for every field, and when I submit I don't know what went wrong.&quot;</li></ul></section>
+<section id="slide-110" data-part="4" data-cue="A11Y-004 · Scenario · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · Scenario · block 1 · page 1</h2><pre class="code" data-lang="ts">import { Component, input } from '@angular/core';
+
+@Component({
+  selector: 'ui-text-field',
+  template: `
+    &lt;div class=&quot;ui-field&quot;&gt;
+      &lt;span class=&quot;ui-field__label&quot;&gt;
+        {{ label() }}
+        @if (required()) {
+          &lt;span class=&quot;ui-field__required&quot;&gt;*&lt;/span&gt;
+        }
+      &lt;/span&gt;
+      &lt;input class=&quot;ui-field__input&quot; [placeholder]=&quot;hint()&quot; [class.ui-field__input--error]=&quot;!!error()&quot; /&gt;
+      @if (error()) {</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-111" data-part="4" data-cue="A11Y-004 · Scenario · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · Scenario · block 2 · page 2</h2><pre class="code" data-lang="ts">        &lt;span class=&quot;ui-field__error&quot;&gt;{{ error() }}&lt;/span&gt;
+      }
+    &lt;/div&gt;
+  `,
+})
+export class TextFieldComponent {
+  readonly label = input.required&lt;string&gt;();
+  readonly hint = input('');
+  readonly error = input&lt;string | null&gt;(null);
+  readonly required = input(false);
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-112" data-part="4" data-cue="A11Y-004 · Scenario · block 3 · page 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · Scenario · block 3 · page 1</h2><pre class="code" data-lang="html">&lt;ui-text-field label=&quot;Email&quot; hint=&quot;We never share your email&quot; [required]=&quot;true&quot; [error]=&quot;emailError()&quot; /&gt;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-113" data-part="4" data-cue="A11Y-004 · Interview question"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · Interview question</h2><p class="question">List everything a screen-reader user misses, and fix the component. The value binding is covered by another question (API-004); focus on labels, hints, errors and required state.</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-114" data-part="4" data-cue="A11Y-004 · 1. The input has no accessible name"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · 1. The input has no accessible name</h2><ul><li>The label is a &lt;span&gt;, not a &lt;label&gt; associated with the input, so the input is announced as &quot;edit text&quot; with no name.</li><li>Clicking the label text also does not focus the input, which matters for users with motor impairments.</li></ul></section>
+<section id="slide-115" data-part="4" data-cue="A11Y-004 · 1. The input has no accessible name"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · 1. The input has no accessible name</h2><ul><li>Fix: a &lt;label for&gt; pointing at a per-instance input id.</li></ul></section>
+<section id="slide-116" data-part="4" data-cue="A11Y-004 · 2. The hint is a placeholder"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · 2. The hint is a placeholder</h2><ul><li>Placeholder text disappears as soon as the user types, is often low contrast, and is not reliably announced as a description.</li><li>Users with memory or cognitive impairments lose the instruction exactly when they need it.</li></ul></section>
+<section id="slide-117" data-part="4" data-cue="A11Y-004 · 2. The hint is a placeholder"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · 2. The hint is a placeholder</h2><ul><li>Fix: render the hint as visible text and reference it with aria-describedby.</li></ul></section>
+<section id="slide-118" data-part="4" data-cue="A11Y-004 · 3. Errors are visual only"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · 3. Errors are visual only</h2><ul><li>A red border is not announced, and the error text is not connected to the input.</li><li>A screen-reader user hears nothing about the error, now or when they return to the field.</li></ul></section>
+<section id="slide-119" data-part="4" data-cue="A11Y-004 · 3. Errors are visual only"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · 3. Errors are visual only</h2><ul><li>Fix:</li></ul></section>
+<section id="slide-120" data-part="4" data-cue="A11Y-004 · 3. Errors are visual only"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · 3. Errors are visual only</h2><ul><li>aria-invalid=&quot;true&quot; on the input while there is an error.</li><li>Add the error's id to aria-describedby, so it is read when the field gets focus.</li><li>Show something besides colour (an icon or the word &quot;Error&quot;), for WCAG 1.4.1.</li></ul></section>
+<section id="slide-121" data-part="4" data-cue="A11Y-004 · 4. Required is visual only"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · 4. Required is visual only</h2><ul><li>The asterisk is read as &quot;star&quot; (or not at all), and the input does not say it is required.</li><li>Use the required attribute (or aria-required=&quot;true&quot; if native validation is unwanted) and hide the asterisk from assistive technology.</li><li>The form should also explain what the asterisk means.</li></ul></section>
+<section id="slide-122" data-part="4" data-cue="A11Y-004 · 5. Ids must be unique per instance"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · 5. Ids must be unique per instance</h2><ul><li>A sign-up form has many fields.</li><li>Every id the component generates (input, hint, error) must be unique per instance, or for and aria-describedby point at the wrong field.</li></ul></section>
+<section id="slide-123" data-part="4" data-cue="A11Y-004 · Answer · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · Answer · block 1 · page 1</h2><pre class="code" data-lang="ts">import { Component, booleanAttribute, computed, input } from '@angular/core';
+
+let nextId = 0;
+
+@Component({
+  selector: 'ui-text-field',
+  template: `
+    &lt;div class=&quot;ui-field&quot;&gt;
+      &lt;label class=&quot;ui-field__label&quot; [for]=&quot;inputId&quot;&gt;
+        {{ label() }}
+        @if (required()) {
+          &lt;span class=&quot;ui-field__required&quot; aria-hidden=&quot;true&quot;&gt;*&lt;/span&gt;
+        }
+      &lt;/label&gt;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-124" data-part="4" data-cue="A11Y-004 · Answer · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · Answer · block 2 · page 2</h2><pre class="code" data-lang="ts">      @if (hint()) {
+        &lt;p class=&quot;ui-field__hint&quot; [id]=&quot;hintId&quot;&gt;{{ hint() }}&lt;/p&gt;
+      }
+      &lt;input
+        class=&quot;ui-field__input&quot;
+        [id]=&quot;inputId&quot;
+        [required]=&quot;required()&quot;
+        [attr.aria-invalid]=&quot;error() ? true : null&quot;
+        [attr.aria-describedby]=&quot;describedBy()&quot; /&gt;
+      &lt;p class=&quot;ui-field__error&quot; [id]=&quot;errorId&quot; aria-live=&quot;polite&quot;&gt;
+        @if (error(); as message) {
+          &lt;span class=&quot;ui-field__error-icon&quot; aria-hidden=&quot;true&quot;&gt;!&lt;/span&gt;
+          {{ message }}
+        }</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-125" data-part="4" data-cue="A11Y-004 · Answer · block 3 · page 3"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · Answer · block 3 · page 3</h2><pre class="code" data-lang="ts">      &lt;/p&gt;
+    &lt;/div&gt;
+  `,
+})
+export class TextFieldComponent {
+  readonly label = input.required&lt;string&gt;();
+  readonly hint = input('');
+  readonly error = input&lt;string | null&gt;(null);
+  readonly required = input(false, { transform: booleanAttribute });
+
+  protected readonly inputId = `ui-text-field-${nextId++}`;
+  protected readonly hintId = `${this.inputId}-hint`;
+  protected readonly errorId = `${this.inputId}-error`;
+  protected readonly describedBy = computed(() =&gt; {</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-126" data-part="4" data-cue="A11Y-004 · Answer · block 4 · page 4"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · Answer · block 4 · page 4</h2><pre class="code" data-lang="ts">    const ids = [this.hint() ? this.hintId : '', this.error() ? this.errorId : ''].filter(id =&gt; id !== '');
+    return ids.length &gt; 0 ? ids.join(' ') : null;
+  });
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-127" data-part="4" data-cue="A11Y-004 · Fixed version"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · Fixed version</h2><ul><li>The error paragraph is always rendered (empty when there is no error), so the live region exists before its text changes.</li><li>It is only referenced from aria-describedby while it has content.</li></ul></section>
+<section id="slide-128" data-part="4" data-cue="A11Y-004 · What a strong candidate also mentions"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · What a strong candidate also mentions</h2><ul><li>When to show errors is a product decision the library must support, not make.</li><li>Showing an error on the first keystroke is hostile; the usual pattern is after the field is left (touched) or after submit.</li><li>The component receives error as an input, which keeps that decision with the consumer, and the documentation should recommend a default.</li></ul></section>
+<section id="slide-129" data-part="4" data-cue="A11Y-004 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · Follow-up 1</h2><p class="question">Why do many screen readers ignore a live region that is inserted at the same time as its text?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-129-answer" data-part="4" data-cue="Assistive technology often observes changes to an already registered live region"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · Follow-up 1 · Answer</h2><ul><li>Assistive technology often observes changes to an already registered live region.</li><li>If the region and its first message appear in one insertion, some combinations treat it as initial content rather than an update to announce.</li><li>Keep a persistent empty region, then change its text after the relevant interaction.</li></ul></section>
+<section id="slide-130" data-part="4" data-cue="A11Y-004 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · Follow-up 2</h2><p class="question">Should the error be announced politely or assertively? What changes if you get it wrong?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-130-answer" data-part="4" data-cue="Polite is usually appropriate for field validation while the user is entering da"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · Follow-up 2 · Answer</h2><ul><li>Polite is usually appropriate for field validation while the user is entering data.</li><li>Assertive can interrupt the current speech and should be reserved for genuinely urgent information.</li><li>Repeated assertive errors on every keystroke can make a form difficult to use.</li></ul></section>
+<section id="slide-131" data-part="4" data-cue="A11Y-004 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · Follow-up 3</h2><p class="question">How would this component expose the inner input to consumers who need `autocomplete`, `inputmode` or `maxlength`?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-131-answer" data-part="4" data-cue="Prefer a form-field that wraps a projected native input enhanced by a directive,"><div class="kicker">Interview walkthrough</div><h2>A11Y-004 · Follow-up 3 · Answer</h2><ul><li>Prefer a form-field that wraps a projected native input enhanced by a directive, so native attributes stay on the real control.</li><li>The field and directive can share a control interface through dependency injection and register label, helper, and error identifiers.</li><li>If an internal input is necessary, document explicit attribute forwarding and a focus API.</li></ul></section>
+<section id="slide-132" data-part="5" data-cue="A11Y-005 · Scenario"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Scenario</h2><ul><li>We now review A11Y-005: Toasts that vanish before anyone can use them.</li><li>Inspect the consumer contract and identify the mechanism behind each reported defect.</li></ul></section>
+<section id="slide-133" data-part="5" data-cue="A11Y-005 · Scenario"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Scenario</h2><ul><li>@acme/ui provides a toast service.</li><li>Products use it for messages like &quot;Saved&quot;, &quot;Message deleted — Undo&quot;, and &quot;Payment failed&quot;.</li><li>Accessibility testing found that screen-reader users sometimes hear nothing, are interrupted mid-sentence by &quot;Saved&quot;, and that nobody using a keyboard has ever managed to press Undo.</li></ul></section>
+<section id="slide-134" data-part="5" data-cue="A11Y-005 · Scenario · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Scenario · block 1 · page 1</h2><pre class="code" data-lang="ts">import { Component, Injectable, inject, signal } from '@angular/core';
+
+export interface ToastAction {
+  label: string;
+  run: () =&gt; void;
+}
+
+export interface Toast {
+  id: number;
+  message: string;
+  action?: ToastAction;
+}
+
+@Injectable({ providedIn: 'root' })</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-135" data-part="5" data-cue="A11Y-005 · Scenario · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Scenario · block 2 · page 2</h2><pre class="code" data-lang="ts">export class ToastService {
+  readonly toasts = signal&lt;readonly Toast[]&gt;([]);
+  private nextId = 0;
+
+  show(message: string, action?: ToastAction): void {
+    const toast: Toast = { id: this.nextId++, message, action };
+    this.toasts.update(list =&gt; [...list, toast]);
+    setTimeout(() =&gt; this.dismiss(toast.id), 3000);
+  }
+
+  dismiss(id: number): void {
+    this.toasts.update(list =&gt; list.filter(toast =&gt; toast.id !== id));
+  }
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-136" data-part="5" data-cue="A11Y-005 · Scenario · block 3 · page 3"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Scenario · block 3 · page 3</h2><pre class="code" data-lang="ts">
+@Component({
+  selector: 'ui-toast-outlet',
+  template: `
+    @for (toast of service.toasts(); track toast.id) {
+      &lt;div class=&quot;ui-toast&quot; role=&quot;alert&quot;&gt;
+        {{ toast.message }}
+        @if (toast.action; as action) {
+          &lt;button type=&quot;button&quot; (click)=&quot;action.run()&quot;&gt;{{ action.label }}&lt;/button&gt;
+        }
+      &lt;/div&gt;
+    }
+  `,
+})</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-137" data-part="5" data-cue="A11Y-005 · Scenario · block 4 · page 4"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Scenario · block 4 · page 4</h2><pre class="code" data-lang="ts">export class ToastOutletComponent {
+  protected readonly service = inject(ToastService);
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-138" data-part="5" data-cue="A11Y-005 · Interview question"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Interview question</h2><p class="question">Explain each of the three findings and redesign the service and outlet. Keep the API easy for product teams to use correctly.</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-139" data-part="5" data-cue="A11Y-005 · 1. &quot;Sometimes hear nothing&quot;: live regions created with their content"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · 1. &quot;Sometimes hear nothing&quot;: live regions created with their content</h2><ul><li>Each toast element is created already containing role=&quot;alert&quot; and its text.</li><li>Screen readers announce changes inside live regions they already know about, and support for regions inserted together with their content is inconsistent.</li><li>The reliable pattern is a live region that exists from page load and stays empty until a message is added to it.</li></ul></section>
+<section id="slide-140" data-part="5" data-cue="A11Y-005 · 1. &quot;Sometimes hear nothing&quot;: live regions created with their content"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · 1. &quot;Sometimes hear nothing&quot;: live regions created with their content</h2><ul><li>Fix: the outlet renders permanent live-region containers; toasts are added inside them.</li></ul></section>
+<section id="slide-141" data-part="5" data-cue="A11Y-005 · 2. &quot;Interrupted by 'Saved'&quot;: everything is assertive"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · 2. &quot;Interrupted by 'Saved'&quot;: everything is assertive</h2><ul><li>role=&quot;alert&quot; is assertive: it interrupts whatever the screen reader is saying.</li><li>That suits &quot;Payment failed&quot;, not &quot;Saved&quot;.</li><li>The service must let callers choose politeness, with polite as the default so the easy path is the considerate one.</li></ul></section>
+<section id="slide-142" data-part="5" data-cue="A11Y-005 · 3. &quot;Nobody can press Undo&quot;: the timer"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · 3. &quot;Nobody can press Undo&quot;: the timer</h2><ul><li>Three seconds is too short to read for many users (screen magnifier users may not even have the toast in view), and far too short to reach a button at the end of the document by keyboard.</li><li>WCAG 2.2.1 (Timing Adjustable) requires that users can turn off, adjust or extend time limits like this.</li></ul></section>
+<section id="slide-143" data-part="5" data-cue="A11Y-005 · 3. &quot;Nobody can press Undo&quot;: the timer"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · 3. &quot;Nobody can press Undo&quot;: the timer</h2><ul><li>Fix:</li></ul></section>
+<section id="slide-144" data-part="5" data-cue="A11Y-005 · 3. &quot;Nobody can press Undo&quot;: the timer"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · 3. &quot;Nobody can press Undo&quot;: the timer</h2><ul><li>Toasts with an action do not auto-dismiss by default; they stay until used or dismissed.</li><li>Informational toasts use a longer default and pause while hovered or focused.</li><li>Every toast has a dismiss button.</li></ul></section>
+<section id="slide-145" data-part="5" data-cue="A11Y-005 · Answer · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Answer · block 1 · page 1</h2><pre class="code" data-lang="ts">import { Component, Injectable, computed, inject, input, signal } from '@angular/core';
+
+export type ToastPoliteness = 'polite' | 'assertive';
+
+export interface ToastAction {
+  label: string;
+  run: () =&gt; void;
+}
+
+export interface ToastOptions {
+  politeness?: ToastPoliteness;
+  action?: ToastAction;
+  /** Milliseconds before dismissal, or null to stay until dismissed. */
+  duration?: number | null;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-146" data-part="5" data-cue="A11Y-005 · Answer · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Answer · block 2 · page 2</h2><pre class="code" data-lang="ts">}
+
+export interface Toast {
+  readonly id: number;
+  readonly message: string;
+  readonly politeness: ToastPoliteness;
+  readonly action?: ToastAction;
+  readonly duration: number | null;
+}
+
+@Injectable({ providedIn: 'root' })
+export class ToastService {
+  readonly toasts = signal&lt;readonly Toast[]&gt;([]);
+  private readonly timers = new Map&lt;number, ReturnType&lt;typeof setTimeout&gt;&gt;();</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-147" data-part="5" data-cue="A11Y-005 · Answer · block 3 · page 3"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Answer · block 3 · page 3</h2><pre class="code" data-lang="ts">  private nextId = 0;
+
+  show(message: string, options: ToastOptions = {}): number {
+    const toast: Toast = {
+      id: this.nextId++,
+      message,
+      politeness: options.politeness ?? 'polite',
+      action: options.action,
+      duration: options.duration !== undefined ? options.duration : options.action ? null : 8000,
+    };
+    this.toasts.update(list =&gt; [...list, toast]);
+    this.resume(toast.id);
+    return toast.id;
+  }</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-148" data-part="5" data-cue="A11Y-005 · Answer · block 4 · page 4"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Answer · block 4 · page 4</h2><pre class="code" data-lang="ts">
+  dismiss(id: number): void {
+    this.pause(id);
+    this.toasts.update(list =&gt; list.filter(toast =&gt; toast.id !== id));
+  }
+
+  pause(id: number): void {
+    clearTimeout(this.timers.get(id));
+    this.timers.delete(id);
+  }
+
+  resume(id: number): void {
+    const toast = this.toasts().find(t =&gt; t.id === id);
+    if (!toast || toast.duration === null || this.timers.has(id)) return;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-149" data-part="5" data-cue="A11Y-005 · Answer · block 5 · page 5"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Answer · block 5 · page 5</h2><pre class="code" data-lang="ts">    this.timers.set(id, setTimeout(() =&gt; this.dismiss(id), toast.duration));
+  }
+}
+
+@Component({
+  selector: 'ui-toast',
+  host: {
+    class: 'ui-toast',
+    '(mouseenter)': 'service.pause(toast().id)',
+    '(mouseleave)': 'service.resume(toast().id)',
+    '(focusin)': 'service.pause(toast().id)',
+    '(focusout)': 'service.resume(toast().id)',
+  },
+  template: `</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-150" data-part="5" data-cue="A11Y-005 · Answer · block 6 · page 6"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Answer · block 6 · page 6</h2><pre class="code" data-lang="ts">    &lt;span&gt;{{ toast().message }}&lt;/span&gt;
+    @if (toast().action; as action) {
+      &lt;button type=&quot;button&quot; (click)=&quot;action.run(); service.dismiss(toast().id)&quot;&gt;{{ action.label }}&lt;/button&gt;
+    }
+    &lt;button type=&quot;button&quot; [attr.aria-label]=&quot;dismissLabel&quot; (click)=&quot;service.dismiss(toast().id)&quot;&gt;
+      &lt;span aria-hidden=&quot;true&quot;&gt;×&lt;/span&gt;
+    &lt;/button&gt;
+  `,
+})
+export class ToastComponent {
+  readonly toast = input.required&lt;Toast&gt;();
+  protected readonly service = inject(ToastService);
+  protected readonly dismissLabel = 'Dismiss notification';
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-151" data-part="5" data-cue="A11Y-005 · Answer · block 7 · page 7"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Answer · block 7 · page 7</h2><pre class="code" data-lang="ts">
+@Component({
+  selector: 'ui-toast-outlet',
+  imports: [ToastComponent],
+  template: `
+    &lt;div class=&quot;ui-toast-region&quot; aria-live=&quot;polite&quot;&gt;
+      @for (toast of polite(); track toast.id) {
+        &lt;ui-toast [toast]=&quot;toast&quot; /&gt;
+      }
+    &lt;/div&gt;
+    &lt;div class=&quot;ui-toast-region&quot; aria-live=&quot;assertive&quot;&gt;
+      @for (toast of assertive(); track toast.id) {
+        &lt;ui-toast [toast]=&quot;toast&quot; /&gt;
+      }</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-152" data-part="5" data-cue="A11Y-005 · Answer · block 8 · page 8"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Answer · block 8 · page 8</h2><pre class="code" data-lang="ts">    &lt;/div&gt;
+  `,
+})
+export class ToastOutletComponent {
+  private readonly service = inject(ToastService);
+  protected readonly polite = computed(() =&gt; this.service.toasts().filter(t =&gt; t.politeness === 'polite'));
+  protected readonly assertive = computed(() =&gt; this.service.toasts().filter(t =&gt; t.politeness === 'assertive'));
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-153" data-part="5" data-cue="A11Y-005 · Fixed version"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Fixed version</h2><ul><li>Notes on the design:</li></ul></section>
+<section id="slide-154" data-part="5" data-cue="A11Y-005 · Fixed version"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Fixed version</h2><ul><li>The two regions exist as soon as the outlet renders, so a toast added later is a change inside a known live region. - show() returns the id, so callers can dismiss a toast when the situation resolves.</li><li>The defaults make the safe choice the easy one: polite, a long duration, and no timer at all when there is an action.</li></ul></section>
+<section id="slide-155" data-part="5" data-cue="A11Y-005 · What a strong candidate also mentions"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · What a strong candidate also mentions</h2><ul><li>The CDK LiveAnnouncer already manages a hidden live region and can be used instead of the visible regions for the announcement itself.</li><li>Focus is lost if a focused toast is dismissed.</li><li>When the user dismisses a toast they tabbed into, focus should go somewhere sensible, such as back to where it was before.</li></ul></section>
+<section id="slide-156" data-part="5" data-cue="A11Y-005 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Follow-up 1</h2><p class="question">A toast says &quot;3 files uploaded&quot; and then &quot;4 files uploaded&quot; a second later. What will a screen reader say, and how would you improve it?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-156-answer" data-part="5" data-cue="Speech may skip, merge, or interrupt rapid updates; do not promise that both cou"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Follow-up 1 · Answer</h2><ul><li>Speech may skip, merge, or interrupt rapid updates; do not promise that both counts are read exactly.</li><li>Batch progress updates and announce a useful final summary, while keeping current visible status available.</li><li>A live announcer can replace an outdated progress message rather than queueing every intermediate number.</li></ul></section>
+<section id="slide-157" data-part="5" data-cue="A11Y-005 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Follow-up 2</h2><p class="question">Should the outlet be a landmark region? What are the trade-offs?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-157-answer" data-part="5" data-cue="A named region can make a persistent notification history discoverable, especial"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Follow-up 2 · Answer</h2><ul><li>A named region can make a persistent notification history discoverable, especially if it contains actions users may revisit.</li><li>But turning every transient toast into a landmark creates navigation noise.</li><li>Prefer one meaningful named outlet when it serves a navigable purpose, and use a separate status announcement channel for new messages.</li></ul></section>
+<section id="slide-158" data-part="5" data-cue="A11Y-005 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Follow-up 3</h2><p class="question">How would you test that a toast is announced?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-158-answer" data-part="5" data-cue="Automate the structural contract: a persistent connected live region, the intend"><div class="kicker">Interview walkthrough</div><h2>A11Y-005 · Follow-up 3 · Answer</h2><ul><li>Automate the structural contract: a persistent connected live region, the intended politeness, and the new message reaching it after the event.</li><li>Spy on a live announcer at a unit boundary only when testing the call contract; also exercise the browser integration.</li></ul></section>
+<section id="slide-159" data-part="6" data-cue="A11Y-006 · Scenario"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Scenario</h2><ul><li>We now review A11Y-006: Live coding: build an accessible listbox.</li><li>Inspect the consumer contract and identify the mechanism behind each reported defect.</li></ul></section>
+<section id="slide-160" data-part="6" data-cue="A11Y-006 · Scenario"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Scenario</h2><ul><li>@acme/ui needs a single-select listbox.</li><li>It will be used on its own (for example, choosing a shipping method) and later inside a select and a combobox, so it must be correct, accessible, and easy for product teams to understand.</li></ul></section>
+<section id="slide-161" data-part="6" data-cue="A11Y-006 · Scenario"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Scenario</h2><ul><li>You have 40 minutes.</li><li>Talk through your decisions as you go.</li><li>The interviewer cares more about the order you tackle things in and the reasons you give than about finishing every step.</li></ul></section>
+<section id="slide-162" data-part="6" data-cue="A11Y-006 · Scenario"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Scenario</h2><ul><li>Starting point:</li></ul></section>
+<section id="slide-163" data-part="6" data-cue="A11Y-006 · Scenario · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Scenario · block 1 · page 1</h2><pre class="code" data-lang="ts">import { Component, input, model } from '@angular/core';
+
+export interface ListboxOption&lt;T&gt; {
+  value: T;
+  label: string;
+  disabled?: boolean;
+}
+
+@Component({
+  selector: 'ui-listbox',
+  template: `
+    &lt;!-- TODO --&gt;
+  `,
+})</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-164" data-part="6" data-cue="A11Y-006 · Scenario · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Scenario · block 2 · page 2</h2><pre class="code" data-lang="ts">export class ListboxComponent&lt;T&gt; {
+  readonly options = input.required&lt;readonly ListboxOption&lt;T&gt;[]&gt;();
+  readonly value = model&lt;T | null&gt;(null);
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-165" data-part="6" data-cue="A11Y-006 · Scenario · block 3 · page 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Scenario · block 3 · page 1</h2><pre class="code" data-lang="html">&lt;ui-listbox label=&quot;Shipping method&quot; [options]=&quot;shippingOptions&quot; [(value)]=&quot;shipping&quot; /&gt;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-166" data-part="6" data-cue="A11Y-006 · Interview question"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Interview question</h2><p class="question">Work through these steps in order. Each builds on the last. 1. Render and select (5 min). Show the options; clicking an enabled option selects it and updates `value`. 2. Semantics (5 min). Make a screen reader announce it as a listbox with a name, and announce each option and whether it is selected or disabled. 3. Keyboard (12 min). Tab moves focus to the listbox. Up and Down move the active option, skipping disabled ones; Home and End jump; Enter and Space select. Screen readers must announce the active option. Explain why you chose `aria-activedescendant` or a roving `tabindex`. 4. Type-ahead (5 min). Typing letters moves to the next matching option. 5. Styling with tokens (5 min). Show active, selected, disabled and focus states using only design tokens, and keep them visible in forced-colors mode. 6. Discussion (8 min). How would this work with reactive forms? With object values? How would you test it, and what would you give product teams for their tests?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-167" data-part="6" data-cue="A11Y-006 · Answer · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Answer · block 1 · page 1</h2><pre class="code" data-lang="ts">import {
+  Component,
+  DestroyRef,
+  ElementRef,
+  afterRenderEffect,
+  computed,
+  inject,
+  input,
+  linkedSignal,
+  model,
+  viewChildren,
+} from '@angular/core';
+
+export interface ListboxOption&lt;T&gt; {</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-168" data-part="6" data-cue="A11Y-006 · Answer · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Answer · block 2 · page 2</h2><pre class="code" data-lang="ts">  value: T;
+  label: string;
+  disabled?: boolean;
+}
+
+let nextId = 0;
+
+@Component({
+  selector: 'ui-listbox',
+  template: `
+    &lt;ul
+      class=&quot;ui-listbox&quot;
+      role=&quot;listbox&quot;
+      tabindex=&quot;0&quot;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-169" data-part="6" data-cue="A11Y-006 · Answer · block 3 · page 3"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Answer · block 3 · page 3</h2><pre class="code" data-lang="ts">      [attr.aria-label]=&quot;label()&quot;
+      [attr.aria-activedescendant]=&quot;activeId()&quot;
+      (keydown)=&quot;onKeydown($event)&quot;&gt;
+      @for (option of options(); track option; let i = $index) {
+        &lt;li
+          #optionElement
+          class=&quot;ui-listbox__option&quot;
+          role=&quot;option&quot;
+          [id]=&quot;optionId(i)&quot;
+          [class.ui-listbox__option--active]=&quot;i === activeIndex()&quot;
+          [attr.aria-selected]=&quot;isSelected(option)&quot;
+          [attr.aria-disabled]=&quot;option.disabled || null&quot;
+          (click)=&quot;choose(i)&quot;&gt;
+          {{ option.label }}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-170" data-part="6" data-cue="A11Y-006 · Answer · block 4 · page 4"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Answer · block 4 · page 4</h2><pre class="code" data-lang="ts">        &lt;/li&gt;
+      }
+    &lt;/ul&gt;
+  `,
+})
+export class ListboxComponent&lt;T&gt; {
+  readonly options = input.required&lt;readonly ListboxOption&lt;T&gt;[]&gt;();
+  readonly label = input.required&lt;string&gt;();
+  readonly value = model&lt;T | null&gt;(null);
+  readonly compareWith = input&lt;(a: T, b: T) =&gt; boolean&gt;(Object.is);
+
+  private readonly baseId = `ui-listbox-${nextId++}`;
+  private readonly optionElements = viewChildren&lt;ElementRef&lt;HTMLElement&gt;&gt;('optionElement');
+</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-171" data-part="6" data-cue="A11Y-006 · Answer · block 5 · page 5"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Answer · block 5 · page 5</h2><pre class="code" data-lang="ts">  /** The keyboard position: the selected option if enabled, else the first enabled one, else -1. */
+  protected readonly activeIndex = linkedSignal(() =&gt; {
+    const options = this.options();
+    const value = this.value();
+    const compare = this.compareWith();
+    const selected = value === null ? -1 : options.findIndex(option =&gt; compare(option.value, value));
+    return selected !== -1 &amp;&amp; !options[selected].disabled ? selected : options.findIndex(option =&gt; !option.disabled);
+  });
+
+  protected readonly activeId = computed(() =&gt; {
+    const index = this.activeIndex();
+    return index === -1 ? null : this.optionId(index);
+  });
+</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-172" data-part="6" data-cue="A11Y-006 · Answer · block 6 · page 6"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Answer · block 6 · page 6</h2><pre class="code" data-lang="ts">  private typed = '';
+  private typedTimer: ReturnType&lt;typeof setTimeout&gt; | undefined;
+
+  constructor() {
+    inject(DestroyRef).onDestroy(() =&gt; clearTimeout(this.typedTimer));
+
+    // Keep the active option visible when it moves by keyboard.
+    afterRenderEffect(() =&gt; {
+      const element = this.optionElements()[this.activeIndex()]?.nativeElement;
+      element?.scrollIntoView({ block: 'nearest' });
+    });
+  }
+
+  protected optionId(index: number): string {</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-173" data-part="6" data-cue="A11Y-006 · Answer · block 7 · page 7"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Answer · block 7 · page 7</h2><pre class="code" data-lang="ts">    return `${this.baseId}-option-${index}`;
+  }
+
+  protected isSelected(option: ListboxOption&lt;T&gt;): boolean {
+    const value = this.value();
+    return value !== null &amp;&amp; this.compareWith()(option.value, value);
+  }
+
+  protected choose(index: number): void {
+    const option = this.options()[index];
+    if (!option || option.disabled) return;
+    this.value.set(option.value);
+    this.activeIndex.set(index);
+  }</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-174" data-part="6" data-cue="A11Y-006 · Answer · block 8 · page 8"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Answer · block 8 · page 8</h2><pre class="code" data-lang="ts">
+  protected onKeydown(event: KeyboardEvent): void {
+    const enabled = this.enabledIndexes();
+    if (enabled.length === 0) return;
+    const position = enabled.indexOf(this.activeIndex());
+    let next: number;
+    switch (event.key) {
+      case 'ArrowDown':
+        next = enabled[Math.min(position + 1, enabled.length - 1)];
+        break;
+      case 'ArrowUp':
+        next = enabled[Math.max(position - 1, 0)];
+        break;
+      case 'Home':</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-175" data-part="6" data-cue="A11Y-006 · Answer · block 9 · page 9"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Answer · block 9 · page 9</h2><pre class="code" data-lang="ts">        next = enabled[0];
+        break;
+      case 'End':
+        next = enabled[enabled.length - 1];
+        break;
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+        this.choose(this.activeIndex());
+        return;
+      default:
+        this.typeahead(event);
+        return;
+    }</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-176" data-part="6" data-cue="A11Y-006 · Answer · block 10 · page 10"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Answer · block 10 · page 10</h2><pre class="code" data-lang="ts">    event.preventDefault();
+    this.activeIndex.set(next);
+  }
+
+  private enabledIndexes(): number[] {
+    return this.options().flatMap((option, index) =&gt; (option.disabled ? [] : [index]));
+  }
+
+  private typeahead(event: KeyboardEvent): void {
+    if (event.key.length !== 1 || event.ctrlKey || event.metaKey || event.altKey) return;
+    clearTimeout(this.typedTimer);
+    this.typed += event.key.toLocaleLowerCase();
+    this.typedTimer = setTimeout(() =&gt; (this.typed = ''), 500);
+</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-177" data-part="6" data-cue="A11Y-006 · Answer · block 11 · page 11"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Answer · block 11 · page 11</h2><pre class="code" data-lang="ts">    // A single letter searches from the next option, so repeated presses cycle through matches.
+    // A longer string searches from the active option, so &quot;ca&quot; can stay on &quot;Canada&quot;.
+    const options = this.options();
+    const count = options.length;
+    const offset = this.typed.length === 1 ? 1 : 0;
+    for (let step = 0; step &lt; count; step++) {
+      const index = (((this.activeIndex() + offset + step) % count) + count) % count;
+      const option = options[index];
+      if (!option.disabled &amp;&amp; option.label.toLocaleLowerCase().startsWith(this.typed)) {
+        this.activeIndex.set(index);
+        return;
+      }
+    }
+  }</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-178" data-part="6" data-cue="A11Y-006 · Answer · block 12 · page 12"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Answer · block 12 · page 12</h2><pre class="code" data-lang="ts">}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-179" data-part="6" data-cue="A11Y-006 · Step-by-step notes · item 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Step-by-step notes · item 1</h2><ul><li>Step</li></ul></section>
+<section id="slide-180" data-part="6" data-cue="A11Y-006 · Step-by-step notes · item 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Step-by-step notes · item 2</h2><ul><li>1. value is a model(), so [(value)] works and selection is one signal.</li><li>Options are readonly and never mutated (see SIG-004). track option uses object identity, which is correct here because options carry no per-row state.</li></ul></section>
+<section id="slide-181" data-part="6" data-cue="A11Y-006 · Step-by-step notes · item 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Step-by-step notes · item 1</h2><ul><li>Step</li></ul></section>
+<section id="slide-182" data-part="6" data-cue="A11Y-006 · Step-by-step notes · item 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Step-by-step notes · item 2</h2><ul><li>2. role=&quot;listbox&quot; with aria-label, role=&quot;option&quot; with aria-selected, and aria-disabled on disabled options.</li><li>Disabled options stay visible and announced, which helps users understand what is unavailable. label is a required input, so a nameless listbox does not compile.</li></ul></section>
+<section id="slide-183" data-part="6" data-cue="A11Y-006 · Step-by-step notes · item 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Step-by-step notes · item 1</h2><ul><li>Step</li></ul></section>
+<section id="slide-184" data-part="6" data-cue="A11Y-006 · Step-by-step notes · item 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Step-by-step notes · item 2</h2><ul><li>3. aria-activedescendant keeps DOM focus on the listbox and tells assistive technology which option is active.</li><li>It fits a listbox well, and it is the pattern a combobox needs later, where focus must stay in the text input.</li><li>A roving tabindex (focus moves to each option) is also valid for a standalone listbox, and the candidate should be able to say so.</li></ul></section>
+<section id="slide-185" data-part="6" data-cue="A11Y-006 · Step-by-step notes"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Step-by-step notes</h2><ul><li>Edge cases a strong candidate handles:</li></ul></section>
+<section id="slide-186" data-part="6" data-cue="A11Y-006 · Step-by-step notes"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Step-by-step notes</h2><ul><li>First focus: the active option is the selected one, or the first enabled one.</li><li>A selected option that later becomes disabled is not made active.</li><li>All options disabled: activeIndex is -1, aria-activedescendant is removed, and the keyboard does nothing.</li></ul></section>
+<section id="slide-187" data-part="6" data-cue="A11Y-006 · Step-by-step notes · item 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Step-by-step notes · item 1</h2><ul><li>Step</li></ul></section>
+<section id="slide-188" data-part="6" data-cue="A11Y-006 · Step-by-step notes · item 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Step-by-step notes · item 2</h2><ul><li>4.</li><li>Type-ahead buffers keystrokes for 500 ms, ignores modifier shortcuts, skips disabled options and wraps around.</li><li>The timer is cleared on destroy.</li></ul></section>
+<section id="slide-189" data-part="6" data-cue="A11Y-006 · Step 5: styles using only tokens"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Step 5: styles using only tokens</h2><ul><li>These go in the component's stylesheet.</li></ul></section>
+<section id="slide-190" data-part="6" data-cue="A11Y-006 · Answer · block 13 · page 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Answer · block 13 · page 1</h2><pre class="code" data-lang="css">.ui-listbox {
+  list-style: none;
+  margin: 0;
+  padding: var(--ui-space-1);
+  max-height: var(--ui-listbox-max-height, 16rem);
+  overflow-y: auto;
+  border: 1px solid var(--ui-color-border);
+  border-radius: var(--ui-radius-control);
+  background: var(--ui-color-surface);
+  color: var(--ui-color-on-surface);
+}
+
+.ui-listbox:focus-visible {
+  outline: var(--ui-focus-ring-width) solid var(--ui-color-focus-ring);</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-191" data-part="6" data-cue="A11Y-006 · Answer · block 14 · page 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Answer · block 14 · page 2</h2><pre class="code" data-lang="css">  outline-offset: var(--ui-focus-ring-offset);
+}
+
+.ui-listbox__option {
+  display: flex;
+  gap: var(--ui-space-2);
+  padding: var(--ui-space-2) var(--ui-space-3);
+  border-radius: var(--ui-radius-control);
+  outline: 1px solid transparent;
+  cursor: pointer;
+}
+
+.ui-listbox:focus-visible .ui-listbox__option--active {
+  background: var(--ui-color-surface-hover);</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-192" data-part="6" data-cue="A11Y-006 · Answer · block 15 · page 3"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Answer · block 15 · page 3</h2><pre class="code" data-lang="css">  outline-color: var(--ui-color-focus-ring);
+}
+
+.ui-listbox__option[aria-selected='true'] {
+  font-weight: var(--ui-font-weight-strong);
+}
+
+.ui-listbox__option[aria-selected='true']::after {
+  content: '✓' / '';
+  margin-inline-start: auto;
+}
+
+.ui-listbox__option[aria-disabled='true'] {
+  color: var(--ui-color-on-surface-disabled);</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-193" data-part="6" data-cue="A11Y-006 · Answer · block 16 · page 4"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Answer · block 16 · page 4</h2><pre class="code" data-lang="css">  cursor: not-allowed;
+}
+
+@media (forced-colors: active) {
+  .ui-listbox:focus-visible .ui-listbox__option--active {
+    outline-color: Highlight;
+  }
+
+  .ui-listbox__option[aria-disabled='true'] {
+    color: GrayText;
+  }
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-194" data-part="6" data-cue="A11Y-006 · Step 5: styles using only tokens"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Step 5: styles using only tokens</h2><ul><li>States are styled from the ARIA attributes, so the visual state and the announced state cannot disagree.</li><li>Selection shows a check mark as well as weight, so it does not depend on colour.</li><li>The active option uses an outline, which forced-colors mode keeps.</li></ul></section>
+<section id="slide-195" data-part="6" data-cue="A11Y-006 · Step 6: discussion points"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Step 6: discussion points</h2><ul><li>Forms: implement ControlValueAccessor writing the same value signal, following the contract in API-004 (writeValue never calls onChange; touched on blur; disabled state).</li><li>Object values: compareWith lets teams pass objects that are equal but not identical, such as options rebuilt after a fetch.</li></ul></section>
+<section id="slide-196" data-part="6" data-cue="A11Y-006 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Follow-up 1</h2><p class="question">How would you extend this to multiple selection? What changes in ARIA and keyboard behaviour?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-196-answer" data-part="6" data-cue="Represent selection as a collection, add aria-multiselectable true, and expose a"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Follow-up 1 · Answer</h2><ul><li>Represent selection as a collection, add aria-multiselectable true, and expose aria-selected for each option.</li><li>Choose an APG-supported multiple-selection keyboard model.</li><li>In a modifier-free model, Space toggles the active option, with optional range and select-all behavior documented.</li></ul></section>
+<section id="slide-197" data-part="6" data-cue="A11Y-006 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Follow-up 2</h2><p class="question">The list has 10,000 options. What breaks, and how would virtual scrolling interact with `aria-activedescendant`?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-197-answer" data-part="6" data-cue="Rendering ten thousand options can cost layout and memory, but virtualization ca"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Follow-up 2 · Answer</h2><ul><li>Rendering ten thousand options can cost layout and memory, but virtualization can remove the element referenced by aria-activedescendant.</li><li>Keep the active option rendered or provide a compatible identity strategy, and expose position and set-size information where the virtualized pattern requires it.</li><li>Coordinate scrolling and rendering before assigning the reference.</li></ul></section>
+<section id="slide-198" data-part="6" data-cue="A11Y-006 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Follow-up 3</h2><p class="question">How would you build a select (a button that opens this listbox in a popup) on top of it?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-198-answer" data-part="6" data-cue="A popup select needs a named trigger, expanded state, an appropriate popup relat"><div class="kicker">Interview walkthrough</div><h2>A11Y-006 · Follow-up 3 · Answer</h2><ul><li>A popup select needs a named trigger, expanded state, an appropriate popup relationship, opening and closing keys, selection commitment, Escape handling, and focus restoration.</li><li>Define whether DOM focus moves to the listbox or remains on a combobox-like trigger with active descendant management; follow the selected pattern consistently.</li></ul></section>
+<section id="slide-199" data-part="7" data-cue="Implementation clarification · Repeated-letter typeahead"><div class="kicker">Recap and clarifications</div><h2>Implementation clarification · Repeated-letter typeahead</h2><ul><li>The reference buffer accumulates repeated letters, so typing the same letter twice quickly searches for a doubled prefix rather than cycling.</li><li>The supplemental listbox example resets repeated single-letter input to a one-letter search and verifies cycling.</li><li>The source remains unchanged.</li></ul></section>
+<section id="slide-200" data-part="7" data-cue="Implementation clarification · Browser checks and announcements"><div class="kicker">Recap and clarifications</div><h2>Implementation clarification · Browser checks and announcements</h2><ul><li>DOM and browser interaction checks establish names, relationships, and focus in the tested browser.</li><li>They do not establish a universal screen-reader announcement or server-hydration identifier strategy.</li></ul></section>
+<section id="slide-201" data-part="7" data-cue="Final review checklist"><div class="kicker">Recap and clarifications</div><h2>Final review checklist</h2><ul><li>Review the lesson by answering each main question and follow-up aloud.</li><li>For Accessible Angular Components: Names, Focus, and Interaction, connect each reported symptom to its mechanism, explain the corrected public contract, and name a regression check that exercises the consumer path.</li><li>State compatibility and accessibility limitations clearly.</li></ul></section>
+<script src="../assets/slides.js"></script></body></html>

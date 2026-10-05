@@ -1,0 +1,65 @@
+{
+  "generatedOn": "2026-10-05",
+  "seconds": 2304.592583,
+  "chapters": [
+    {
+      "title": "Introduction and foundations",
+      "seconds": 0
+    },
+    {
+      "title": "VER-001: Is this a breaking change?",
+      "seconds": 557.14
+    },
+    {
+      "title": "VER-002: A deprecation that warns everyone and honours nobody",
+      "seconds": 1179.526
+    },
+    {
+      "title": "VER-003: A package that leaks its internals and duplicates Angular",
+      "seconds": 1686.509
+    },
+    {
+      "title": "Final review checklist",
+      "seconds": 2271.726
+    }
+  ],
+  "width": 1920,
+  "height": 1080,
+  "videoCodec": "h264",
+  "audioCodec": "aac",
+  "subtitleCodec": "mov_text",
+  "bytes": 51792304,
+  "runtimeAssertions": 8,
+  "assertions": [
+    "New name does not warn",
+    "Old input retains rendered behavior",
+    "Deprecated usage warns once",
+    "New name wins when both are set",
+    "Explicit old default cannot override new value",
+    "Recomputations do not flood warnings",
+    "Rendered default is preserved",
+    "Direct old getter change is documented as observable"
+  ],
+  "consumerCompilationChecks": 5,
+  "consumerAssertions": [
+    "required-input-breaks-existing-template",
+    "narrowed-input-rejects-existing-string",
+    "nullable-output-breaks-non-null-handler",
+    "widened-input-accepts-new-consumer",
+    "explicit-package-exports-allow-public-and-block-internal"
+  ],
+  "checkedSlides": 117,
+  "captions": 616,
+  "estimatedAzureDollars": 0.5092800000000002,
+  "reservedCharacters": 33952,
+  "preservedDrillPauses": 12,
+  "mainQuestions": 3,
+  "followupQuestions": 9,
+  "fullDecodePassed": true,
+  "browserPlaybackPassed": true,
+  "checkedVideoSeeks": [
+    20,
+    727.8,
+    2284.592583
+  ]
+}
