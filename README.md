@@ -2,21 +2,39 @@
 
 Senior-level Angular interview questions and answers for developers preparing for technical interviews. The project focuses on explaining engineering decisions, tradeoffs, and practical application.
 
-## Project status
+The current questions target **engineers who build a shared component library**: components that many product teams consume, where bugs and missed requirements are costly, consumers must understand the API without help, breaking changes are rare and managed, accessibility is required, and signals and design tokens are used everywhere.
 
-The repository is in its initial setup phase. Interview questions and answers have not yet been added. Contributions that establish accurate, well-structured learning material are welcome.
+## Questions
 
-## Scope
+Browse the **[question index](questions/README.md)**. It lists every question with its topic, format, level and expected time.
 
-Planned coverage includes:
+| Topic | Covers |
+| --- | --- |
+| Signals and reactivity | `input`, `model`, `computed`, `linkedSignal`, `effect`, `afterRenderEffect` |
+| Design tokens and theming | Token layers, tokens as public API, dark mode, forced colors, zoom and text spacing |
+| Accessibility | Accessible names, dialogs, tabs, form fields, live regions, a live-coding listbox |
+| Component API design | Inputs and outputs, attribute selectors, content projection, `ControlValueAccessor` |
+| Versioning and breaking changes | What counts as breaking, safe deprecation, package structure |
+| Testing | Testing through a host, component harnesses, accessibility checks |
+| Performance and change detection | Components that work in zoneless applications |
 
-- Angular architecture, components, dependency injection, and application design.
-- Reactivity, RxJS, state management, and change detection.
-- Routing, forms, HTTP communication, and error handling.
-- Testing, accessibility, security, and performance.
-- Technical leadership, maintainability, and architectural tradeoffs.
+Each question follows the same shape:
 
-Answers should explain the reasoning behind an approach, identify its limitations, and include examples where they clarify the concept.
+1. **Scenario:** a realistic report from product teams, and the code under review.
+2. **Question:** what the candidate must find, fix or design.
+3. **Hints:** collapsed, for practice.
+4. **Answer:** each problem explained, a fixed version, and what strong candidates add.
+5. **Scoring:** strong and weak signals for each area.
+6. **Follow-up questions** and **references**.
+
+## How to use it
+
+- **Practising alone:** read the scenario, write your answer (out loud or on paper), use the hints only when stuck, then compare with the answer and the scoring table.
+- **Running a mock interview:** pick questions from different topics until the minutes add up to your slot. A 60-minute session might be two code reviews, one discussion, and the first steps of the live-coding exercise. Use the scoring tables to give consistent feedback.
+
+## Accuracy
+
+TypeScript examples marked for verification are compiled with the Angular compiler and strict template type checking (`npm run verify:examples`). Answers state the minimum Angular version they assume in their front matter. Corrections are welcome; see below.
 
 ## Getting started
 
@@ -25,13 +43,15 @@ Browse the Markdown files on GitHub or clone the repository to read and edit the
 ```sh
 git clone https://github.com/QuinntyneBrown/senior-angular-interview-prep.git
 cd senior-angular-interview-prep
+npm install
+npm run check
 ```
 
-No dependency installation or build step is required for the current documentation-only repository.
+Reading the questions needs no installation. `npm install` is only needed to validate questions and compile examples.
 
 ## Contributing
 
-We welcome new questions, corrections, clearer explanations, and improvements to examples. Read [CONTRIBUTING.md](CONTRIBUTING.md) for content standards and the pull request process.
+We welcome new questions, corrections, clearer explanations, and improvements to examples. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the question format, the checks, and the pull request process. Start a new question from [`templates/question.md`](templates/question.md).
 
 All participants are expected to follow the [Code of Conduct](CODE_OF_CONDUCT.md). Use [GitHub issues](https://github.com/QuinntyneBrown/senior-angular-interview-prep/issues) for content feedback and proposals. Follow the [security policy](SECURITY.md) for sensitive reports.
 
@@ -43,7 +63,8 @@ Contributions are recognized through the repository's [contributor history](http
 
 | Document | Purpose |
 | --- | --- |
-| [Contributing](CONTRIBUTING.md) | Contribution workflow and content standards |
+| [Question index](questions/README.md) | Every question, generated from the question files |
+| [Contributing](CONTRIBUTING.md) | Question format, checks, and contribution workflow |
 | [Contributors](CONTRIBUTORS.md) | Contributor recognition |
 | [Code of Conduct](CODE_OF_CONDUCT.md) | Community expectations and enforcement |
 | [Security](SECURITY.md) | Reporting security concerns |

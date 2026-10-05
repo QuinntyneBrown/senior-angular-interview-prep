@@ -1,0 +1,44 @@
+[
+  {
+    "key": "signals",
+    "prefix": "SIG",
+    "title": "Signals and reactivity",
+    "description": "Inputs, models, computed state, linked state, and effects in components that many applications consume."
+  },
+  {
+    "key": "design-tokens",
+    "prefix": "TOK",
+    "title": "Design tokens and theming",
+    "description": "Token layers, theming, contrast, forced colors, zoom, and tokens as a public contract."
+  },
+  {
+    "key": "accessibility",
+    "prefix": "A11Y",
+    "title": "Accessibility",
+    "description": "Accessible names, keyboard patterns, focus management, form semantics, and live announcements."
+  },
+  {
+    "key": "component-api",
+    "prefix": "API",
+    "title": "Component API design",
+    "description": "Inputs, outputs, host elements, content projection, and form integration that consumers can understand."
+  },
+  {
+    "key": "versioning",
+    "prefix": "VER",
+    "title": "Versioning and breaking changes",
+    "description": "Recognizing breaking changes, deprecating safely, and controlling the package's public surface."
+  },
+  {
+    "key": "testing",
+    "prefix": "TST",
+    "title": "Testing",
+    "description": "Testing components the way consumers use them, including accessibility checks and harnesses."
+  },
+  {
+    "key": "performance",
+    "prefix": "PERF",
+    "title": "Performance and change detection",
+    "description": "Components that stay correct and fast under OnPush and zoneless applications."
+  }
+]
