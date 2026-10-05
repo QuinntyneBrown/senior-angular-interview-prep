@@ -1,0 +1,25 @@
+{
+  "name": "senior-angular-interview-prep",
+  "private": true,
+  "description": "Senior Angular interview questions and answers for engineers who build shared component libraries.",
+  "license": "MIT",
+  "scripts": {
+    "index": "node scripts/build-index.mjs",
+    "check": "node scripts/build-index.mjs --check",
+    "verify:examples": "node scripts/verify-examples.mjs"
+  },
+  "engines": {
+    "node": "^22.22.3 || >=24.15.0"
+  },
+  "devDependencies": {
+    "@angular/cdk": "^22.2.0",
+    "@angular/common": "^22.2.0",
+    "@angular/compiler": "^22.2.0",
+    "@angular/compiler-cli": "^22.2.0",
+    "@angular/core": "^22.2.0",
+    "@angular/forms": "^22.2.0",
+    "@angular/platform-browser": "^22.2.0",
+    "rxjs": "^7.8.0",
+    "typescript": "~6.0.0"
+  }
+}
