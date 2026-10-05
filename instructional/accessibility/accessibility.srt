@@ -1,0 +1,5200 @@
+1
+00:00:00,000 --> 00:00:03,476
+Senior Angular interview preparation, lesson 3.
+
+2
+00:00:03,476 --> 00:00:07,532
+Accessible Angular Components: Names, Focus, and Interaction.
+
+3
+00:00:09,740 --> 00:00:11,258
+Accessibility is observable behavior
+
+4
+00:00:12,382 --> 00:00:14,279
+Welcome to the accessibility lesson.
+
+5
+00:00:14,279 --> 00:00:18,073
+We will examine an icon button, a modal dialog, tabs,
+
+6
+00:00:18,073 --> 00:00:22,245
+a form field, toast announcements, and a complete listbox coding exercise.
+
+7
+00:00:22,245 --> 00:00:26,038
+Accessibility is part of a component's behavior and public contract.
+
+8
+00:00:26,038 --> 00:00:29,832
+A control must have a discoverable role, a meaningful name,
+
+9
+00:00:29,832 --> 00:00:34,004
+appropriate states, and an interaction model that works without a pointer.
+
+10
+00:00:35,380 --> 00:00:37,322
+Accessibility is observable behavior · 2
+
+11
+00:00:38,447 --> 00:00:42,006
+A screenshot cannot tell you whether pressing Tab reaches the control,
+
+12
+00:00:42,006 --> 00:00:46,213
+whether the focused item is selected, or whether an error is connected to
+
+13
+00:00:46,213 --> 00:00:46,860
+its input.
+
+14
+00:00:46,860 --> 00:00:51,066
+A component can look correct while its accessibility tree tells a different story.
+
+15
+00:00:51,066 --> 00:00:53,655
+Start a review by inspecting the native element,
+
+16
+00:00:53,655 --> 00:00:55,920
+then its computed role and accessible name,
+
+17
+00:00:55,920 --> 00:00:57,538
+then its states and relationships.
+
+18
+00:00:57,538 --> 00:01:01,745
+Finally use the keyboard to operate it in the order a user would.
+
+19
+00:01:03,120 --> 00:01:05,411
+Accessibility is observable behavior · 3
+
+20
+00:01:06,536 --> 00:01:08,510
+Our examples are teaching implementations.
+
+21
+00:01:08,510 --> 00:01:11,275
+We will verify DOM relationships, keyboard events,
+
+22
+00:01:11,275 --> 00:01:14,435
+native dialog behavior, and focus in a real
+
+23
+00:01:14,435 --> 00:01:14,830
+browser.
+
+24
+00:01:14,830 --> 00:01:19,965
+We will not treat those checks as proof of every screen reader's announcements.
+
+25
+00:01:19,965 --> 00:01:23,520
+Speech output depends on browser and assistive technology combinations.
+
+26
+00:01:23,520 --> 00:01:26,680
+A senior answer states which behavior was tested
+
+27
+00:01:26,680 --> 00:01:29,445
+and where manual testing is still needed.
+
+28
+00:01:30,819 --> 00:01:32,938
+Choose native semantics before adding ARIA
+
+29
+00:01:34,063 --> 00:01:39,009
+A native button already supports keyboard activation, focus, disabled behavior, and a button role.
+
+30
+00:01:39,009 --> 00:01:42,188
+A clickable div has none of those properties automatically.
+
+31
+00:01:42,188 --> 00:01:46,780
+Adding role button only changes its semantic description; it does not make Space
+
+32
+00:01:46,780 --> 00:01:51,372
+activate it, put it in the tab order, or prevent activation while disabled.
+
+33
+00:01:51,372 --> 00:01:54,905
+Prefer the native element when it provides the required behavior.
+
+34
+00:01:56,280 --> 00:01:59,268
+Choose native semantics before adding ARIA · 2
+
+35
+00:02:00,393 --> 00:02:05,247
+ARIA supplements semantics when a native element does not express the complete widget.
+
+36
+00:02:05,247 --> 00:02:07,487
+It describes roles, states, and relationships.
+
+37
+00:02:07,487 --> 00:02:11,595
+The application remains responsible for keeping those states synchronized with behavior.
+
+38
+00:02:11,595 --> 00:02:14,956
+A tab marked selected must show the corresponding panel.
+
+39
+00:02:14,956 --> 00:02:19,810
+An option marked disabled must not become selectable through a separate click handler.
+
+40
+00:02:19,810 --> 00:02:23,545
+An aria-modal attribute does not itself make the background inert.
+
+41
+00:02:24,919 --> 00:02:27,769
+Choose native semantics before adding ARIA · 3
+
+42
+00:02:28,895 --> 00:02:33,525
+Use the WAI-ARIA Authoring Practices patterns as an interaction reference for composite widgets.
+
+43
+00:02:33,525 --> 00:02:36,731
+They provide expected keyboard behavior and explain focus strategies.
+
+44
+00:02:36,731 --> 00:02:39,937
+They are guidance rather than a blanket compliance certificate.
+
+45
+00:02:39,937 --> 00:02:44,568
+Select the pattern that fits the user task, then implement the whole model.
+
+46
+00:02:44,568 --> 00:02:47,774
+A row of buttons is not automatically a tablist,
+
+47
+00:02:47,774 --> 00:02:51,692
+and a list of links may be better navigation than a
+
+48
+00:02:51,692 --> 00:02:52,405
+custom listbox.
+
+49
+00:02:53,780 --> 00:02:55,220
+Accessible names and descriptions
+
+50
+00:02:56,345 --> 00:02:58,569
+An accessible name identifies a control.
+
+51
+00:02:58,569 --> 00:03:02,647
+For a visible text button, its content often supplies that name.
+
+52
+00:03:02,647 --> 00:03:07,096
+An icon-only button needs another naming source, such as aria-label or aria-labelledby.
+
+53
+00:03:07,096 --> 00:03:10,804
+Hide decorative icon markup from assistive technology so an SVG
+
+54
+00:03:10,804 --> 00:03:14,511
+title or glyph does not compete with the intended label.
+
+55
+00:03:14,511 --> 00:03:16,736
+The label should describe the action,
+
+56
+00:03:16,736 --> 00:03:19,702
+such as Delete invoice, rather than the image,
+
+57
+00:03:19,702 --> 00:03:21,185
+such as Trash can.
+
+58
+00:03:22,560 --> 00:03:24,658
+Accessible names and descriptions · 2
+
+59
+00:03:25,782 --> 00:03:27,961
+An accessible description provides supporting information.
+
+60
+00:03:27,961 --> 00:03:32,319
+Connect instructions, constraints, and errors with aria-describedby rather than replacing the name.
+
+61
+00:03:32,319 --> 00:03:36,313
+A tooltip is not a reliable substitute for a required name.
+
+62
+00:03:36,313 --> 00:03:40,670
+Keyboard users must be able to reveal and dismiss supplemental tooltip content,
+
+63
+00:03:40,670 --> 00:03:44,664
+and the button should already make sense before the tooltip appears.
+
+64
+00:03:46,040 --> 00:03:48,463
+Accessible names and descriptions · 3
+
+65
+00:03:49,588 --> 00:03:53,343
+Prefer aria-labelledby when visible text already provides the right
+
+66
+00:03:53,343 --> 00:03:56,681
+wording, particularly when several labels contribute useful context.
+
+67
+00:03:56,681 --> 00:04:00,020
+Ensure every referenced identifier exists and is unique.
+
+68
+00:04:00,020 --> 00:04:02,941
+Generated identifiers must work across multiple instances.
+
+69
+00:04:02,941 --> 00:04:08,783
+Module counters are convenient in simple browser examples, but server rendering and hydration require
+
+70
+00:04:08,783 --> 00:04:14,625
+a stable strategy so the client does not produce different relationships from the server.
+
+71
+00:04:16,000 --> 00:04:18,373
+Focus is a resource with an owner
+
+72
+00:04:19,498 --> 00:04:23,226
+Focus tells the keyboard user where the next operation will happen.
+
+73
+00:04:23,226 --> 00:04:25,938
+Keep a visible focus indicator, avoid unnecessary positive
+
+74
+00:04:25,938 --> 00:04:28,650
+tabindex values, and preserve a logical reading order.
+
+75
+00:04:28,650 --> 00:04:32,718
+When a component moves focus, it should have a clear user-facing reason.
+
+76
+00:04:32,718 --> 00:04:37,464
+Opening a modal is one such reason; receiving a background toast normally is not.
+
+77
+00:04:38,839 --> 00:04:41,943
+Focus is a resource with an owner · 2
+
+78
+00:04:43,068 --> 00:04:45,826
+Before opening a modal, remember the invoking element.
+
+79
+00:04:45,826 --> 00:04:48,929
+On open, focus an appropriate element inside the dialog.
+
+80
+00:04:48,929 --> 00:04:53,067
+Contain interaction while it is modal and provide a keyboard dismissal path.
+
+81
+00:04:53,067 --> 00:04:57,549
+On close, restore focus when the invoking element still exists and is usable.
+
+82
+00:04:57,549 --> 00:04:59,618
+If a destructive action removed it,
+
+83
+00:04:59,618 --> 00:05:02,721
+choose a logical next location rather than focusing a
+
+84
+00:05:02,721 --> 00:05:03,411
+detached node.
+
+85
+00:05:03,411 --> 00:05:05,825
+This fallback is a production design responsibility.
+
+86
+00:05:07,200 --> 00:05:09,972
+Focus is a resource with an owner · 3
+
+87
+00:05:11,097 --> 00:05:13,311
+Initial focus depends on content and risk.
+
+88
+00:05:13,311 --> 00:05:16,158
+A destructive confirmation commonly starts on the safe action.
+
+89
+00:05:16,158 --> 00:05:19,637
+A long structured explanation can start at a heading or paragraph
+
+90
+00:05:19,637 --> 00:05:23,117
+with tabindex minus one so users can read it before acting.
+
+91
+00:05:23,117 --> 00:05:27,545
+Do not focus the entire dialog element merely because it is easy to query.
+
+92
+00:05:27,545 --> 00:05:31,025
+Native dialog and the CDK reduce the amount of custom behavior,
+
+93
+00:05:31,025 --> 00:05:34,505
+but they still need a name and a deliberate focus policy.
+
+94
+00:05:35,880 --> 00:05:37,553
+Modal dialogs and content creation
+
+95
+00:05:38,678 --> 00:05:42,022
+Use showModal on a native dialog when its behavior fits.
+
+96
+00:05:42,022 --> 00:05:44,697
+It places the dialog in the top layer
+
+97
+00:05:44,697 --> 00:05:47,372
+and makes the rest of the document inert.
+
+98
+00:05:47,372 --> 00:05:52,054
+Merely setting the open attribute creates an open dialog without the same modal operation.
+
+99
+00:05:52,054 --> 00:05:54,729
+The distinction explains why visually covering a page
+
+100
+00:05:54,729 --> 00:05:57,405
+does not prevent keyboard interaction with controls underneath.
+
+101
+00:05:58,779 --> 00:06:01,222
+Modal dialogs and content creation · 2
+
+102
+00:06:02,348 --> 00:06:05,965
+Keep the Angular state and the native dialog state connected.
+
+103
+00:06:05,965 --> 00:06:07,774
+Escape produces a cancel event.
+
+104
+00:06:07,774 --> 00:06:12,115
+A form with method dialog can close the element through another path.
+
+105
+00:06:12,115 --> 00:06:16,818
+Route those paths back to the component's model, and restore focus after closure.
+
+106
+00:06:16,818 --> 00:06:18,989
+Invoke browser DOM operations after rendering,
+
+107
+00:06:18,989 --> 00:06:21,883
+not during a constructor before the view query
+
+108
+00:06:21,883 --> 00:06:22,245
+exists.
+
+109
+00:06:23,620 --> 00:06:26,126
+Modal dialogs and content creation · 3
+
+110
+00:06:27,251 --> 00:06:29,398
+Projection is another source of surprises.
+
+111
+00:06:29,398 --> 00:06:32,262
+A parent creates its projected content even if
+
+112
+00:06:32,262 --> 00:06:34,768
+the child's ng-content appears inside a condition.
+
+113
+00:06:34,768 --> 00:06:37,632
+Hiding a dialog does not prevent an expensive
+
+114
+00:06:37,632 --> 00:06:40,495
+projected form from being created or making requests.
+
+115
+00:06:40,495 --> 00:06:44,075
+Offer a template slot that is instantiated only when open,
+
+116
+00:06:44,075 --> 00:06:47,655
+or a dialog service that creates a component on demand.
+
+117
+00:06:47,655 --> 00:06:49,444
+This separates visibility from lifetime.
+
+118
+00:06:50,820 --> 00:06:52,813
+Composite widgets and keyboard tables
+
+119
+00:06:53,938 --> 00:06:58,816
+A composite widget groups several related items into a coherent keyboard interaction.
+
+120
+00:06:58,816 --> 00:07:03,288
+A tablist generally has one tab in the page's tab order.
+
+121
+00:07:03,288 --> 00:07:06,947
+Arrow keys move within it, Home and End reach
+
+122
+00:07:06,947 --> 00:07:10,606
+the extremes, and selection determines which panel is shown.
+
+123
+00:07:10,606 --> 00:07:14,265
+Keep roles, aria-selected, tabindex, aria-controls, and panel labeling consistent.
+
+124
+00:07:15,640 --> 00:07:18,102
+Composite widgets and keyboard tables · 2
+
+125
+00:07:19,227 --> 00:07:22,040
+Automatic activation selects a tab as focus moves.
+
+126
+00:07:22,040 --> 00:07:24,502
+It works well when panels display immediately.
+
+127
+00:07:24,502 --> 00:07:27,667
+Manual activation moves focus first and selects on Enter
+
+128
+00:07:27,667 --> 00:07:30,480
+or Space, which can avoid repeated slow requests.
+
+129
+00:07:30,480 --> 00:07:32,942
+Do not combine half of each model.
+
+130
+00:07:32,942 --> 00:07:35,756
+If scrolling buttons are added for narrow screens,
+
+131
+00:07:35,756 --> 00:07:39,624
+preserve keyboard access to the actual tabs and scroll the focused
+
+132
+00:07:39,624 --> 00:07:40,679
+tab into view.
+
+133
+00:07:40,679 --> 00:07:43,845
+The extra buttons should not replace the tablist semantics.
+
+134
+00:07:45,220 --> 00:07:47,737
+Composite widgets and keyboard tables · 3
+
+135
+00:07:48,863 --> 00:07:52,819
+Track identity rather than assuming a static index is always enough.
+
+136
+00:07:52,819 --> 00:07:57,855
+Removing the final tab must not leave an inaccessible panel or no reachable tab.
+
+137
+00:07:57,855 --> 00:08:02,171
+Handle empty lists, disabled items if supported, right-to-left direction, and multiple groups.
+
+138
+00:08:02,171 --> 00:08:05,408
+A key manager can help with traversal and wrapping,
+
+139
+00:08:05,408 --> 00:08:09,005
+but it does not supply the entire semantic and selection
+
+140
+00:08:09,005 --> 00:08:09,365
+contract.
+
+141
+00:08:10,740 --> 00:08:12,638
+Form relationships and error timing
+
+142
+00:08:13,763 --> 00:08:17,559
+A visible label needs a programmatic connection to the input.
+
+143
+00:08:17,559 --> 00:08:22,114
+Match label for with input id, or use valid wrapping label semantics.
+
+144
+00:08:22,114 --> 00:08:25,531
+A custom component wrapper cannot rely on an identifier
+
+145
+00:08:25,531 --> 00:08:28,568
+on its host automatically naming an internal input.
+
+146
+00:08:28,568 --> 00:08:32,365
+Form-field abstractions need an explicit relationship to the actual control.
+
+147
+00:08:33,740 --> 00:08:36,058
+Form relationships and error timing · 2
+
+148
+00:08:37,183 --> 00:08:40,647
+Use aria-describedby for helper and error text and aria-invalid when
+
+149
+00:08:40,647 --> 00:08:44,112
+the control is invalid according to the application's display policy.
+
+150
+00:08:44,112 --> 00:08:46,884
+Do not announce every validation detail before the
+
+151
+00:08:46,884 --> 00:08:49,656
+user has had a chance to enter data.
+
+152
+00:08:49,656 --> 00:08:52,775
+An error shown after blur or submission usually needs
+
+153
+00:08:52,775 --> 00:08:55,547
+a clear explanation and a route to correction.
+
+154
+00:08:55,547 --> 00:08:59,704
+Preserve instructions when adding an error rather than dropping their identifier accidentally.
+
+155
+00:09:01,080 --> 00:09:03,981
+Form relationships and error timing · 3
+
+156
+00:09:05,106 --> 00:09:10,907
+For live error updates, establish the live region before putting the message into it.
+
+157
+00:09:10,907 --> 00:09:15,881
+Some assistive technology misses a region inserted together with its first text.
+
+158
+00:09:15,881 --> 00:09:18,367
+Keep the name, description, visual error,
+
+159
+00:09:18,367 --> 00:09:21,683
+and live announcement synchronized, but avoid redundant repeated
+
+160
+00:09:21,683 --> 00:09:22,097
+speech.
+
+161
+00:09:22,097 --> 00:09:27,485
+Verify the structural relationships automatically and test actual announcements manually on supported combinations.
+
+162
+00:09:28,860 --> 00:09:30,602
+Live regions are asynchronous communication
+
+163
+00:09:31,727 --> 00:09:36,607
+A toast's presence on screen does not mean a screen reader will announce it.
+
+164
+00:09:36,607 --> 00:09:39,396
+A persistent live region provides a communication channel.
+
+165
+00:09:39,396 --> 00:09:43,579
+Polite announcements usually wait for an appropriate pause; assertive announcements may interrupt.
+
+166
+00:09:43,579 --> 00:09:48,110
+Choose urgency according to the user impact, not the color of the toast.
+
+167
+00:09:48,110 --> 00:09:51,945
+Routine success feedback should rarely interrupt what the user is reading.
+
+168
+00:09:53,320 --> 00:09:55,769
+Live regions are asynchronous communication · 2
+
+169
+00:09:56,894 --> 00:10:00,042
+Separate the visible notification history from the announcement channel.
+
+170
+00:10:00,042 --> 00:10:03,191
+Replacing a list of toasts can cause too much
+
+171
+00:10:03,191 --> 00:10:06,339
+content to be spoken or can repeat old messages.
+
+172
+00:10:06,339 --> 00:10:09,838
+Publish the specific new status through a live announcer or
+
+173
+00:10:09,838 --> 00:10:13,336
+persistent region while leaving the visible items available for review.
+
+174
+00:10:13,336 --> 00:10:17,885
+Do not move focus into a noninteractive toast simply to make it noticeable.
+
+175
+00:10:19,260 --> 00:10:21,765
+Live regions are asynchronous communication · 3
+
+176
+00:10:22,890 --> 00:10:26,945
+Rapid changes can be coalesced or interrupted depending on the platform.
+
+177
+00:10:26,945 --> 00:10:31,001
+A sequence such as three files uploaded, then four files uploaded,
+
+178
+00:10:31,001 --> 00:10:34,688
+is not a reliable promise of two separate spoken sentences.
+
+179
+00:10:34,688 --> 00:10:38,744
+Batch progress, announce a final summary, and offer stable visible status.
+
+180
+00:10:38,744 --> 00:10:43,169
+Tests can verify that the intended text reaches a connected live region;
+
+181
+00:10:43,169 --> 00:10:47,225
+they cannot assert a universal spoken transcript from a DOM change.
+
+182
+00:10:48,600 --> 00:10:50,664
+Listbox focus and selection are different
+
+183
+00:10:51,789 --> 00:10:54,885
+A single-select listbox lets a user choose one option.
+
+184
+00:10:54,885 --> 00:10:58,325
+The active option is the one keyboard navigation currently addresses.
+
+185
+00:10:58,325 --> 00:11:00,733
+The selected value is the committed choice.
+
+186
+00:11:00,733 --> 00:11:03,485
+These can differ when arrows move without selecting.
+
+187
+00:11:03,485 --> 00:11:07,957
+Pick a documented behavior and keep it consistent for pointer and keyboard interaction.
+
+188
+00:11:07,957 --> 00:11:12,085
+A native select is often preferable when it fits the product need.
+
+189
+00:11:13,460 --> 00:11:16,171
+Listbox focus and selection are different · 2
+
+190
+00:11:17,296 --> 00:11:20,546
+With aria-activedescendant, DOM focus stays on the listbox container.
+
+191
+00:11:20,546 --> 00:11:23,435
+The attribute points to the rendered active option,
+
+192
+00:11:23,435 --> 00:11:25,963
+which must exist and have an identifier.
+
+193
+00:11:25,963 --> 00:11:31,018
+Roving tabindex is an alternative for a standalone widget: focus moves among option elements.
+
+194
+00:11:31,018 --> 00:11:33,185
+Do not mix both strategies casually.
+
+195
+00:11:33,185 --> 00:11:36,435
+Neither strategy removes the need to scroll the active
+
+196
+00:11:36,435 --> 00:11:39,325
+option into view and display a visible indicator.
+
+197
+00:11:40,700 --> 00:11:43,876
+Listbox focus and selection are different · 3
+
+198
+00:11:45,001 --> 00:11:48,644
+Use roles listbox and option, an accessible name on
+
+199
+00:11:48,644 --> 00:11:52,288
+the container, aria-selected on options, and aria-disabled where appropriate.
+
+200
+00:11:52,288 --> 00:11:55,932
+Disabled options remain discoverable but must not be chosen.
+
+201
+00:11:55,932 --> 00:11:57,957
+Keep identifiers unique across instances.
+
+202
+00:11:57,957 --> 00:12:00,386
+In an empty or all-disabled list,
+
+203
+00:12:00,386 --> 00:12:04,030
+remove an invalid active descendant reference and let navigation
+
+204
+00:12:04,030 --> 00:12:05,244
+safely do nothing.
+
+205
+00:12:06,620 --> 00:12:08,548
+Listbox state, typeahead, and dynamic data
+
+206
+00:12:09,673 --> 00:12:12,610
+The coding exercise uses a model for the selected
+
+207
+00:12:12,610 --> 00:12:15,548
+value and a linked signal for the active index.
+
+208
+00:12:15,548 --> 00:12:19,139
+When options change, reconcile the active item against current data instead
+
+209
+00:12:19,139 --> 00:12:22,404
+of keeping an index that can point past the list.
+
+210
+00:12:22,404 --> 00:12:25,015
+Object values may need compareWith because a refetch
+
+211
+00:12:25,015 --> 00:12:27,300
+can return equal records with different references.
+
+212
+00:12:27,300 --> 00:12:30,564
+Do not mutate the consumer's options to store local selection.
+
+213
+00:12:31,940 --> 00:12:34,952
+Listbox state, typeahead, and dynamic data · 2
+
+214
+00:12:36,077 --> 00:12:39,464
+Arrow keys, Home, and End traverse enabled options; Enter
+
+215
+00:12:39,464 --> 00:12:42,852
+and Space commit the active item in this example.
+
+216
+00:12:42,852 --> 00:12:46,240
+Prevent the browser's scrolling default for handled navigation keys.
+
+217
+00:12:46,240 --> 00:12:51,510
+Printable characters build a short typeahead buffer, with a reset timer and modifier-key filtering.
+
+218
+00:12:51,510 --> 00:12:53,392
+Clear the timer on destruction.
+
+219
+00:12:53,392 --> 00:12:56,780
+Repeated-letter cycling deserves special attention: a buffer that becomes
+
+220
+00:12:56,780 --> 00:12:59,791
+two identical letters does not automatically implement cycling.
+
+221
+00:12:59,791 --> 00:13:04,684
+We will document that limitation in the source example and show a correction.
+
+222
+00:13:06,059 --> 00:13:09,113
+Listbox state, typeahead, and dynamic data · 3
+
+223
+00:13:10,239 --> 00:13:12,213
+Virtualization adds an important constraint.
+
+224
+00:13:12,213 --> 00:13:16,952
+An active descendant cannot safely reference an option removed from the DOM.
+
+225
+00:13:16,952 --> 00:13:22,086
+A large list needs an identity and rendering strategy that keeps the active
+
+226
+00:13:22,086 --> 00:13:26,826
+option represented, correct position and set-size metadata where required, and integration tests.
+
+227
+00:13:26,826 --> 00:13:29,985
+Do not add virtual scrolling to a semantic
+
+228
+00:13:29,985 --> 00:13:33,144
+listbox and assume the accessibility contract survives unchanged.
+
+229
+00:13:34,520 --> 00:13:36,723
+Style from state and verify transitions
+
+230
+00:13:37,848 --> 00:13:40,137
+Selection should remain recognizable without color.
+
+231
+00:13:40,137 --> 00:13:44,333
+A check mark or another shape can supplement background and weight.
+
+232
+00:13:44,333 --> 00:13:47,767
+Style from ARIA state where it reflects the actual
+
+233
+00:13:47,767 --> 00:13:51,200
+behavioral state, so a separate CSS flag cannot drift.
+
+234
+00:13:51,200 --> 00:13:54,252
+Use design tokens for focus rings, surfaces, spacing,
+
+235
+00:13:54,252 --> 00:13:57,305
+and disabled colors, with forced-colors adjustments where necessary.
+
+236
+00:13:58,679 --> 00:14:01,843
+Style from state and verify transitions · 2
+
+237
+00:14:02,968 --> 00:14:06,921
+Build tests around transitions: focus enters, arrows move, selection commits,
+
+238
+00:14:06,921 --> 00:14:09,689
+options change, a disabled item is skipped,
+
+239
+00:14:09,689 --> 00:14:11,666
+and focus returns after dismissal.
+
+240
+00:14:11,666 --> 00:14:14,434
+Render two instances to catch duplicate identifiers.
+
+241
+00:14:14,434 --> 00:14:16,411
+Test empty and all-disabled data.
+
+242
+00:14:16,411 --> 00:14:21,155
+For dialogs, use real Tab and Escape events in browser automation because
+
+243
+00:14:21,155 --> 00:14:25,504
+synthetic dispatch alone does not perform the browser's default focus behavior.
+
+244
+00:14:26,880 --> 00:14:29,832
+Style from state and verify transitions · 3
+
+245
+00:14:30,958 --> 00:14:35,017
+An automated accessibility scanner catches many missing names and invalid relationships,
+
+246
+00:14:35,017 --> 00:14:38,708
+but it does not prove the widget's full interaction pattern.
+
+247
+00:14:38,708 --> 00:14:41,660
+A test can pass every scanner rule and
+
+248
+00:14:41,660 --> 00:14:44,243
+still fail to move focus with ArrowRight.
+
+249
+00:14:44,243 --> 00:14:48,303
+Combine structural checks, behavior tests, visual review, and manual assistive-technology checks.
+
+250
+00:14:48,303 --> 00:14:51,625
+We will use this layered method in every walkthrough.
+
+251
+00:14:53,000 --> 00:14:54,972
+A11Y-001 · Scenario
+
+252
+00:14:56,098 --> 00:15:02,046
+We now review A11Y-001: An icon button that keyboard and screen-reader users cannot use.
+
+253
+00:15:02,046 --> 00:15:07,145
+Inspect the consumer contract and identify the mechanism behind each reported defect.
+
+254
+00:15:08,520 --> 00:15:10,010
+A11Y-001 · Scenario
+
+255
+00:15:11,135 --> 00:15:13,937
+@acme/ui has shipped this icon button for a year.
+
+256
+00:15:13,937 --> 00:15:16,116
+It uses an icon font with ligatures,
+
+257
+00:15:16,116 --> 00:15:18,607
+so the text delete renders as a bin
+
+258
+00:15:18,607 --> 00:15:18,918
+icon.
+
+259
+00:15:18,918 --> 00:15:21,720
+Hundreds of call sites look like the usage below.
+
+260
+00:15:21,720 --> 00:15:25,145
+An accessibility audit has just failed three products because of it.
+
+261
+00:15:26,520 --> 00:15:30,375
+A11Y-001 · Scenario · block 1 · page 1
+
+262
+00:15:31,500 --> 00:15:34,654
+This is the original code, part 1 of 2.
+
+263
+00:15:34,654 --> 00:15:35,705
+Focus on IconButtonComponent.
+
+264
+00:15:35,705 --> 00:15:39,210
+Trace which element or value the consumer actually interacts with.
+
+265
+00:15:39,210 --> 00:15:43,065
+We will compare this implementation with the correction after the question.
+
+266
+00:15:44,440 --> 00:15:48,299
+A11Y-001 · Scenario · block 2 · page 2
+
+267
+00:15:49,424 --> 00:15:52,581
+This is the original code, part 2 of 2.
+
+268
+00:15:52,581 --> 00:15:54,336
+Focus on icon, disabled, pressed.
+
+269
+00:15:54,336 --> 00:15:57,845
+Trace which element or value the consumer actually interacts with.
+
+270
+00:15:57,845 --> 00:16:01,704
+We will compare this implementation with the correction after the question.
+
+271
+00:16:03,080 --> 00:16:06,604
+A11Y-001 · Scenario · block 3 · page 1
+
+272
+00:16:07,729 --> 00:16:10,612
+This is the original code, part 1 of 1.
+
+273
+00:16:10,612 --> 00:16:13,176
+Read this part in the context of Scenario.
+
+274
+00:16:13,176 --> 00:16:16,380
+Trace which element or value the consumer actually interacts with.
+
+275
+00:16:16,380 --> 00:16:19,905
+We will compare this implementation with the correction after the question.
+
+276
+00:16:21,280 --> 00:16:23,354
+A11Y-001 · Interview question
+
+277
+00:16:24,479 --> 00:16:26,918
+List the accessibility failures, fix the component,
+
+278
+00:16:26,918 --> 00:16:30,750
+and explain how you would release the fix to hundreds of
+
+279
+00:16:30,750 --> 00:16:31,796
+existing call sites.
+
+280
+00:16:38,446 --> 00:16:39,702
+A11Y-001 · 1.
+
+281
+00:16:39,702 --> 00:16:41,796
+It is not a button
+
+282
+00:16:42,921 --> 00:16:46,101
+A <div> with a click handler has no role,
+
+283
+00:16:46,101 --> 00:16:50,341
+is not in the tab order, and does not respond to Enter
+
+284
+00:16:50,341 --> 00:16:51,047
+or Space.
+
+285
+00:16:51,047 --> 00:16:55,641
+Keyboard users cannot reach it; screen readers do not announce it as interactive.
+
+286
+00:16:55,641 --> 00:17:00,588
+Adding role="button", tabindex="0" and key handlers is possible but recreates what the native element
+
+287
+00:17:00,588 --> 00:17:05,535
+already does, usually incompletely (Space activates on key up for native buttons, for example).
+
+288
+00:17:06,910 --> 00:17:08,168
+A11Y-001 · 1.
+
+289
+00:17:08,168 --> 00:17:10,265
+It is not a button
+
+290
+00:17:11,390 --> 00:17:14,912
+Fix: use a native <button type="button">. type="button" matters:
+
+291
+00:17:14,912 --> 00:17:18,435
+a button inside a <form> defaults to submit.
+
+292
+00:17:19,810 --> 00:17:20,967
+A11Y-001 · 2.
+
+293
+00:17:20,967 --> 00:17:23,669
+The accessible name is the ligature text
+
+294
+00:17:24,795 --> 00:17:28,739
+The only text inside is more_vert, so assistive technology announces something like
+
+295
+00:17:28,739 --> 00:17:32,683
+"more underscore vert". title on the custom element does not help: it
+
+296
+00:17:32,683 --> 00:17:35,313
+is on a host element with no role,
+
+297
+00:17:35,313 --> 00:17:39,257
+and title is not reliably exposed or shown to keyboard and touch
+
+298
+00:17:39,257 --> 00:17:39,914
+users anyway.
+
+299
+00:17:41,290 --> 00:17:42,536
+A11Y-001 · 2.
+
+300
+00:17:42,536 --> 00:17:45,446
+The accessible name is the ligature text
+
+301
+00:17:46,571 --> 00:17:50,190
+Fix: a label input bound to aria-label on the button,
+
+302
+00:17:50,190 --> 00:17:54,172
+and aria-hidden="true" on the icon so the ligature text is never
+
+303
+00:17:54,172 --> 00:17:54,534
+read.
+
+304
+00:17:55,910 --> 00:17:57,273
+A11Y-001 · 3.
+
+305
+00:17:57,273 --> 00:17:59,092
+Disabled is visual only
+
+306
+00:18:00,217 --> 00:18:05,166
+The class greys the button out, but nothing tells assistive technology it is unavailable.
+
+307
+00:18:05,166 --> 00:18:09,055
+There are two valid fixes, and the choice should be deliberate:
+
+308
+00:18:10,430 --> 00:18:11,917
+A11Y-001 · 3.
+
+309
+00:18:11,917 --> 00:18:13,900
+Disabled is visual only
+
+310
+00:18:15,025 --> 00:18:18,667
+Native disabled: removes the button from the tab order.
+
+311
+00:18:18,667 --> 00:18:23,524
+Simple, but users cannot discover the control or a tooltip explaining why
+
+312
+00:18:23,524 --> 00:18:28,381
+it is disabled. - aria-disabled="true": keeps it focusable and announced as unavailable.
+
+313
+00:18:28,381 --> 00:18:31,215
+The component must then block activation itself.
+
+314
+00:18:32,590 --> 00:18:34,224
+A11Y-001 · 3.
+
+315
+00:18:34,224 --> 00:18:36,403
+Disabled is visual only
+
+316
+00:18:37,528 --> 00:18:43,035
+The fixed version uses aria-disabled so that disabled actions in toolbars remain discoverable.
+
+317
+00:18:44,410 --> 00:18:48,359
+A11Y-001 · Answer · block 1 · page 1
+
+318
+00:18:49,484 --> 00:18:52,714
+This is the answer code, part 1 of 2.
+
+319
+00:18:52,714 --> 00:18:54,508
+Focus on aria-label, aria-disabled, aria-hidden.
+
+320
+00:18:54,508 --> 00:18:58,097
+Follow the declarations and event paths as a single implementation.
+
+321
+00:18:58,097 --> 00:19:02,045
+The adjacent explanation describes the contract; the complete source is available
+
+322
+00:19:02,045 --> 00:19:05,635
+with the lesson so you can inspect the remaining context.
+
+323
+00:19:07,010 --> 00:19:11,017
+A11Y-001 · Answer · block 2 · page 2
+
+324
+00:19:12,142 --> 00:19:15,419
+This is the answer code, part 2 of 2.
+
+325
+00:19:15,419 --> 00:19:17,604
+Focus on IconButtonComponent, icon, label, disabled.
+
+326
+00:19:17,604 --> 00:19:21,246
+Follow the declarations and event paths as a single implementation.
+
+327
+00:19:21,246 --> 00:19:25,253
+The adjacent explanation describes the contract; the complete source is available
+
+328
+00:19:25,253 --> 00:19:28,895
+with the lesson so you can inspect the remaining context.
+
+329
+00:19:30,270 --> 00:19:32,362
+A11Y-001 · Fixed version
+
+330
+00:19:33,487 --> 00:19:37,321
+Making label required turns a recurring accessibility bug into a compile
+
+331
+00:19:37,321 --> 00:19:41,155
+error: nobody can add an icon button without a name again.
+
+332
+00:19:42,530 --> 00:19:43,879
+A11Y-001 · 4.
+
+333
+00:19:43,879 --> 00:19:47,479
+Releasing it without breaking hundreds of call sites
+
+334
+00:19:48,604 --> 00:19:53,861
+A new required input is a breaking change: every existing <ui-icon-button> stops compiling.
+
+335
+00:19:53,861 --> 00:19:55,075
+A safe rollout:
+
+336
+00:19:56,450 --> 00:19:57,551
+A11Y-001 · 4.
+
+337
+00:19:57,551 --> 00:20:01,592
+Releasing it without breaking hundreds of call sites · item 1
+
+338
+00:20:02,717 --> 00:20:04,645
+Minor release: add label as optional.
+
+339
+00:20:04,645 --> 00:20:08,501
+When it is missing, fall back to the title attribute if present,
+
+340
+00:20:08,501 --> 00:20:11,394
+and log a development-mode warning that names the icon,
+
+341
+00:20:11,394 --> 00:20:13,643
+so teams can find each call site.
+
+342
+00:20:13,643 --> 00:20:16,215
+Mark the old behaviour deprecated in the changelog.
+
+343
+00:20:17,590 --> 00:20:18,737
+A11Y-001 · 4.
+
+344
+00:20:18,737 --> 00:20:22,946
+Releasing it without breaking hundreds of call sites · item 2
+
+345
+00:20:24,071 --> 00:20:28,612
+Provide a migration: an ng update schematic that rewrites title="..." to label="...",
+
+346
+00:20:28,612 --> 00:20:32,774
+and reports call sites with neither for a person to fix.
+
+347
+00:20:34,150 --> 00:20:35,379
+A11Y-001 · 4.
+
+348
+00:20:35,379 --> 00:20:39,889
+Releasing it without breaking hundreds of call sites · item 3
+
+349
+00:20:41,013 --> 00:20:42,806
+Next major: make label required.
+
+350
+00:20:42,806 --> 00:20:45,675
+The compiler now lists any remaining call sites.
+
+351
+00:20:47,050 --> 00:20:48,339
+A11Y-001 · 4.
+
+352
+00:20:48,339 --> 00:20:51,779
+Releasing it without breaking hundreds of call sites
+
+353
+00:20:52,904 --> 00:20:57,874
+The other changes (native button, aria-hidden icon, aria-disabled) fix behaviour without changing the
+
+354
+00:20:57,874 --> 00:21:02,462
+API, so they can ship immediately in a minor or patch release.
+
+355
+00:21:02,462 --> 00:21:07,815
+Mention them in the changelog: teams with styles targeting the internal div will notice.
+
+356
+00:21:09,190 --> 00:21:11,293
+A11Y-001 · Follow-up 1
+
+357
+00:21:12,417 --> 00:21:15,697
+A team wants a tooltip on every icon button.
+
+358
+00:21:15,697 --> 00:21:18,977
+How does a tooltip relate to the accessible name,
+
+359
+00:21:18,977 --> 00:21:21,893
+and how should it behave for keyboard users?
+
+360
+00:21:27,050 --> 00:21:29,853
+A tooltip supplies supplemental explanation; the icon button
+
+361
+00:21:29,853 --> 00:21:32,306
+still needs a name before it appears.
+
+362
+00:21:32,306 --> 00:21:35,810
+Show it on keyboard focus as well as pointer hover,
+
+363
+00:21:35,810 --> 00:21:40,015
+allow Escape to dismiss it, and avoid moving focus into a noninteractive
+
+364
+00:21:40,015 --> 00:21:40,366
+tooltip.
+
+365
+00:21:40,366 --> 00:21:43,870
+Associate useful descriptive content without making the name unexpectedly verbose.
+
+366
+00:21:43,870 --> 00:21:47,725
+Ensure hoverable, dismissible, and persistent behavior where the content criterion applies.
+
+367
+00:21:47,725 --> 00:21:51,229
+If the popup contains interactive controls, it is a different
+
+368
+00:21:51,229 --> 00:21:54,733
+pattern and should not be presented as a simple tooltip.
+
+369
+00:21:56,109 --> 00:21:58,343
+A11Y-001 · Follow-up 2
+
+370
+00:21:59,469 --> 00:22:02,958
+When is aria-labelledby better than aria-label here?
+
+371
+00:22:08,339 --> 00:22:13,181
+Use labelledby when visible text already provides the intended label or when combining
+
+372
+00:22:13,181 --> 00:22:17,651
+a visible action with contextual text is clearer than duplicating a string.
+
+373
+00:22:17,651 --> 00:22:22,867
+It keeps spoken wording aligned with the visible interface and can improve localization maintenance.
+
+374
+00:22:22,867 --> 00:22:25,474
+The referenced elements need stable unique identifiers.
+
+375
+00:22:25,474 --> 00:22:30,689
+Use aria-label for an otherwise unnamed icon control when no suitable visible text exists.
+
+376
+00:22:30,689 --> 00:22:33,669
+Do not add both casually and assume both
+
+377
+00:22:33,669 --> 00:22:36,649
+will be spoken; naming precedence determines the result.
+
+378
+00:22:38,025 --> 00:22:40,173
+A11Y-001 · Follow-up 3
+
+379
+00:22:41,298 --> 00:22:44,236
+How would you test, automatically, that every icon
+
+380
+00:22:44,236 --> 00:22:46,808
+button in a product has a name?
+
+381
+00:22:52,194 --> 00:22:55,773
+Run an accessibility scanner in the rendered product and add
+
+382
+00:22:55,773 --> 00:22:59,353
+a browser test that queries buttons by their accessible name.
+
+383
+00:22:59,353 --> 00:23:03,290
+Cover states where icons or labels change and multiple component instances.
+
+384
+00:23:03,290 --> 00:23:05,796
+Required input typing can help library consumers,
+
+385
+00:23:05,796 --> 00:23:09,018
+but an empty string can still pass a string
+
+386
+00:23:09,018 --> 00:23:09,376
+type.
+
+387
+00:23:09,376 --> 00:23:13,313
+Add runtime development diagnostics or tests for empty labels where useful.
+
+388
+00:23:13,313 --> 00:23:15,819
+Automated checks establish that a name exists,
+
+389
+00:23:15,819 --> 00:23:19,399
+not that every name is meaningful, so review representative wording
+
+390
+00:23:19,399 --> 00:23:20,114
+as well.
+
+391
+00:23:21,490 --> 00:23:23,483
+A11Y-002 · Scenario
+
+392
+00:23:24,608 --> 00:23:29,374
+We now review A11Y-002: A modal dialog that is not modal.
+
+393
+00:23:29,374 --> 00:23:34,575
+Inspect the consumer contract and identify the mechanism behind each reported defect.
+
+394
+00:23:35,950 --> 00:23:37,537
+A11Y-002 · Scenario
+
+395
+00:23:38,662 --> 00:23:40,315
+@acme/ui ships the dialog below.
+
+396
+00:23:40,315 --> 00:23:42,299
+It looks correct with a mouse.
+
+397
+00:23:42,299 --> 00:23:45,275
+A screen-reader user reports they "can't tell a dialog
+
+398
+00:23:45,275 --> 00:23:48,251
+opened, and Tab takes me to the page underneath".
+
+399
+00:23:48,251 --> 00:23:51,558
+Another team reports that a heavy form inside a closed
+
+400
+00:23:51,558 --> 00:23:54,534
+dialog still makes HTTP requests when the page loads.
+
+401
+00:23:55,910 --> 00:23:59,460
+A11Y-002 · Scenario · block 1 · page 1
+
+402
+00:24:00,585 --> 00:24:03,489
+This is the original code, part 1 of 2.
+
+403
+00:24:03,489 --> 00:24:04,457
+Focus on role.
+
+404
+00:24:04,457 --> 00:24:07,685
+Trace which element or value the consumer actually interacts with.
+
+405
+00:24:07,685 --> 00:24:11,235
+We will compare this implementation with the correction after the question.
+
+406
+00:24:12,609 --> 00:24:16,497
+A11Y-002 · Scenario · block 2 · page 2
+
+407
+00:24:17,623 --> 00:24:20,804
+This is the original code, part 2 of 2.
+
+408
+00:24:20,804 --> 00:24:22,571
+Focus on DialogComponent, open, heading.
+
+409
+00:24:22,571 --> 00:24:26,106
+Trace which element or value the consumer actually interacts with.
+
+410
+00:24:26,106 --> 00:24:29,995
+We will compare this implementation with the correction after the question.
+
+411
+00:24:31,369 --> 00:24:33,133
+A11Y-002 · Interview question
+
+412
+00:24:34,259 --> 00:24:37,513
+What does a modal dialog have to do for keyboard and
+
+413
+00:24:37,513 --> 00:24:40,471
+screen-reader users, and which of those does this one do?
+
+414
+00:24:40,471 --> 00:24:42,838
+Fix it, and explain the second team's bug.
+
+415
+00:24:49,488 --> 00:24:51,155
+A11Y-002 · Answer
+
+416
+00:24:52,280 --> 00:24:55,893
+A modal dialog must: move focus into itself when it opens,
+
+417
+00:24:55,893 --> 00:24:59,506
+keep keyboard focus and screen-reader browsing inside, have an accessible name,
+
+418
+00:24:59,506 --> 00:25:03,448
+close on Escape, and return focus to where the user was when
+
+419
+00:25:03,448 --> 00:25:04,105
+it closes.
+
+420
+00:25:04,105 --> 00:25:06,076
+This one does none of them.
+
+421
+00:25:07,452 --> 00:25:08,724
+A11Y-002 · 1.
+
+422
+00:25:08,724 --> 00:25:09,995
+Focus stays behind
+
+423
+00:25:11,121 --> 00:25:13,028
+Opening it does not move focus.
+
+424
+00:25:13,028 --> 00:25:15,890
+A keyboard user's next Tab goes to whatever followed
+
+425
+00:25:15,890 --> 00:25:18,433
+the trigger, and a screen-reader user hears nothing.
+
+426
+00:25:18,433 --> 00:25:20,977
+The user may not know a dialog opened.
+
+427
+00:25:22,352 --> 00:25:23,600
+A11Y-002 · 2.
+
+428
+00:25:23,600 --> 00:25:26,930
+The rest of the page is still reachable
+
+429
+00:25:28,055 --> 00:25:32,456
+Nothing stops Tab from leaving the dialog, and nothing hides the page
+
+430
+00:25:32,456 --> 00:25:36,857
+behind it from assistive technology. role="dialog" alone does not make anything modal.
+
+431
+00:25:38,232 --> 00:25:39,691
+A11Y-002 · 3.
+
+432
+00:25:39,691 --> 00:25:41,150
+No accessible name
+
+433
+00:25:42,275 --> 00:25:46,809
+role="dialog" with no aria-labelledby or aria-label is announced as just "dialog".
+
+434
+00:25:46,809 --> 00:25:51,757
+The heading is right there; it needs an id and a reference.
+
+435
+00:25:53,132 --> 00:25:54,217
+A11Y-002 · 4.
+
+436
+00:25:54,217 --> 00:25:58,196
+No keyboard way to close, and focus is lost on close
+
+437
+00:25:59,321 --> 00:26:03,993
+There is no Escape handling, and the close control is a <span>: not focusable,
+
+438
+00:26:03,993 --> 00:26:08,665
+not a button, and its only text, ×, is announced as "times" or "multiplication".
+
+439
+00:26:08,665 --> 00:26:12,670
+When the dialog closes, its content is destroyed while it contains focus,
+
+440
+00:26:12,670 --> 00:26:17,343
+so focus falls back to <body> and the user has to find their place
+
+441
+00:26:17,343 --> 00:26:17,676
+again.
+
+442
+00:26:19,052 --> 00:26:22,660
+A11Y-002 · Fix: use the native <dialog> element
+
+443
+00:26:23,786 --> 00:26:28,378
+showModal() gives most of this for free: the dialog renders in the top layer,
+
+444
+00:26:28,378 --> 00:26:32,971
+the rest of the document becomes inert (unreachable by Tab and hidden from assistive
+
+445
+00:26:32,971 --> 00:26:36,908
+technology), focus moves into the dialog, and Escape fires a cancel event.
+
+446
+00:26:36,908 --> 00:26:39,532
+The component then only needs to name it,
+
+447
+00:26:39,532 --> 00:26:42,157
+provide a real close button, and restore focus.
+
+448
+00:26:43,532 --> 00:26:47,055
+A11Y-002 · Answer · block 1 · page 1
+
+449
+00:26:48,181 --> 00:26:51,118
+This is the answer code, part 1 of 5.
+
+450
+00:26:51,118 --> 00:26:55,360
+Read this part in the context of Fix: use the native <dialog> element.
+
+451
+00:26:55,360 --> 00:26:58,623
+Follow the declarations and event paths as a single implementation.
+
+452
+00:26:58,623 --> 00:27:02,213
+The adjacent explanation describes the contract; the complete source is available
+
+453
+00:27:02,213 --> 00:27:05,476
+with the lesson so you can inspect the remaining context.
+
+454
+00:27:06,852 --> 00:27:10,786
+A11Y-002 · Answer · block 2 · page 2
+
+455
+00:27:11,911 --> 00:27:15,272
+This is the answer code, part 2 of 5.
+
+456
+00:27:15,272 --> 00:27:17,139
+Focus on aria-labelledby, aria-label, aria-hidden.
+
+457
+00:27:17,139 --> 00:27:20,874
+Follow the declarations and event paths as a single implementation.
+
+458
+00:27:20,874 --> 00:27:24,982
+The adjacent explanation describes the contract; the complete source is available
+
+459
+00:27:24,982 --> 00:27:28,717
+with the lesson so you can inspect the remaining context.
+
+460
+00:27:30,092 --> 00:27:34,218
+A11Y-002 · Answer · block 3 · page 3
+
+461
+00:27:35,343 --> 00:27:38,718
+This is the answer code, part 3 of 5.
+
+462
+00:27:38,718 --> 00:27:40,969
+Focus on DialogComponent, open, heading, closeLabel.
+
+463
+00:27:40,969 --> 00:27:44,720
+Follow the declarations and event paths as a single implementation.
+
+464
+00:27:44,720 --> 00:27:48,846
+The adjacent explanation describes the contract; the complete source is available
+
+465
+00:27:48,846 --> 00:27:52,597
+with the lesson so you can inspect the remaining context.
+
+466
+00:27:53,972 --> 00:27:57,687
+A11Y-002 · Answer · block 4 · page 4
+
+467
+00:27:58,813 --> 00:28:01,852
+This is the answer code, part 4 of 5.
+
+468
+00:28:01,852 --> 00:28:02,866
+Focus on onCancel.
+
+469
+00:28:02,866 --> 00:28:06,243
+Follow the declarations and event paths as a single implementation.
+
+470
+00:28:06,243 --> 00:28:09,959
+The adjacent explanation describes the contract; the complete source is available
+
+471
+00:28:09,959 --> 00:28:13,336
+with the lesson so you can inspect the remaining context.
+
+472
+00:28:14,712 --> 00:28:18,533
+A11Y-002 · Answer · block 5 · page 5
+
+473
+00:28:19,659 --> 00:28:22,785
+This is the answer code, part 5 of 5.
+
+474
+00:28:22,785 --> 00:28:23,827
+Focus on onClose.
+
+475
+00:28:23,827 --> 00:28:27,301
+Follow the declarations and event paths as a single implementation.
+
+476
+00:28:27,301 --> 00:28:31,123
+The adjacent explanation describes the contract; the complete source is available
+
+477
+00:28:31,123 --> 00:28:34,597
+with the lesson so you can inspect the remaining context.
+
+478
+00:28:35,972 --> 00:28:40,643
+A11Y-002 · Fix: use the native <dialog> element
+
+479
+00:28:41,768 --> 00:28:42,617
+Design notes:
+
+480
+00:28:43,992 --> 00:28:47,706
+A11Y-002 · Fix: use the native <dialog> element
+
+481
+00:28:48,831 --> 00:28:51,673
+The model stays the single source of truth.
+
+482
+00:28:51,673 --> 00:28:55,937
+Escape is cancelled and turned into open.set(false), and the effect calls close().
+
+483
+00:28:55,937 --> 00:28:58,780
+Focus restoration happens in the close event handler,
+
+484
+00:28:58,780 --> 00:29:03,044
+so it runs for every way of closing. - afterRenderEffect is used
+
+485
+00:29:03,044 --> 00:29:07,308
+because showModal() needs the element to be rendered; it never runs during
+
+486
+00:29:07,308 --> 00:29:08,019
+server rendering.
+
+487
+00:29:08,019 --> 00:29:11,928
+The close label is an input so applications can translate it.
+
+488
+00:29:11,928 --> 00:29:15,837
+The page backdrop is now the ::backdrop pseudo-element, styled with tokens.
+
+489
+00:29:17,212 --> 00:29:18,365
+A11Y-002 · 5.
+
+490
+00:29:18,365 --> 00:29:21,825
+The second team's bug: projected content is always created
+
+491
+00:29:22,951 --> 00:29:25,327
+<ng-content> inside @if does not delay anything.
+
+492
+00:29:25,327 --> 00:29:29,401
+Projected content belongs to the parent's template, so the parent creates it,
+
+493
+00:29:29,401 --> 00:29:33,814
+and runs its lifecycle hooks, whether or not the dialog ever shows it.
+
+494
+00:29:33,814 --> 00:29:37,888
+That is why the hidden form makes HTTP requests on page load.
+
+495
+00:29:37,888 --> 00:29:41,622
+The fixed version renders the content all the time inside a
+
+496
+00:29:41,622 --> 00:29:45,356
+closed <dialog> (which is hidden), so the cost is the same.
+
+497
+00:29:46,732 --> 00:29:48,098
+A11Y-002 · 5.
+
+498
+00:29:48,098 --> 00:29:52,198
+The second team's bug: projected content is always created
+
+499
+00:29:53,323 --> 00:29:57,617
+For heavy or lazy content, the library should offer one of:
+
+500
+00:29:58,992 --> 00:30:00,194
+A11Y-002 · 5.
+
+501
+00:30:00,194 --> 00:30:03,801
+The second team's bug: projected content is always created
+
+502
+00:30:04,926 --> 00:30:07,918
+A template slot: the consumer passes an <ng-template>,
+
+503
+00:30:07,918 --> 00:30:11,284
+and the dialog renders it with ngTemplateOutlet only while
+
+504
+00:30:11,284 --> 00:30:11,658
+open.
+
+505
+00:30:11,658 --> 00:30:14,650
+A dialog service that creates the content component
+
+506
+00:30:14,650 --> 00:30:17,268
+on demand (the CDK Dialog does this).
+
+507
+00:30:17,268 --> 00:30:21,757
+Consumers can also wrap their content in @defer or their own @if.
+
+508
+00:30:23,132 --> 00:30:25,234
+A11Y-002 · Follow-up 1
+
+509
+00:30:26,359 --> 00:30:30,414
+A team wants clicking the backdrop to close the dialog.
+
+510
+00:30:30,414 --> 00:30:35,686
+How would you implement it with <dialog>, and should it be the default?
+
+511
+00:30:40,637 --> 00:30:43,789
+Detect a pointer interaction outside the dialog's content rectangle
+
+512
+00:30:43,789 --> 00:30:46,941
+and route it through the component's normal close request.
+
+513
+00:30:46,941 --> 00:30:50,444
+A dialog-target click alone can also occur in content padding,
+
+514
+00:30:50,444 --> 00:30:54,647
+so account for geometry and pointer down/up behavior to avoid accidental closure
+
+515
+00:30:54,647 --> 00:30:55,347
+after dragging.
+
+516
+00:30:55,347 --> 00:30:59,200
+Make backdrop dismissal an explicit policy rather than a universal default.
+
+517
+00:30:59,200 --> 00:31:02,703
+A destructive confirmation or unsaved form may require deliberate cancellation.
+
+518
+00:31:02,703 --> 00:31:05,505
+Keep Escape and a visible close or cancel
+
+519
+00:31:05,505 --> 00:31:07,956
+control available according to the product's requirements.
+
+520
+00:31:09,332 --> 00:31:11,415
+A11Y-002 · Follow-up 2
+
+521
+00:31:12,540 --> 00:31:16,359
+Which element should receive focus first in a destructive confirmation dialog?
+
+522
+00:31:16,359 --> 00:31:16,707
+Why?
+
+523
+00:31:21,990 --> 00:31:24,859
+Usually focus the least destructive action so an
+
+524
+00:31:24,859 --> 00:31:27,728
+accidental Enter does not commit the destructive operation.
+
+525
+00:31:27,728 --> 00:31:30,598
+If the dialog begins with important structured information,
+
+526
+00:31:30,598 --> 00:31:35,261
+focus a static heading or paragraph with tabindex minus one so the content
+
+527
+00:31:35,261 --> 00:31:36,695
+can be read first.
+
+528
+00:31:36,695 --> 00:31:39,565
+Choose according to the task rather than always
+
+529
+00:31:39,565 --> 00:31:42,076
+focusing the first element in DOM order.
+
+530
+00:31:42,076 --> 00:31:46,739
+Give the dialog a meaningful name and ensure the destructive action is clear.
+
+531
+00:31:46,739 --> 00:31:51,401
+Confirm focus restoration and a sensible fallback if the invoking item is deleted.
+
+532
+00:31:52,777 --> 00:31:54,968
+A11Y-002 · Follow-up 3
+
+533
+00:31:56,093 --> 00:32:00,931
+How would you test focus return and background inertness in an automated test?
+
+534
+00:32:06,360 --> 00:32:10,486
+In a real browser, focus the invoking button, open the modal,
+
+535
+00:32:10,486 --> 00:32:15,362
+verify focus enters, and press Tab and Shift Tab to ensure background controls
+
+536
+00:32:15,362 --> 00:32:16,112
+are unreachable.
+
+537
+00:32:16,112 --> 00:32:19,863
+Press Escape and verify the model closes and focus returns.
+
+538
+00:32:19,863 --> 00:32:22,864
+Try programmatically focusing a background control while the
+
+539
+00:32:22,864 --> 00:32:25,490
+modal is open to check native inertness.
+
+540
+00:32:25,490 --> 00:32:27,741
+Cover close-button and form-dialog paths too.
+
+541
+00:32:27,741 --> 00:32:31,117
+DOM attributes alone do not prove native modality; showModal
+
+542
+00:32:31,117 --> 00:32:34,117
+and actual interaction are the behavior under test.
+
+543
+00:32:35,493 --> 00:32:37,553
+A11Y-003 · Scenario
+
+544
+00:32:38,678 --> 00:32:43,604
+We now review A11Y-003: Tabs that only work with a mouse.
+
+545
+00:32:43,604 --> 00:32:48,978
+Inspect the consumer contract and identify the mechanism behind each reported defect.
+
+546
+00:32:50,353 --> 00:32:51,985
+A11Y-003 · Scenario
+
+547
+00:32:53,110 --> 00:32:56,605
+This is the first version of the @acme/ui tabs component.
+
+548
+00:32:56,605 --> 00:32:59,751
+It is already used on a settings page that
+
+549
+00:32:59,751 --> 00:33:02,898
+shows two tab groups at once: "Profile" and "Notifications".
+
+550
+00:33:04,273 --> 00:33:08,186
+A11Y-003 · Scenario · block 1 · page 1
+
+551
+00:33:09,311 --> 00:33:12,511
+This is the original code, part 1 of 3.
+
+552
+00:33:12,511 --> 00:33:14,289
+Focus on TabComponent, label, active.
+
+553
+00:33:14,289 --> 00:33:17,846
+Trace which element or value the consumer actually interacts with.
+
+554
+00:33:17,846 --> 00:33:21,758
+We will compare this implementation with the correction after the question.
+
+555
+00:33:23,133 --> 00:33:26,783
+A11Y-003 · Scenario · block 2 · page 2
+
+556
+00:33:27,908 --> 00:33:30,894
+This is the original code, part 2 of 3.
+
+557
+00:33:30,894 --> 00:33:33,549
+Read this part in the context of Scenario.
+
+558
+00:33:33,549 --> 00:33:36,867
+Trace which element or value the consumer actually interacts with.
+
+559
+00:33:36,867 --> 00:33:40,517
+We will compare this implementation with the correction after the question.
+
+560
+00:33:41,893 --> 00:33:45,956
+A11Y-003 · Scenario · block 3 · page 3
+
+561
+00:33:47,081 --> 00:33:50,404
+This is the original code, part 3 of 3.
+
+562
+00:33:50,404 --> 00:33:51,882
+Focus on TabsComponent, tabs.
+
+563
+00:33:51,882 --> 00:33:55,575
+Trace which element or value the consumer actually interacts with.
+
+564
+00:33:55,575 --> 00:33:59,637
+We will compare this implementation with the correction after the question.
+
+565
+00:34:01,013 --> 00:34:04,573
+A11Y-003 · Scenario · block 4 · page 1
+
+566
+00:34:05,698 --> 00:34:08,611
+This is the original code, part 1 of 1.
+
+567
+00:34:08,611 --> 00:34:11,200
+Read this part in the context of Scenario.
+
+568
+00:34:11,200 --> 00:34:14,437
+Trace which element or value the consumer actually interacts with.
+
+569
+00:34:14,437 --> 00:34:17,998
+We will compare this implementation with the correction after the question.
+
+570
+00:34:19,373 --> 00:34:21,313
+A11Y-003 · Interview question
+
+571
+00:34:22,438 --> 00:34:25,363
+Describe how tabs should behave for keyboard and screen-reader
+
+572
+00:34:25,363 --> 00:34:28,289
+users, list what is missing, and fix the component.
+
+573
+00:34:28,289 --> 00:34:30,890
+Point out any bug that only appears because
+
+574
+00:34:30,890 --> 00:34:33,491
+there are two tab groups on the page.
+
+575
+00:34:40,141 --> 00:34:41,844
+A11Y-003 · Answer
+
+576
+00:34:42,969 --> 00:34:47,332
+The WAI-ARIA tabs pattern: a tablist contains tab elements, each controlling a tabpanel.
+
+577
+00:34:47,332 --> 00:34:52,032
+Only the selected tab is in the Tab order (a roving tabindex); arrow keys
+
+578
+00:34:52,032 --> 00:34:56,395
+move between tabs, and Home and End jump to the first and last.
+
+579
+00:34:56,395 --> 00:34:58,745
+Each tab says whether it is selected,
+
+580
+00:34:58,745 --> 00:35:01,431
+and each panel is labelled by its tab.
+
+581
+00:35:02,806 --> 00:35:04,400
+A11Y-003 · 1.
+
+582
+00:35:04,400 --> 00:35:06,526
+No roles or states
+
+583
+00:35:07,651 --> 00:35:10,581
+Divs with click handlers expose nothing.
+
+584
+00:35:10,581 --> 00:35:16,932
+A screen reader announces plain text, not "Security, tab, 2 of 2, selected".
+
+585
+00:35:16,932 --> 00:35:23,771
+Needed: role="tablist" (with a label), role="tab" with aria-selected and aria-controls, and role="tabpanel" with aria-labelledby.
+
+586
+00:35:25,146 --> 00:35:26,474
+A11Y-003 · 2.
+
+587
+00:35:26,474 --> 00:35:27,802
+Not keyboard operable
+
+588
+00:35:28,927 --> 00:35:31,401
+The tabs are not focusable at all.
+
+589
+00:35:31,401 --> 00:35:35,291
+Making each one a plain <button> would fix reachability but produce
+
+590
+00:35:35,291 --> 00:35:39,180
+the wrong pattern: five Tab presses to get past five tabs.
+
+591
+00:35:39,180 --> 00:35:42,362
+Only the selected tab should have tabindex="0"; the rest
+
+592
+00:35:42,362 --> 00:35:45,191
+get -1, and arrow keys move between them.
+
+593
+00:35:46,565 --> 00:35:48,056
+A11Y-003 · 3.
+
+594
+00:35:48,056 --> 00:35:50,044
+Duplicate ids across instances
+
+595
+00:35:51,170 --> 00:35:53,708
+Both groups render id="tab-0" and id="tab-1".
+
+596
+00:35:53,708 --> 00:35:58,361
+Duplicate ids are invalid, and any aria-labelledby or aria-controls reference resolves
+
+597
+00:35:58,361 --> 00:36:01,322
+to the first match in the document,
+
+598
+00:36:01,322 --> 00:36:05,976
+so the second group's panels would be labelled by the first
+
+599
+00:36:05,976 --> 00:36:06,822
+group's tabs.
+
+600
+00:36:06,822 --> 00:36:10,206
+Ids must be unique per instance: generate them
+
+601
+00:36:10,206 --> 00:36:13,591
+from a counter, never from the position alone.
+
+602
+00:36:14,966 --> 00:36:16,252
+A11Y-003 · 4.
+
+603
+00:36:16,252 --> 00:36:17,966
+Nothing is selected initially
+
+604
+00:36:19,092 --> 00:36:23,094
+No tab starts active, so every panel is hidden until a click.
+
+605
+00:36:23,094 --> 00:36:26,429
+With a roving tabindex, no tab would be focusable either,
+
+606
+00:36:26,429 --> 00:36:29,431
+and the whole component would be unreachable by keyboard.
+
+607
+00:36:30,806 --> 00:36:32,116
+A11Y-003 · 5.
+
+608
+00:36:32,116 --> 00:36:34,737
+State is pushed into children imperatively
+
+609
+00:36:35,862 --> 00:36:38,139
+select writes into each child's signal.
+
+610
+00:36:38,139 --> 00:36:43,455
+If tabs are added or removed (@if around a <ui-tab>), nothing updates their state.
+
+611
+00:36:43,455 --> 00:36:48,011
+Deriving "am I selected?" from one source in the parent avoids that.
+
+612
+00:36:49,386 --> 00:36:52,994
+A11Y-003 · Answer · block 1 · page 1
+
+613
+00:36:54,119 --> 00:36:57,071
+This is the answer code, part 1 of 8.
+
+614
+00:36:57,071 --> 00:37:00,023
+Read this part in the context of Fixed version.
+
+615
+00:37:00,023 --> 00:37:03,303
+Follow the declarations and event paths as a single implementation.
+
+616
+00:37:03,303 --> 00:37:06,911
+The adjacent explanation describes the contract; the complete source is available
+
+617
+00:37:06,911 --> 00:37:10,191
+with the lesson so you can inspect the remaining context.
+
+618
+00:37:11,565 --> 00:37:15,379
+A11Y-003 · Answer · block 2 · page 2
+
+619
+00:37:16,504 --> 00:37:19,624
+This is the answer code, part 2 of 8.
+
+620
+00:37:19,624 --> 00:37:20,664
+Focus on selectedTab.
+
+621
+00:37:20,664 --> 00:37:24,130
+Follow the declarations and event paths as a single implementation.
+
+622
+00:37:24,130 --> 00:37:27,944
+The adjacent explanation describes the contract; the complete source is available
+
+623
+00:37:27,944 --> 00:37:31,411
+with the lesson so you can inspect the remaining context.
+
+624
+00:37:32,786 --> 00:37:36,885
+A11Y-003 · Answer · block 3 · page 3
+
+625
+00:37:38,010 --> 00:37:41,363
+This is the answer code, part 3 of 8.
+
+626
+00:37:41,363 --> 00:37:43,599
+Focus on TabComponent, label, tabId, panelId.
+
+627
+00:37:43,599 --> 00:37:47,325
+Follow the declarations and event paths as a single implementation.
+
+628
+00:37:47,325 --> 00:37:51,424
+The adjacent explanation describes the contract; the complete source is available
+
+629
+00:37:51,424 --> 00:37:55,151
+with the lesson so you can inspect the remaining context.
+
+630
+00:37:56,526 --> 00:38:00,607
+A11Y-003 · Answer · block 4 · page 4
+
+631
+00:38:01,732 --> 00:38:05,143
+This is the answer code, part 4 of 8.
+
+632
+00:38:05,143 --> 00:38:07,418
+Focus on role, aria-label, aria-controls, aria-selected.
+
+633
+00:38:07,418 --> 00:38:11,209
+Follow the declarations and event paths as a single implementation.
+
+634
+00:38:11,209 --> 00:38:15,379
+The adjacent explanation describes the contract; the complete source is available
+
+635
+00:38:15,379 --> 00:38:19,171
+with the lesson so you can inspect the remaining context.
+
+636
+00:38:20,546 --> 00:38:24,647
+A11Y-003 · Answer · block 5 · page 5
+
+637
+00:38:25,773 --> 00:38:29,130
+This is the answer code, part 5 of 8.
+
+638
+00:38:29,130 --> 00:38:31,368
+Focus on TabsComponent, label, selectedIndex, tabs.
+
+639
+00:38:31,368 --> 00:38:35,098
+Follow the declarations and event paths as a single implementation.
+
+640
+00:38:35,098 --> 00:38:39,201
+The adjacent explanation describes the contract; the complete source is available
+
+641
+00:38:39,201 --> 00:38:42,931
+with the lesson so you can inspect the remaining context.
+
+642
+00:38:44,306 --> 00:38:48,443
+A11Y-003 · Answer · block 6 · page 6
+
+643
+00:38:49,568 --> 00:38:52,953
+This is the answer code, part 6 of 8.
+
+644
+00:38:52,953 --> 00:38:55,210
+Focus on activeIndex, selectedTab, buttons, onKeydown.
+
+645
+00:38:55,210 --> 00:38:58,971
+Follow the declarations and event paths as a single implementation.
+
+646
+00:38:58,971 --> 00:39:03,109
+The adjacent explanation describes the contract; the complete source is available
+
+647
+00:39:03,109 --> 00:39:06,870
+with the lesson so you can inspect the remaining context.
+
+648
+00:39:08,246 --> 00:39:11,946
+A11Y-003 · Answer · block 7 · page 7
+
+649
+00:39:13,071 --> 00:39:16,097
+This is the answer code, part 7 of 8.
+
+650
+00:39:16,097 --> 00:39:19,124
+Read this part in the context of Fixed version.
+
+651
+00:39:19,124 --> 00:39:22,488
+Follow the declarations and event paths as a single implementation.
+
+652
+00:39:22,488 --> 00:39:26,187
+The adjacent explanation describes the contract; the complete source is available
+
+653
+00:39:26,187 --> 00:39:29,550
+with the lesson so you can inspect the remaining context.
+
+654
+00:39:30,926 --> 00:39:34,508
+A11Y-003 · Answer · block 8 · page 8
+
+655
+00:39:35,633 --> 00:39:38,564
+This is the answer code, part 8 of 8.
+
+656
+00:39:38,564 --> 00:39:41,495
+Read this part in the context of Fixed version.
+
+657
+00:39:41,495 --> 00:39:44,751
+Follow the declarations and event paths as a single implementation.
+
+658
+00:39:44,751 --> 00:39:48,334
+The adjacent explanation describes the contract; the complete source is available
+
+659
+00:39:48,334 --> 00:39:51,591
+with the lesson so you can inspect the remaining context.
+
+660
+00:39:52,966 --> 00:39:55,290
+A11Y-003 · Fixed version
+
+661
+00:39:56,415 --> 00:40:01,451
+This uses automatic activation: moving with the arrow keys also selects the tab.
+
+662
+00:40:01,451 --> 00:40:03,775
+That suits panels that render instantly.
+
+663
+00:40:03,775 --> 00:40:07,262
+If showing a panel is slow (it fetches data),
+
+664
+00:40:07,262 --> 00:40:09,974
+use manual activation instead: arrows move focus,
+
+665
+00:40:09,974 --> 00:40:11,911
+and Enter or Space selects.
+
+666
+00:40:13,286 --> 00:40:15,432
+A11Y-003 · Fixed version
+
+667
+00:40:16,556 --> 00:40:19,518
+The panel has tabindex="0" so keyboard users can
+
+668
+00:40:19,518 --> 00:40:22,479
+reach a panel that has no focusable content.
+
+669
+00:40:22,479 --> 00:40:27,290
+If every panel always starts with a focusable element, that can be dropped.
+
+670
+00:40:28,666 --> 00:40:31,994
+A11Y-003 · What a strong candidate also mentions
+
+671
+00:40:33,119 --> 00:40:37,341
+Right-to-left layouts reverse the meaning of the left and right arrow keys.
+
+672
+00:40:37,341 --> 00:40:41,212
+Read the direction (for example with the CDK Directionality) instead of
+
+673
+00:40:41,212 --> 00:40:45,083
+hard-coding it. - selectedIndex as a model() lets consumers control the
+
+674
+00:40:45,083 --> 00:40:48,601
+selected tab, for example to sync it with the URL.
+
+675
+00:40:48,601 --> 00:40:52,472
+The label input is required, so a tablist is never nameless.
+
+676
+00:40:52,472 --> 00:40:55,287
+Adding it to an existing component is breaking,
+
+677
+00:40:55,287 --> 00:40:57,751
+so it would be staged (see A11Y-001).
+
+678
+00:40:59,126 --> 00:41:01,430
+A11Y-003 · Follow-up 1
+
+679
+00:41:02,555 --> 00:41:06,011
+When would you choose manual activation over automatic activation?
+
+680
+00:41:11,400 --> 00:41:15,259
+Use manual activation when showing a panel is slow or
+
+681
+00:41:15,259 --> 00:41:18,733
+costly, such as a network request or heavy render.
+
+682
+00:41:18,733 --> 00:41:22,206
+Arrows move focus, while Enter or Space commits selection.
+
+683
+00:41:22,206 --> 00:41:25,294
+Automatic activation is appropriate when panel changes are
+
+684
+00:41:25,294 --> 00:41:27,996
+immediate and moving through tabs remains responsive.
+
+685
+00:41:27,996 --> 00:41:33,399
+Keep focused and selected indices separate for manual activation and document the keyboard model.
+
+686
+00:41:33,399 --> 00:41:38,031
+Do not change between models unpredictably based on a transient request duration.
+
+687
+00:41:39,406 --> 00:41:41,671
+A11Y-003 · Follow-up 2
+
+688
+00:41:42,796 --> 00:41:45,099
+The tabs overflow on a phone.
+
+689
+00:41:45,099 --> 00:41:49,705
+What happens to keyboard and screen-reader behaviour if you add scroll buttons?
+
+690
+00:41:55,112 --> 00:41:59,263
+Keep tab roles, selection, panel relationships, and the one-tab-stop strategy intact.
+
+691
+00:41:59,263 --> 00:42:02,659
+Scroll the focused tab into view and make scroll
+
+692
+00:42:02,659 --> 00:42:05,678
+controls named native buttons if they are needed.
+
+693
+00:42:05,678 --> 00:42:09,829
+The extra controls should not cause the arrow handler to treat
+
+694
+00:42:09,829 --> 00:42:13,603
+them as tabs or hide selected tabs from assistive technology.
+
+695
+00:42:13,603 --> 00:42:16,622
+Test touch, keyboard, narrow layouts, and right-to-left direction.
+
+696
+00:42:16,622 --> 00:42:20,774
+A visual overflow solution should preserve the widget's semantic interaction model.
+
+697
+00:42:22,149 --> 00:42:24,382
+A11Y-003 · Follow-up 3
+
+698
+00:42:25,507 --> 00:42:29,350
+Would you build this on the CDK's FocusKeyManager?
+
+699
+00:42:29,350 --> 00:42:34,154
+What would it give you and what would it cost?
+
+700
+00:42:39,222 --> 00:42:44,715
+FocusKeyManager can manage active items, wrapping, orientation, disabled skipping, and typeahead depending on configuration.
+
+701
+00:42:44,715 --> 00:42:47,069
+It can reduce bespoke traversal code.
+
+702
+00:42:47,069 --> 00:42:50,208
+You still own tab semantics, selected state, panels,
+
+703
+00:42:50,208 --> 00:42:52,954
+identifiers, rendering, and automatic versus manual activation.
+
+704
+00:42:52,954 --> 00:42:56,486
+It also introduces an adapter contract and a CDK
+
+705
+00:42:56,486 --> 00:42:59,624
+dependency that must fit the supported framework range.
+
+706
+00:42:59,624 --> 00:43:03,156
+Use it when the shared behavior outweighs that cost,
+
+707
+00:43:03,156 --> 00:43:07,472
+and test the complete component rather than assuming the manager supplies
+
+708
+00:43:07,472 --> 00:43:08,257
+accessibility automatically.
+
+709
+00:43:09,632 --> 00:43:11,686
+A11Y-004 · Scenario
+
+710
+00:43:12,811 --> 00:43:17,720
+We now review A11Y-004: A form field where nothing is connected.
+
+711
+00:43:17,720 --> 00:43:23,077
+Inspect the consumer contract and identify the mechanism behind each reported defect.
+
+712
+00:43:24,452 --> 00:43:26,071
+A11Y-004 · Scenario
+
+713
+00:43:27,196 --> 00:43:31,270
+Every form in every Acme product uses this text field from @acme/ui.
+
+714
+00:43:31,270 --> 00:43:32,289
+It looks right.
+
+715
+00:43:32,289 --> 00:43:36,363
+A screen-reader user testing the sign-up form says: "I hear 'edit text,
+
+716
+00:43:36,363 --> 00:43:40,777
+blank' for every field, and when I submit I don't know what went
+
+717
+00:43:40,777 --> 00:43:41,117
+wrong."
+
+718
+00:43:42,492 --> 00:43:45,999
+A11Y-004 · Scenario · block 1 · page 1
+
+719
+00:43:47,123 --> 00:43:49,992
+This is the original code, part 1 of 2.
+
+720
+00:43:49,992 --> 00:43:52,542
+Read this part in the context of Scenario.
+
+721
+00:43:52,542 --> 00:43:55,730
+Trace which element or value the consumer actually interacts with.
+
+722
+00:43:55,730 --> 00:43:59,236
+We will compare this implementation with the correction after the question.
+
+723
+00:44:00,612 --> 00:44:04,610
+A11Y-004 · Scenario · block 2 · page 2
+
+724
+00:44:05,735 --> 00:44:09,005
+This is the original code, part 2 of 2.
+
+725
+00:44:09,005 --> 00:44:11,185
+Focus on TextFieldComponent, label, hint, error.
+
+726
+00:44:11,185 --> 00:44:14,819
+Trace which element or value the consumer actually interacts with.
+
+727
+00:44:14,819 --> 00:44:18,817
+We will compare this implementation with the correction after the question.
+
+728
+00:44:20,192 --> 00:44:23,681
+A11Y-004 · Scenario · block 3 · page 1
+
+729
+00:44:24,806 --> 00:44:27,660
+This is the original code, part 1 of 1.
+
+730
+00:44:27,660 --> 00:44:30,197
+Read this part in the context of Scenario.
+
+731
+00:44:30,197 --> 00:44:33,368
+Trace which element or value the consumer actually interacts with.
+
+732
+00:44:33,368 --> 00:44:36,857
+We will compare this implementation with the correction after the question.
+
+733
+00:44:38,232 --> 00:44:40,460
+A11Y-004 · Interview question
+
+734
+00:44:41,585 --> 00:44:45,736
+List everything a screen-reader user misses, and fix the component.
+
+735
+00:44:45,736 --> 00:44:49,471
+The value binding is covered by another question (API-004);
+
+736
+00:44:49,471 --> 00:44:52,791
+focus on labels, hints, errors and required state.
+
+737
+00:44:59,440 --> 00:45:00,581
+A11Y-004 · 1.
+
+738
+00:45:00,581 --> 00:45:02,863
+The input has no accessible name
+
+739
+00:45:03,988 --> 00:45:07,972
+The label is a <span>, not a <label> associated with the input,
+
+740
+00:45:07,972 --> 00:45:11,625
+so the input is announced as "edit text" with no name.
+
+741
+00:45:11,625 --> 00:45:14,613
+Clicking the label text also does not focus the
+
+742
+00:45:14,613 --> 00:45:17,269
+input, which matters for users with motor impairments.
+
+743
+00:45:18,645 --> 00:45:19,971
+A11Y-004 · 1.
+
+744
+00:45:19,971 --> 00:45:22,625
+The input has no accessible name
+
+745
+00:45:23,750 --> 00:45:27,730
+Fix: a <label for> pointing at a per-instance input id.
+
+746
+00:45:29,105 --> 00:45:30,415
+A11Y-004 · 2.
+
+747
+00:45:30,415 --> 00:45:32,599
+The hint is a placeholder
+
+748
+00:45:33,724 --> 00:45:36,867
+Placeholder text disappears as soon as the user types,
+
+749
+00:45:36,867 --> 00:45:40,710
+is often low contrast, and is not reliably announced as a
+
+750
+00:45:40,710 --> 00:45:41,059
+description.
+
+751
+00:45:41,059 --> 00:45:45,950
+Users with memory or cognitive impairments lose the instruction exactly when they need it.
+
+752
+00:45:47,325 --> 00:45:48,606
+A11Y-004 · 2.
+
+753
+00:45:48,606 --> 00:45:50,741
+The hint is a placeholder
+
+754
+00:45:51,867 --> 00:45:56,650
+Fix: render the hint as visible text and reference it with aria-describedby.
+
+755
+00:45:58,025 --> 00:45:59,250
+A11Y-004 · 3.
+
+756
+00:45:59,250 --> 00:46:00,884
+Errors are visual only
+
+757
+00:46:02,009 --> 00:46:03,914
+A red border is not announced,
+
+758
+00:46:03,914 --> 00:46:06,454
+and the error text is not connected to
+
+759
+00:46:06,454 --> 00:46:07,089
+the input.
+
+760
+00:46:07,089 --> 00:46:09,629
+A screen-reader user hears nothing about the error,
+
+761
+00:46:09,629 --> 00:46:12,170
+now or when they return to the field.
+
+762
+00:46:13,545 --> 00:46:15,195
+A11Y-004 · 3.
+
+763
+00:46:15,195 --> 00:46:17,397
+Errors are visual only
+
+764
+00:46:18,522 --> 00:46:18,950
+Fix:
+
+765
+00:46:20,325 --> 00:46:21,471
+A11Y-004 · 3.
+
+766
+00:46:21,471 --> 00:46:23,000
+Errors are visual only
+
+767
+00:46:24,125 --> 00:46:27,113
+aria-invalid="true" on the input while there is an error.
+
+768
+00:46:27,113 --> 00:46:29,105
+Add the error's id to aria-describedby,
+
+769
+00:46:29,105 --> 00:46:31,761
+so it is read when the field gets
+
+770
+00:46:31,761 --> 00:46:32,093
+focus.
+
+771
+00:46:32,093 --> 00:46:36,409
+Show something besides colour (an icon or the word "Error"), for WCAG 1.4.1.
+
+772
+00:46:36,409 --> 00:46:40,725
+To announce an error that appears while the user is in the field,
+
+773
+00:46:40,725 --> 00:46:45,373
+the error container needs to be a live region that is always in the
+
+774
+00:46:45,373 --> 00:46:45,705
+DOM.
+
+775
+00:46:45,705 --> 00:46:49,690
+A live region inserted together with its text is often not announced.
+
+776
+00:46:51,065 --> 00:46:52,378
+A11Y-004 · 4.
+
+777
+00:46:52,378 --> 00:46:54,129
+Required is visual only
+
+778
+00:46:55,254 --> 00:46:58,731
+The asterisk is read as "star" (or not at all),
+
+779
+00:46:58,731 --> 00:47:01,861
+and the input does not say it is required.
+
+780
+00:47:01,861 --> 00:47:04,990
+Use the required attribute (or aria-required="true" if native validation
+
+781
+00:47:04,990 --> 00:47:08,120
+is unwanted) and hide the asterisk from assistive technology.
+
+782
+00:47:08,120 --> 00:47:11,250
+The form should also explain what the asterisk means.
+
+783
+00:47:12,625 --> 00:47:13,948
+A11Y-004 · 5.
+
+784
+00:47:13,948 --> 00:47:16,596
+Ids must be unique per instance
+
+785
+00:47:17,721 --> 00:47:20,041
+A sign-up form has many fields.
+
+786
+00:47:20,041 --> 00:47:22,748
+Every id the component generates (input, hint,
+
+787
+00:47:22,748 --> 00:47:27,002
+error) must be unique per instance, or for and aria-describedby point
+
+788
+00:47:27,002 --> 00:47:28,549
+at the wrong field.
+
+789
+00:47:29,925 --> 00:47:33,580
+A11Y-004 · Answer · block 1 · page 1
+
+790
+00:47:34,705 --> 00:47:37,694
+This is the answer code, part 1 of 4.
+
+791
+00:47:37,694 --> 00:47:38,691
+Focus on aria-hidden.
+
+792
+00:47:38,691 --> 00:47:42,013
+Follow the declarations and event paths as a single implementation.
+
+793
+00:47:42,013 --> 00:47:45,667
+The adjacent explanation describes the contract; the complete source is available
+
+794
+00:47:45,667 --> 00:47:48,990
+with the lesson so you can inspect the remaining context.
+
+795
+00:47:50,364 --> 00:47:54,370
+A11Y-004 · Answer · block 2 · page 2
+
+796
+00:47:55,495 --> 00:47:58,984
+This is the answer code, part 2 of 4.
+
+797
+00:47:58,984 --> 00:48:01,310
+Focus on aria-invalid, aria-describedby, aria-live, aria-hidden.
+
+798
+00:48:01,310 --> 00:48:05,187
+Follow the declarations and event paths as a single implementation.
+
+799
+00:48:05,187 --> 00:48:09,452
+The adjacent explanation describes the contract; the complete source is available
+
+800
+00:48:09,452 --> 00:48:13,329
+with the lesson so you can inspect the remaining context.
+
+801
+00:48:14,705 --> 00:48:18,627
+A11Y-004 · Answer · block 3 · page 3
+
+802
+00:48:19,752 --> 00:48:22,960
+This is the answer code, part 3 of 4.
+
+803
+00:48:22,960 --> 00:48:25,099
+Focus on TextFieldComponent, label, hint, error.
+
+804
+00:48:25,099 --> 00:48:28,663
+Follow the declarations and event paths as a single implementation.
+
+805
+00:48:28,663 --> 00:48:32,585
+The adjacent explanation describes the contract; the complete source is available
+
+806
+00:48:32,585 --> 00:48:36,149
+with the lesson so you can inspect the remaining context.
+
+807
+00:48:37,525 --> 00:48:41,130
+A11Y-004 · Answer · block 4 · page 4
+
+808
+00:48:42,255 --> 00:48:45,203
+This is the answer code, part 4 of 4.
+
+809
+00:48:45,203 --> 00:48:48,152
+Read this part in the context of Fixed version.
+
+810
+00:48:48,152 --> 00:48:51,429
+Follow the declarations and event paths as a single implementation.
+
+811
+00:48:51,429 --> 00:48:55,033
+The adjacent explanation describes the contract; the complete source is available
+
+812
+00:48:55,033 --> 00:48:58,310
+with the lesson so you can inspect the remaining context.
+
+813
+00:48:59,685 --> 00:49:01,593
+A11Y-004 · Fixed version
+
+814
+00:49:02,718 --> 00:49:06,440
+The error paragraph is always rendered (empty when there is no
+
+815
+00:49:06,440 --> 00:49:09,825
+error), so the live region exists before its text changes.
+
+816
+00:49:09,825 --> 00:49:13,210
+It is only referenced from aria-describedby while it has content.
+
+817
+00:49:14,585 --> 00:49:17,972
+A11Y-004 · What a strong candidate also mentions
+
+818
+00:49:19,097 --> 00:49:24,121
+When to show errors is a product decision the library must support, not make.
+
+819
+00:49:24,121 --> 00:49:28,069
+Showing an error on the first keystroke is hostile; the usual
+
+820
+00:49:28,069 --> 00:49:32,017
+pattern is after the field is left (touched) or after submit.
+
+821
+00:49:32,017 --> 00:49:34,529
+The component receives error as an input,
+
+822
+00:49:34,529 --> 00:49:37,042
+which keeps that decision with the consumer,
+
+823
+00:49:37,042 --> 00:49:39,554
+and the documentation should recommend a default.
+
+824
+00:49:39,554 --> 00:49:43,861
+On submit, the form, not the field, should move focus to the
+
+825
+00:49:43,861 --> 00:49:47,809
+first invalid field or to an error summary at the top.
+
+826
+00:49:47,809 --> 00:49:50,680
+The library can provide a helper for this.
+
+827
+00:49:50,680 --> 00:49:54,269
+Announcing every keystroke's validation through the live region is noisy.
+
+828
+00:49:54,269 --> 00:49:58,935
+Debounce the error or only set it on blur. - autocomplete must be
+
+829
+00:49:58,935 --> 00:50:03,242
+passable to the inner input (autocomplete="email"), for WCAG 1.3.5 (Identify Input Purpose).
+
+830
+00:50:03,242 --> 00:50:07,190
+That is a reason to consider the attribute-selector design in API-002.
+
+831
+00:50:08,565 --> 00:50:10,627
+A11Y-004 · Follow-up 1
+
+832
+00:50:11,752 --> 00:50:15,321
+Why do many screen readers ignore a live region that
+
+833
+00:50:15,321 --> 00:50:18,534
+is inserted at the same time as its text?
+
+834
+00:50:23,803 --> 00:50:27,681
+Assistive technology often observes changes to an already registered live region.
+
+835
+00:50:27,681 --> 00:50:31,559
+If the region and its first message appear in one insertion,
+
+836
+00:50:31,559 --> 00:50:35,790
+some combinations treat it as initial content rather than an update to
+
+837
+00:50:35,790 --> 00:50:36,142
+announce.
+
+838
+00:50:36,142 --> 00:50:40,726
+Keep a persistent empty region, then change its text after the relevant interaction.
+
+839
+00:50:40,726 --> 00:50:45,309
+Timing varies across platforms, so a delayed write is not a universal guarantee.
+
+840
+00:50:45,309 --> 00:50:48,130
+Verify the DOM sequence automatically and test announcements
+
+841
+00:50:48,130 --> 00:50:50,950
+with the supported browser and screen reader combinations.
+
+842
+00:50:52,326 --> 00:50:54,465
+A11Y-004 · Follow-up 2
+
+843
+00:50:55,590 --> 00:50:58,511
+Should the error be announced politely or assertively?
+
+844
+00:50:58,511 --> 00:51:01,067
+What changes if you get it wrong?
+
+845
+00:51:06,459 --> 00:51:11,094
+Polite is usually appropriate for field validation while the user is entering data.
+
+846
+00:51:11,094 --> 00:51:16,086
+Assertive can interrupt the current speech and should be reserved for genuinely urgent information.
+
+847
+00:51:16,086 --> 00:51:20,722
+Repeated assertive errors on every keystroke can make a form difficult to use.
+
+848
+00:51:20,722 --> 00:51:23,931
+Decide when errors become visible, connect the error as
+
+849
+00:51:23,931 --> 00:51:26,783
+a description, and avoid announcing unchanged messages repeatedly.
+
+850
+00:51:26,783 --> 00:51:29,636
+Submission may need an error summary and deliberate
+
+851
+00:51:29,636 --> 00:51:32,489
+focus management instead of several competing live announcements.
+
+852
+00:51:33,864 --> 00:51:36,118
+A11Y-004 · Follow-up 3
+
+853
+00:51:37,243 --> 00:51:40,248
+How would this component expose the inner input
+
+854
+00:51:40,248 --> 00:51:43,254
+to consumers who need autocomplete, inputmode or maxlength?
+
+855
+00:51:48,667 --> 00:51:52,928
+Prefer a form-field that wraps a projected native input enhanced by
+
+856
+00:51:52,928 --> 00:51:56,801
+a directive, so native attributes stay on the real control.
+
+857
+00:51:56,801 --> 00:52:00,675
+The field and directive can share a control interface through
+
+858
+00:52:00,675 --> 00:52:04,161
+dependency injection and register label, helper, and error identifiers.
+
+859
+00:52:04,161 --> 00:52:09,584
+If an internal input is necessary, document explicit attribute forwarding and a focus API.
+
+860
+00:52:09,584 --> 00:52:14,233
+Do not assume arbitrary attributes on the wrapper automatically reach the descendant.
+
+861
+00:52:14,233 --> 00:52:17,332
+Include autocomplete and forms integration in consumer examples.
+
+862
+00:52:18,707 --> 00:52:20,729
+A11Y-005 · Scenario
+
+863
+00:52:21,854 --> 00:52:27,113
+We now review A11Y-005: Toasts that vanish before anyone can use them.
+
+864
+00:52:27,113 --> 00:52:32,372
+Inspect the consumer contract and identify the mechanism behind each reported defect.
+
+865
+00:52:33,747 --> 00:52:35,593
+A11Y-005 · Scenario
+
+866
+00:52:36,718 --> 00:52:38,646
+@acme/ui provides a toast service.
+
+867
+00:52:38,646 --> 00:52:44,045
+Products use it for messages like "Saved", "Message deleted — Undo", and "Payment failed".
+
+868
+00:52:44,045 --> 00:52:47,516
+Accessibility testing found that screen-reader users sometimes hear nothing,
+
+869
+00:52:47,516 --> 00:52:52,529
+are interrupted mid-sentence by "Saved", and that nobody using a keyboard has ever
+
+870
+00:52:52,529 --> 00:52:54,072
+managed to press Undo.
+
+871
+00:52:55,447 --> 00:52:59,236
+A11Y-005 · Scenario · block 1 · page 1
+
+872
+00:53:00,361 --> 00:53:03,460
+This is the original code, part 1 of 4.
+
+873
+00:53:03,460 --> 00:53:04,838
+Focus on ToastAction, Toast.
+
+874
+00:53:04,838 --> 00:53:08,283
+Trace which element or value the consumer actually interacts with.
+
+875
+00:53:08,283 --> 00:53:12,072
+We will compare this implementation with the correction after the question.
+
+876
+00:53:13,447 --> 00:53:17,463
+A11Y-005 · Scenario · block 2 · page 2
+
+877
+00:53:18,588 --> 00:53:21,874
+This is the original code, part 2 of 4.
+
+878
+00:53:21,874 --> 00:53:24,064
+Focus on ToastService, toasts, Toast, nextId.
+
+879
+00:53:24,064 --> 00:53:27,715
+Trace which element or value the consumer actually interacts with.
+
+880
+00:53:27,715 --> 00:53:31,732
+We will compare this implementation with the correction after the question.
+
+881
+00:53:33,107 --> 00:53:36,812
+A11Y-005 · Scenario · block 3 · page 3
+
+882
+00:53:37,937 --> 00:53:40,968
+This is the original code, part 3 of 4.
+
+883
+00:53:40,968 --> 00:53:41,978
+Focus on role.
+
+884
+00:53:41,978 --> 00:53:45,346
+Trace which element or value the consumer actually interacts with.
+
+885
+00:53:45,346 --> 00:53:49,051
+We will compare this implementation with the correction after the question.
+
+886
+00:53:50,427 --> 00:53:54,387
+A11Y-005 · Scenario · block 4 · page 4
+
+887
+00:53:55,512 --> 00:53:58,752
+This is the original code, part 4 of 4.
+
+888
+00:53:58,752 --> 00:54:00,192
+Focus on ToastOutletComponent, service.
+
+889
+00:54:00,192 --> 00:54:03,792
+Trace which element or value the consumer actually interacts with.
+
+890
+00:54:03,792 --> 00:54:07,752
+We will compare this implementation with the correction after the question.
+
+891
+00:54:09,127 --> 00:54:11,109
+A11Y-005 · Interview question
+
+892
+00:54:12,234 --> 00:54:16,590
+Explain each of the three findings and redesign the service and outlet.
+
+893
+00:54:16,590 --> 00:54:20,221
+Keep the API easy for product teams to use correctly.
+
+894
+00:54:26,871 --> 00:54:28,091
+A11Y-005 · 1.
+
+895
+00:54:28,091 --> 00:54:31,750
+"Sometimes hear nothing": live regions created with their content
+
+896
+00:54:32,876 --> 00:54:36,760
+Each toast element is created already containing role="alert" and its text.
+
+897
+00:54:36,760 --> 00:54:40,645
+Screen readers announce changes inside live regions they already know about,
+
+898
+00:54:40,645 --> 00:54:44,530
+and support for regions inserted together with their content is inconsistent.
+
+899
+00:54:44,530 --> 00:54:48,415
+The reliable pattern is a live region that exists from page
+
+900
+00:54:48,415 --> 00:54:52,299
+load and stays empty until a message is added to it.
+
+901
+00:54:53,675 --> 00:54:55,174
+A11Y-005 · 1.
+
+902
+00:54:55,174 --> 00:54:59,674
+"Sometimes hear nothing": live regions created with their content
+
+903
+00:55:00,799 --> 00:55:05,940
+Fix: the outlet renders permanent live-region containers; toasts are added inside them.
+
+904
+00:55:07,315 --> 00:55:08,644
+A11Y-005 · 2.
+
+905
+00:55:08,644 --> 00:55:11,302
+"Interrupted by 'Saved'": everything is assertive
+
+906
+00:55:12,427 --> 00:55:16,521
+role="alert" is assertive: it interrupts whatever the screen reader is saying.
+
+907
+00:55:16,521 --> 00:55:18,755
+That suits "Payment failed", not "Saved".
+
+908
+00:55:18,755 --> 00:55:21,360
+The service must let callers choose politeness,
+
+909
+00:55:21,360 --> 00:55:25,083
+with polite as the default so the easy path is
+
+910
+00:55:25,083 --> 00:55:26,200
+the considerate one.
+
+911
+00:55:27,575 --> 00:55:28,781
+A11Y-005 · 3.
+
+912
+00:55:28,781 --> 00:55:31,194
+"Nobody can press Undo": the timer
+
+913
+00:55:32,320 --> 00:55:36,836
+Three seconds is too short to read for many users (screen magnifier users
+
+914
+00:55:36,836 --> 00:55:39,615
+may not even have the toast in view),
+
+915
+00:55:39,615 --> 00:55:44,131
+and far too short to reach a button at the end of the
+
+916
+00:55:44,131 --> 00:55:45,174
+document by keyboard.
+
+917
+00:55:45,174 --> 00:55:48,300
+WCAG 2.2.1 (Timing Adjustable) requires that users can turn
+
+918
+00:55:48,300 --> 00:55:51,080
+off, adjust or extend time limits like this.
+
+919
+00:55:52,455 --> 00:55:54,117
+A11Y-005 · 3.
+
+920
+00:55:54,117 --> 00:55:57,442
+"Nobody can press Undo": the timer
+
+921
+00:55:58,567 --> 00:55:59,020
+Fix:
+
+922
+00:56:00,395 --> 00:56:01,687
+A11Y-005 · 3.
+
+923
+00:56:01,687 --> 00:56:04,272
+"Nobody can press Undo": the timer
+
+924
+00:56:05,397 --> 00:56:08,216
+Toasts with an action do not auto-dismiss by
+
+925
+00:56:08,216 --> 00:56:10,683
+default; they stay until used or dismissed.
+
+926
+00:56:10,683 --> 00:56:14,912
+Informational toasts use a longer default and pause while hovered or focused.
+
+927
+00:56:14,912 --> 00:56:17,027
+Every toast has a dismiss button.
+
+928
+00:56:17,027 --> 00:56:21,256
+Do not move focus to toasts: that would interrupt the user's work.
+
+929
+00:56:21,256 --> 00:56:24,428
+Instead, important actions such as Undo should also be
+
+930
+00:56:24,428 --> 00:56:27,600
+available somewhere persistent (for example, in the item's menu).
+
+931
+00:56:28,975 --> 00:56:32,875
+A11Y-005 · Answer · block 1 · page 1
+
+932
+00:56:34,001 --> 00:56:37,192
+This is the answer code, part 1 of 8.
+
+933
+00:56:37,192 --> 00:56:38,966
+Focus on ToastPoliteness, ToastAction, ToastOptions.
+
+934
+00:56:38,966 --> 00:56:42,512
+Follow the declarations and event paths as a single implementation.
+
+935
+00:56:42,512 --> 00:56:46,413
+The adjacent explanation describes the contract; the complete source is available
+
+936
+00:56:46,413 --> 00:56:49,960
+with the lesson so you can inspect the remaining context.
+
+937
+00:56:51,335 --> 00:56:55,187
+A11Y-005 · Answer · block 2 · page 2
+
+938
+00:56:56,312 --> 00:56:59,463
+This is the answer code, part 2 of 8.
+
+939
+00:56:59,463 --> 00:57:01,564
+Focus on Toast, id, message, politeness.
+
+940
+00:57:01,564 --> 00:57:05,066
+Follow the declarations and event paths as a single implementation.
+
+941
+00:57:05,066 --> 00:57:08,918
+The adjacent explanation describes the contract; the complete source is available
+
+942
+00:57:08,918 --> 00:57:12,420
+with the lesson so you can inspect the remaining context.
+
+943
+00:57:13,795 --> 00:57:17,645
+A11Y-005 · Answer · block 3 · page 3
+
+944
+00:57:18,770 --> 00:57:21,920
+This is the answer code, part 3 of 8.
+
+945
+00:57:21,920 --> 00:57:22,970
+Focus on nextId.
+
+946
+00:57:22,970 --> 00:57:26,470
+Follow the declarations and event paths as a single implementation.
+
+947
+00:57:26,470 --> 00:57:30,320
+The adjacent explanation describes the contract; the complete source is available
+
+948
+00:57:30,320 --> 00:57:33,820
+with the lesson so you can inspect the remaining context.
+
+949
+00:57:35,195 --> 00:57:38,840
+A11Y-005 · Answer · block 4 · page 4
+
+950
+00:57:39,965 --> 00:57:42,946
+This is the answer code, part 4 of 8.
+
+951
+00:57:42,946 --> 00:57:45,928
+Read this part in the context of Fixed version.
+
+952
+00:57:45,928 --> 00:57:49,242
+Follow the declarations and event paths as a single implementation.
+
+953
+00:57:49,242 --> 00:57:52,886
+The adjacent explanation describes the contract; the complete source is available
+
+954
+00:57:52,886 --> 00:57:56,200
+with the lesson so you can inspect the remaining context.
+
+955
+00:57:57,575 --> 00:58:01,187
+A11Y-005 · Answer · block 5 · page 5
+
+956
+00:58:02,312 --> 00:58:05,266
+This is the answer code, part 5 of 8.
+
+957
+00:58:05,266 --> 00:58:08,221
+Read this part in the context of Fixed version.
+
+958
+00:58:08,221 --> 00:58:11,505
+Follow the declarations and event paths as a single implementation.
+
+959
+00:58:11,505 --> 00:58:15,116
+The adjacent explanation describes the contract; the complete source is available
+
+960
+00:58:15,116 --> 00:58:18,399
+with the lesson so you can inspect the remaining context.
+
+961
+00:58:19,775 --> 00:58:23,855
+A11Y-005 · Answer · block 6 · page 6
+
+962
+00:58:24,980 --> 00:58:28,317
+This is the answer code, part 6 of 8.
+
+963
+00:58:28,317 --> 00:58:30,543
+Focus on ToastComponent, toast, service, dismissLabel.
+
+964
+00:58:30,543 --> 00:58:34,251
+Follow the declarations and event paths as a single implementation.
+
+965
+00:58:34,251 --> 00:58:38,331
+The adjacent explanation describes the contract; the complete source is available
+
+966
+00:58:38,331 --> 00:58:42,040
+with the lesson so you can inspect the remaining context.
+
+967
+00:58:43,415 --> 00:58:47,261
+A11Y-005 · Answer · block 7 · page 7
+
+968
+00:58:48,386 --> 00:58:51,532
+This is the answer code, part 7 of 8.
+
+969
+00:58:51,532 --> 00:58:52,581
+Focus on aria-live.
+
+970
+00:58:52,581 --> 00:58:56,077
+Follow the declarations and event paths as a single implementation.
+
+971
+00:58:56,077 --> 00:58:59,923
+The adjacent explanation describes the contract; the complete source is available
+
+972
+00:58:59,923 --> 00:59:03,419
+with the lesson so you can inspect the remaining context.
+
+973
+00:59:04,795 --> 00:59:08,817
+A11Y-005 · Answer · block 8 · page 8
+
+974
+00:59:09,942 --> 00:59:13,232
+This is the answer code, part 8 of 8.
+
+975
+00:59:13,232 --> 00:59:15,426
+Focus on ToastOutletComponent, service, polite, assertive.
+
+976
+00:59:15,426 --> 00:59:19,082
+Follow the declarations and event paths as a single implementation.
+
+977
+00:59:19,082 --> 00:59:23,103
+The adjacent explanation describes the contract; the complete source is available
+
+978
+00:59:23,103 --> 00:59:26,760
+with the lesson so you can inspect the remaining context.
+
+979
+00:59:28,135 --> 00:59:30,344
+A11Y-005 · Fixed version
+
+980
+00:59:31,469 --> 00:59:32,940
+Notes on the design:
+
+981
+00:59:34,315 --> 00:59:36,124
+A11Y-005 · Fixed version
+
+982
+00:59:37,249 --> 00:59:40,262
+The two regions exist as soon as the outlet renders,
+
+983
+00:59:40,262 --> 00:59:44,180
+so a toast added later is a change inside a known live region.
+
+984
+00:59:44,180 --> 00:59:48,098
+- show() returns the id, so callers can dismiss a toast when the
+
+985
+00:59:48,098 --> 00:59:48,701
+situation resolves.
+
+986
+00:59:48,701 --> 00:59:51,714
+The defaults make the safe choice the easy one: polite,
+
+987
+00:59:51,714 --> 00:59:55,331
+a long duration, and no timer at all when there is an
+
+988
+00:59:55,331 --> 00:59:55,632
+action.
+
+989
+00:59:55,632 --> 00:59:58,646
+The dismiss label is fixed English here for brevity; in
+
+990
+00:59:58,646 --> 01:00:01,660
+the library it would come from an injected, translatable configuration.
+
+991
+01:00:03,035 --> 01:00:06,145
+A11Y-005 · What a strong candidate also mentions
+
+992
+01:00:07,270 --> 01:00:10,839
+The CDK LiveAnnouncer already manages a hidden live region and can
+
+993
+01:00:10,839 --> 01:00:14,408
+be used instead of the visible regions for the announcement itself.
+
+994
+01:00:14,408 --> 01:00:17,329
+Focus is lost if a focused toast is dismissed.
+
+995
+01:00:17,329 --> 01:00:20,249
+When the user dismisses a toast they tabbed into,
+
+996
+01:00:20,249 --> 01:00:23,819
+focus should go somewhere sensible, such as back to where it
+
+997
+01:00:23,819 --> 01:00:24,468
+was before.
+
+998
+01:00:24,468 --> 01:00:26,739
+Stacking: five toasts at once are unreadable.
+
+999
+01:00:26,739 --> 01:00:29,659
+Limit how many are visible and queue the rest.
+
+1000
+01:00:31,035 --> 01:00:33,170
+A11Y-005 · Follow-up 1
+
+1001
+01:00:34,295 --> 01:00:39,496
+A toast says "3 files uploaded" and then "4 files uploaded" a second later.
+
+1002
+01:00:39,496 --> 01:00:43,955
+What will a screen reader say, and how would you improve it?
+
+1003
+01:00:49,069 --> 01:00:52,271
+Speech may skip, merge, or interrupt rapid updates; do
+
+1004
+01:00:52,271 --> 01:00:55,118
+not promise that both counts are read exactly.
+
+1005
+01:00:55,118 --> 01:00:57,965
+Batch progress updates and announce a useful final
+
+1006
+01:00:57,965 --> 01:01:00,456
+summary, while keeping current visible status available.
+
+1007
+01:01:00,456 --> 01:01:03,303
+A live announcer can replace an outdated progress
+
+1008
+01:01:03,303 --> 01:01:05,794
+message rather than queueing every intermediate number.
+
+1009
+01:01:05,794 --> 01:01:08,286
+Avoid repeatedly speaking the entire toast history.
+
+1010
+01:01:08,286 --> 01:01:11,133
+Test the message sequence and manually evaluate the
+
+1011
+01:01:11,133 --> 01:01:13,980
+supported assistive technology to choose a useful cadence.
+
+1012
+01:01:15,355 --> 01:01:17,550
+A11Y-005 · Follow-up 2
+
+1013
+01:01:18,675 --> 01:01:21,269
+Should the outlet be a landmark region?
+
+1014
+01:01:21,269 --> 01:01:22,752
+What are the trade-offs?
+
+1015
+01:01:28,202 --> 01:01:31,496
+A named region can make a persistent notification history
+
+1016
+01:01:31,496 --> 01:01:34,790
+discoverable, especially if it contains actions users may revisit.
+
+1017
+01:01:34,790 --> 01:01:38,816
+But turning every transient toast into a landmark creates navigation noise.
+
+1018
+01:01:38,816 --> 01:01:42,842
+Prefer one meaningful named outlet when it serves a navigable purpose,
+
+1019
+01:01:42,842 --> 01:01:46,501
+and use a separate status announcement channel for new messages.
+
+1020
+01:01:46,501 --> 01:01:50,893
+Do not move focus to the region merely because a toast appeared.
+
+1021
+01:01:50,893 --> 01:01:54,553
+Evaluate the page's existing landmarks and the user's recovery task.
+
+1022
+01:01:55,929 --> 01:01:58,054
+A11Y-005 · Follow-up 3
+
+1023
+01:01:59,179 --> 01:02:02,477
+How would you test that a toast is announced?
+
+1024
+01:02:07,889 --> 01:02:11,164
+Automate the structural contract: a persistent connected live region,
+
+1025
+01:02:11,164 --> 01:02:15,167
+the intended politeness, and the new message reaching it after the
+
+1026
+01:02:15,167 --> 01:02:15,530
+event.
+
+1027
+01:02:15,530 --> 01:02:19,170
+Spy on a live announcer at a unit boundary only
+
+1028
+01:02:19,170 --> 01:02:22,809
+when testing the call contract; also exercise the browser integration.
+
+1029
+01:02:22,809 --> 01:02:26,084
+A DOM test cannot prove the exact spoken output,
+
+1030
+01:02:26,084 --> 01:02:29,723
+so include manual screen reader checks for repeated messages, interruption,
+
+1031
+01:02:29,723 --> 01:02:30,451
+and timing.
+
+1032
+01:02:30,451 --> 01:02:34,453
+Document the tested combinations rather than declaring announcement behavior universally certified.
+
+1033
+01:02:35,829 --> 01:02:38,025
+A11Y-006 · Scenario
+
+1034
+01:02:39,150 --> 01:02:43,942
+We now review A11Y-006: Live coding: build an accessible listbox.
+
+1035
+01:02:43,942 --> 01:02:49,694
+Inspect the consumer contract and identify the mechanism behind each reported defect.
+
+1036
+01:02:51,069 --> 01:02:52,714
+A11Y-006 · Scenario
+
+1037
+01:02:53,839 --> 01:02:55,569
+@acme/ui needs a single-select listbox.
+
+1038
+01:02:55,569 --> 01:02:58,683
+It will be used on its own (for example,
+
+1039
+01:02:58,683 --> 01:03:02,835
+choosing a shipping method) and later inside a select and a combobox,
+
+1040
+01:03:02,835 --> 01:03:06,987
+so it must be correct, accessible, and easy for product teams to
+
+1041
+01:03:06,987 --> 01:03:07,334
+understand.
+
+1042
+01:03:08,709 --> 01:03:10,371
+A11Y-006 · Scenario
+
+1043
+01:03:11,496 --> 01:03:12,825
+You have 40 minutes.
+
+1044
+01:03:12,825 --> 01:03:15,152
+Talk through your decisions as you go.
+
+1045
+01:03:15,152 --> 01:03:18,809
+The interviewer cares more about the order you tackle things in
+
+1046
+01:03:18,809 --> 01:03:22,134
+and the reasons you give than about finishing every step.
+
+1047
+01:03:23,509 --> 01:03:25,909
+A11Y-006 · Scenario
+
+1048
+01:03:27,034 --> 01:03:27,994
+Starting point:
+
+1049
+01:03:29,369 --> 01:03:33,099
+A11Y-006 · Scenario · block 1 · page 1
+
+1050
+01:03:34,224 --> 01:03:37,275
+This is the original code, part 1 of 2.
+
+1051
+01:03:37,275 --> 01:03:38,293
+Focus on ListboxOption.
+
+1052
+01:03:38,293 --> 01:03:41,684
+Trace which element or value the consumer actually interacts with.
+
+1053
+01:03:41,684 --> 01:03:45,414
+We will compare this implementation with the correction after the question.
+
+1054
+01:03:46,789 --> 01:03:50,959
+A11Y-006 · Scenario · block 2 · page 2
+
+1055
+01:03:52,084 --> 01:03:55,496
+This is the original code, part 2 of 2.
+
+1056
+01:03:55,496 --> 01:03:57,771
+Focus on ListboxComponent, options, ListboxOption, value.
+
+1057
+01:03:57,771 --> 01:04:01,563
+Trace which element or value the consumer actually interacts with.
+
+1058
+01:04:01,563 --> 01:04:05,733
+We will compare this implementation with the correction after the question.
+
+1059
+01:04:07,109 --> 01:04:10,647
+A11Y-006 · Scenario · block 3 · page 1
+
+1060
+01:04:11,772 --> 01:04:14,666
+This is the original code, part 1 of 1.
+
+1061
+01:04:14,666 --> 01:04:17,239
+Read this part in the context of Scenario.
+
+1062
+01:04:17,239 --> 01:04:20,456
+Trace which element or value the consumer actually interacts with.
+
+1063
+01:04:20,456 --> 01:04:23,994
+We will compare this implementation with the correction after the question.
+
+1064
+01:04:25,369 --> 01:04:27,555
+A11Y-006 · Interview question
+
+1065
+01:04:28,680 --> 01:04:30,895
+Work through these steps in order.
+
+1066
+01:04:30,895 --> 01:04:32,741
+Each builds on the last.
+
+1067
+01:04:32,741 --> 01:04:33,110
+1.
+
+1068
+01:04:33,110 --> 01:04:34,956
+Render and select (5 min).
+
+1069
+01:04:34,956 --> 01:04:39,387
+Show the options; clicking an enabled option selects it and updates value.
+
+1070
+01:04:39,387 --> 01:04:39,756
+2.
+
+1071
+01:04:39,756 --> 01:04:40,864
+Semantics (5 min).
+
+1072
+01:04:40,864 --> 01:04:45,294
+Make a screen reader announce it as a listbox with a name,
+
+1073
+01:04:45,294 --> 01:04:49,356
+and announce each option and whether it is selected or disabled.
+
+1074
+01:04:49,356 --> 01:04:49,725
+3.
+
+1075
+01:04:49,725 --> 01:04:50,833
+Keyboard (12 min).
+
+1076
+01:04:50,833 --> 01:04:53,048
+Tab moves focus to the listbox.
+
+1077
+01:04:53,048 --> 01:04:55,632
+Up and Down move the active option,
+
+1078
+01:04:55,632 --> 01:04:58,955
+skipping disabled ones; Home and End jump; Enter and
+
+1079
+01:04:58,955 --> 01:04:59,694
+Space select.
+
+1080
+01:04:59,694 --> 01:05:02,278
+Screen readers must announce the active option.
+
+1081
+01:05:02,278 --> 01:05:05,601
+Explain why you chose aria-activedescendant or a roving tabindex.
+
+1082
+01:05:05,601 --> 01:05:05,971
+4.
+
+1083
+01:05:05,971 --> 01:05:07,078
+Type-ahead (5 min).
+
+1084
+01:05:07,078 --> 01:05:10,032
+Typing letters moves to the next matching option.
+
+1085
+01:05:10,032 --> 01:05:10,401
+5.
+
+1086
+01:05:10,401 --> 01:05:12,247
+Styling with tokens (5 min).
+
+1087
+01:05:12,247 --> 01:05:15,570
+Show active, selected, disabled and focus states using only
+
+1088
+01:05:15,570 --> 01:05:18,893
+design tokens, and keep them visible in forced-colors mode.
+
+1089
+01:05:18,893 --> 01:05:19,262
+6.
+
+1090
+01:05:19,262 --> 01:05:20,370
+Discussion (8 min).
+
+1091
+01:05:20,370 --> 01:05:22,955
+How would this work with reactive forms?
+
+1092
+01:05:22,955 --> 01:05:24,062
+With object values?
+
+1093
+01:05:24,062 --> 01:05:27,016
+How would you test it, and what would
+
+1094
+01:05:27,016 --> 01:05:29,601
+you give product teams for their tests?
+
+1095
+01:05:36,251 --> 01:05:40,003
+A11Y-006 · Answer · block 1 · page 1
+
+1096
+01:05:41,128 --> 01:05:44,178
+This is the answer code, part 1 of 12.
+
+1097
+01:05:44,178 --> 01:05:45,194
+Focus on ListboxOption.
+
+1098
+01:05:45,194 --> 01:05:48,583
+Follow the declarations and event paths as a single implementation.
+
+1099
+01:05:48,583 --> 01:05:52,311
+The adjacent explanation describes the contract; the complete source is available
+
+1100
+01:05:52,311 --> 01:05:55,701
+with the lesson so you can inspect the remaining context.
+
+1101
+01:05:57,076 --> 01:06:00,916
+A11Y-006 · Answer · block 2 · page 2
+
+1102
+01:06:02,041 --> 01:06:05,182
+This is the answer code, part 2 of 12.
+
+1103
+01:06:05,182 --> 01:06:06,579
+Focus on role, tabindex.
+
+1104
+01:06:06,579 --> 01:06:10,070
+Follow the declarations and event paths as a single implementation.
+
+1105
+01:06:10,070 --> 01:06:13,910
+The adjacent explanation describes the contract; the complete source is available
+
+1106
+01:06:13,910 --> 01:06:17,401
+with the lesson so you can inspect the remaining context.
+
+1107
+01:06:18,776 --> 01:06:22,908
+A11Y-006 · Answer · block 3 · page 3
+
+1108
+01:06:24,033 --> 01:06:27,634
+This is the answer code, part 3 of 12.
+
+1109
+01:06:27,634 --> 01:06:30,035
+Focus on aria-label, aria-activedescendant, role, aria-selected.
+
+1110
+01:06:30,035 --> 01:06:34,037
+Follow the declarations and event paths as a single implementation.
+
+1111
+01:06:34,037 --> 01:06:38,439
+The adjacent explanation describes the contract; the complete source is available
+
+1112
+01:06:38,439 --> 01:06:42,441
+with the lesson so you can inspect the remaining context.
+
+1113
+01:06:43,816 --> 01:06:47,961
+A11Y-006 · Answer · block 4 · page 4
+
+1114
+01:06:49,086 --> 01:06:52,477
+This is the answer code, part 4 of 12.
+
+1115
+01:06:52,477 --> 01:06:54,738
+Focus on ListboxComponent, options, ListboxOption, label.
+
+1116
+01:06:54,738 --> 01:06:58,507
+Follow the declarations and event paths as a single implementation.
+
+1117
+01:06:58,507 --> 01:07:02,652
+The adjacent explanation describes the contract; the complete source is available
+
+1118
+01:07:02,652 --> 01:07:06,421
+with the lesson so you can inspect the remaining context.
+
+1119
+01:07:07,796 --> 01:07:11,716
+A11Y-006 · Answer · block 5 · page 5
+
+1120
+01:07:12,841 --> 01:07:16,048
+This is the answer code, part 5 of 12.
+
+1121
+01:07:16,048 --> 01:07:17,473
+Focus on activeIndex, activeId.
+
+1122
+01:07:17,473 --> 01:07:21,037
+Follow the declarations and event paths as a single implementation.
+
+1123
+01:07:21,037 --> 01:07:24,957
+The adjacent explanation describes the contract; the complete source is available
+
+1124
+01:07:24,957 --> 01:07:28,521
+with the lesson so you can inspect the remaining context.
+
+1125
+01:07:29,896 --> 01:07:33,887
+A11Y-006 · Answer · block 6 · page 6
+
+1126
+01:07:35,012 --> 01:07:38,277
+This is the answer code, part 6 of 12.
+
+1127
+01:07:38,277 --> 01:07:40,092
+Focus on typed, typedTimer, optionId.
+
+1128
+01:07:40,092 --> 01:07:43,720
+Follow the declarations and event paths as a single implementation.
+
+1129
+01:07:43,720 --> 01:07:47,712
+The adjacent explanation describes the contract; the complete source is available
+
+1130
+01:07:47,712 --> 01:07:51,341
+with the lesson so you can inspect the remaining context.
+
+1131
+01:07:52,716 --> 01:07:56,616
+A11Y-006 · Answer · block 7 · page 7
+
+1132
+01:07:57,741 --> 01:08:00,931
+This is the answer code, part 7 of 12.
+
+1133
+01:08:00,931 --> 01:08:02,350
+Focus on isSelected, choose.
+
+1134
+01:08:02,350 --> 01:08:05,895
+Follow the declarations and event paths as a single implementation.
+
+1135
+01:08:05,895 --> 01:08:09,795
+The adjacent explanation describes the contract; the complete source is available
+
+1136
+01:08:09,795 --> 01:08:13,341
+with the lesson so you can inspect the remaining context.
+
+1137
+01:08:14,716 --> 01:08:18,566
+A11Y-006 · Answer · block 8 · page 8
+
+1138
+01:08:19,691 --> 01:08:22,840
+This is the answer code, part 8 of 12.
+
+1139
+01:08:22,840 --> 01:08:23,891
+Focus on onKeydown.
+
+1140
+01:08:23,891 --> 01:08:27,391
+Follow the declarations and event paths as a single implementation.
+
+1141
+01:08:27,391 --> 01:08:31,241
+The adjacent explanation describes the contract; the complete source is available
+
+1142
+01:08:31,241 --> 01:08:34,741
+with the lesson so you can inspect the remaining context.
+
+1143
+01:08:36,116 --> 01:08:39,746
+A11Y-006 · Answer · block 9 · page 9
+
+1144
+01:08:40,871 --> 01:08:43,841
+This is the answer code, part 9 of 12.
+
+1145
+01:08:43,841 --> 01:08:48,131
+Read this part in the context of Reference solution (steps 1 to 4).
+
+1146
+01:08:48,131 --> 01:08:51,431
+Follow the declarations and event paths as a single implementation.
+
+1147
+01:08:51,431 --> 01:08:55,061
+The adjacent explanation describes the contract; the complete source is available
+
+1148
+01:08:55,061 --> 01:08:58,361
+with the lesson so you can inspect the remaining context.
+
+1149
+01:08:59,736 --> 01:09:03,635
+A11Y-006 · Answer · block 10 · page 10
+
+1150
+01:09:04,761 --> 01:09:07,951
+This is the answer code, part 10 of 12.
+
+1151
+01:09:07,951 --> 01:09:09,370
+Focus on enabledIndexes, typeahead.
+
+1152
+01:09:09,370 --> 01:09:12,915
+Follow the declarations and event paths as a single implementation.
+
+1153
+01:09:12,915 --> 01:09:16,815
+The adjacent explanation describes the contract; the complete source is available
+
+1154
+01:09:16,815 --> 01:09:20,361
+with the lesson so you can inspect the remaining context.
+
+1155
+01:09:21,736 --> 01:09:25,366
+A11Y-006 · Answer · block 11 · page 11
+
+1156
+01:09:26,491 --> 01:09:29,461
+This is the answer code, part 11 of 12.
+
+1157
+01:09:29,461 --> 01:09:33,751
+Read this part in the context of Reference solution (steps 1 to 4).
+
+1158
+01:09:33,751 --> 01:09:37,051
+Follow the declarations and event paths as a single implementation.
+
+1159
+01:09:37,051 --> 01:09:40,681
+The adjacent explanation describes the contract; the complete source is available
+
+1160
+01:09:40,681 --> 01:09:43,981
+with the lesson so you can inspect the remaining context.
+
+1161
+01:09:45,356 --> 01:09:49,005
+A11Y-006 · Answer · block 12 · page 12
+
+1162
+01:09:50,131 --> 01:09:53,117
+This is the answer code, part 12 of 12.
+
+1163
+01:09:53,117 --> 01:09:57,432
+Read this part in the context of Reference solution (steps 1 to 4).
+
+1164
+01:09:57,432 --> 01:10:00,751
+Follow the declarations and event paths as a single implementation.
+
+1165
+01:10:00,751 --> 01:10:04,402
+The adjacent explanation describes the contract; the complete source is available
+
+1166
+01:10:04,402 --> 01:10:07,721
+with the lesson so you can inspect the remaining context.
+
+1167
+01:10:09,095 --> 01:10:12,677
+A11Y-006 · Step-by-step notes · item 1
+
+1168
+01:10:13,802 --> 01:10:14,201
+Step
+
+1169
+01:10:15,576 --> 01:10:19,041
+A11Y-006 · Step-by-step notes · item 2
+
+1170
+01:10:20,166 --> 01:10:25,183
+value is a model(), so [(value)] works and selection is one signal.
+
+1171
+01:10:25,183 --> 01:10:30,201
+Options are readonly and never mutated (see SIG-004). track option uses object
+
+1172
+01:10:30,201 --> 01:10:34,801
+identity, which is correct here because options carry no per-row state.
+
+1173
+01:10:36,176 --> 01:10:39,757
+A11Y-006 · Step-by-step notes · item 1
+
+1174
+01:10:40,881 --> 01:10:41,281
+Step
+
+1175
+01:10:42,656 --> 01:10:46,251
+A11Y-006 · Step-by-step notes · item 2
+
+1176
+01:10:47,377 --> 01:10:52,138
+role="listbox" with aria-label, role="option" with aria-selected, and aria-disabled on disabled options.
+
+1177
+01:10:52,138 --> 01:10:57,766
+Disabled options stay visible and announced, which helps users understand what is unavailable.
+
+1178
+01:10:57,766 --> 01:11:02,961
+label is a required input, so a nameless listbox does not compile.
+
+1179
+01:11:04,336 --> 01:11:07,917
+A11Y-006 · Step-by-step notes · item 1
+
+1180
+01:11:09,042 --> 01:11:09,441
+Step
+
+1181
+01:11:10,816 --> 01:11:13,769
+A11Y-006 · Step-by-step notes · item 2
+
+1182
+01:11:14,894 --> 01:11:17,690
+aria-activedescendant keeps DOM focus on the listbox and
+
+1183
+01:11:17,690 --> 01:11:20,138
+tells assistive technology which option is active.
+
+1184
+01:11:20,138 --> 01:11:23,984
+It fits a listbox well, and it is the pattern a
+
+1185
+01:11:23,984 --> 01:11:27,830
+combobox needs later, where focus must stay in the text input.
+
+1186
+01:11:27,830 --> 01:11:32,025
+A roving tabindex (focus moves to each option) is also valid for
+
+1187
+01:11:32,025 --> 01:11:36,220
+a standalone listbox, and the candidate should be able to say so.
+
+1188
+01:11:37,595 --> 01:11:40,285
+A11Y-006 · Step-by-step notes
+
+1189
+01:11:41,411 --> 01:11:44,101
+Edge cases a strong candidate handles:
+
+1190
+01:11:45,476 --> 01:11:47,635
+A11Y-006 · Step-by-step notes
+
+1191
+01:11:48,761 --> 01:11:54,101
+First focus: the active option is the selected one, or the first enabled one.
+
+1192
+01:11:54,101 --> 01:11:58,296
+A selected option that later becomes disabled is not made active.
+
+1193
+01:11:58,296 --> 01:12:03,636
+All options disabled: activeIndex is -1, aria-activedescendant is removed, and the keyboard does nothing.
+
+1194
+01:12:03,636 --> 01:12:07,832
+Options change: linkedSignal recomputes the active option from the new options,
+
+1195
+01:12:07,832 --> 01:12:11,646
+so it never points past the end of the list.
+
+1196
+01:12:11,646 --> 01:12:16,223
+Unique ids: derived from a per-instance counter, never from the index alone.
+
+1197
+01:12:16,223 --> 01:12:20,801
+Scrolling: the active option is scrolled into view after rendering, with afterRenderEffect.
+
+1198
+01:12:22,176 --> 01:12:25,757
+A11Y-006 · Step-by-step notes · item 1
+
+1199
+01:12:26,881 --> 01:12:27,281
+Step
+
+1200
+01:12:28,656 --> 01:12:32,531
+A11Y-006 · Step-by-step notes · item 2
+
+1201
+01:12:33,656 --> 01:12:36,240
+Type-ahead buffers keystrokes for 500 ms,
+
+1202
+01:12:36,240 --> 01:12:39,686
+ignores modifier shortcuts, skips disabled options and wraps
+
+1203
+01:12:39,686 --> 01:12:40,116
+around.
+
+1204
+01:12:40,116 --> 01:12:42,701
+The timer is cleared on destroy.
+
+1205
+01:12:44,076 --> 01:12:47,888
+A11Y-006 · Step 5: styles using only tokens
+
+1206
+01:12:49,013 --> 01:12:51,300
+These go in the component's stylesheet.
+
+1207
+01:12:52,676 --> 01:12:56,476
+A11Y-006 · Answer · block 13 · page 1
+
+1208
+01:12:57,601 --> 01:13:00,711
+This is the answer code, part 1 of 4.
+
+1209
+01:13:00,711 --> 01:13:01,747
+Focus on background.
+
+1210
+01:13:01,747 --> 01:13:05,203
+Follow the declarations and event paths as a single implementation.
+
+1211
+01:13:05,203 --> 01:13:09,005
+The adjacent explanation describes the contract; the complete source is available
+
+1212
+01:13:09,005 --> 01:13:12,460
+with the lesson so you can inspect the remaining context.
+
+1213
+01:13:13,836 --> 01:13:17,629
+A11Y-006 · Answer · block 14 · page 2
+
+1214
+01:13:18,754 --> 01:13:21,857
+This is the answer code, part 2 of 4.
+
+1215
+01:13:21,857 --> 01:13:22,891
+Focus on background.
+
+1216
+01:13:22,891 --> 01:13:26,339
+Follow the declarations and event paths as a single implementation.
+
+1217
+01:13:26,339 --> 01:13:30,132
+The adjacent explanation describes the contract; the complete source is available
+
+1218
+01:13:30,132 --> 01:13:33,581
+with the lesson so you can inspect the remaining context.
+
+1219
+01:13:34,956 --> 01:13:38,923
+A11Y-006 · Answer · block 15 · page 3
+
+1220
+01:13:40,048 --> 01:13:43,368
+This is the answer code, part 3 of 4.
+
+1221
+01:13:43,368 --> 01:13:44,844
+Focus on aria-selected, aria-disabled.
+
+1222
+01:13:44,844 --> 01:13:48,533
+Follow the declarations and event paths as a single implementation.
+
+1223
+01:13:48,533 --> 01:13:52,591
+The adjacent explanation describes the contract; the complete source is available
+
+1224
+01:13:52,591 --> 01:13:56,281
+with the lesson so you can inspect the remaining context.
+
+1225
+01:13:57,656 --> 01:14:01,493
+A11Y-006 · Answer · block 16 · page 4
+
+1226
+01:14:02,618 --> 01:14:05,758
+This is the answer code, part 4 of 4.
+
+1227
+01:14:05,758 --> 01:14:06,804
+Focus on aria-disabled.
+
+1228
+01:14:06,804 --> 01:14:10,293
+Follow the declarations and event paths as a single implementation.
+
+1229
+01:14:10,293 --> 01:14:14,131
+The adjacent explanation describes the contract; the complete source is available
+
+1230
+01:14:14,131 --> 01:14:17,621
+with the lesson so you can inspect the remaining context.
+
+1231
+01:14:18,996 --> 01:14:22,267
+A11Y-006 · Step 5: styles using only tokens
+
+1232
+01:14:23,392 --> 01:14:25,682
+States are styled from the ARIA attributes,
+
+1233
+01:14:25,682 --> 01:14:28,626
+so the visual state and the announced state cannot
+
+1234
+01:14:28,626 --> 01:14:28,954
+disagree.
+
+1235
+01:14:28,954 --> 01:14:31,571
+Selection shows a check mark as well as
+
+1236
+01:14:31,571 --> 01:14:34,189
+weight, so it does not depend on colour.
+
+1237
+01:14:34,189 --> 01:14:37,461
+The active option uses an outline, which forced-colors mode keeps.
+
+1238
+01:14:38,836 --> 01:14:41,799
+A11Y-006 · Step 6: discussion points
+
+1239
+01:14:42,924 --> 01:14:46,291
+Forms: implement ControlValueAccessor writing the same value signal,
+
+1240
+01:14:46,291 --> 01:14:50,920
+following the contract in API-004 (writeValue never calls onChange; touched on
+
+1241
+01:14:50,920 --> 01:14:52,183
+blur; disabled state).
+
+1242
+01:14:52,183 --> 01:14:56,392
+Object values: compareWith lets teams pass objects that are equal
+
+1243
+01:14:56,392 --> 01:15:00,600
+but not identical, such as options rebuilt after a fetch.
+
+1244
+01:15:00,600 --> 01:15:06,492
+Tests: a host component with real options, keyboard interactions from the APG keyboard table,
+
+1245
+01:15:06,492 --> 01:15:12,385
+two instances on one page for id uniqueness, and axe in a real browser.
+
+1246
+01:15:12,385 --> 01:15:15,331
+For product teams: a ListboxHarness with selectOption,
+
+1247
+01:15:15,331 --> 01:15:19,119
+getSelectedOptionLabel and pressKey, published from a testing entry point
+
+1248
+01:15:19,119 --> 01:15:19,960
+(see TST-001).
+
+1249
+01:15:21,336 --> 01:15:23,676
+A11Y-006 · Follow-up 1
+
+1250
+01:15:24,801 --> 01:15:28,036
+How would you extend this to multiple selection?
+
+1251
+01:15:28,036 --> 01:15:30,867
+What changes in ARIA and keyboard behaviour?
+
+1252
+01:15:36,170 --> 01:15:41,861
+Represent selection as a collection, add aria-multiselectable true, and expose aria-selected for each option.
+
+1253
+01:15:41,861 --> 01:15:44,301
+Choose an APG-supported multiple-selection keyboard model.
+
+1254
+01:15:44,301 --> 01:15:47,553
+In a modifier-free model, Space toggles the active
+
+1255
+01:15:47,553 --> 01:15:50,806
+option, with optional range and select-all behavior documented.
+
+1256
+01:15:50,806 --> 01:15:55,685
+Keep focus independent of selection so navigation does not unexpectedly clear choices.
+
+1257
+01:15:55,685 --> 01:15:59,750
+Define disabled behavior, output payloads, and reconciliation when options disappear.
+
+1258
+01:15:59,750 --> 01:16:05,036
+This is a new public contract, not just changing value to an array.
+
+1259
+01:16:06,411 --> 01:16:08,706
+A11Y-006 · Follow-up 2
+
+1260
+01:16:09,831 --> 01:16:11,997
+The list has 10,000 options.
+
+1261
+01:16:11,997 --> 01:16:16,331
+What breaks, and how would virtual scrolling interact with aria-activedescendant?
+
+1262
+01:16:21,742 --> 01:16:25,285
+Rendering ten thousand options can cost layout and memory,
+
+1263
+01:16:25,285 --> 01:16:28,828
+but virtualization can remove the element referenced by aria-activedescendant.
+
+1264
+01:16:28,828 --> 01:16:33,159
+Keep the active option rendered or provide a compatible identity strategy,
+
+1265
+01:16:33,159 --> 01:16:37,884
+and expose position and set-size information where the virtualized pattern requires it.
+
+1266
+01:16:37,884 --> 01:16:41,034
+Coordinate scrolling and rendering before assigning the reference.
+
+1267
+01:16:41,034 --> 01:16:46,152
+Test navigation across window boundaries, typeahead to offscreen items, and screen reader behavior.
+
+1268
+01:16:46,152 --> 01:16:49,302
+Consider filtering or a native control before adding
+
+1269
+01:16:49,302 --> 01:16:52,058
+complexity that the task does not need.
+
+1270
+01:16:53,433 --> 01:16:55,586
+A11Y-006 · Follow-up 3
+
+1271
+01:16:56,711 --> 01:17:00,496
+How would you build a select (a button that opens
+
+1272
+01:17:00,496 --> 01:17:03,903
+this listbox in a popup) on top of it?
+
+1273
+01:17:09,051 --> 01:17:12,362
+A popup select needs a named trigger, expanded state,
+
+1274
+01:17:12,362 --> 01:17:16,777
+an appropriate popup relationship, opening and closing keys, selection commitment, Escape handling,
+
+1275
+01:17:16,777 --> 01:17:17,881
+and focus restoration.
+
+1276
+01:17:17,881 --> 01:17:22,296
+Define whether DOM focus moves to the listbox or remains on a
+
+1277
+01:17:22,296 --> 01:17:26,343
+combobox-like trigger with active descendant management; follow the selected pattern consistently.
+
+1278
+01:17:26,343 --> 01:17:29,654
+Use an overlay strategy for positioning and outside interaction.
+
+1279
+01:17:29,654 --> 01:17:34,069
+Keep the standalone listbox's selection logic reusable, but do not assume adding
+
+1280
+01:17:34,069 --> 01:17:38,117
+a button and hiding the list supplies the complete popup contract.
+
+1281
+01:17:39,492 --> 01:17:41,623
+Implementation clarification · Repeated-letter typeahead
+
+1282
+01:17:42,747 --> 01:17:47,436
+The reference buffer accumulates repeated letters, so typing the same letter
+
+1283
+01:17:47,436 --> 01:17:51,698
+twice quickly searches for a doubled prefix rather than cycling.
+
+1284
+01:17:51,698 --> 01:17:55,108
+The supplemental listbox example resets repeated single-letter input
+
+1285
+01:17:55,108 --> 01:17:58,092
+to a one-letter search and verifies cycling.
+
+1286
+01:17:58,092 --> 01:17:59,796
+The source remains unchanged.
+
+1287
+01:18:01,171 --> 01:18:04,287
+Implementation clarification · Browser checks and announcements
+
+1288
+01:18:05,412 --> 01:18:12,124
+DOM and browser interaction checks establish names, relationships, and focus in the tested browser.
+
+1289
+01:18:12,124 --> 01:18:17,876
+They do not establish a universal screen-reader announcement or server-hydration identifier strategy.
+
+1290
+01:18:19,252 --> 01:18:20,436
+Final review checklist
+
+1291
+01:18:21,561 --> 01:18:25,902
+Review the lesson by answering each main question and follow-up aloud.
+
+1292
+01:18:25,902 --> 01:18:29,059
+For Accessible Angular Components: Names, Focus, and Interaction,
+
+1293
+01:18:29,059 --> 01:18:31,821
+connect each reported symptom to its mechanism,
+
+1294
+01:18:31,821 --> 01:18:35,768
+explain the corrected public contract, and name a regression check
+
+1295
+01:18:35,768 --> 01:18:37,741
+that exercises the consumer path.
+
+1296
+01:18:37,741 --> 01:18:40,109
+State compatibility and accessibility limitations clearly.
+
+1297
+01:18:40,109 --> 01:18:42,872
+The linked transcript, complete code, source questions,
+
+1298
+01:18:42,872 --> 01:18:46,818
+and verification report let you repeat the exercises at your
+
+1299
+01:18:46,818 --> 01:18:47,608
+own pace.
+
+1300
+01:18:48,650 --> 01:18:51,017
+That's the end of lesson 3.
+

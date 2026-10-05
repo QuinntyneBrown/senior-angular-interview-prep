@@ -1,0 +1,2464 @@
+1
+00:00:00,000 --> 00:00:03,310
+Senior Angular interview preparation, lesson 5.
+
+2
+00:00:03,310 --> 00:00:07,172
+Versioning Angular Libraries: Compatibility and Safe Migration.
+
+3
+00:00:09,380 --> 00:00:12,496
+Define the public contract before choosing a version
+
+4
+00:00:13,621 --> 00:00:15,568
+Welcome to the versioning lesson.
+
+5
+00:00:15,568 --> 00:00:19,463
+We will classify twelve proposed changes, review an input deprecation,
+
+6
+00:00:19,463 --> 00:00:23,357
+and repair a package that leaks internals and duplicates Angular.
+
+7
+00:00:23,357 --> 00:00:28,810
+Semantic versioning becomes useful only when the package defines what its public contract includes.
+
+8
+00:00:28,810 --> 00:00:32,705
+For a component library, that contract extends beyond method signatures.
+
+9
+00:00:34,080 --> 00:00:37,772
+Define the public contract before choosing a version · 2
+
+10
+00:00:38,898 --> 00:00:43,112
+Inputs, outputs, selectors, tokens, documented DOM hooks, keyboard behavior, forms integration,
+
+11
+00:00:43,112 --> 00:00:46,944
+defaults, peer ranges, and testing harnesses can all affect consumers.
+
+12
+00:00:46,944 --> 00:00:50,392
+An accidental export can become an external dependency even
+
+13
+00:00:50,392 --> 00:00:53,457
+if its author intended it to be private.
+
+14
+00:00:53,457 --> 00:00:56,522
+A private intention does not remove a name
+
+15
+00:00:56,522 --> 00:00:59,205
+from the package that was actually published.
+
+16
+00:01:00,580 --> 00:01:03,824
+Define the public contract before choosing a version · 3
+
+17
+00:01:04,949 --> 00:01:09,490
+Ask whether a supported consumer that worked before can continue to work without modification.
+
+18
+00:01:09,490 --> 00:01:12,086
+Then distinguish an intentional public promise from an
+
+19
+00:01:12,086 --> 00:01:14,357
+unsupported dependency and consider the practical rollout.
+
+20
+00:01:14,357 --> 00:01:18,250
+A change can be formally compatible and still deserve a visual review.
+
+21
+00:01:18,250 --> 00:01:21,818
+A change can fix a bug and still break a workaround.
+
+22
+00:01:21,818 --> 00:01:24,414
+State the compatibility policy instead of assuming that
+
+23
+00:01:24,414 --> 00:01:26,685
+the word fix determines the release number.
+
+24
+00:01:28,060 --> 00:01:29,924
+Input acceptance and output obligations
+
+25
+00:01:31,049 --> 00:01:33,286
+An input accepts values from consumers.
+
+26
+00:01:33,286 --> 00:01:37,760
+Widening its accepted type usually permits more existing uses without invalidating them.
+
+27
+00:01:37,760 --> 00:01:41,116
+Narrowing it can make an existing template stop compiling.
+
+28
+00:01:41,116 --> 00:01:46,336
+A new required input forces consumers to provide information they did not previously need.
+
+29
+00:01:46,336 --> 00:01:50,065
+An optional input with a harmless default is generally additive.
+
+30
+00:01:51,440 --> 00:01:53,795
+Input acceptance and output obligations · 2
+
+31
+00:01:54,920 --> 00:01:56,265
+An output is different.
+
+32
+00:01:56,265 --> 00:01:58,620
+Consumers handle the values the library emits.
+
+33
+00:01:58,620 --> 00:02:01,311
+Widening an output to include null can break
+
+34
+00:02:01,311 --> 00:02:04,002
+a handler that dereferences the original non-null value.
+
+35
+00:02:04,002 --> 00:02:07,030
+The library has increased the obligations of the receiver.
+
+36
+00:02:07,030 --> 00:02:10,057
+Do not classify input and output changes with the
+
+37
+00:02:10,057 --> 00:02:13,085
+same rule merely because both use a union type.
+
+38
+00:02:14,460 --> 00:02:16,997
+Input acceptance and output obligations · 3
+
+39
+00:02:18,123 --> 00:02:19,573
+Defaults also carry meaning.
+
+40
+00:02:19,573 --> 00:02:24,648
+Changing medium to small can alter layout in every template that omitted the size.
+
+41
+00:02:24,648 --> 00:02:29,724
+Even if no compile error appears, consumers may rely on the old visual result.
+
+42
+00:02:29,724 --> 00:02:32,261
+Evaluate documented guarantees, snapshots, and product impact.
+
+43
+00:02:32,261 --> 00:02:36,974
+A complete interview answer says which changes are clearly breaking and which depend
+
+44
+00:02:36,974 --> 00:02:41,325
+on the contract, then explains the evidence that resolves each uncertain case.
+
+45
+00:02:42,700 --> 00:02:44,857
+Behavior and presentation can break consumers
+
+46
+00:02:45,983 --> 00:02:50,144
+Switching to OnPush can expose consumers that mutate an object in
+
+47
+00:02:50,144 --> 00:02:54,305
+place or dynamically insert a child that relies on zone-triggered checks.
+
+48
+00:02:54,305 --> 00:02:58,845
+A keyboard change can improve conformance while changing how existing interactions behave.
+
+49
+00:02:58,845 --> 00:03:03,006
+Internal DOM changes may be safe under a documented encapsulation policy,
+
+50
+00:03:03,006 --> 00:03:07,546
+but tests, selectors, and custom styles can still depend on them in
+
+51
+00:03:07,546 --> 00:03:07,924
+practice.
+
+52
+00:03:09,300 --> 00:03:12,192
+Behavior and presentation can break consumers · 2
+
+53
+00:03:13,318 --> 00:03:15,942
+Build an inventory of supported customization points.
+
+54
+00:03:15,942 --> 00:03:21,191
+If teams were instructed to use an internal class, it is not really internal.
+
+55
+00:03:21,191 --> 00:03:26,441
+If the harness supplies the supported interaction API, update the harness with the component.
+
+56
+00:03:26,441 --> 00:03:30,190
+Theme tokens need contrast and visual checks; a darker color
+
+57
+00:03:30,190 --> 00:03:33,565
+is not automatically a breaking change or automatically harmless.
+
+58
+00:03:34,940 --> 00:03:37,947
+Behavior and presentation can break consumers · 3
+
+59
+00:03:39,072 --> 00:03:44,332
+Raise a minimum Angular peer version only when dropping support is intentional and tested.
+
+60
+00:03:44,332 --> 00:03:48,842
+A package that claims compatibility with a range should install and compile
+
+61
+00:03:48,842 --> 00:03:53,351
+representative consumers across that range, including its forms and testing entry points.
+
+62
+00:03:53,351 --> 00:03:57,485
+Passing on the newest framework alone does not validate the minimum.
+
+63
+00:03:58,860 --> 00:04:01,113
+Deprecation preserves behavior while changing guidance
+
+64
+00:04:02,238 --> 00:04:05,242
+A deprecation introduces a supported replacement while keeping
+
+65
+00:04:05,242 --> 00:04:08,247
+the old contract usable for an announced period.
+
+66
+00:04:08,247 --> 00:04:12,378
+In the button rename, both inputs need an unset state so
+
+67
+00:04:12,378 --> 00:04:16,133
+resolution can distinguish absence from an explicitly selected primary value.
+
+68
+00:04:16,133 --> 00:04:20,265
+The new input wins, then the old input, then the default.
+
+69
+00:04:21,640 --> 00:04:24,341
+Deprecation preserves behavior while changing guidance · 2
+
+70
+00:04:25,466 --> 00:04:29,517
+Warnings should be actionable and limited to actual deprecated usage in development.
+
+71
+00:04:29,517 --> 00:04:31,543
+A computed derivation should stay pure.
+
+72
+00:04:31,543 --> 00:04:35,257
+Put the diagnostic side effect in an appropriate effect and choose
+
+73
+00:04:35,257 --> 00:04:38,634
+whether once means once per instance or once per application.
+
+74
+00:04:38,634 --> 00:04:39,647
+Document that choice.
+
+75
+00:04:39,647 --> 00:04:42,686
+Do not teach teams to ignore a flood of
+
+76
+00:04:42,686 --> 00:04:45,725
+warnings from components that already use the new name.
+
+77
+00:04:47,100 --> 00:04:50,253
+Deprecation preserves behavior while changing guidance · 3
+
+78
+00:04:51,378 --> 00:04:53,823
+Compatibility also includes direct component references.
+
+79
+00:04:53,823 --> 00:04:58,714
+If callers read the old input getter, changing its default from primary
+
+80
+00:04:58,714 --> 00:05:03,197
+to undefined is observable even when the rendered appearance is unchanged.
+
+81
+00:05:03,197 --> 00:05:06,050
+State that limitation and inventory such uses.
+
+82
+00:05:06,050 --> 00:05:10,941
+For strict compatibility, consider a distinct resolved property or a bridging API.
+
+83
+00:05:10,941 --> 00:05:15,424
+A visual equivalence claim should not erase a public property change.
+
+84
+00:05:16,800 --> 00:05:19,492
+Migrations need more than a search and replace
+
+85
+00:05:20,617 --> 00:05:24,654
+A template migration can rename a static kind attribute and a bound
+
+86
+00:05:24,654 --> 00:05:28,355
+kind input when it knows the element is the library component.
+
+87
+00:05:28,355 --> 00:05:32,056
+It should not rewrite every unrelated kind attribute in the repository.
+
+88
+00:05:32,056 --> 00:05:35,420
+Parse templates and resolve symbols where the tooling supports it,
+
+89
+00:05:35,420 --> 00:05:38,784
+then report uncertain cases rather than applying a destructive guess.
+
+90
+00:05:40,160 --> 00:05:43,863
+Migrations need more than a search and replace · 2
+
+91
+00:05:44,988 --> 00:05:48,118
+Programmatic setInput calls, host directive aliases, dynamic templates,
+
+92
+00:05:48,118 --> 00:05:50,856
+and computed property names need separate analysis.
+
+93
+00:05:50,856 --> 00:05:54,378
+A migration can handle statically resolvable string names and
+
+94
+00:05:54,378 --> 00:05:57,899
+known imports, while emitting a report for dynamic uses.
+
+95
+00:05:57,899 --> 00:06:01,812
+Make migrations repeatable and test both changed and unchanged files.
+
+96
+00:06:01,812 --> 00:06:05,725
+The report should explain the manual correction and replacement API.
+
+97
+00:06:07,100 --> 00:06:11,138
+Migrations need more than a search and replace · 3
+
+98
+00:06:12,263 --> 00:06:17,204
+Publish a changelog, replacement examples, editor deprecation hints, and a removal version.
+
+99
+00:06:17,204 --> 00:06:20,087
+Gather data from repository scans, CI builds,
+
+100
+00:06:20,087 --> 00:06:23,381
+and consumer owners before removing the old contract.
+
+101
+00:06:23,381 --> 00:06:29,146
+Runtime diagnostics can help during development, but avoid secretly transmitting consumer code or telemetry.
+
+102
+00:06:29,146 --> 00:06:33,265
+Migration evidence should be explicit and proportionate to the organization.
+
+103
+00:06:34,640 --> 00:06:36,693
+Package boundaries and peer dependencies
+
+104
+00:06:37,819 --> 00:06:41,864
+Angular libraries should cooperate with the application's Angular installation.
+
+105
+00:06:41,864 --> 00:06:47,709
+Declaring Angular framework packages as ordinary runtime dependencies can allow multiple incompatible copies.
+
+106
+00:06:47,709 --> 00:06:51,754
+That can lead to injection context and identity problems,
+
+107
+00:06:51,754 --> 00:06:56,699
+although a specific NG0203 error still needs diagnosis rather than a
+
+108
+00:06:56,699 --> 00:06:57,599
+one-cause assumption.
+
+109
+00:06:57,599 --> 00:07:01,645
+Peer dependencies express the versions the consumer must supply.
+
+110
+00:07:03,020 --> 00:07:05,412
+Package boundaries and peer dependencies · 2
+
+111
+00:07:06,537 --> 00:07:09,713
+Use explicit exports to keep the public surface deliberate.
+
+112
+00:07:09,713 --> 00:07:13,595
+A wildcard export can publish internal helpers and component rows accidentally.
+
+113
+00:07:13,595 --> 00:07:17,124
+Separate entry points let consumers import the feature they need,
+
+114
+00:07:17,124 --> 00:07:22,065
+and a testing entry point can expose harnesses without making them part of the
+
+115
+00:07:22,065 --> 00:07:23,124
+main application API.
+
+116
+00:07:23,124 --> 00:07:28,065
+However, an entry point alone does not make a dependency optional at installation time.
+
+117
+00:07:29,440 --> 00:07:31,933
+Package boundaries and peer dependencies · 3
+
+118
+00:07:33,058 --> 00:07:36,262
+If a date picker depends on a date library,
+
+119
+00:07:36,262 --> 00:07:39,822
+simply moving it to a secondary entry point may improve
+
+120
+00:07:39,822 --> 00:07:43,383
+imports and bundles but still leave a required root dependency.
+
+121
+00:07:43,383 --> 00:07:46,587
+Making an optional peer safe requires isolating references and
+
+122
+00:07:46,587 --> 00:07:49,792
+documenting the feature's requirement, or using a separate package.
+
+123
+00:07:49,792 --> 00:07:52,996
+Evaluate package manager installation, TypeScript resolution, and bundling separately.
+
+124
+00:07:52,996 --> 00:07:55,844
+They are different phases with different failure modes.
+
+125
+00:07:57,220 --> 00:07:59,132
+Release gates and support policy
+
+126
+00:08:00,257 --> 00:08:04,231
+A release gate can compare public declarations, compile representative templates,
+
+127
+00:08:04,231 --> 00:08:07,807
+run behavior and accessibility tests, inspect the packed artifact,
+
+128
+00:08:07,807 --> 00:08:09,397
+and review theme snapshots.
+
+129
+00:08:09,397 --> 00:08:11,781
+A generated API diff is useful,
+
+130
+00:08:11,781 --> 00:08:14,961
+but it cannot understand every default or keyboard
+
+131
+00:08:14,961 --> 00:08:15,358
+change.
+
+132
+00:08:15,358 --> 00:08:20,525
+Combine mechanical checks with a release checklist that asks whether consumer behavior changed.
+
+133
+00:08:21,900 --> 00:08:24,523
+Release gates and support policy · 2
+
+134
+00:08:25,648 --> 00:08:30,895
+Decide how many major lines to support according to staffing and consumer upgrade schedules.
+
+135
+00:08:30,895 --> 00:08:36,142
+Support should state security patches, critical fixes, supported framework ranges, and the end date.
+
+136
+00:08:36,142 --> 00:08:39,890
+A breaking security fix may need a new major and
+
+137
+00:08:39,890 --> 00:08:43,263
+compatible backports or a documented mitigation for older lines.
+
+138
+00:08:43,263 --> 00:08:47,011
+Communicate urgency and migration steps; do not silently redefine a
+
+139
+00:08:47,011 --> 00:08:50,385
+minor release as breaking while claiming ordinary semantic versioning.
+
+140
+00:08:51,760 --> 00:08:54,620
+Release gates and support policy · 3
+
+141
+00:08:55,745 --> 00:09:00,239
+Before publishing, install the packed package into a clean consumer project.
+
+142
+00:09:00,239 --> 00:09:04,733
+Test each supported entry point without relying on monorepo path mappings.
+
+143
+00:09:04,733 --> 00:09:08,002
+Verify peers, declarations, exports, assets, and dependency isolation.
+
+144
+00:09:08,002 --> 00:09:11,270
+The consumer should receive the package you tested,
+
+145
+00:09:11,270 --> 00:09:15,356
+not an internal build layout that accidentally makes missing files
+
+146
+00:09:15,356 --> 00:09:15,765
+available.
+
+147
+00:09:17,140 --> 00:09:19,040
+VER-001 · Scenario
+
+148
+00:09:20,165 --> 00:09:23,910
+We now review VER-001: Is this a breaking change?.
+
+149
+00:09:23,910 --> 00:09:28,905
+Inspect the consumer contract and identify the mechanism behind each reported defect.
+
+150
+00:09:30,280 --> 00:09:32,040
+VER-001 · Scenario
+
+151
+00:09:33,166 --> 00:09:36,510
+@acme/ui is at version 4.6.0 and follows semantic versioning.
+
+152
+00:09:36,510 --> 00:09:41,342
+The release manager lists the changes planned for the next release of ui-select,
+
+153
+00:09:41,342 --> 00:09:46,545
+and asks you to decide which ones force the next version to be 5.0.0.
+
+154
+00:09:47,920 --> 00:09:51,889
+VER-001 · Scenario · block 1 · page 1
+
+155
+00:09:53,014 --> 00:09:56,261
+This is the original code, part 1 of 1.
+
+156
+00:09:56,261 --> 00:09:58,426
+Focus on SelectOption, SelectComponent, options, size.
+
+157
+00:09:58,426 --> 00:10:02,035
+Trace which element or value the consumer actually interacts with.
+
+158
+00:10:02,035 --> 00:10:06,005
+We will compare this implementation with the correction after the question.
+
+159
+00:10:07,380 --> 00:10:09,466
+VER-001 · Scenario
+
+160
+00:10:10,591 --> 00:10:11,425
+Planned changes:
+
+161
+00:10:12,800 --> 00:10:15,550
+VER-001 · Scenario · item 1
+
+162
+00:10:16,675 --> 00:10:19,425
+Add an optional placeholder input with default ''.
+
+163
+00:10:20,800 --> 00:10:23,569
+VER-001 · Scenario · item 2
+
+164
+00:10:24,694 --> 00:10:26,425
+Add a required label input.
+
+165
+00:10:27,800 --> 00:10:30,540
+VER-001 · Scenario · item 3
+
+166
+00:10:31,665 --> 00:10:34,405
+Change the default size from 'medium' to 'small'.
+
+167
+00:10:35,780 --> 00:10:38,607
+VER-001 · Scenario · item 4
+
+168
+00:10:39,732 --> 00:10:43,265
+Narrow size from string to 'small' | 'medium' | 'large'.
+
+169
+00:10:44,640 --> 00:10:47,502
+VER-001 · Scenario · item 5
+
+170
+00:10:48,627 --> 00:10:52,204
+Widen the value input from SelectOption to SelectOption | null.
+
+171
+00:10:53,580 --> 00:10:56,468
+VER-001 · Scenario · item 6
+
+172
+00:10:57,593 --> 00:11:01,564
+Widen the selectionChange payload from SelectOption to SelectOption | null.
+
+173
+00:11:02,940 --> 00:11:05,677
+VER-001 · Scenario · item 7
+
+174
+00:11:06,803 --> 00:11:13,304
+Replace the internal <div> list with <ul>/<li> and rename internal CSS classes.
+
+175
+00:11:14,679 --> 00:11:18,396
+VER-001 · Scenario · item 8
+
+176
+00:11:19,522 --> 00:11:21,845
+Darken the semantic token --ui-color-action-primary.
+
+177
+00:11:23,220 --> 00:11:26,029
+VER-001 · Scenario · item 9
+
+178
+00:11:27,154 --> 00:11:30,665
+Make Space select the highlighted option (today only Enter does).
+
+179
+00:11:32,040 --> 00:11:35,487
+VER-001 · Scenario · item 10
+
+180
+00:11:36,613 --> 00:11:41,785
+Stop exporting SelectOptionRowComponent, which was exported from public-api.ts by accident.
+
+181
+00:11:43,160 --> 00:11:46,660
+VER-001 · Scenario · item 11
+
+182
+00:11:47,785 --> 00:11:51,285
+Switch the component to ChangeDetectionStrategy.OnPush.
+
+183
+00:11:52,660 --> 00:11:56,718
+VER-001 · Scenario · item 12
+
+184
+00:11:57,844 --> 00:12:03,425
+Raise the @angular/core peer dependency from >=20 to >=21.
+
+185
+00:12:04,800 --> 00:12:06,877
+VER-001 · Interview question
+
+186
+00:12:08,002 --> 00:12:11,833
+For each change, is it breaking, not breaking, or "it depends"?
+
+187
+00:12:11,833 --> 00:12:12,878
+Justify each one.
+
+188
+00:12:12,878 --> 00:12:17,755
+Then tell me how you would stop accidental breaking changes from reaching a release.
+
+189
+00:12:24,405 --> 00:12:26,083
+VER-001 · Answer
+
+190
+00:12:27,208 --> 00:12:30,757
+A working definition: a change is breaking if a consumer
+
+191
+00:12:30,757 --> 00:12:34,307
+who used only the documented public API has to change
+
+192
+00:12:34,307 --> 00:12:37,856
+their code, or sees behaviour they reasonably relied on change.
+
+193
+00:12:37,856 --> 00:12:42,116
+That makes writing down what the public API is (exports, selectors, inputs,
+
+194
+00:12:42,116 --> 00:12:46,376
+outputs, types, tokens, keyboard behaviour) the first job of a library team.
+
+195
+00:12:47,751 --> 00:12:51,382
+VER-001 · Answer · comparison 1
+
+196
+00:12:52,508 --> 00:12:53,416
+#: 1.
+
+197
+00:12:53,416 --> 00:12:56,140
+Change: Optional input with a default.
+
+198
+00:12:56,140 --> 00:12:57,503
+Verdict: Not breaking.
+
+199
+00:12:57,503 --> 00:13:01,136
+Why: Existing templates compile and behave the same..
+
+200
+00:13:02,511 --> 00:13:05,779
+VER-001 · Answer · comparison 2
+
+201
+00:13:06,904 --> 00:13:07,800
+#: 2.
+
+202
+00:13:07,800 --> 00:13:09,144
+Change: Required input.
+
+203
+00:13:09,144 --> 00:13:10,040
+Verdict: Breaking.
+
+204
+00:13:10,040 --> 00:13:13,177
+Why: Every existing <ui-select> fails to compile.
+
+205
+00:13:13,177 --> 00:13:17,210
+Stage it: optional with a dev-mode warning in a
+
+206
+00:13:17,210 --> 00:13:20,796
+minor, required in the next major (see A11Y-001)..
+
+207
+00:13:22,171 --> 00:13:25,350
+VER-001 · Answer · comparison 3
+
+208
+00:13:26,475 --> 00:13:27,269
+#: 3.
+
+209
+00:13:27,269 --> 00:13:28,859
+Change: New default size.
+
+210
+00:13:28,859 --> 00:13:29,653
+Verdict: Breaking.
+
+211
+00:13:29,653 --> 00:13:35,217
+Why: No compile error, but every select that relied on the default changes size.
+
+212
+00:13:35,217 --> 00:13:38,396
+Silent visual changes are the most expensive kind..
+
+213
+00:13:39,771 --> 00:13:43,080
+VER-001 · Answer · comparison 4
+
+214
+00:13:44,206 --> 00:13:45,033
+#: 4.
+
+215
+00:13:45,033 --> 00:13:47,515
+Change: Narrow size to a union.
+
+216
+00:13:47,515 --> 00:13:48,343
+Verdict: Breaking.
+
+217
+00:13:48,343 --> 00:13:51,652
+Why: Call sites passing other strings stop compiling.
+
+218
+00:13:51,652 --> 00:13:55,376
+They were probably bugs, but the upgrade still fails..
+
+219
+00:13:56,751 --> 00:13:59,723
+VER-001 · Answer · comparison 5
+
+220
+00:14:00,848 --> 00:14:01,628
+#: 5.
+
+221
+00:14:01,628 --> 00:14:03,579
+Change: Widen an input type.
+
+222
+00:14:03,579 --> 00:14:05,140
+Verdict: Usually not breaking.
+
+223
+00:14:05,140 --> 00:14:09,042
+Why: Callers write inputs; accepting more values breaks no caller.
+
+224
+00:14:09,042 --> 00:14:12,944
+It is breaking for code that reads select.value() from a
+
+225
+00:14:12,944 --> 00:14:16,456
+component reference, because the result can now be null..
+
+226
+00:14:17,831 --> 00:14:21,367
+VER-001 · Answer · comparison 6
+
+227
+00:14:22,492 --> 00:14:23,376
+#: 6.
+
+228
+00:14:23,376 --> 00:14:25,586
+Change: Widen an output payload.
+
+229
+00:14:25,586 --> 00:14:26,470
+Verdict: Breaking.
+
+230
+00:14:26,470 --> 00:14:28,238
+Why: Consumers read outputs.
+
+231
+00:14:28,238 --> 00:14:31,775
+A handler typed (option: SelectOption) now receives null,
+
+232
+00:14:31,775 --> 00:14:35,753
+which strict templates reject, and untyped handlers crash at
+
+233
+00:14:35,753 --> 00:14:36,196
+runtime..
+
+234
+00:14:37,571 --> 00:14:40,608
+VER-001 · Answer · comparison 7
+
+235
+00:14:41,733 --> 00:14:42,574
+#: 7.
+
+236
+00:14:42,574 --> 00:14:45,100
+Change: Internal DOM and class names.
+
+237
+00:14:45,100 --> 00:14:48,467
+Verdict: Not breaking, if the policy says so.
+
+238
+00:14:48,467 --> 00:14:52,256
+Why: DOM structure and internal classes must be documented
+
+239
+00:14:52,256 --> 00:14:56,044
+as private, and tests should use the library's harnesses.
+
+240
+00:14:56,044 --> 00:15:01,096
+Still list it in the changelog: Hyrum's law says someone styled .ui-select__row..
+
+241
+00:15:02,471 --> 00:15:05,467
+VER-001 · Answer · comparison 8
+
+242
+00:15:06,592 --> 00:15:07,380
+#: 8.
+
+243
+00:15:07,380 --> 00:15:08,957
+Change: Token value change.
+
+244
+00:15:08,957 --> 00:15:11,718
+Verdict: Not breaking API; a design change.
+
+245
+00:15:11,718 --> 00:15:16,055
+Why: Release it in a minor with release notes and screenshots.
+
+246
+00:15:16,055 --> 00:15:21,576
+It must still meet contrast in every theme; screenshot tests in products will change..
+
+247
+00:15:22,951 --> 00:15:26,031
+VER-001 · Answer · comparison 9
+
+248
+00:15:27,156 --> 00:15:27,926
+#: 9.
+
+249
+00:15:27,926 --> 00:15:29,080
+Change: Space selects.
+
+250
+00:15:29,080 --> 00:15:31,776
+Verdict: It depends; usually a minor fix.
+
+251
+00:15:31,776 --> 00:15:36,781
+Why: It aligns with the ARIA pattern, so it is a bug fix.
+
+252
+00:15:36,781 --> 00:15:41,016
+Call it out: consumers' end-to-end tests that press Space may change..
+
+253
+00:15:42,391 --> 00:15:45,675
+VER-001 · Answer · comparison 10
+
+254
+00:15:46,800 --> 00:15:47,621
+#: 10.
+
+255
+00:15:47,621 --> 00:15:49,673
+Change: Remove an accidental export.
+
+256
+00:15:49,673 --> 00:15:50,494
+Verdict: Breaking.
+
+257
+00:15:50,494 --> 00:15:53,779
+Why: Anything exported is public, whatever was intended.
+
+258
+00:15:53,779 --> 00:15:59,116
+Deprecate it, keep exporting it until the next major, and mark it @deprecated..
+
+259
+00:16:00,491 --> 00:16:03,614
+VER-001 · Answer · comparison 11
+
+260
+00:16:04,739 --> 00:16:05,611
+#: 11.
+
+261
+00:16:05,611 --> 00:16:07,357
+Change: Switch to OnPush.
+
+262
+00:16:07,357 --> 00:16:09,975
+Verdict: It depends; treat as breaking.
+
+263
+00:16:09,975 --> 00:16:14,775
+Why: Consumers who mutate an input array in place (options.push(...)) relied
+
+264
+00:16:14,775 --> 00:16:19,576
+on default change detection; under OnPush the list no longer updates..
+
+265
+00:16:20,951 --> 00:16:24,046
+VER-001 · Answer · comparison 12
+
+266
+00:16:25,171 --> 00:16:25,945
+#: 12.
+
+267
+00:16:25,945 --> 00:16:28,267
+Change: Raise the Angular peer range.
+
+268
+00:16:28,267 --> 00:16:29,041
+Verdict: Breaking.
+
+269
+00:16:29,041 --> 00:16:32,911
+Why: Applications on Angular 20 can no longer install it.
+
+270
+00:16:32,911 --> 00:16:36,007
+Align with Angular's own release cadence: a new
+
+271
+00:16:36,007 --> 00:16:38,716
+major of the library per Angular major..
+
+272
+00:16:40,091 --> 00:16:42,941
+VER-001 · Preventing accidental breaking changes
+
+273
+00:16:44,066 --> 00:16:45,941
+An API report in CI.
+
+274
+00:16:45,941 --> 00:16:49,692
+Generate a "golden" file of the public TypeScript surface (exports,
+
+275
+00:16:49,692 --> 00:16:54,944
+input and output types) on every pull request, and fail when it changes without
+
+276
+00:16:54,944 --> 00:16:56,069
+an approved update.
+
+277
+00:16:56,069 --> 00:16:59,445
+Angular itself guards its packages with golden API files.
+
+278
+00:16:59,445 --> 00:17:04,322
+A change to the golden file makes the breaking question visible in review.
+
+279
+00:17:04,322 --> 00:17:06,572
+Conventional commits with BREAKING CHANGE: footers,
+
+280
+00:17:06,572 --> 00:17:09,948
+and release tooling that refuses a minor version when
+
+281
+00:17:09,948 --> 00:17:11,074
+one is present.
+
+282
+00:17:11,074 --> 00:17:14,075
+Visual regression tests for every component and token,
+
+283
+00:17:14,075 --> 00:17:17,075
+so changes like 3 and 8 are seen,
+
+284
+00:17:17,075 --> 00:17:18,576
+not discovered by consumers.
+
+285
+00:17:18,576 --> 00:17:23,452
+Accessibility and keyboard tests written against behaviour, so changes like 9 are deliberate.
+
+286
+00:17:23,452 --> 00:17:26,453
+Harnesses shipped with the library, so consumers' tests
+
+287
+00:17:26,453 --> 00:17:29,454
+do not depend on internal DOM (change 7).
+
+288
+00:17:29,454 --> 00:17:33,956
+A published policy stating what is public and how long deprecations last.
+
+289
+00:17:35,330 --> 00:17:37,331
+VER-001 · Follow-up 1
+
+290
+00:17:38,457 --> 00:17:40,890
+A security fix requires a breaking change.
+
+291
+00:17:40,890 --> 00:17:45,063
+How do you release it to teams who are two majors behind?
+
+292
+00:17:50,317 --> 00:17:53,653
+Publish the fix according to the compatibility policy and urgency.
+
+293
+00:17:53,653 --> 00:17:55,989
+If a compatible security backport is feasible,
+
+294
+00:17:55,989 --> 00:17:58,658
+release it on supported older majors with tests.
+
+295
+00:17:58,658 --> 00:18:00,994
+If the fix truly requires a break,
+
+296
+00:18:00,994 --> 00:18:04,330
+publish the new major with a focused migration and explain
+
+297
+00:18:04,330 --> 00:18:07,667
+the risk and any temporary mitigation for teams that cannot
+
+298
+00:18:07,667 --> 00:18:08,334
+upgrade immediately.
+
+299
+00:18:08,334 --> 00:18:10,002
+Coordinate disclosure and support windows.
+
+300
+00:18:10,002 --> 00:18:13,005
+Do not conceal a breaking change inside a supposedly
+
+301
+00:18:13,005 --> 00:18:15,675
+compatible patch merely because the reason is security.
+
+302
+00:18:17,050 --> 00:18:19,195
+VER-001 · Follow-up 2
+
+303
+00:18:20,320 --> 00:18:25,530
+How many major versions would you support at once, and what does "support" mean?
+
+304
+00:18:30,840 --> 00:18:34,414
+Choose the number of supported major lines from team capacity,
+
+305
+00:18:34,414 --> 00:18:38,346
+consumer release cadence, and risk, then publish exact dates and coverage.
+
+306
+00:18:38,346 --> 00:18:42,279
+Support might include security patches and critical regressions without new features.
+
+307
+00:18:42,279 --> 00:18:46,211
+State supported Angular ranges and what happens after end of support.
+
+308
+00:18:46,211 --> 00:18:49,786
+One current line and one previous line can be practical
+
+309
+00:18:49,786 --> 00:18:53,360
+for some organizations, but it is not a universal answer.
+
+310
+00:18:53,360 --> 00:18:58,008
+Make the commitment sustainable and measurable rather than promising every historical version indefinitely.
+
+311
+00:18:59,383 --> 00:19:01,478
+VER-001 · Follow-up 3
+
+312
+00:19:02,603 --> 00:19:06,555
+Would you ever ship a breaking change in a minor release?
+
+313
+00:19:06,555 --> 00:19:07,633
+Under what policy?
+
+314
+00:19:13,015 --> 00:19:17,204
+Under ordinary semantic versioning, a breaking change belongs in a major release.
+
+315
+00:19:17,204 --> 00:19:19,997
+If the organization adopts an explicit exception policy,
+
+316
+00:19:19,997 --> 00:19:24,186
+communicate it before consumers rely on minor compatibility, label the change prominently,
+
+317
+00:19:24,186 --> 00:19:26,281
+and provide migration and risk guidance.
+
+318
+00:19:26,281 --> 00:19:30,121
+Calling a break a bug fix does not make it compatible.
+
+319
+00:19:30,121 --> 00:19:33,263
+Prefer a new major or a staged opt-in path.
+
+320
+00:19:33,263 --> 00:19:38,150
+Any exception weakens the useful guarantee of minor upgrades, so explain the trade-off honestly.
+
+321
+00:19:39,526 --> 00:19:41,558
+VER-002 · Scenario
+
+322
+00:19:42,683 --> 00:19:47,967
+We now review VER-002: A deprecation that warns everyone and honours nobody.
+
+323
+00:19:47,967 --> 00:19:53,251
+Inspect the consumer contract and identify the mechanism behind each reported defect.
+
+324
+00:19:54,626 --> 00:19:56,162
+VER-002 · Scenario
+
+325
+00:19:57,287 --> 00:20:01,832
+@acme/ui is renaming the button's kind input to variant, to match every other component.
+
+326
+00:20:01,832 --> 00:20:05,404
+The pull request is meant to ship in a minor release,
+
+327
+00:20:05,404 --> 00:20:08,651
+keep kind working, and warn teams that still use it.
+
+328
+00:20:10,026 --> 00:20:13,751
+VER-002 · Scenario · block 1 · page 1
+
+329
+00:20:14,876 --> 00:20:17,924
+This is the original code, part 1 of 2.
+
+330
+00:20:17,924 --> 00:20:19,278
+Focus on ButtonVariant, ButtonComponent.
+
+331
+00:20:19,278 --> 00:20:22,665
+Trace which element or value the consumer actually interacts with.
+
+332
+00:20:22,665 --> 00:20:26,390
+We will compare this implementation with the correction after the question.
+
+333
+00:20:27,766 --> 00:20:31,582
+VER-002 · Scenario · block 2 · page 2
+
+334
+00:20:32,707 --> 00:20:35,829
+This is the original code, part 2 of 2.
+
+335
+00:20:35,829 --> 00:20:37,564
+Focus on kind, variant, resolvedVariant.
+
+336
+00:20:37,564 --> 00:20:41,034
+Trace which element or value the consumer actually interacts with.
+
+337
+00:20:41,034 --> 00:20:44,851
+We will compare this implementation with the correction after the question.
+
+338
+00:20:46,226 --> 00:20:48,117
+VER-002 · Interview question
+
+339
+00:20:49,242 --> 00:20:50,511
+Review the pull request.
+
+340
+00:20:50,511 --> 00:20:53,686
+Which consumers get the wrong result, who sees the warning,
+
+341
+00:20:53,686 --> 00:20:56,861
+and how would you ship this rename end to end?
+
+342
+00:21:03,511 --> 00:21:04,683
+VER-002 · 1.
+
+343
+00:21:04,683 --> 00:21:07,810
+Precedence is wrong, and "not set" is invisible
+
+344
+00:21:08,935 --> 00:21:12,723
+Both inputs default to 'primary', so the component cannot tell "the
+
+345
+00:21:12,723 --> 00:21:16,168
+consumer did not set kind" from "the consumer set kind="primary"".
+
+346
+00:21:16,168 --> 00:21:19,956
+The rule kind() !== 'primary' ? kind() : variant() then gives
+
+347
+00:21:19,956 --> 00:21:23,401
+the deprecated name priority whenever it holds a non-default value:
+
+348
+00:21:24,776 --> 00:21:26,433
+VER-002 · 1.
+
+349
+00:21:26,433 --> 00:21:32,511
+Precedence is wrong, and "not set" is invisible · comparison 1
+
+350
+00:21:33,636 --> 00:21:35,521
+Template: variant="danger" kind="secondary".
+
+351
+00:21:35,521 --> 00:21:38,664
+Expected: danger (new name wins).
+
+352
+00:21:38,664 --> 00:21:39,921
+Actual: secondary.
+
+353
+00:21:41,296 --> 00:21:42,936
+VER-002 · 1.
+
+354
+00:21:42,936 --> 00:21:48,951
+Precedence is wrong, and "not set" is invisible · comparison 2
+
+355
+00:21:50,076 --> 00:21:52,126
+Template: kind="primary" variant="danger".
+
+356
+00:21:52,126 --> 00:21:53,493
+Expected: danger.
+
+357
+00:21:53,493 --> 00:21:54,861
+Actual: danger.
+
+358
+00:21:56,236 --> 00:21:57,841
+VER-002 · 1.
+
+359
+00:21:57,841 --> 00:22:03,729
+Precedence is wrong, and "not set" is invisible · comparison 3
+
+360
+00:22:04,854 --> 00:22:06,103
+Template: kind="danger".
+
+361
+00:22:06,103 --> 00:22:07,352
+Expected: danger.
+
+362
+00:22:07,352 --> 00:22:08,601
+Actual: danger.
+
+363
+00:22:09,976 --> 00:22:11,237
+VER-002 · 1.
+
+364
+00:22:11,237 --> 00:22:14,600
+Precedence is wrong, and "not set" is invisible
+
+365
+00:22:15,725 --> 00:22:18,570
+A team halfway through migrating, with both attributes
+
+366
+00:22:18,570 --> 00:22:21,061
+on some buttons, gets the old value.
+
+367
+00:22:22,436 --> 00:22:23,781
+VER-002 · 1.
+
+368
+00:22:23,781 --> 00:22:27,369
+Precedence is wrong, and "not set" is invisible
+
+369
+00:22:28,494 --> 00:22:32,592
+Fix: default both to undefined, so "not set" is observable,
+
+370
+00:22:32,592 --> 00:22:36,281
+and resolve in one direction: variant() ?? kind() ??
+
+371
+00:22:36,281 --> 00:22:36,691
+'primary'.
+
+372
+00:22:36,691 --> 00:22:38,741
+The new name always wins.
+
+373
+00:22:40,116 --> 00:22:41,317
+VER-002 · 2.
+
+374
+00:22:41,317 --> 00:22:43,720
+The warning goes to everyone, repeatedly
+
+375
+00:22:44,845 --> 00:22:48,121
+The warning sits inside a computed, which has two problems:
+
+376
+00:22:49,496 --> 00:22:50,655
+VER-002 · 2.
+
+377
+00:22:50,655 --> 00:22:52,974
+The warning goes to everyone, repeatedly
+
+378
+00:22:54,099 --> 00:22:57,260
+It does not check whether kind was used at all,
+
+379
+00:22:57,260 --> 00:22:59,790
+so every button in every application logs it,
+
+380
+00:22:59,790 --> 00:23:02,951
+including teams that already migrated. - computed functions should be
+
+381
+00:23:02,951 --> 00:23:03,268
+pure.
+
+382
+00:23:03,268 --> 00:23:05,481
+This one logs each time it recomputes,
+
+383
+00:23:05,481 --> 00:23:08,010
+so one page can log dozens of identical
+
+384
+00:23:08,010 --> 00:23:08,326
+lines.
+
+385
+00:23:08,326 --> 00:23:12,121
+Teams learn to ignore the console, and miss the warnings that matter.
+
+386
+00:23:13,496 --> 00:23:14,801
+VER-002 · 2.
+
+387
+00:23:14,801 --> 00:23:17,411
+The warning goes to everyone, repeatedly
+
+388
+00:23:18,536 --> 00:23:23,520
+Fix: log in development mode only, only when kind is actually set, and once.
+
+389
+00:23:23,520 --> 00:23:27,081
+Include the element so developers can find the call site.
+
+390
+00:23:28,455 --> 00:23:29,636
+VER-002 · 3.
+
+391
+00:23:29,636 --> 00:23:32,390
+The rest of the rollout is missing
+
+392
+00:23:33,516 --> 00:23:36,141
+A deprecation is a process, not an annotation:
+
+393
+00:23:37,516 --> 00:23:38,782
+VER-002 · 3.
+
+394
+00:23:38,782 --> 00:23:41,738
+The rest of the rollout is missing
+
+395
+00:23:42,863 --> 00:23:46,547
+Documentation and changelog: a "Deprecations" section naming the old input,
+
+396
+00:23:46,547 --> 00:23:50,600
+the replacement, and the major version that removes it. - @deprecated
+
+397
+00:23:50,600 --> 00:23:54,653
+JSDoc (kept from the PR), which editors and linters can surface.
+
+398
+00:23:54,653 --> 00:23:59,811
+An ng update migration for the next major that rewrites kind= and [kind]= to
+
+399
+00:23:59,811 --> 00:24:04,601
+variant in templates, and reports anything it cannot rewrite (for example setInput('kind', ...)).
+
+400
+00:24:04,601 --> 00:24:07,548
+Tests for every row of the table above,
+
+401
+00:24:07,548 --> 00:24:10,864
+and for "warns once, only when kind is set".
+
+402
+00:24:10,864 --> 00:24:14,181
+Removal in the next major, listed under breaking changes.
+
+403
+00:24:15,556 --> 00:24:19,202
+VER-002 · Answer · block 1 · page 1
+
+404
+00:24:20,327 --> 00:24:23,310
+This is the answer code, part 1 of 3.
+
+405
+00:24:23,310 --> 00:24:24,304
+Focus on ButtonVariant.
+
+406
+00:24:24,304 --> 00:24:27,619
+Follow the declarations and event paths as a single implementation.
+
+407
+00:24:27,619 --> 00:24:31,266
+The adjacent explanation describes the contract; the complete source is available
+
+408
+00:24:31,266 --> 00:24:34,581
+with the lesson so you can inspect the remaining context.
+
+409
+00:24:35,955 --> 00:24:39,919
+VER-002 · Answer · block 2 · page 2
+
+410
+00:24:41,045 --> 00:24:44,288
+This is the answer code, part 2 of 3.
+
+411
+00:24:44,288 --> 00:24:46,450
+Focus on ButtonComponent, kind, variant, resolvedVariant.
+
+412
+00:24:46,450 --> 00:24:50,053
+Follow the declarations and event paths as a single implementation.
+
+413
+00:24:50,053 --> 00:24:54,017
+The adjacent explanation describes the contract; the complete source is available
+
+414
+00:24:54,017 --> 00:24:57,621
+with the lesson so you can inspect the remaining context.
+
+415
+00:24:58,996 --> 00:25:02,574
+VER-002 · Answer · block 3 · page 3
+
+416
+00:25:03,699 --> 00:25:06,627
+This is the answer code, part 3 of 3.
+
+417
+00:25:06,627 --> 00:25:09,555
+Read this part in the context of Fixed version.
+
+418
+00:25:09,555 --> 00:25:12,808
+Follow the declarations and event paths as a single implementation.
+
+419
+00:25:12,808 --> 00:25:16,387
+The adjacent explanation describes the contract; the complete source is available
+
+420
+00:25:16,387 --> 00:25:19,641
+with the lesson so you can inspect the remaining context.
+
+421
+00:25:21,016 --> 00:25:23,330
+VER-002 · Fixed version
+
+422
+00:25:24,455 --> 00:25:24,840
+Notes:
+
+423
+00:25:26,215 --> 00:25:28,223
+VER-002 · Fixed version
+
+424
+00:25:29,348 --> 00:25:33,124
+The logging is in an effect, which is where side effects
+
+425
+00:25:33,124 --> 00:25:36,901
+belong, and only exists in development mode. - warnedAboutKind is module-level,
+
+426
+00:25:36,901 --> 00:25:40,677
+so an application logs the warning once, not once per button.
+
+427
+00:25:40,677 --> 00:25:45,484
+A compatibility limitation: changing the default from 'primary' to undefined can be invisible to
+
+428
+00:25:45,484 --> 00:25:49,947
+ordinary template consumers: the resolved variant is still 'primary' when nothing is set.
+
+429
+00:25:49,947 --> 00:25:52,694
+Code reading button.kind() from a component reference would
+
+430
+00:25:52,694 --> 00:25:55,441
+now see undefined; mention it in the changelog.
+
+431
+00:25:56,816 --> 00:25:59,065
+VER-002 · Follow-up 1
+
+432
+00:26:00,190 --> 00:26:04,083
+Could input({ alias: 'kind' }) solve this with one input?
+
+433
+00:26:04,083 --> 00:26:04,862
+Why not?
+
+434
+00:26:10,226 --> 00:26:14,845
+One alias gives one public binding name for an input; it does
+
+435
+00:26:14,845 --> 00:26:19,079
+not generally expose two independently accepted names with a documented precedence.
+
+436
+00:26:19,079 --> 00:26:22,928
+Renaming only the TypeScript property while aliasing kind keeps the
+
+437
+00:26:22,928 --> 00:26:26,393
+old template API rather than introducing variant alongside it.
+
+438
+00:26:26,393 --> 00:26:29,472
+Two inputs with an unset state support both
+
+439
+00:26:29,472 --> 00:26:32,552
+names during migration and make conflict resolution explicit.
+
+440
+00:26:32,552 --> 00:26:36,016
+Test the public binding metadata and consumer templates instead
+
+441
+00:26:36,016 --> 00:26:39,096
+of assuming a property rename changes both names.
+
+442
+00:26:40,471 --> 00:26:42,804
+VER-002 · Follow-up 2
+
+443
+00:26:43,929 --> 00:26:47,501
+How would your ng update migration find kind
+
+444
+00:26:47,501 --> 00:26:50,628
+used through setInput or a host directive?
+
+445
+00:26:55,670 --> 00:26:58,823
+Use AST and symbol analysis for known component
+
+446
+00:26:58,823 --> 00:27:01,583
+references and statically resolvable setInput string names.
+
+447
+00:27:01,583 --> 00:27:05,131
+Inspect directive composition metadata for exposed or renamed bindings
+
+448
+00:27:05,131 --> 00:27:08,679
+and update templates according to the actual public name.
+
+449
+00:27:08,679 --> 00:27:11,833
+Dynamic expressions and generated code may need a
+
+450
+00:27:11,833 --> 00:27:14,592
+diagnostic report rather than an automatic rewrite.
+
+451
+00:27:14,592 --> 00:27:19,323
+Keep fixtures for aliases, both-name conflicts, unrelated kind properties, and repeat runs.
+
+452
+00:27:19,323 --> 00:27:24,054
+A safe migration reports uncertainty instead of making a broad text replacement.
+
+453
+00:27:25,429 --> 00:27:27,495
+VER-002 · Follow-up 3
+
+454
+00:27:28,619 --> 00:27:32,697
+How do you know when it is safe to remove kind?
+
+455
+00:27:32,697 --> 00:27:34,551
+What data would you collect?
+
+456
+00:27:39,651 --> 00:27:42,750
+Collect static usage scans, migration completion, consumer build results,
+
+457
+00:27:42,750 --> 00:27:45,849
+and confirmations from owners within the published support window.
+
+458
+00:27:45,849 --> 00:27:49,293
+Include direct property reads and programmatic inputs, not only templates.
+
+459
+00:27:49,293 --> 00:27:53,081
+Development warnings can guide teams, but should not silently transmit telemetry.
+
+460
+00:27:53,081 --> 00:27:56,524
+Remove kind in the announced major when supported consumers have
+
+461
+00:27:56,524 --> 00:27:59,968
+a workable path, with release notes and a final migration.
+
+462
+00:27:59,968 --> 00:28:02,723
+Lack of warnings in the library's demo is
+
+463
+00:28:02,723 --> 00:28:05,133
+not evidence that all product teams migrated.
+
+464
+00:28:06,509 --> 00:28:08,490
+VER-003 · Scenario
+
+465
+00:28:09,615 --> 00:28:15,179
+We now review VER-003: A package that leaks its internals and duplicates Angular.
+
+466
+00:28:15,179 --> 00:28:20,315
+Inspect the consumer contract and identify the mechanism behind each reported defect.
+
+467
+00:28:21,689 --> 00:28:23,313
+VER-003 · Scenario
+
+468
+00:28:24,438 --> 00:28:30,068
+These are the published package.json and entry point of @acme/ui, built with ng-packagr.
+
+469
+00:28:30,068 --> 00:28:33,534
+Three reports came in after the last release:
+
+470
+00:28:34,909 --> 00:28:37,349
+VER-003 · Scenario · item 1
+
+471
+00:28:38,474 --> 00:28:43,566
+"Upgrading @acme/ui broke our app with NG0203: inject() must be called from
+
+472
+00:28:43,566 --> 00:28:48,234
+an injection context, and our bundle contains two copies of @angular/core.".
+
+473
+00:28:49,609 --> 00:28:51,689
+VER-003 · Scenario · item 2
+
+474
+00:28:52,814 --> 00:28:55,810
+"We only use the button, but we had to install date-fns
+
+475
+00:28:55,810 --> 00:28:58,534
+and we now get its type errors in our build.".
+
+476
+00:28:59,909 --> 00:29:02,700
+VER-003 · Scenario · item 3
+
+477
+00:29:03,825 --> 00:29:07,334
+"You removed domUtils in a minor release and broke
+
+478
+00:29:07,334 --> 00:29:10,454
+our code." (The team imports isFocusable from @acme/ui.).
+
+479
+00:29:11,829 --> 00:29:15,335
+VER-003 · Scenario · block 1 · page 1
+
+480
+00:29:16,460 --> 00:29:19,329
+This is the original code, part 1 of 1.
+
+481
+00:29:19,329 --> 00:29:21,879
+Read this part in the context of Scenario.
+
+482
+00:29:21,879 --> 00:29:25,067
+Trace which element or value the consumer actually interacts with.
+
+483
+00:29:25,067 --> 00:29:28,574
+We will compare this implementation with the correction after the question.
+
+484
+00:29:29,949 --> 00:29:33,352
+VER-003 · Scenario · block 2 · page 1
+
+485
+00:29:34,477 --> 00:29:37,261
+This is the original code, part 1 of 1.
+
+486
+00:29:37,261 --> 00:29:39,736
+Read this part in the context of Scenario.
+
+487
+00:29:39,736 --> 00:29:42,830
+Trace which element or value the consumer actually interacts with.
+
+488
+00:29:42,830 --> 00:29:46,234
+We will compare this implementation with the correction after the question.
+
+489
+00:29:47,609 --> 00:29:49,823
+VER-003 · Interview question
+
+490
+00:29:50,948 --> 00:29:56,150
+Explain each report, then describe how you would structure the package and its dependencies.
+
+491
+00:29:56,150 --> 00:29:59,124
+Which of your fixes are themselves breaking changes?
+
+492
+00:30:05,774 --> 00:30:09,511
+VER-003 · Report 1: Angular as a regular dependency
+
+493
+00:30:10,636 --> 00:30:14,724
+Listing @angular/core under dependencies lets the package manager install a separate
+
+494
+00:30:14,724 --> 00:30:18,813
+copy for the library whenever the application's version does not satisfy
+
+495
+00:30:18,813 --> 00:30:22,530
+the range, or the package manager's layout keeps them apart.
+
+496
+00:30:22,530 --> 00:30:27,362
+Two copies of Angular means two sets of injection tokens and two runtimes:
+
+497
+00:30:27,362 --> 00:30:32,195
+the library's inject() calls run against a framework instance that has no active
+
+498
+00:30:32,195 --> 00:30:36,284
+injection context, which produces NG0203, and the bundle carries Angular twice.
+
+499
+00:30:37,659 --> 00:30:41,933
+VER-003 · Report 1: Angular as a regular dependency
+
+500
+00:30:43,058 --> 00:30:46,511
+Frameworks and any package whose instance must be
+
+501
+00:30:46,511 --> 00:30:49,965
+shared (Angular, the CDK, RxJS) belong in peerDependencies.
+
+502
+00:30:49,965 --> 00:30:54,281
+The application installs exactly one copy, and the package manager
+
+503
+00:30:54,281 --> 00:30:58,598
+reports a conflict instead of silently duplicating it. tslib stays
+
+504
+00:30:58,598 --> 00:31:02,483
+in dependencies (it is what ng-packagr's own template does).
+
+505
+00:31:03,859 --> 00:31:07,907
+VER-003 · Report 2: one entry point for everything
+
+506
+00:31:09,032 --> 00:31:11,976
+With a single entry point, every consumer depends
+
+507
+00:31:11,976 --> 00:31:14,920
+on every component's dependencies, types and module-level code.
+
+508
+00:31:14,920 --> 00:31:17,863
+The button's users pay for the date picker.
+
+509
+00:31:19,239 --> 00:31:23,469
+VER-003 · Report 2: one entry point for everything
+
+510
+00:31:24,594 --> 00:31:30,162
+Fix: secondary entry points, one per component family: @acme/ui/button, @acme/ui/select,
+
+511
+00:31:30,162 --> 00:31:35,731
+@acme/ui/date-picker. ng-packagr builds each one separately, and only the date
+
+512
+00:31:35,731 --> 00:31:40,744
+picker imports date-fns, which becomes an optional peer dependency.
+
+513
+00:31:42,119 --> 00:31:46,039
+VER-003 · Report 3: export made internals public
+
+514
+00:31:47,164 --> 00:31:51,075
+export from internal/dom-utils published every function in that file.
+
+515
+00:31:51,075 --> 00:31:55,856
+Whatever the folder name says, a symbol importable from the package
+
+516
+00:31:55,856 --> 00:32:00,637
+is public API (see VER-001), and removing it was a breaking
+
+517
+00:32:00,637 --> 00:32:04,984
+change in a minor release. select-option-row.component has the same problem.
+
+518
+00:32:06,359 --> 00:32:10,412
+VER-003 · Report 3: export made internals public
+
+519
+00:32:11,537 --> 00:32:14,828
+Fix: explicit, named exports from each entry point,
+
+520
+00:32:14,828 --> 00:32:19,766
+so publishing something is a deliberate act, plus an API report (golden
+
+521
+00:32:19,766 --> 00:32:24,703
+file) checked in CI so any change to the public surface is
+
+522
+00:32:24,703 --> 00:32:25,937
+visible in review.
+
+523
+00:32:25,937 --> 00:32:31,286
+Share internal code between entry points through a dedicated internal entry point (for
+
+524
+00:32:31,286 --> 00:32:36,224
+example @acme/ui/internal) documented as having no compatibility guarantees, or keep it unexported.
+
+525
+00:32:37,599 --> 00:32:41,339
+VER-003 · Answer · block 1 · page 1
+
+526
+00:32:42,464 --> 00:32:45,524
+This is the answer code, part 1 of 2.
+
+527
+00:32:45,524 --> 00:32:46,544
+Focus on peerDependencies.
+
+528
+00:32:46,544 --> 00:32:49,944
+Follow the declarations and event paths as a single implementation.
+
+529
+00:32:49,944 --> 00:32:53,684
+The adjacent explanation describes the contract; the complete source is available
+
+530
+00:32:53,684 --> 00:32:57,084
+with the lesson so you can inspect the remaining context.
+
+531
+00:32:58,459 --> 00:33:02,037
+VER-003 · Answer · block 2 · page 2
+
+532
+00:33:03,162 --> 00:33:06,090
+This is the answer code, part 2 of 2.
+
+533
+00:33:06,090 --> 00:33:09,018
+Read this part in the context of Fixed structure.
+
+534
+00:33:09,018 --> 00:33:12,271
+Follow the declarations and event paths as a single implementation.
+
+535
+00:33:12,271 --> 00:33:15,850
+The adjacent explanation describes the contract; the complete source is available
+
+536
+00:33:15,850 --> 00:33:19,104
+with the lesson so you can inspect the remaining context.
+
+537
+00:33:20,479 --> 00:33:24,020
+VER-003 · Answer · block 3 · page 1
+
+538
+00:33:25,145 --> 00:33:28,043
+This is the answer code, part 1 of 1.
+
+539
+00:33:28,043 --> 00:33:30,941
+Read this part in the context of Fixed structure.
+
+540
+00:33:30,941 --> 00:33:34,161
+Follow the declarations and event paths as a single implementation.
+
+541
+00:33:34,161 --> 00:33:37,703
+The adjacent explanation describes the contract; the complete source is available
+
+542
+00:33:37,703 --> 00:33:40,924
+with the lesson so you can inspect the remaining context.
+
+543
+00:33:42,299 --> 00:33:44,181
+VER-003 · Fixed structure
+
+544
+00:33:45,306 --> 00:33:48,443
+"sideEffects": false promises bundlers that importing a module has no
+
+545
+00:33:48,443 --> 00:33:51,580
+effects of its own, so unused modules can be dropped.
+
+546
+00:33:51,580 --> 00:33:55,659
+It is only true if no file does work at the top level
+
+547
+00:33:55,659 --> 00:33:59,424
+(registering icons, patching globals); that must be a rule in code review.
+
+548
+00:34:00,799 --> 00:34:04,725
+VER-003 · Which fixes are breaking · comparison 1
+
+549
+00:34:05,850 --> 00:34:08,925
+Fix: Moving Angular and the CDK to peerDependencies.
+
+550
+00:34:08,925 --> 00:34:12,384
+Breaking?: No for applications, which already install them; package
+
+551
+00:34:12,384 --> 00:34:15,844
+managers may now report conflicts they used to hide..
+
+552
+00:34:17,219 --> 00:34:21,325
+VER-003 · Which fixes are breaking · comparison 2
+
+553
+00:34:22,450 --> 00:34:24,316
+Fix: Adding secondary entry points.
+
+554
+00:34:24,316 --> 00:34:29,544
+Breaking?: No, if the primary entry point keeps re-exporting them for a deprecation period..
+
+555
+00:34:30,919 --> 00:34:34,926
+VER-003 · Which fixes are breaking · comparison 3
+
+556
+00:34:36,051 --> 00:34:38,373
+Fix: Making date-fns an optional peer.
+
+557
+00:34:38,373 --> 00:34:42,244
+Breaking?: Yes for date-picker users, who must now install it..
+
+558
+00:34:43,619 --> 00:34:48,525
+VER-003 · Which fixes are breaking · comparison 4
+
+559
+00:34:49,650 --> 00:34:51,434
+Fix: Removing accidental exports.
+
+560
+00:34:51,434 --> 00:34:52,326
+Breaking?: Yes.
+
+561
+00:34:52,326 --> 00:34:55,004
+Deprecate first, remove in a major..
+
+562
+00:34:56,379 --> 00:34:58,969
+VER-003 · Which fixes are breaking
+
+563
+00:35:00,094 --> 00:35:02,684
+domUtils itself should be restored in a patch
+
+564
+00:35:02,684 --> 00:35:05,274
+release, deprecated, and removed in the next major.
+
+565
+00:35:05,274 --> 00:35:09,484
+Apologise in the release notes; it was a breaking change in a minor.
+
+566
+00:35:10,859 --> 00:35:12,969
+VER-003 · Follow-up 1
+
+567
+00:35:14,094 --> 00:35:17,743
+Which Angular versions should @acme/ui 5.x declare in its
+
+568
+00:35:17,743 --> 00:35:21,393
+peer range, and how would you test that claim?
+
+569
+00:35:26,651 --> 00:35:29,816
+Declare only the framework versions actually supported and tested.
+
+570
+00:35:29,816 --> 00:35:34,037
+Build a consumer matrix at the minimum and relevant releases within the
+
+571
+00:35:34,037 --> 00:35:38,258
+range, including forms, secondary entry points, harnesses, and zoneless behavior where supported.
+
+572
+00:35:38,258 --> 00:35:41,775
+A broad greater-than-or-equal range claims future compatibility you cannot validate.
+
+573
+00:35:41,775 --> 00:35:46,348
+Use bounded compatible ranges when appropriate and revise them as releases are tested.
+
+574
+00:35:46,348 --> 00:35:49,161
+Do not choose the range solely from the
+
+575
+00:35:49,161 --> 00:35:51,623
+framework version installed in the library workspace.
+
+576
+00:35:52,998 --> 00:35:55,232
+VER-003 · Follow-up 2
+
+577
+00:35:56,358 --> 00:36:02,922
+How would you migrate consumers from @acme/ui to @acme/ui/button imports automatically?
+
+578
+00:36:08,219 --> 00:36:11,570
+Resolve named imports from the root entry point and
+
+579
+00:36:11,570 --> 00:36:14,550
+map supported symbols to their feature entry points.
+
+580
+00:36:14,550 --> 00:36:17,529
+Split mixed imports where needed, preserve type-only imports
+
+581
+00:36:17,529 --> 00:36:20,136
+and aliases, and update tests and documentation.
+
+582
+00:36:20,136 --> 00:36:22,370
+Report ambiguous wildcard or dynamic imports.
+
+583
+00:36:22,370 --> 00:36:26,467
+Validate the result against the packed package, not monorepo path mappings.
+
+584
+00:36:26,467 --> 00:36:29,819
+Keep a root compatibility re-export during a deprecation window
+
+585
+00:36:29,819 --> 00:36:33,171
+when feasible, then remove it in the announced major.
+
+586
+00:36:34,546 --> 00:36:36,799
+VER-003 · Follow-up 3
+
+587
+00:36:37,924 --> 00:36:43,294
+What does a consumer see when two of their dependencies need incompatible peer ranges?
+
+588
+00:36:48,701 --> 00:36:52,079
+The package manager may report a peer conflict or
+
+589
+00:36:52,079 --> 00:36:55,083
+refuse installation depending on its version and policy.
+
+590
+00:36:55,083 --> 00:36:58,461
+Forcing installation can produce a graph outside one library's
+
+591
+00:36:58,461 --> 00:37:01,465
+supported range, leading to build or runtime failures.
+
+592
+00:37:01,465 --> 00:37:03,717
+Align dependency versions, upgrade a library,
+
+593
+00:37:03,717 --> 00:37:06,721
+or use supported alternatives rather than ignoring the
+
+594
+00:37:06,721 --> 00:37:07,471
+conflict automatically.
+
+595
+00:37:07,471 --> 00:37:10,850
+Inspect the resolved graph and test the resulting consumer.
+
+596
+00:37:10,850 --> 00:37:15,731
+Peer metadata communicates a constraint; it does not prove runtime compatibility by itself.
+
+597
+00:37:17,106 --> 00:37:19,225
+Implementation clarification · Direct-reference compatibility
+
+598
+00:37:20,350 --> 00:37:25,011
+The deprecation correction changes kind() from primary to undefined when unset.
+
+599
+00:37:25,011 --> 00:37:28,401
+Consumers reading that getter can observe the change
+
+600
+00:37:28,401 --> 00:37:31,368
+even though the rendered default stays primary.
+
+601
+00:37:31,368 --> 00:37:33,910
+Treat those reads as migration cases.
+
+602
+00:37:35,286 --> 00:37:37,820
+Implementation clarification · Installation versus imports
+
+603
+00:37:38,945 --> 00:37:43,770
+Secondary entry points alone do not make date-fns optional to install.
+
+604
+00:37:43,770 --> 00:37:47,280
+Optional peer metadata or a separate package must
+
+605
+00:37:47,280 --> 00:37:50,351
+match the isolated feature and its declarations.
+
+606
+00:37:51,726 --> 00:37:52,894
+Final review checklist
+
+607
+00:37:54,018 --> 00:37:58,304
+Review the lesson by answering each main question and follow-up aloud.
+
+608
+00:37:58,304 --> 00:38:01,421
+For Versioning Angular Libraries: Compatibility and Safe Migration,
+
+609
+00:38:01,421 --> 00:38:04,148
+connect each reported symptom to its mechanism,
+
+610
+00:38:04,148 --> 00:38:08,044
+explain the corrected public contract, and name a regression check
+
+611
+00:38:08,044 --> 00:38:09,992
+that exercises the consumer path.
+
+612
+00:38:09,992 --> 00:38:12,329
+State compatibility and accessibility limitations clearly.
+
+613
+00:38:12,329 --> 00:38:15,056
+The linked transcript, complete code, source questions,
+
+614
+00:38:15,056 --> 00:38:18,952
+and verification report let you repeat the exercises at your
+
+615
+00:38:18,952 --> 00:38:19,732
+own pace.
+
+616
+00:38:20,773 --> 00:38:23,111
+That's the end of lesson 5.
+

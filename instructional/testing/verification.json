@@ -1,0 +1,48 @@
+{
+  "generatedOn": "2026-10-05",
+  "seconds": 1160.5,
+  "chapters": [
+    {
+      "title": "Introduction and foundations",
+      "seconds": 0
+    },
+    {
+      "title": "TST-001: Tests that pass while the component is broken",
+      "seconds": 593.6
+    },
+    {
+      "title": "Final review checklist",
+      "seconds": 1129.159
+    }
+  ],
+  "width": 1920,
+  "height": 1080,
+  "videoCodec": "h264",
+  "audioCodec": "aac",
+  "subtitleCodec": "mov_text",
+  "bytes": 27395568,
+  "runtimeAssertions": 5,
+  "assertions": [
+    "Harness filters a group by public label",
+    "Harness selects by label through event path",
+    "Harness keyboard operation wraps",
+    "Harness reports actual focus",
+    "Harness remains scoped to selected group"
+  ],
+  "consumerCompilationChecks": 0,
+  "consumerAssertions": [],
+  "checkedSlides": 50,
+  "captions": 325,
+  "estimatedAzureDollars": 0.273045,
+  "reservedCharacters": 18203,
+  "preservedDrillPauses": 4,
+  "mainQuestions": 1,
+  "followupQuestions": 3,
+  "fullDecodePassed": true,
+  "browserPlaybackPassed": true,
+  "checkedVideoSeeks": [
+    20,
+    671.56,
+    1140.333292
+  ]
+}

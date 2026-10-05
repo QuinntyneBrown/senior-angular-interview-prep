@@ -1,0 +1,2133 @@
+{
+  "duration": 2304.592583,
+  "chunks": [
+    {
+      "heading": null,
+      "start": 0,
+      "duration": 9.38,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Senior Angular interview preparation, lesson 5. Versioning Angular Libraries: Compatibility and Safe Migration.",
+          "start": 0,
+          "duration": 7.172
+        }
+      ]
+    },
+    {
+      "heading": "Define the public contract before choosing a version",
+      "start": 9.38,
+      "duration": 24.7,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Define the public contract before choosing a version",
+          "start": 9.38,
+          "duration": 3.116
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Welcome to the versioning lesson. We will classify twelve proposed changes, review an input deprecation, and repair a package that leaks internals and duplicates Angular. Semantic versioning becomes useful only when the package defines what its public contract includes. For a component library, that contract extends beyond method signatures.",
+          "start": 13.621,
+          "duration": 19.084
+        }
+      ]
+    },
+    {
+      "heading": "Define the public contract before choosing a version · 2",
+      "start": 34.08,
+      "duration": 26.5,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Define the public contract before choosing a version · 2",
+          "start": 34.08,
+          "duration": 3.693
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Inputs, outputs, selectors, tokens, documented DOM hooks, keyboard behavior, forms integration, defaults, peer ranges, and testing harnesses can all affect consumers. An accidental export can become an external dependency even if its author intended it to be private. A private intention does not remove a name from the package that was actually published.",
+          "start": 38.898,
+          "duration": 20.307
+        }
+      ]
+    },
+    {
+      "heading": "Define the public contract before choosing a version · 3",
+      "start": 60.58,
+      "duration": 27.48,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Define the public contract before choosing a version · 3",
+          "start": 60.58,
+          "duration": 3.244
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Ask whether a supported consumer that worked before can continue to work without modification. Then distinguish an intentional public promise from an unsupported dependency and consider the practical rollout. A change can be formally compatible and still deserve a visual review. A change can fix a bug and still break a workaround. State the compatibility policy instead of assuming that the word fix determines the release number.",
+          "start": 64.949,
+          "duration": 21.736
+        }
+      ]
+    },
+    {
+      "heading": "Input acceptance and output obligations",
+      "start": 88.06,
+      "duration": 23.38,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Input acceptance and output obligations",
+          "start": 88.06,
+          "duration": 1.864
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "An input accepts values from consumers. Widening its accepted type usually permits more existing uses without invalidating them. Narrowing it can make an existing template stop compiling. A new required input forces consumers to provide information they did not previously need. An optional input with a harmless default is generally additive.",
+          "start": 91.049,
+          "duration": 19.016
+        }
+      ]
+    },
+    {
+      "heading": "Input acceptance and output obligations · 2",
+      "start": 111.44,
+      "duration": 23.02,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Input acceptance and output obligations · 2",
+          "start": 111.44,
+          "duration": 2.355
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "An output is different. Consumers handle the values the library emits. Widening an output to include null can break a handler that dereferences the original non-null value. The library has increased the obligations of the receiver. Do not classify input and output changes with the same rule merely because both use a union type.",
+          "start": 114.92,
+          "duration": 18.165
+        }
+      ]
+    },
+    {
+      "heading": "Input acceptance and output obligations · 3",
+      "start": 134.46,
+      "duration": 28.24,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Input acceptance and output obligations · 3",
+          "start": 134.46,
+          "duration": 2.537
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Defaults also carry meaning. Changing medium to small can alter layout in every template that omitted the size. Even if no compile error appears, consumers may rely on the old visual result. Evaluate documented guarantees, snapshots, and product impact. A complete interview answer says which changes are clearly breaking and which depend on the contract, then explains the evidence that resolves each uncertain case.",
+          "start": 138.123,
+          "duration": 23.202
+        }
+      ]
+    },
+    {
+      "heading": "Behavior and presentation can break consumers",
+      "start": 162.7,
+      "duration": 26.6,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Behavior and presentation can break consumers",
+          "start": 162.7,
+          "duration": 2.158
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Switching to OnPush can expose consumers that mutate an object in place or dynamically insert a child that relies on zone-triggered checks. A keyboard change can improve conformance while changing how existing interactions behave. Internal DOM changes may be safe under a documented encapsulation policy, but tests, selectors, and custom styles can still depend on them in practice.",
+          "start": 165.983,
+          "duration": 21.942
+        }
+      ]
+    },
+    {
+      "heading": "Behavior and presentation can break consumers · 2",
+      "start": 189.3,
+      "duration": 25.64,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Behavior and presentation can break consumers · 2",
+          "start": 189.3,
+          "duration": 2.892
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Build an inventory of supported customization points. If teams were instructed to use an internal class, it is not really internal. If the harness supplies the supported interaction API, update the harness with the component. Theme tokens need contrast and visual checks; a darker color is not automatically a breaking change or automatically harmless.",
+          "start": 193.318,
+          "duration": 20.247
+        }
+      ]
+    },
+    {
+      "heading": "Behavior and presentation can break consumers · 3",
+      "start": 214.94,
+      "duration": 23.92,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Behavior and presentation can break consumers · 3",
+          "start": 214.94,
+          "duration": 3.007
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Raise a minimum Angular peer version only when dropping support is intentional and tested. A package that claims compatibility with a range should install and compile representative consumers across that range, including its forms and testing entry points. Passing on the newest framework alone does not validate the minimum.",
+          "start": 219.072,
+          "duration": 18.413
+        }
+      ]
+    },
+    {
+      "heading": "Deprecation preserves behavior while changing guidance",
+      "start": 238.86,
+      "duration": 22.78,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Deprecation preserves behavior while changing guidance",
+          "start": 238.86,
+          "duration": 2.253
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A deprecation introduces a supported replacement while keeping the old contract usable for an announced period. In the button rename, both inputs need an unset state so resolution can distinguish absence from an explicitly selected primary value. The new input wins, then the old input, then the default.",
+          "start": 242.238,
+          "duration": 18.027
+        }
+      ]
+    },
+    {
+      "heading": "Deprecation preserves behavior while changing guidance · 2",
+      "start": 261.64,
+      "duration": 25.46,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Deprecation preserves behavior while changing guidance · 2",
+          "start": 261.64,
+          "duration": 2.701
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Warnings should be actionable and limited to actual deprecated usage in development. A computed derivation should stay pure. Put the diagnostic side effect in an appropriate effect and choose whether once means once per instance or once per application. Document that choice. Do not teach teams to ignore a flood of warnings from components that already use the new name.",
+          "start": 265.466,
+          "duration": 20.259
+        }
+      ]
+    },
+    {
+      "heading": "Deprecation preserves behavior while changing guidance · 3",
+      "start": 287.1,
+      "duration": 29.7,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Deprecation preserves behavior while changing guidance · 3",
+          "start": 287.1,
+          "duration": 3.153
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Compatibility also includes direct component references. If callers read the old input getter, changing its default from primary to undefined is observable even when the rendered appearance is unchanged. State that limitation and inventory such uses. For strict compatibility, consider a distinct resolved property or a bridging API. A visual equivalence claim should not erase a public property change.",
+          "start": 291.378,
+          "duration": 24.047
+        }
+      ]
+    },
+    {
+      "heading": "Migrations need more than a search and replace",
+      "start": 316.8,
+      "duration": 23.36,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Migrations need more than a search and replace",
+          "start": 316.8,
+          "duration": 2.692
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A template migration can rename a static kind attribute and a bound kind input when it knows the element is the library component. It should not rewrite every unrelated kind attribute in the repository. Parse templates and resolve symbols where the tooling supports it, then report uncertain cases rather than applying a destructive guess.",
+          "start": 320.617,
+          "duration": 18.168
+        }
+      ]
+    },
+    {
+      "heading": "Migrations need more than a search and replace · 2",
+      "start": 340.16,
+      "duration": 26.94,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Migrations need more than a search and replace · 2",
+          "start": 340.16,
+          "duration": 3.703
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Programmatic setInput calls, host directive aliases, dynamic templates, and computed property names need separate analysis. A migration can handle statically resolvable string names and known imports, while emitting a report for dynamic uses. Make migrations repeatable and test both changed and unchanged files. The report should explain the manual correction and replacement API.",
+          "start": 344.988,
+          "duration": 20.737
+        }
+      ]
+    },
+    {
+      "heading": "Migrations need more than a search and replace · 3",
+      "start": 367.1,
+      "duration": 27.54,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Migrations need more than a search and replace · 3",
+          "start": 367.1,
+          "duration": 4.038
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Publish a changelog, replacement examples, editor deprecation hints, and a removal version. Gather data from repository scans, CI builds, and consumer owners before removing the old contract. Runtime diagnostics can help during development, but avoid secretly transmitting consumer code or telemetry. Migration evidence should be explicit and proportionate to the organization.",
+          "start": 372.263,
+          "duration": 21.002
+        }
+      ]
+    },
+    {
+      "heading": "Package boundaries and peer dependencies",
+      "start": 394.64,
+      "duration": 28.38,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Package boundaries and peer dependencies",
+          "start": 394.64,
+          "duration": 2.054
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Angular libraries should cooperate with the application's Angular installation. Declaring Angular framework packages as ordinary runtime dependencies can allow multiple incompatible copies. That can lead to injection context and identity problems, although a specific NG0203 error still needs diagnosis rather than a one-cause assumption. Peer dependencies express the versions the consumer must supply.",
+          "start": 397.819,
+          "duration": 23.826
+        }
+      ]
+    },
+    {
+      "heading": "Package boundaries and peer dependencies · 2",
+      "start": 423.02,
+      "duration": 26.42,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Package boundaries and peer dependencies · 2",
+          "start": 423.02,
+          "duration": 2.392
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use explicit exports to keep the public surface deliberate. A wildcard export can publish internal helpers and component rows accidentally. Separate entry points let consumers import the feature they need, and a testing entry point can expose harnesses without making them part of the main application API. However, an entry point alone does not make a dependency optional at installation time.",
+          "start": 426.537,
+          "duration": 21.528
+        }
+      ]
+    },
+    {
+      "heading": "Package boundaries and peer dependencies · 3",
+      "start": 449.44,
+      "duration": 27.78,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Package boundaries and peer dependencies · 3",
+          "start": 449.44,
+          "duration": 2.493
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "If a date picker depends on a date library, simply moving it to a secondary entry point may improve imports and bundles but still leave a required root dependency. Making an optional peer safe requires isolating references and documenting the feature's requirement, or using a separate package. Evaluate package manager installation, TypeScript resolution, and bundling separately. They are different phases with different failure modes.",
+          "start": 453.058,
+          "duration": 22.787
+        }
+      ]
+    },
+    {
+      "heading": "Release gates and support policy",
+      "start": 477.22,
+      "duration": 24.68,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Release gates and support policy",
+          "start": 477.22,
+          "duration": 1.912
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A release gate can compare public declarations, compile representative templates, run behavior and accessibility tests, inspect the packed artifact, and review theme snapshots. A generated API diff is useful, but it cannot understand every default or keyboard change. Combine mechanical checks with a release checklist that asks whether consumer behavior changed.",
+          "start": 480.257,
+          "duration": 20.268
+        }
+      ]
+    },
+    {
+      "heading": "Release gates and support policy · 2",
+      "start": 501.9,
+      "duration": 29.86,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Release gates and support policy · 2",
+          "start": 501.9,
+          "duration": 2.623
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Decide how many major lines to support according to staffing and consumer upgrade schedules. Support should state security patches, critical fixes, supported framework ranges, and the end date. A breaking security fix may need a new major and compatible backports or a documented mitigation for older lines. Communicate urgency and migration steps; do not silently redefine a minor release as breaking while claiming ordinary semantic versioning.",
+          "start": 505.648,
+          "duration": 24.737
+        }
+      ]
+    },
+    {
+      "heading": "Release gates and support policy · 3",
+      "start": 531.76,
+      "duration": 25.38,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Release gates and support policy · 3",
+          "start": 531.76,
+          "duration": 2.86
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Before publishing, install the packed package into a clean consumer project. Test each supported entry point without relying on monorepo path mappings. Verify peers, declarations, exports, assets, and dependency isolation. The consumer should receive the package you tested, not an internal build layout that accidentally makes missing files available.",
+          "start": 535.745,
+          "duration": 20.02
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Scenario",
+      "start": 557.14,
+      "duration": 13.14,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Scenario",
+          "start": 557.14,
+          "duration": 1.9
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "We now review VER-001: Is this a breaking change?. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+          "start": 560.165,
+          "duration": 8.74
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Scenario",
+      "start": 570.28,
+      "duration": 17.64,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Scenario",
+          "start": 570.28,
+          "duration": 1.761
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`@acme/ui` is at version 4.6.0 and follows semantic versioning. The release manager lists the changes planned for the next release of `ui-select`, and asks you to decide which ones force the next version to be 5.0.0.",
+          "start": 573.166,
+          "duration": 13.379
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Scenario · block 1 · page 1",
+      "start": 587.92,
+      "duration": 19.46,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Scenario · block 1 · page 1",
+          "start": 587.92,
+          "duration": 3.969
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 1. Focus on SelectOption, SelectComponent, options, size. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 593.014,
+          "duration": 12.991
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Scenario",
+      "start": 607.38,
+      "duration": 5.42,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Scenario",
+          "start": 607.38,
+          "duration": 2.086
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Planned changes:",
+          "start": 610.591,
+          "duration": 0.834
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Scenario · item 1",
+      "start": 612.8,
+      "duration": 8,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Scenario · item 1",
+          "start": 612.8,
+          "duration": 2.75
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Add an optional `placeholder` input with default `''`.",
+          "start": 616.675,
+          "duration": 2.75
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Scenario · item 2",
+      "start": 620.8,
+      "duration": 7,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Scenario · item 2",
+          "start": 620.8,
+          "duration": 2.769
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Add a required `label` input.",
+          "start": 624.694,
+          "duration": 1.731
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Scenario · item 3",
+      "start": 627.8,
+      "duration": 7.98,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Scenario · item 3",
+          "start": 627.8,
+          "duration": 2.74
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Change the default `size` from `'medium'` to `'small'`.",
+          "start": 631.665,
+          "duration": 2.74
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Scenario · item 4",
+      "start": 635.78,
+      "duration": 8.86,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Scenario · item 4",
+          "start": 635.78,
+          "duration": 2.827
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Narrow `size` from `string` to `'small' | 'medium' | 'large'`.",
+          "start": 639.732,
+          "duration": 3.533
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Scenario · item 5",
+      "start": 644.64,
+      "duration": 8.94,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Scenario · item 5",
+          "start": 644.64,
+          "duration": 2.862
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Widen the `value` input from `SelectOption` to `SelectOption | null`.",
+          "start": 648.627,
+          "duration": 3.578
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Scenario · item 6",
+      "start": 653.58,
+      "duration": 9.36,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Scenario · item 6",
+          "start": 653.58,
+          "duration": 2.888
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Widen the `selectionChange` payload from `SelectOption` to `SelectOption | null`.",
+          "start": 657.593,
+          "duration": 3.972
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Scenario · item 7",
+      "start": 662.94,
+      "duration": 11.74,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Scenario · item 7",
+          "start": 662.94,
+          "duration": 2.737
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Replace the internal `<div>` list with `<ul>`/`<li>` and rename internal CSS classes.",
+          "start": 666.803,
+          "duration": 6.502
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Scenario · item 8",
+      "start": 674.68,
+      "duration": 8.54,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Scenario · item 8",
+          "start": 674.68,
+          "duration": 3.717
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Darken the semantic token `--ui-color-action-primary`.",
+          "start": 679.522,
+          "duration": 2.323
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Scenario · item 9",
+      "start": 683.22,
+      "duration": 8.82,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Scenario · item 9",
+          "start": 683.22,
+          "duration": 2.809
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Make Space select the highlighted option (today only Enter does).",
+          "start": 687.154,
+          "duration": 3.511
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Scenario · item 10",
+      "start": 692.04,
+      "duration": 11.12,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Scenario · item 10",
+          "start": 692.04,
+          "duration": 3.448
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Stop exporting `SelectOptionRowComponent`, which was exported from `public-api.ts` by accident.",
+          "start": 696.613,
+          "duration": 5.172
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Scenario · item 11",
+      "start": 703.16,
+      "duration": 9.5,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Scenario · item 11",
+          "start": 703.16,
+          "duration": 3.5
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Switch the component to `ChangeDetectionStrategy.OnPush`.",
+          "start": 707.785,
+          "duration": 3.5
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Scenario · item 12",
+      "start": 712.66,
+      "duration": 12.14,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Scenario · item 12",
+          "start": 712.66,
+          "duration": 4.059
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Raise the `@angular/core` peer dependency from `>=20` to `>=21`.",
+          "start": 717.844,
+          "duration": 5.581
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Interview question",
+      "start": 724.8,
+      "duration": 19.606,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Interview question",
+          "start": 724.8,
+          "duration": 2.078
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "For each change, is it breaking, not breaking, or \"it depends\"? Justify each one. Then tell me how you would stop accidental breaking changes from reaching a release.",
+          "start": 728.002,
+          "duration": 9.754
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Answer",
+      "start": 744.406,
+      "duration": 23.345,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Answer",
+          "start": 744.406,
+          "duration": 1.677
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A working definition: a change is breaking if a consumer who used only the documented public API has to change their code, or sees behaviour they reasonably relied on change. That makes writing down what the public API is (exports, selectors, inputs, outputs, types, tokens, keyboard behaviour) the first job of a library team.",
+          "start": 747.208,
+          "duration": 19.168
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Answer · comparison 1",
+      "start": 767.751,
+      "duration": 14.76,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Answer · comparison 1",
+          "start": 767.751,
+          "duration": 3.632
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "#: 1. Change: Optional input with a default. Verdict: Not breaking. Why: Existing templates compile and behave the same..",
+          "start": 772.508,
+          "duration": 8.628
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Answer · comparison 2",
+      "start": 782.511,
+      "duration": 19.66,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Answer · comparison 2",
+          "start": 782.511,
+          "duration": 3.268
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "#: 2. Change: Required input. Verdict: Breaking. Why: Every existing `<ui-select>` fails to compile. Stage it: optional with a dev-mode warning in a minor, required in the next major (see A11Y-001)..",
+          "start": 786.904,
+          "duration": 13.892
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Answer · comparison 3",
+      "start": 802.171,
+      "duration": 17.6,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Answer · comparison 3",
+          "start": 802.171,
+          "duration": 3.179
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "#: 3. Change: New default `size`. Verdict: Breaking. Why: No compile error, but every select that relied on the default changes size. Silent visual changes are the most expensive kind..",
+          "start": 806.475,
+          "duration": 11.921
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Answer · comparison 4",
+      "start": 819.771,
+      "duration": 16.98,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Answer · comparison 4",
+          "start": 819.771,
+          "duration": 3.31
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "#: 4. Change: Narrow `size` to a union. Verdict: Breaking. Why: Call sites passing other strings stop compiling. They were probably bugs, but the upgrade still fails..",
+          "start": 824.206,
+          "duration": 11.17
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Answer · comparison 5",
+      "start": 836.751,
+      "duration": 21.08,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Answer · comparison 5",
+          "start": 836.751,
+          "duration": 2.972
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "#: 5. Change: Widen an input type. Verdict: Usually not breaking. Why: Callers write inputs; accepting more values breaks no caller. It is breaking for code that reads `select.value()` from a component reference, because the result can now be `null`..",
+          "start": 840.848,
+          "duration": 15.608
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Answer · comparison 6",
+      "start": 857.831,
+      "duration": 19.74,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Answer · comparison 6",
+          "start": 857.831,
+          "duration": 3.536
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "#: 6. Change: Widen an output payload. Verdict: Breaking. Why: Consumers read outputs. A handler typed `(option: SelectOption)` now receives `null`, which strict templates reject, and untyped handlers crash at runtime..",
+          "start": 862.492,
+          "duration": 13.704
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Answer · comparison 7",
+      "start": 877.571,
+      "duration": 24.9,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Answer · comparison 7",
+          "start": 877.571,
+          "duration": 3.037
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "#: 7. Change: Internal DOM and class names. Verdict: Not breaking, if the policy says so. Why: DOM structure and internal classes must be documented as private, and tests should use the library's harnesses. Still list it in the changelog: Hyrum's law says someone styled `.ui-select__row`..",
+          "start": 881.733,
+          "duration": 19.363
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Answer · comparison 8",
+      "start": 902.471,
+      "duration": 20.48,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Answer · comparison 8",
+          "start": 902.471,
+          "duration": 2.996
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "#: 8. Change: Token value change. Verdict: Not breaking API; a design change. Why: Release it in a minor with release notes and screenshots. It must still meet contrast in every theme; screenshot tests in products will change..",
+          "start": 906.592,
+          "duration": 14.984
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Answer · comparison 9",
+      "start": 922.951,
+      "duration": 19.44,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Answer · comparison 9",
+          "start": 922.951,
+          "duration": 3.08
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "#: 9. Change: Space selects. Verdict: It depends; usually a minor fix. Why: It aligns with the ARIA pattern, so it is a bug fix. Call it out: consumers' end-to-end tests that press Space may change..",
+          "start": 927.156,
+          "duration": 13.86
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Answer · comparison 10",
+      "start": 942.391,
+      "duration": 18.1,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Answer · comparison 10",
+          "start": 942.391,
+          "duration": 3.284
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "#: 10. Change: Remove an accidental export. Verdict: Breaking. Why: Anything exported is public, whatever was intended. Deprecate it, keep exporting it until the next major, and mark it `@deprecated`..",
+          "start": 946.8,
+          "duration": 12.316
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Answer · comparison 11",
+      "start": 960.491,
+      "duration": 20.46,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Answer · comparison 11",
+          "start": 960.491,
+          "duration": 3.123
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "#: 11. Change: Switch to `OnPush`. Verdict: It depends; treat as breaking. Why: Consumers who mutate an input array in place (`options.push(...)`) relied on default change detection; under `OnPush` the list no longer updates..",
+          "start": 964.739,
+          "duration": 14.837
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Answer · comparison 12",
+      "start": 980.951,
+      "duration": 19.14,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Answer · comparison 12",
+          "start": 980.951,
+          "duration": 3.095
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "#: 12. Change: Raise the Angular peer range. Verdict: Breaking. Why: Applications on Angular 20 can no longer install it. Align with Angular's own release cadence: a new major of the library per Angular major..",
+          "start": 985.171,
+          "duration": 13.545
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Preventing accidental breaking changes",
+      "start": 1000.091,
+      "duration": 55.24,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Preventing accidental breaking changes",
+          "start": 1000.091,
+          "duration": 2.85
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "An API report in CI. Generate a \"golden\" file of the public TypeScript surface (exports, input and output types) on every pull request, and fail when it changes without an approved update. Angular itself guards its packages with golden API files. A change to the golden file makes the breaking question visible in review. Conventional commits with `BREAKING CHANGE:` footers, and release tooling that refuses a minor version when one is present. Visual regression tests for every component and token, so changes like 3 and 8 are seen, not discovered by consumers. Accessibility and keyboard tests written against behaviour, so changes like 9 are deliberate. Harnesses shipped with the library, so consumers' tests do not depend on internal DOM (change 7). A published policy stating what is public and how long deprecations last.",
+          "start": 1004.066,
+          "duration": 49.89
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Follow-up 1",
+      "start": 1055.331,
+      "duration": 41.719,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Follow-up 1",
+          "start": 1055.331,
+          "duration": 2.001
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "A security fix requires a breaking change. How do you release it to teams who are two majors behind?",
+          "start": 1058.457,
+          "duration": 6.606
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Publish the fix according to the compatibility policy and urgency. If a compatible security backport is feasible, release it on supported older majors with tests. If the fix truly requires a break, publish the new major with a focused migration and explain the risk and any temporary mitigation for teams that cannot upgrade immediately. Coordinate disclosure and support windows. Do not conceal a breaking change inside a supposedly compatible patch merely because the reason is security.",
+          "start": 1070.317,
+          "duration": 25.358
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Follow-up 2",
+      "start": 1097.05,
+      "duration": 42.333,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Follow-up 2",
+          "start": 1097.05,
+          "duration": 2.145
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How many major versions would you support at once, and what does \"support\" mean?",
+          "start": 1100.32,
+          "duration": 5.21
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Choose the number of supported major lines from team capacity, consumer release cadence, and risk, then publish exact dates and coverage. Support might include security patches and critical regressions without new features. State supported Angular ranges and what happens after end of support. One current line and one previous line can be practical for some organizations, but it is not a universal answer. Make the commitment sustainable and measurable rather than promising every historical version indefinitely.",
+          "start": 1110.84,
+          "duration": 27.168
+        }
+      ]
+    },
+    {
+      "heading": "VER-001 · Follow-up 3",
+      "start": 1139.383,
+      "duration": 40.143,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-001 · Follow-up 3",
+          "start": 1139.383,
+          "duration": 2.095
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Would you ever ship a breaking change in a minor release? Under what policy?",
+          "start": 1142.603,
+          "duration": 5.03
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Under ordinary semantic versioning, a breaking change belongs in a major release. If the organization adopts an explicit exception policy, communicate it before consumers rely on minor compatibility, label the change prominently, and provide migration and risk guidance. Calling a break a bug fix does not make it compatible. Prefer a new major or a staged opt-in path. Any exception weakens the useful guarantee of minor upgrades, so explain the trade-off honestly.",
+          "start": 1153.015,
+          "duration": 25.136
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · Scenario",
+      "start": 1179.526,
+      "duration": 15.1,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · Scenario",
+          "start": 1179.526,
+          "duration": 2.032
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "We now review VER-002: A deprecation that warns everyone and honours nobody. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+          "start": 1182.683,
+          "duration": 10.568
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · Scenario",
+      "start": 1194.626,
+      "duration": 15.4,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · Scenario",
+          "start": 1194.626,
+          "duration": 1.536
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`@acme/ui` is renaming the button's `kind` input to `variant`, to match every other component. The pull request is meant to ship in a minor release, keep `kind` working, and warn teams that still use it.",
+          "start": 1197.287,
+          "duration": 11.364
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · Scenario · block 1 · page 1",
+      "start": 1210.026,
+      "duration": 17.74,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · Scenario · block 1 · page 1",
+          "start": 1210.026,
+          "duration": 3.725
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 2. Focus on ButtonVariant, ButtonComponent. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1214.876,
+          "duration": 11.515
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · Scenario · block 2 · page 2",
+      "start": 1227.766,
+      "duration": 18.46,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · Scenario · block 2 · page 2",
+          "start": 1227.766,
+          "duration": 3.816
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 2 of 2. Focus on kind, variant, resolvedVariant. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1232.707,
+          "duration": 12.144
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · Interview question",
+      "start": 1246.226,
+      "duration": 17.285,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · Interview question",
+          "start": 1246.226,
+          "duration": 1.891
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Review the pull request. Which consumers get the wrong result, who sees the warning, and how would you ship this rename end to end?",
+          "start": 1249.242,
+          "duration": 7.619
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · 1. Precedence is wrong, and \"not set\" is invisible",
+      "start": 1263.511,
+      "duration": 21.265,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · 1. Precedence is wrong, and \"not set\" is invisible",
+          "start": 1263.511,
+          "duration": 4.299
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Both inputs default to `'primary'`, so the component cannot tell \"the consumer did not set `kind`\" from \"the consumer set `kind=\"primary\"`\". The rule `kind() !== 'primary' ? kind() : variant()` then gives the deprecated name priority whenever it holds a non-default value:",
+          "start": 1268.935,
+          "duration": 14.466
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · 1. Precedence is wrong, and \"not set\" is invisible · comparison 1",
+      "start": 1284.776,
+      "duration": 16.52,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · 1. Precedence is wrong, and \"not set\" is invisible · comparison 1",
+          "start": 1284.776,
+          "duration": 7.735
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Template: `variant=\"danger\" kind=\"secondary\"`. Expected: `danger` (new name wins). Actual: `secondary`.",
+          "start": 1293.636,
+          "duration": 6.285
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · 1. Precedence is wrong, and \"not set\" is invisible · comparison 2",
+      "start": 1301.296,
+      "duration": 14.94,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · 1. Precedence is wrong, and \"not set\" is invisible · comparison 2",
+          "start": 1301.296,
+          "duration": 7.655
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Template: `kind=\"primary\" variant=\"danger\"`. Expected: `danger`. Actual: `danger`.",
+          "start": 1310.076,
+          "duration": 4.785
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · 1. Precedence is wrong, and \"not set\" is invisible · comparison 3",
+      "start": 1316.236,
+      "duration": 13.74,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · 1. Precedence is wrong, and \"not set\" is invisible · comparison 3",
+          "start": 1316.236,
+          "duration": 7.493
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Template: `kind=\"danger\"`. Expected: `danger`. Actual: `danger`.",
+          "start": 1324.854,
+          "duration": 3.747
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · 1. Precedence is wrong, and \"not set\" is invisible",
+      "start": 1329.976,
+      "duration": 12.46,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · 1. Precedence is wrong, and \"not set\" is invisible",
+          "start": 1329.976,
+          "duration": 4.624
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A team halfway through migrating, with both attributes on some buttons, gets the old value.",
+          "start": 1335.725,
+          "duration": 5.336
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · 1. Precedence is wrong, and \"not set\" is invisible",
+      "start": 1342.436,
+      "duration": 17.68,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · 1. Precedence is wrong, and \"not set\" is invisible",
+          "start": 1342.436,
+          "duration": 4.933
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: default both to `undefined`, so \"not set\" is observable, and resolve in one direction: `variant() ?? kind() ?? 'primary'`. The new name always wins.",
+          "start": 1348.494,
+          "duration": 10.247
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · 2. The warning goes to everyone, repeatedly",
+      "start": 1360.116,
+      "duration": 9.38,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · 2. The warning goes to everyone, repeatedly",
+          "start": 1360.116,
+          "duration": 3.604
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The warning sits inside a `computed`, which has two problems:",
+          "start": 1364.845,
+          "duration": 3.276
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · 2. The warning goes to everyone, repeatedly",
+      "start": 1369.496,
+      "duration": 24,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · 2. The warning goes to everyone, repeatedly",
+          "start": 1369.496,
+          "duration": 3.478
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "It does not check whether `kind` was used at all, so every button in every application logs it, including teams that already migrated. - `computed` functions should be pure. This one logs each time it recomputes, so one page can log dozens of identical lines. Teams learn to ignore the console, and miss the warnings that matter.",
+          "start": 1374.099,
+          "duration": 18.022
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · 2. The warning goes to everyone, repeatedly",
+      "start": 1393.496,
+      "duration": 14.96,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · 2. The warning goes to everyone, repeatedly",
+          "start": 1393.496,
+          "duration": 3.915
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: log in development mode only, only when `kind` is actually set, and once. Include the element so developers can find the call site.",
+          "start": 1398.536,
+          "duration": 8.545
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · 3. The rest of the rollout is missing",
+      "start": 1408.456,
+      "duration": 9.06,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · 3. The rest of the rollout is missing",
+          "start": 1408.456,
+          "duration": 3.935
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "A deprecation is a process, not an annotation:",
+          "start": 1413.516,
+          "duration": 2.625
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · 3. The rest of the rollout is missing",
+      "start": 1417.516,
+      "duration": 38.04,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · 3. The rest of the rollout is missing",
+          "start": 1417.516,
+          "duration": 4.222
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Documentation and changelog: a \"Deprecations\" section naming the old input, the replacement, and the major version that removes it. - `@deprecated` JSDoc (kept from the PR), which editors and linters can surface. An `ng update` migration for the next major that rewrites `kind=` and `[kind]=` to `variant` in templates, and reports anything it cannot rewrite (for example `setInput('kind', ...)`). Tests for every row of the table above, and for \"warns once, only when `kind` is set\". Removal in the next major, listed under breaking changes.",
+          "start": 1422.863,
+          "duration": 31.318
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · Answer · block 1 · page 1",
+      "start": 1455.556,
+      "duration": 20.4,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · Answer · block 1 · page 1",
+          "start": 1455.556,
+          "duration": 3.646
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 3. Focus on ButtonVariant. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1460.327,
+          "duration": 14.254
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · Answer · block 2 · page 2",
+      "start": 1475.956,
+      "duration": 23.04,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · Answer · block 2 · page 2",
+          "start": 1475.956,
+          "duration": 3.964
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 2 of 3. Focus on ButtonComponent, kind, variant, resolvedVariant. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1481.045,
+          "duration": 16.576
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · Answer · block 3 · page 3",
+      "start": 1498.996,
+      "duration": 22.02,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · Answer · block 3 · page 3",
+          "start": 1498.996,
+          "duration": 3.578
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 3 of 3. Read this part in the context of Fixed version. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1503.699,
+          "duration": 15.942
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · Fixed version",
+      "start": 1521.016,
+      "duration": 5.2,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · Fixed version",
+          "start": 1521.016,
+          "duration": 2.314
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Notes:",
+          "start": 1524.455,
+          "duration": 0.386
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · Fixed version",
+      "start": 1526.216,
+      "duration": 30.6,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · Fixed version",
+          "start": 1526.216,
+          "duration": 2.007
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The logging is in an `effect`, which is where side effects belong, and only exists in development mode. - `warnedAboutKind` is module-level, so an application logs the warning once, not once per button. A compatibility limitation: changing the default from `'primary'` to `undefined` can be invisible to ordinary template consumers: the resolved variant is still `'primary'` when nothing is set. Code reading `button.kind()` from a component reference would now see `undefined`; mention it in the changelog.",
+          "start": 1529.348,
+          "duration": 26.093
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · Follow-up 1",
+      "start": 1556.816,
+      "duration": 43.655,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · Follow-up 1",
+          "start": 1556.816,
+          "duration": 2.249
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Could `input({ alias: 'kind' })` solve this with one input? Why not?",
+          "start": 1560.19,
+          "duration": 4.672
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "One alias gives one public binding name for an input; it does not generally expose two independently accepted names with a documented precedence. Renaming only the TypeScript property while aliasing kind keeps the old template API rather than introducing variant alongside it. Two inputs with an unset state support both names during migration and make conflict resolution explicit. Test the public binding metadata and consumer templates instead of assuming a property rename changes both names.",
+          "start": 1570.226,
+          "duration": 28.87
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · Follow-up 2",
+      "start": 1600.471,
+      "duration": 44.958,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · Follow-up 2",
+          "start": 1600.471,
+          "duration": 2.333
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How would your `ng update` migration find `kind` used through `setInput` or a host directive?",
+          "start": 1603.929,
+          "duration": 6.699
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Use AST and symbol analysis for known component references and statically resolvable setInput string names. Inspect directive composition metadata for exposed or renamed bindings and update templates according to the actual public name. Dynamic expressions and generated code may need a diagnostic report rather than an automatic rewrite. Keep fixtures for aliases, both-name conflicts, unrelated kind properties, and repeat runs. A safe migration reports uncertainty instead of making a broad text replacement.",
+          "start": 1615.67,
+          "duration": 28.384
+        }
+      ]
+    },
+    {
+      "heading": "VER-002 · Follow-up 3",
+      "start": 1645.429,
+      "duration": 41.08,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-002 · Follow-up 3",
+          "start": 1645.429,
+          "duration": 2.066
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How do you know when it is safe to remove `kind`? What data would you collect?",
+          "start": 1648.62,
+          "duration": 5.931
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Collect static usage scans, migration completion, consumer build results, and confirmations from owners within the published support window. Include direct property reads and programmatic inputs, not only templates. Development warnings can guide teams, but should not silently transmit telemetry. Remove kind in the announced major when supported consumers have a workable path, with release notes and a final migration. Lack of warnings in the library's demo is not evidence that all product teams migrated.",
+          "start": 1659.651,
+          "duration": 25.483
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Scenario",
+      "start": 1686.509,
+      "duration": 15.18,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Scenario",
+          "start": 1686.509,
+          "duration": 1.981
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "We now review VER-003: A package that leaks its internals and duplicates Angular. Inspect the consumer contract and identify the mechanism behind each reported defect.",
+          "start": 1689.615,
+          "duration": 10.7
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Scenario",
+      "start": 1701.689,
+      "duration": 13.22,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Scenario",
+          "start": 1701.689,
+          "duration": 1.624
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "These are the published `package.json` and entry point of `@acme/ui`, built with ng-packagr. Three reports came in after the last release:",
+          "start": 1704.438,
+          "duration": 9.096
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Scenario · item 1",
+      "start": 1714.909,
+      "duration": 14.7,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Scenario · item 1",
+          "start": 1714.909,
+          "duration": 2.44
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "\"Upgrading `@acme/ui` broke our app with `NG0203: inject() must be called from an injection context`, and our bundle contains two copies of `@angular/core`.\".",
+          "start": 1718.474,
+          "duration": 9.76
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Scenario · item 2",
+      "start": 1729.609,
+      "duration": 10.3,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Scenario · item 2",
+          "start": 1729.609,
+          "duration": 2.08
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "\"We only use the button, but we had to install `date-fns` and we now get its type errors in our build.\".",
+          "start": 1732.814,
+          "duration": 5.72
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Scenario · item 3",
+      "start": 1739.909,
+      "duration": 11.92,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Scenario · item 3",
+          "start": 1739.909,
+          "duration": 2.791
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "\"You removed `domUtils` in a minor release and broke our code.\" (The team imports `isFocusable` from `@acme/ui`.).",
+          "start": 1743.825,
+          "duration": 6.629
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Scenario · block 1 · page 1",
+      "start": 1751.829,
+      "duration": 18.12,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Scenario · block 1 · page 1",
+          "start": 1751.829,
+          "duration": 3.506
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 1. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1756.46,
+          "duration": 12.114
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Scenario · block 2 · page 1",
+      "start": 1769.949,
+      "duration": 17.66,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Scenario · block 2 · page 1",
+          "start": 1769.949,
+          "duration": 3.403
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the original code, part 1 of 1. Read this part in the context of Scenario. Trace which element or value the consumer actually interacts with. We will compare this implementation with the correction after the question.",
+          "start": 1774.477,
+          "duration": 11.757
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Interview question",
+      "start": 1787.609,
+      "duration": 18.165,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Interview question",
+          "start": 1787.609,
+          "duration": 2.214
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Explain each report, then describe how you would structure the package and its dependencies. Which of your fixes are themselves breaking changes?",
+          "start": 1790.948,
+          "duration": 8.176
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Report 1: Angular as a regular dependency",
+      "start": 1805.774,
+      "duration": 31.885,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Report 1: Angular as a regular dependency",
+          "start": 1805.774,
+          "duration": 3.737
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Listing `@angular/core` under `dependencies` lets the package manager install a separate copy for the library whenever the application's version does not satisfy the range, or the package manager's layout keeps them apart. Two copies of Angular means two sets of injection tokens and two runtimes: the library's `inject()` calls run against a framework instance that has no active injection context, which produces `NG0203`, and the bundle carries Angular twice.",
+          "start": 1810.636,
+          "duration": 25.648
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Report 1: Angular as a regular dependency",
+      "start": 1837.659,
+      "duration": 26.2,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Report 1: Angular as a regular dependency",
+          "start": 1837.659,
+          "duration": 4.274
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Frameworks and any package whose instance must be shared (Angular, the CDK, RxJS) belong in `peerDependencies`. The application installs exactly one copy, and the package manager reports a conflict instead of silently duplicating it. `tslib` stays in `dependencies` (it is what ng-packagr's own template does).",
+          "start": 1843.058,
+          "duration": 19.426
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Report 2: one entry point for everything",
+      "start": 1863.859,
+      "duration": 15.38,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Report 2: one entry point for everything",
+          "start": 1863.859,
+          "duration": 4.048
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "With a single entry point, every consumer depends on every component's dependencies, types and module-level code. The button's users pay for the date picker.",
+          "start": 1869.032,
+          "duration": 8.832
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Report 2: one entry point for everything",
+      "start": 1879.239,
+      "duration": 22.88,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Report 2: one entry point for everything",
+          "start": 1879.239,
+          "duration": 4.23
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: secondary entry points, one per component family: `@acme/ui/button`, `@acme/ui/select`, `@acme/ui/date-picker`. ng-packagr builds each one separately, and only the date picker imports `date-fns`, which becomes an optional peer dependency.",
+          "start": 1884.594,
+          "duration": 16.15
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Report 3: `export *` made internals public",
+      "start": 1902.119,
+      "duration": 24.24,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Report 3: `export *` made internals public",
+          "start": 1902.119,
+          "duration": 3.92
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`export *` from `internal/dom-utils` published every function in that file. Whatever the folder name says, a symbol importable from the package is public API (see VER-001), and removing it was a breaking change in a minor release. `select-option-row.component` has the same problem.",
+          "start": 1907.164,
+          "duration": 17.82
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Report 3: `export *` made internals public",
+      "start": 1926.359,
+      "duration": 31.24,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Report 3: `export *` made internals public",
+          "start": 1926.359,
+          "duration": 4.053
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: explicit, named exports from each entry point, so publishing something is a deliberate act, plus an API report (golden file) checked in CI so any change to the public surface is visible in review. Share internal code between entry points through a dedicated internal entry point (for example `@acme/ui/internal`) documented as having no compatibility guarantees, or keep it unexported.",
+          "start": 1931.537,
+          "duration": 24.687
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Answer · block 1 · page 1",
+      "start": 1957.599,
+      "duration": 20.86,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Answer · block 1 · page 1",
+          "start": 1957.599,
+          "duration": 3.74
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 2. Focus on peerDependencies. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1962.464,
+          "duration": 14.62
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Answer · block 2 · page 2",
+      "start": 1978.459,
+      "duration": 22.02,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Answer · block 2 · page 2",
+          "start": 1978.459,
+          "duration": 3.578
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 2 of 2. Read this part in the context of Fixed structure. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 1983.162,
+          "duration": 15.942
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Answer · block 3 · page 1",
+      "start": 2000.479,
+      "duration": 21.82,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Answer · block 3 · page 1",
+          "start": 2000.479,
+          "duration": 3.541
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "This is the answer code, part 1 of 1. Read this part in the context of Fixed structure. Follow the declarations and event paths as a single implementation. The adjacent explanation describes the contract; the complete source is available with the lesson so you can inspect the remaining context.",
+          "start": 2005.145,
+          "duration": 15.779
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Fixed structure",
+      "start": 2022.299,
+      "duration": 18.5,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Fixed structure",
+          "start": 2022.299,
+          "duration": 1.882
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`\"sideEffects\": false` promises bundlers that importing a module has no effects of its own, so unused modules can be dropped. It is only true if no file does work at the top level (registering icons, patching globals); that must be a rule in code review.",
+          "start": 2025.306,
+          "duration": 14.118
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Which fixes are breaking · comparison 1",
+      "start": 2040.799,
+      "duration": 16.42,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Which fixes are breaking · comparison 1",
+          "start": 2040.799,
+          "duration": 3.926
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: Moving Angular and the CDK to `peerDependencies`. Breaking?: No for applications, which already install them; package managers may now report conflicts they used to hide..",
+          "start": 2045.85,
+          "duration": 9.994
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Which fixes are breaking · comparison 2",
+      "start": 2057.219,
+      "duration": 13.7,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Which fixes are breaking · comparison 2",
+          "start": 2057.219,
+          "duration": 4.106
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: Adding secondary entry points. Breaking?: No, if the primary entry point keeps re-exporting them for a deprecation period..",
+          "start": 2062.45,
+          "duration": 7.094
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Which fixes are breaking · comparison 3",
+      "start": 2070.919,
+      "duration": 12.7,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Which fixes are breaking · comparison 3",
+          "start": 2070.919,
+          "duration": 4.007
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: Making `date-fns` an optional peer. Breaking?: Yes for date-picker users, who must now install it..",
+          "start": 2076.051,
+          "duration": 6.193
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Which fixes are breaking · comparison 4",
+      "start": 2083.619,
+      "duration": 12.76,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Which fixes are breaking · comparison 4",
+          "start": 2083.619,
+          "duration": 4.906
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Fix: Removing accidental exports. Breaking?: Yes. Deprecate first, remove in a major..",
+          "start": 2089.65,
+          "duration": 5.354
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Which fixes are breaking",
+      "start": 2096.379,
+      "duration": 14.48,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Which fixes are breaking",
+          "start": 2096.379,
+          "duration": 2.59
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "`domUtils` itself should be restored in a patch release, deprecated, and removed in the next major. Apologise in the release notes; it was a breaking change in a minor.",
+          "start": 2100.094,
+          "duration": 9.39
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Follow-up 1",
+      "start": 2110.859,
+      "duration": 42.14,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Follow-up 1",
+          "start": 2110.859,
+          "duration": 2.11
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "Which Angular versions should `@acme/ui` 5.x declare in its peer range, and how would you test that claim?",
+          "start": 2114.094,
+          "duration": 7.299
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Declare only the framework versions actually supported and tested. Build a consumer matrix at the minimum and relevant releases within the range, including forms, secondary entry points, harnesses, and zoneless behavior where supported. A broad greater-than-or-equal range claims future compatibility you cannot validate. Use bounded compatible ranges when appropriate and revise them as releases are tested. Do not choose the range solely from the framework version installed in the library workspace.",
+          "start": 2126.651,
+          "duration": 24.973
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Follow-up 2",
+      "start": 2152.999,
+      "duration": 41.547,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Follow-up 2",
+          "start": 2152.999,
+          "duration": 2.234
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "How would you migrate consumers from `@acme/ui` to `@acme/ui/button` imports automatically?",
+          "start": 2156.358,
+          "duration": 6.564
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Resolve named imports from the root entry point and map supported symbols to their feature entry points. Split mixed imports where needed, preserve type-only imports and aliases, and update tests and documentation. Report ambiguous wildcard or dynamic imports. Validate the result against the packed package, not monorepo path mappings. Keep a root compatibility re-export during a deprecation window when feasible, then remove it in the announced major.",
+          "start": 2168.219,
+          "duration": 24.952
+        }
+      ]
+    },
+    {
+      "heading": "VER-003 · Follow-up 3",
+      "start": 2194.546,
+      "duration": 42.56,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "VER-003 · Follow-up 3",
+          "start": 2194.546,
+          "duration": 2.253
+        },
+        {
+          "voice": "en-US-AvaMultilingualNeural",
+          "source": "What does a consumer see when two of their dependencies need incompatible peer ranges?",
+          "start": 2197.924,
+          "duration": 5.37
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The package manager may report a peer conflict or refuse installation depending on its version and policy. Forcing installation can produce a graph outside one library's supported range, leading to build or runtime failures. Align dependency versions, upgrade a library, or use supported alternatives rather than ignoring the conflict automatically. Inspect the resolved graph and test the resulting consumer. Peer metadata communicates a constraint; it does not prove runtime compatibility by itself.",
+          "start": 2208.701,
+          "duration": 27.03
+        }
+      ]
+    },
+    {
+      "heading": "Implementation clarification · Direct-reference compatibility",
+      "start": 2237.106,
+      "duration": 18.18,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Implementation clarification · Direct-reference compatibility",
+          "start": 2237.106,
+          "duration": 2.119
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "The deprecation correction changes kind() from primary to undefined when unset. Consumers reading that getter can observe the change even though the rendered default stays primary. Treat those reads as migration cases.",
+          "start": 2240.35,
+          "duration": 13.561
+        }
+      ]
+    },
+    {
+      "heading": "Implementation clarification · Installation versus imports",
+      "start": 2255.286,
+      "duration": 16.44,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Implementation clarification · Installation versus imports",
+          "start": 2255.286,
+          "duration": 2.534
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Secondary entry points alone do not make date-fns optional to install. Optional peer metadata or a separate package must match the isolated feature and its declarations.",
+          "start": 2258.945,
+          "duration": 11.406
+        }
+      ]
+    },
+    {
+      "heading": "Final review checklist",
+      "start": 2271.726,
+      "duration": 32.76,
+      "segments": [
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Final review checklist",
+          "start": 2271.726,
+          "duration": 1.168
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "Review the lesson by answering each main question and follow-up aloud. For Versioning Angular Libraries: Compatibility and Safe Migration, connect each reported symptom to its mechanism, explain the corrected public contract, and name a regression check that exercises the consumer path. State compatibility and accessibility limitations clearly. The linked transcript, complete code, source questions, and verification report let you repeat the exercises at your own pace.",
+          "start": 2274.019,
+          "duration": 25.713
+        },
+        {
+          "voice": "en-US-AndrewMultilingualNeural",
+          "source": "That's the end of lesson 5.",
+          "start": 2300.773,
+          "duration": 2.338
+        }
+      ]
+    }
+  ],
+  "rawDuration": 2750.496,
+  "playbackRate": 1.2,
+  "preservedInterviewPauses": 12
+}

@@ -1,0 +1,32 @@
+{
+  "topic": "design-tokens",
+  "title": "Design Tokens: Themes, Accessibility, and Public Contracts",
+  "goals": "Design token layers, manage CSS inheritance and migrations, support themes and forced colors, and preserve usable text and targets.",
+  "sources": [
+    {
+      "id": "TOK-001",
+      "title": "A button that cannot be themed",
+      "file": "tok-001-raw-values-and-token-layers.md",
+      "followups": 3
+    },
+    {
+      "id": "TOK-002",
+      "title": "Renaming a public token in a minor release",
+      "file": "tok-002-renaming-a-public-token.md",
+      "followups": 3
+    },
+    {
+      "id": "TOK-003",
+      "title": "Dark mode that flashes, crashes and disappears",
+      "file": "tok-003-dark-mode-and-forced-colors.md",
+      "followups": 3
+    },
+    {
+      "id": "TOK-004",
+      "title": "Size tokens that break zoom and text spacing",
+      "file": "tok-004-tokens-that-break-zoom.md",
+      "followups": 3
+    }
+  ],
+  "pauses": 16
+}

@@ -1,0 +1,14 @@
+{
+  "topic": "performance",
+  "title": "Angular Performance: Zoneless Rendering and Resource Lifetimes",
+  "goals": "Identify render notifications, handle asynchronous state safely, remove zone-dependent DOM timing, and verify cleanup and stable layout.",
+  "sources": [
+    {
+      "id": "PERF-001",
+      "title": "A component that only works with zone.js",
+      "file": "perf-001-a-component-that-needs-zone-js.md",
+      "followups": 3
+    }
+  ],
+  "pauses": 4
+}

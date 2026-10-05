@@ -1,0 +1,26 @@
+{
+  "topic": "versioning",
+  "title": "Versioning Angular Libraries: Compatibility and Safe Migration",
+  "goals": "Classify breaking changes, implement input deprecation, control package exports and peer dependencies, and plan consumer migrations.",
+  "sources": [
+    {
+      "id": "VER-001",
+      "title": "Is this a breaking change?",
+      "file": "ver-001-is-this-a-breaking-change.md",
+      "followups": 3
+    },
+    {
+      "id": "VER-002",
+      "title": "A deprecation that warns everyone and honours nobody",
+      "file": "ver-002-deprecating-an-input.md",
+      "followups": 3
+    },
+    {
+      "id": "VER-003",
+      "title": "A package that leaks its internals and duplicates Angular",
+      "file": "ver-003-the-package-surface.md",
+      "followups": 3
+    }
+  ],
+  "pauses": 12
+}

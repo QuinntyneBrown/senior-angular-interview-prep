@@ -1,0 +1,1300 @@
+1
+00:00:00,000 --> 00:00:02,976
+Senior Angular interview preparation, lesson 6.
+
+2
+00:00:02,976 --> 00:00:05,952
+Testing Angular Libraries Through Consumer Behavior.
+
+3
+00:00:08,160 --> 00:00:09,687
+Green tests need meaningful assertions
+
+4
+00:00:10,813 --> 00:00:12,340
+Welcome to the testing lesson.
+
+5
+00:00:12,340 --> 00:00:15,394
+The question shows tabs that shipped without keyboard support and
+
+6
+00:00:15,394 --> 00:00:18,143
+with duplicate identifiers even though the tests were green.
+
+7
+00:00:18,143 --> 00:00:21,808
+A passing test is evidence only for the assertion it actually makes.
+
+8
+00:00:21,808 --> 00:00:25,474
+Checking that a select method exists proves the shape of an object.
+
+9
+00:00:25,474 --> 00:00:29,445
+It does not prove a user can select a tab with the keyboard.
+
+10
+00:00:30,820 --> 00:00:33,231
+Green tests need meaningful assertions · 2
+
+11
+00:00:34,356 --> 00:00:38,833
+A test can even preserve a bug if it expects the wrong result.
+
+12
+00:00:38,833 --> 00:00:41,933
+An assertion that the active class is absent after
+
+13
+00:00:41,933 --> 00:00:45,032
+selection does not validate selection; it blesses that absence.
+
+14
+00:00:45,032 --> 00:00:48,132
+Begin by writing the user-visible contract in plain language.
+
+15
+00:00:48,132 --> 00:00:50,887
+A tab is selected, its panel is visible,
+
+16
+00:00:50,887 --> 00:00:53,298
+focus moves according to the keyboard pattern,
+
+17
+00:00:53,298 --> 00:00:55,365
+and identifiers remain unique across instances.
+
+18
+00:00:56,740 --> 00:00:59,400
+Green tests need meaningful assertions · 3
+
+19
+00:01:00,525 --> 00:01:04,325
+The testing strategy should reflect how the library is consumed.
+
+20
+00:01:04,325 --> 00:01:09,265
+Product teams bind inputs in templates, project content, handle outputs, and connect forms.
+
+21
+00:01:09,265 --> 00:01:14,585
+A component created alone with direct private method calls does not exercise those boundaries.
+
+22
+00:01:14,585 --> 00:01:18,005
+Use a small host that resembles a real consumer,
+
+23
+00:01:18,005 --> 00:01:21,805
+then interact through the rendered interface and assert observable results.
+
+24
+00:01:23,180 --> 00:01:25,126
+A host exercises Angular integration
+
+25
+00:01:26,251 --> 00:01:30,143
+A host template gives Angular the opportunity to bind inputs,
+
+26
+00:01:30,143 --> 00:01:34,035
+create projected children, connect models, and resolve parent-provided injection contexts.
+
+27
+00:01:34,035 --> 00:01:38,317
+This matters for tabs because the group discovers projected tab components.
+
+28
+00:01:38,317 --> 00:01:41,431
+Calling a method on an isolated group cannot
+
+29
+00:01:41,431 --> 00:01:44,545
+prove that discovery or its panel relationships work.
+
+30
+00:01:45,920 --> 00:01:48,394
+A host exercises Angular integration · 2
+
+31
+00:01:49,519 --> 00:01:51,286
+Render more than one instance.
+
+32
+00:01:51,286 --> 00:01:54,467
+Duplicate identifiers are often invisible in a single fixture.
+
+33
+00:01:54,467 --> 00:01:57,648
+A second group also catches selectors that accidentally operate
+
+34
+00:01:57,648 --> 00:02:00,829
+on the entire document instead of the current component.
+
+35
+00:02:00,829 --> 00:02:04,363
+Give the groups different names and labels so a test
+
+36
+00:02:04,363 --> 00:02:07,545
+can locate the intended instance without relying on position.
+
+37
+00:02:08,919 --> 00:02:11,373
+A host exercises Angular integration · 3
+
+38
+00:02:12,498 --> 00:02:14,950
+Change consumer inputs after the initial render.
+
+39
+00:02:14,950 --> 00:02:17,752
+A component may initialize correctly and then ignore
+
+40
+00:02:17,752 --> 00:02:20,554
+a reset or a new set of children.
+
+41
+00:02:20,554 --> 00:02:24,758
+Test removal, empty content, and valid dynamic changes if they are supported.
+
+42
+00:02:24,758 --> 00:02:29,312
+This shifts the test from a constructor snapshot to the contract over time.
+
+43
+00:02:29,312 --> 00:02:32,464
+A shared component lives inside an application that changes.
+
+44
+00:02:33,840 --> 00:02:35,993
+Interactions should exercise the event path
+
+45
+00:02:37,118 --> 00:02:39,629
+Directly calling select skips the event binding,
+
+46
+00:02:39,629 --> 00:02:41,781
+key handling, default prevention, focus movement,
+
+47
+00:02:41,781 --> 00:02:42,858
+and disabled checks.
+
+48
+00:02:42,858 --> 00:02:45,728
+For a click contract, click the real control.
+
+49
+00:02:45,728 --> 00:02:48,957
+For a keyboard contract, focus the relevant element and
+
+50
+00:02:48,957 --> 00:02:51,827
+send the actual key in a browser test.
+
+51
+00:02:51,827 --> 00:02:53,979
+Synthetic dispatch can exercise a handler,
+
+52
+00:02:53,979 --> 00:02:57,208
+but it does not reproduce browser default actions such
+
+53
+00:02:57,208 --> 00:02:58,284
+as Tab traversal.
+
+54
+00:02:59,660 --> 00:03:02,406
+Interactions should exercise the event path · 2
+
+55
+00:03:03,532 --> 00:03:05,935
+Write assertions from the chosen interaction table.
+
+56
+00:03:05,935 --> 00:03:10,399
+In automatic tabs, ArrowRight moves focus and selection, wrapping at the final tab.
+
+57
+00:03:10,399 --> 00:03:12,460
+Home and End reach the edges.
+
+58
+00:03:12,460 --> 00:03:15,207
+Exactly one tab should be in the tab
+
+59
+00:03:15,207 --> 00:03:17,954
+order, and its selected panel should be visible.
+
+60
+00:03:17,954 --> 00:03:20,014
+Manual activation has a different table,
+
+61
+00:03:20,014 --> 00:03:22,761
+so the test must not assume both patterns
+
+62
+00:03:22,761 --> 00:03:23,105
+simultaneously.
+
+63
+00:03:24,480 --> 00:03:27,161
+Interactions should exercise the event path · 3
+
+64
+00:03:28,286 --> 00:03:31,972
+Use roles, accessible names, and supported harness methods to locate behavior.
+
+65
+00:03:31,972 --> 00:03:35,994
+A private class used for styling is a fragile consumer test selector.
+
+66
+00:03:35,994 --> 00:03:39,681
+The library may use internal selectors inside its harness because it
+
+67
+00:03:39,681 --> 00:03:43,367
+owns both, but product tests should not need to know them.
+
+68
+00:03:43,367 --> 00:03:47,725
+Test the result rather than the implementation detail that happened to create it.
+
+69
+00:03:49,100 --> 00:03:51,243
+Harnesses are versioned testing interfaces
+
+70
+00:03:52,368 --> 00:03:57,082
+A component harness exposes meaningful operations such as selectTab and getSelectedTabLabel.
+
+71
+00:03:57,082 --> 00:03:59,653
+It encapsulates queries, interactions, and stabilization.
+
+72
+00:03:59,653 --> 00:04:03,939
+A filter can choose a group by its public label.
+
+73
+00:04:03,939 --> 00:04:08,224
+This creates a boundary between product tests and component internals.
+
+74
+00:04:09,600 --> 00:04:12,178
+Harnesses are versioned testing interfaces · 2
+
+75
+00:04:13,303 --> 00:04:17,275
+Expose the capabilities a consumer needs to verify a task.
+
+76
+00:04:17,275 --> 00:04:20,454
+Do not return internal DOM nodes, private fields,
+
+77
+00:04:20,454 --> 00:04:24,427
+or CSS class names merely to make the current test
+
+78
+00:04:24,427 --> 00:04:24,824
+easy.
+
+79
+00:04:24,824 --> 00:04:26,811
+Those leaks defeat the abstraction.
+
+80
+00:04:26,811 --> 00:04:30,386
+Errors should explain when a requested tab does not
+
+81
+00:04:30,386 --> 00:04:33,565
+exist rather than silently selecting an arbitrary fallback.
+
+82
+00:04:34,940 --> 00:04:37,258
+Harnesses are versioned testing interfaces · 3
+
+83
+00:04:38,383 --> 00:04:42,281
+Publish harnesses through a testing entry point and document supported environments.
+
+84
+00:04:42,281 --> 00:04:44,762
+Keep the harness and component versions compatible.
+
+85
+00:04:44,762 --> 00:04:47,597
+If a component's markup changes, the harness implementation
+
+86
+00:04:47,597 --> 00:04:50,433
+can adapt while its task API stays stable.
+
+87
+00:04:50,433 --> 00:04:53,623
+A harness API change itself can break consumer tests,
+
+88
+00:04:53,623 --> 00:04:57,876
+so review and version it with the same care as an input
+
+89
+00:04:57,876 --> 00:04:58,584
+or output.
+
+90
+00:04:59,960 --> 00:05:02,013
+Stabilization must not hide rendering bugs
+
+91
+00:05:03,138 --> 00:05:05,875
+Angular tests can force a render with detectChanges.
+
+92
+00:05:05,875 --> 00:05:10,667
+That is useful for many assertions, but it can mask a missing change-detection notification.
+
+93
+00:05:10,667 --> 00:05:15,116
+A promise callback that writes a plain field may appear correct when the
+
+94
+00:05:15,116 --> 00:05:19,565
+test manually runs change detection even though the application would not render it.
+
+95
+00:05:20,940 --> 00:05:23,962
+Stabilization must not hide rendering bugs · 2
+
+96
+00:05:25,087 --> 00:05:28,286
+For notification-sensitive behavior, use a zoneless fixture and
+
+97
+00:05:28,286 --> 00:05:31,086
+wait for stability without forcing every update.
+
+98
+00:05:31,086 --> 00:05:35,885
+A signal consumed in the template, setInput, or markForCheck should notify Angular.
+
+99
+00:05:35,885 --> 00:05:39,085
+Test an asynchronous completion and a timer reset
+
+100
+00:05:39,085 --> 00:05:41,885
+through the same path the component uses.
+
+101
+00:05:41,885 --> 00:05:45,484
+This verifies scheduling as well as the final value.
+
+102
+00:05:46,860 --> 00:05:49,589
+Stabilization must not hide rendering bugs · 3
+
+103
+00:05:50,714 --> 00:05:53,890
+Control time where the behavior depends on a deadline.
+
+104
+00:05:53,890 --> 00:05:58,478
+Fake timers or an injected scheduler can make a debounce or timeout deterministic.
+
+105
+00:05:58,478 --> 00:06:01,302
+But do not replace the event or scheduling
+
+106
+00:06:01,302 --> 00:06:04,126
+mechanism that is the subject of the test.
+
+107
+00:06:04,126 --> 00:06:07,655
+Keep at least one browser integration case for layout, focus,
+
+108
+00:06:07,655 --> 00:06:11,185
+and native behavior that an emulated DOM cannot represent accurately.
+
+109
+00:06:12,560 --> 00:06:14,479
+Accessibility automation and its limits
+
+110
+00:06:15,604 --> 00:06:18,290
+An accessibility scanner can detect missing names,
+
+111
+00:06:18,290 --> 00:06:21,745
+invalid ARIA relationships, and many contrast failures in a
+
+112
+00:06:21,745 --> 00:06:22,513
+rendered browser.
+
+113
+00:06:22,513 --> 00:06:25,967
+Run it on relevant component states: initial, selected, invalid,
+
+114
+00:06:25,967 --> 00:06:29,422
+expanded, and disabled where those states change the tree.
+
+115
+00:06:29,422 --> 00:06:33,645
+A single empty fixture tells you little about a composite control.
+
+116
+00:06:35,020 --> 00:06:37,409
+Accessibility automation and its limits · 2
+
+117
+00:06:38,535 --> 00:06:41,003
+Keyboard and focus need explicit behavior tests.
+
+118
+00:06:41,003 --> 00:06:44,882
+A scanner can accept a tablist whose ArrowRight handler does nothing.
+
+119
+00:06:44,882 --> 00:06:48,408
+Live regions need a different kind of evidence: verify that
+
+120
+00:06:48,408 --> 00:06:51,934
+a persistent connected region receives the intended message with the
+
+121
+00:06:51,934 --> 00:06:55,108
+chosen politeness, then manually check supported screen reader combinations.
+
+122
+00:06:55,108 --> 00:07:00,045
+Do not claim a DOM assertion proves that a user heard the exact sentence.
+
+123
+00:07:01,420 --> 00:07:04,447
+Accessibility automation and its limits · 3
+
+124
+00:07:05,573 --> 00:07:10,762
+Combine tests rather than letting one category stand in for all others.
+
+125
+00:07:10,762 --> 00:07:13,357
+Compiler checks prove types and templates.
+
+126
+00:07:13,357 --> 00:07:15,952
+Browser tests prove the exercised behavior.
+
+127
+00:07:15,952 --> 00:07:18,547
+Visual checks prove the reviewed appearance.
+
+128
+00:07:18,547 --> 00:07:23,737
+Manual assistive-technology testing covers interaction and announcements that automation cannot fully certify.
+
+129
+00:07:23,737 --> 00:07:26,765
+Record those boundaries in the release evidence.
+
+130
+00:07:28,140 --> 00:07:30,118
+Make visual regression coverage intentional
+
+131
+00:07:31,243 --> 00:07:34,804
+A large screenshot suite can be noisy when every
+
+132
+00:07:34,804 --> 00:07:38,365
+story is captured in every theme at every viewport.
+
+133
+00:07:38,365 --> 00:07:41,531
+Start by mapping the behaviors each image protects.
+
+134
+00:07:41,531 --> 00:07:45,092
+Keep representative states, themes, density variants, and text-growth cases.
+
+135
+00:07:45,092 --> 00:07:49,445
+Remove redundant captures only after confirming their risk is covered elsewhere.
+
+136
+00:07:50,820 --> 00:07:53,604
+Make visual regression coverage intentional · 2
+
+137
+00:07:54,729 --> 00:07:59,103
+Control the environment: fonts, viewport, locale, animation, loading data, and time.
+
+138
+00:07:59,103 --> 00:08:03,876
+Wait for a meaningful ready state rather than an arbitrary long sleep.
+
+139
+00:08:03,876 --> 00:08:05,466
+Diagnose flakes by category.
+
+140
+00:08:05,466 --> 00:08:09,444
+A random data value is different from a late web
+
+141
+00:08:09,444 --> 00:08:13,421
+font, and a layout race is different from antialiasing noise.
+
+142
+00:08:13,421 --> 00:08:16,205
+Fix the cause before loosening comparison thresholds.
+
+143
+00:08:17,580 --> 00:08:20,223
+Make visual regression coverage intentional · 3
+
+144
+00:08:21,348 --> 00:08:23,236
+Visual tests need reviewable baselines.
+
+145
+00:08:23,236 --> 00:08:27,767
+A baseline update should identify the intended change and the affected states.
+
+146
+00:08:27,767 --> 00:08:32,299
+Do not approve thousands of images blindly or turn off failures globally.
+
+147
+00:08:32,299 --> 00:08:36,831
+Use focused diffs, ownership, and deterministic fixtures so the suite remains a
+
+148
+00:08:36,831 --> 00:08:40,985
+useful signal rather than a recurring cost everyone learns to ignore.
+
+149
+00:08:42,360 --> 00:08:44,467
+Prove the regression test detects the defect
+
+150
+00:08:45,592 --> 00:08:48,300
+When fixing a bug, make sure the new test
+
+151
+00:08:48,300 --> 00:08:51,008
+fails against the old behavior for the intended reason.
+
+152
+00:08:51,008 --> 00:08:53,416
+If the original tabs lack a keyboard handler,
+
+153
+00:08:53,416 --> 00:08:56,425
+an ArrowRight test should fail because focus and selection do
+
+154
+00:08:56,425 --> 00:08:59,434
+not change, not because the fixture has an unrelated missing
+
+155
+00:08:59,434 --> 00:08:59,735
+import.
+
+156
+00:08:59,735 --> 00:09:02,745
+This is the evidence that the test protects the correction.
+
+157
+00:09:04,120 --> 00:09:07,368
+Prove the regression test detects the defect · 2
+
+158
+00:09:08,493 --> 00:09:11,019
+Avoid assertions that merely mirror the source.
+
+159
+00:09:11,019 --> 00:09:14,268
+Checking that a function assigns a field is weaker
+
+160
+00:09:14,268 --> 00:09:17,155
+than observing the resulting selected panel and focus.
+
+161
+00:09:17,155 --> 00:09:20,765
+Test the public result with realistic input and multiple instances.
+
+162
+00:09:20,765 --> 00:09:24,735
+Where the contract has boundary cases, include the smallest cases that
+
+163
+00:09:24,735 --> 00:09:28,345
+expose them rather than a huge collection of near-duplicate examples.
+
+164
+00:09:29,720 --> 00:09:32,592
+Prove the regression test detects the defect · 3
+
+165
+00:09:33,717 --> 00:09:36,361
+In the upcoming question, we will replace method-existence
+
+166
+00:09:36,361 --> 00:09:39,005
+checks with host-based interactions and a supported harness.
+
+167
+00:09:39,005 --> 00:09:41,318
+We will explain what the harness hides,
+
+168
+00:09:41,318 --> 00:09:43,631
+what remains part of its public API,
+
+169
+00:09:43,631 --> 00:09:46,276
+and how accessibility and visual checks complement it.
+
+170
+00:09:46,276 --> 00:09:49,250
+The goal is a test suite that tells the
+
+171
+00:09:49,250 --> 00:09:52,225
+library team whether consumers can still perform their tasks.
+
+172
+00:09:53,600 --> 00:09:55,364
+TST-001 · Scenario
+
+173
+00:09:56,489 --> 00:10:01,077
+We now review TST-001: Tests that pass while the component is broken.
+
+174
+00:10:01,077 --> 00:10:05,665
+Inspect the consumer contract and identify the mechanism behind each reported defect.
+
+175
+00:10:07,040 --> 00:10:08,655
+TST-001 · Scenario
+
+176
+00:10:09,780 --> 00:10:13,606
+The first version of the tabs component in A11Y-003 shipped with
+
+177
+00:10:13,606 --> 00:10:17,433
+keyboard support missing and duplicate ids, yet its tests were green.
+
+178
+00:10:17,433 --> 00:10:18,824
+These are its tests:
+
+179
+00:10:20,200 --> 00:10:23,536
+TST-001 · Scenario · block 1 · page 1
+
+180
+00:10:24,660 --> 00:10:27,390
+This is the original code, part 1 of 2.
+
+181
+00:10:27,390 --> 00:10:29,816
+Read this part in the context of Scenario.
+
+182
+00:10:29,816 --> 00:10:32,849
+Trace which element or value the consumer actually interacts with.
+
+183
+00:10:32,849 --> 00:10:36,184
+We will compare this implementation with the correction after the question.
+
+184
+00:10:37,559 --> 00:10:40,944
+TST-001 · Scenario · block 2 · page 2
+
+185
+00:10:42,070 --> 00:10:44,839
+This is the original code, part 2 of 2.
+
+186
+00:10:44,839 --> 00:10:47,301
+Read this part in the context of Scenario.
+
+187
+00:10:47,301 --> 00:10:50,379
+Trace which element or value the consumer actually interacts with.
+
+188
+00:10:50,379 --> 00:10:53,765
+We will compare this implementation with the correction after the question.
+
+189
+00:10:55,140 --> 00:10:57,090
+TST-001 · Scenario
+
+190
+00:10:58,215 --> 00:11:02,292
+Product teams also test their own screens that contain ui-tabs.
+
+191
+00:11:02,292 --> 00:11:07,185
+Their tests query .ui-tabs__tab--active and broke when the library renamed that class.
+
+192
+00:11:08,559 --> 00:11:10,227
+TST-001 · Interview question
+
+193
+00:11:11,352 --> 00:11:13,592
+Why did these tests not catch the bugs?
+
+194
+00:11:13,592 --> 00:11:15,551
+Rewrite the testing approach for the library,
+
+195
+00:11:15,551 --> 00:11:18,350
+and say what the library should give product teams for
+
+196
+00:11:18,350 --> 00:11:18,910
+their tests.
+
+197
+00:11:25,559 --> 00:11:28,695
+TST-001 · Why they missed everything
+
+198
+00:11:29,821 --> 00:11:30,630
+No content.
+
+199
+00:11:30,630 --> 00:11:35,486
+TestBed.createComponent(TabsComponent) renders the tabs with nothing projected, so there are no tabs.
+
+200
+00:11:35,486 --> 00:11:38,723
+Someone made the test pass by asserting toBeNull(),
+
+201
+00:11:38,723 --> 00:11:41,961
+so it now checks that nothing is selected,
+
+202
+00:11:41,961 --> 00:11:43,175
+which is meaningless.
+
+203
+00:11:43,175 --> 00:11:43,984
+Driving internals.
+
+204
+00:11:43,984 --> 00:11:47,222
+Calling select(1) skips what users actually do (click,
+
+205
+00:11:47,222 --> 00:11:50,864
+arrow keys, Home, End), so keyboard support was never
+
+206
+00:11:50,864 --> 00:11:51,269
+exercised.
+
+207
+00:11:51,269 --> 00:11:54,911
+Asserting on private markup. .ui-tabs__tab--active is an internal class.
+
+208
+00:11:54,911 --> 00:12:00,576
+The tests say nothing about what users and assistive technology perceive: roles, aria-selected, focus.
+
+209
+00:12:00,576 --> 00:12:05,028
+Testing that a method exists checks the TypeScript compiler, not behaviour.
+
+210
+00:12:05,028 --> 00:12:06,242
+One instance only.
+
+211
+00:12:06,242 --> 00:12:10,288
+The duplicate-id bug needs two tab groups on one page.
+
+212
+00:12:11,664 --> 00:12:15,944
+TST-001 · The approach: test through a host, like a consumer
+
+213
+00:12:17,069 --> 00:12:21,348
+Render the component inside a small host component whose template looks like real
+
+214
+00:12:21,348 --> 00:12:25,628
+usage, interact the way users do, and assert on roles, states and focus.
+
+215
+00:12:27,004 --> 00:12:30,396
+TST-001 · Answer · block 1 · page 1
+
+216
+00:12:31,521 --> 00:12:34,296
+This is the answer code, part 1 of 4.
+
+217
+00:12:34,296 --> 00:12:36,763
+Read this part in the context of The
+
+218
+00:12:36,763 --> 00:12:39,229
+approach: test through a host, like a consumer.
+
+219
+00:12:39,229 --> 00:12:42,313
+Follow the declarations and event paths as a single implementation.
+
+220
+00:12:42,313 --> 00:12:45,705
+The adjacent explanation describes the contract; the complete source is available
+
+221
+00:12:45,705 --> 00:12:48,789
+with the lesson so you can inspect the remaining context.
+
+222
+00:12:50,164 --> 00:12:53,523
+TST-001 · Answer · block 2 · page 2
+
+223
+00:12:54,648 --> 00:12:57,396
+This is the answer code, part 2 of 4.
+
+224
+00:12:57,396 --> 00:12:59,839
+Read this part in the context of The
+
+225
+00:12:59,839 --> 00:13:02,282
+approach: test through a host, like a consumer.
+
+226
+00:13:02,282 --> 00:13:05,336
+Follow the declarations and event paths as a single implementation.
+
+227
+00:13:05,336 --> 00:13:08,695
+The adjacent explanation describes the contract; the complete source is available
+
+228
+00:13:08,695 --> 00:13:11,749
+with the lesson so you can inspect the remaining context.
+
+229
+00:13:13,124 --> 00:13:16,608
+TST-001 · Answer · block 3 · page 3
+
+230
+00:13:17,732 --> 00:13:20,583
+This is the answer code, part 3 of 4.
+
+231
+00:13:20,583 --> 00:13:23,117
+Read this part in the context of The
+
+232
+00:13:23,117 --> 00:13:25,650
+approach: test through a host, like a consumer.
+
+233
+00:13:25,650 --> 00:13:28,817
+Follow the declarations and event paths as a single implementation.
+
+234
+00:13:28,817 --> 00:13:32,301
+The adjacent explanation describes the contract; the complete source is available
+
+235
+00:13:32,301 --> 00:13:35,468
+with the lesson so you can inspect the remaining context.
+
+236
+00:13:36,844 --> 00:13:40,190
+TST-001 · Answer · block 4 · page 4
+
+237
+00:13:41,315 --> 00:13:44,052
+This is the answer code, part 4 of 4.
+
+238
+00:13:44,052 --> 00:13:46,486
+Read this part in the context of The
+
+239
+00:13:46,486 --> 00:13:48,919
+approach: test through a host, like a consumer.
+
+240
+00:13:48,919 --> 00:13:51,961
+Follow the declarations and event paths as a single implementation.
+
+241
+00:13:51,961 --> 00:13:55,307
+The adjacent explanation describes the contract; the complete source is available
+
+242
+00:13:55,307 --> 00:13:58,349
+with the lesson so you can inspect the remaining context.
+
+243
+00:13:59,724 --> 00:14:03,873
+TST-001 · Ship a harness: the library's testing API
+
+244
+00:14:04,998 --> 00:14:08,087
+Product teams should never query the library's internal DOM.
+
+245
+00:14:08,087 --> 00:14:12,548
+A component harness is a supported, versioned testing API: it hides the markup,
+
+246
+00:14:12,548 --> 00:14:17,354
+works in unit tests and end-to-end tests, and waits for the component to be
+
+247
+00:14:17,354 --> 00:14:17,697
+stable.
+
+248
+00:14:17,697 --> 00:14:19,756
+When the library changes its markup,
+
+249
+00:14:19,756 --> 00:14:22,502
+it updates its own harness, and consumers' tests
+
+250
+00:14:22,502 --> 00:14:23,189
+keep passing.
+
+251
+00:14:24,564 --> 00:14:28,256
+TST-001 · Answer · block 5 · page 1
+
+252
+00:14:29,381 --> 00:14:32,401
+This is the answer code, part 1 of 4.
+
+253
+00:14:32,401 --> 00:14:33,744
+Focus on TabsHarnessFilters, TabsHarness.
+
+254
+00:14:33,744 --> 00:14:37,100
+Follow the declarations and event paths as a single implementation.
+
+255
+00:14:37,100 --> 00:14:40,792
+The adjacent explanation describes the contract; the complete source is available
+
+256
+00:14:40,792 --> 00:14:44,149
+with the lesson so you can inspect the remaining context.
+
+257
+00:14:45,524 --> 00:14:49,209
+TST-001 · Answer · block 6 · page 2
+
+258
+00:14:50,334 --> 00:14:53,349
+This is the answer code, part 2 of 4.
+
+259
+00:14:53,349 --> 00:14:55,023
+Focus on tablist, tabs, selectedTab.
+
+260
+00:14:55,023 --> 00:14:58,374
+Follow the declarations and event paths as a single implementation.
+
+261
+00:14:58,374 --> 00:15:02,058
+The adjacent explanation describes the contract; the complete source is available
+
+262
+00:15:02,058 --> 00:15:05,408
+with the lesson so you can inspect the remaining context.
+
+263
+00:15:06,784 --> 00:15:10,346
+TST-001 · Answer · block 7 · page 3
+
+264
+00:15:11,471 --> 00:15:14,494
+This is the answer code, part 3 of 4.
+
+265
+00:15:14,494 --> 00:15:19,196
+Read this part in the context of Ship a harness: the library's testing API.
+
+266
+00:15:19,196 --> 00:15:22,555
+Follow the declarations and event paths as a single implementation.
+
+267
+00:15:22,555 --> 00:15:26,250
+The adjacent explanation describes the contract; the complete source is available
+
+268
+00:15:26,250 --> 00:15:29,609
+with the lesson so you can inspect the remaining context.
+
+269
+00:15:30,984 --> 00:15:34,419
+TST-001 · Answer · block 8 · page 4
+
+270
+00:15:35,544 --> 00:15:38,458
+This is the answer code, part 4 of 4.
+
+271
+00:15:38,458 --> 00:15:42,991
+Read this part in the context of Ship a harness: the library's testing API.
+
+272
+00:15:42,991 --> 00:15:46,229
+Follow the declarations and event paths as a single implementation.
+
+273
+00:15:46,229 --> 00:15:49,791
+The adjacent explanation describes the contract; the complete source is available
+
+274
+00:15:49,791 --> 00:15:53,028
+with the lesson so you can inspect the remaining context.
+
+275
+00:15:54,404 --> 00:15:58,453
+TST-001 · Ship a harness: the library's testing API
+
+276
+00:15:59,578 --> 00:16:03,983
+The harness is published from a testing entry point (@acme/ui/tabs/testing), documented,
+
+277
+00:16:03,983 --> 00:16:07,989
+and covered by the same versioning rules as the component.
+
+278
+00:16:09,364 --> 00:16:13,481
+TST-001 · What else belongs in the library's test strategy
+
+279
+00:16:14,606 --> 00:16:17,548
+Accessibility checks with axe on every component state.
+
+280
+00:16:17,548 --> 00:16:21,595
+Run them in a real browser (for example Vitest browser mode
+
+281
+00:16:21,595 --> 00:16:25,642
+or Playwright), because DOM emulations cannot compute colour contrast or layout.
+
+282
+00:16:25,642 --> 00:16:30,792
+Visual regression tests for each component in each theme, so token changes are reviewed.
+
+283
+00:16:30,792 --> 00:16:35,574
+Keyboard tests written from the ARIA pattern's keyboard table, one assertion per row.
+
+284
+00:16:35,574 --> 00:16:39,989
+Forms tests with a real FormControl for every form control (see API-004).
+
+285
+00:16:41,364 --> 00:16:43,488
+TST-001 · Follow-up 1
+
+286
+00:16:44,613 --> 00:16:49,815
+What belongs in a harness's API, and what should never be exposed?
+
+287
+00:16:55,087 --> 00:16:59,185
+Expose task-level operations and observable state: select a tab by label,
+
+288
+00:16:59,185 --> 00:17:02,166
+read the selected label, send a supported key,
+
+289
+00:17:02,166 --> 00:17:04,774
+and inspect focus when that is meaningful.
+
+290
+00:17:04,774 --> 00:17:08,873
+Hide private fields, raw nodes, styling classes, and internal component hierarchy.
+
+291
+00:17:08,873 --> 00:17:13,344
+The harness can use internal selectors because the library owns their maintenance.
+
+292
+00:17:13,344 --> 00:17:17,070
+Publish filters and useful errors, and version the harness API.
+
+293
+00:17:17,070 --> 00:17:20,424
+If consumers still need to query private DOM after
+
+294
+00:17:20,424 --> 00:17:23,405
+obtaining the harness, revisit the missing supported operation.
+
+295
+00:17:24,780 --> 00:17:26,877
+TST-001 · Follow-up 2
+
+296
+00:17:28,002 --> 00:17:31,671
+How would you test that a live region announcement happens?
+
+297
+00:17:37,021 --> 00:17:42,047
+Verify a connected persistent live region receives the intended new text with the chosen
+
+298
+00:17:42,047 --> 00:17:46,714
+politeness and timing, or verify the announcer boundary in a focused unit test.
+
+299
+00:17:46,714 --> 00:17:51,022
+Then use real browser integration to ensure the region exists and updates.
+
+300
+00:17:51,022 --> 00:17:56,048
+An automated DOM assertion cannot prove the exact speech emitted by a screen reader.
+
+301
+00:17:56,048 --> 00:17:59,279
+Perform manual checks on supported combinations for repetition, interruption,
+
+302
+00:17:59,279 --> 00:18:02,869
+and rapid changes, and record those limits in the test
+
+303
+00:18:02,869 --> 00:18:03,227
+evidence.
+
+304
+00:18:04,603 --> 00:18:07,039
+TST-001 · Follow-up 3
+
+305
+00:18:08,164 --> 00:18:12,469
+Your visual regression suite has 2,000 screenshots and is flaky.
+
+306
+00:18:12,469 --> 00:18:14,192
+What do you do?
+
+307
+00:18:19,366 --> 00:18:23,019
+Classify flakes before changing thresholds: fonts, animation, data, timing,
+
+308
+00:18:23,019 --> 00:18:26,267
+viewport, and actual layout races need different fixes.
+
+309
+00:18:26,267 --> 00:18:30,327
+Freeze irrelevant variability and wait for a deterministic ready condition.
+
+310
+00:18:30,327 --> 00:18:34,386
+Map each screenshot to a risk, keep representative themes and
+
+311
+00:18:34,386 --> 00:18:38,040
+states, and remove redundant captures only when coverage remains.
+
+312
+00:18:38,040 --> 00:18:39,664
+Review baseline changes deliberately.
+
+313
+00:18:39,664 --> 00:18:43,724
+Do not approve all two thousand images blindly or disable
+
+314
+00:18:43,724 --> 00:18:47,784
+the suite; rebuild a smaller reliable signal with clear ownership.
+
+315
+00:18:49,159 --> 00:18:50,279
+Final review checklist
+
+316
+00:18:51,404 --> 00:18:55,509
+Review the lesson by answering each main question and follow-up aloud.
+
+317
+00:18:55,509 --> 00:18:58,121
+For Testing Angular Libraries Through Consumer Behavior,
+
+318
+00:18:58,121 --> 00:19:00,734
+connect each reported symptom to its mechanism,
+
+319
+00:19:00,734 --> 00:19:04,466
+explain the corrected public contract, and name a regression check
+
+320
+00:19:04,466 --> 00:19:06,332
+that exercises the consumer path.
+
+321
+00:19:06,332 --> 00:19:08,571
+State compatibility and accessibility limitations clearly.
+
+322
+00:19:08,571 --> 00:19:11,184
+The linked transcript, complete code, source questions,
+
+323
+00:19:11,184 --> 00:19:14,916
+and verification report let you repeat the exercises at your
+
+324
+00:19:14,916 --> 00:19:15,662
+own pace.
+
+325
+00:19:16,705 --> 00:19:18,944
+That's the end of lesson 6.
+

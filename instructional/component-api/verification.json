@@ -1,0 +1,70 @@
+{
+  "generatedOn": "2026-10-05",
+  "seconds": 2874,
+  "chapters": [
+    {
+      "title": "Introduction and foundations",
+      "seconds": 0
+    },
+    {
+      "title": "API-001: A button that saves twice and ignores disabled",
+      "seconds": 643.88
+    },
+    {
+      "title": "API-002: A wrapper that hides the native element",
+      "seconds": 1185.933
+    },
+    {
+      "title": "API-003: A card with an input for everything",
+      "seconds": 1691.878
+    },
+    {
+      "title": "API-004: A checkbox that makes every form dirty",
+      "seconds": 2234.354
+    },
+    {
+      "title": "Final review checklist",
+      "seconds": 2841.417
+    }
+  ],
+  "width": 1920,
+  "height": 1080,
+  "videoCodec": "h264",
+  "audioCodec": "aac",
+  "subtitleCodec": "mov_text",
+  "bytes": 66470722,
+  "runtimeAssertions": 15,
+  "assertions": [
+    "One native click produces one consumer action",
+    "Boolean attribute disables native activation",
+    "Default button does not submit a form",
+    "Native capabilities remain on actual enhanced input",
+    "Enhanced input keeps native label connection",
+    "Enhanced native input retains forms model-to-view integration",
+    "Enhanced native input retains forms user-to-model integration",
+    "Projected title preserves consumer heading and link semantics",
+    "Default slot preserves consumer body content",
+    "Projected action retains consumer event binding",
+    "Programmatic write renders and stays pristine",
+    "Null reset normalizes without user callbacks",
+    "Native user change updates forms model and dirty state",
+    "Blur reports touched state",
+    "Forms disabled state reaches native control"
+  ],
+  "consumerCompilationChecks": 0,
+  "consumerAssertions": [],
+  "checkedSlides": 137,
+  "captions": 754,
+  "estimatedAzureDollars": 0.6427500000000002,
+  "reservedCharacters": 42850,
+  "preservedDrillPauses": 16,
+  "mainQuestions": 4,
+  "followupQuestions": 12,
+  "fullDecodePassed": true,
+  "browserPlaybackPassed": true,
+  "checkedVideoSeeks": [
+    20,
+    749.2,
+    2853.997917
+  ]
+}

@@ -6,6 +6,8 @@ Notable changes to the learning material and project documentation are recorded 
 
 ### Added
 
+- Instructional videos for all seven topics, with foundations, every main question and follow-up, code examples, captions, measured verification, and Azure speech cost estimates.
+
 - 23 questions with answers for engineers who build a shared Angular component library, about 4 hours 40 minutes of interview time across signals, design tokens, accessibility, component API design, versioning, testing, and zoneless change detection, including a 40-minute live-coding exercise.
 - A standard question format with scenario, hints, answer, scoring table, follow-up questions, and references, and a template for new questions.
 - `npm run check` and `npm run index`: validate every question's front matter and sections, and generate the question index.

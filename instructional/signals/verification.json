@@ -1,0 +1,40 @@
+{
+  "generatedOn": "2026-10-05",
+  "seconds": 3560.289667,
+  "chapters": [
+    {
+      "title": "Introduction and foundations",
+      "seconds": 0
+    },
+    {
+      "title": "Selection state and linkedSignal",
+      "seconds": 1377.24
+    },
+    {
+      "title": "Switch state and model contracts",
+      "seconds": 1931.619
+    },
+    {
+      "title": "Effect cleanup and rendered DOM",
+      "seconds": 2449.506
+    },
+    {
+      "title": "Pure sorting and record identity",
+      "seconds": 2892.382
+    },
+    {
+      "title": "Final review checklist",
+      "seconds": 3449.827
+    }
+  ],
+  "width": 1920,
+  "height": 1080,
+  "videoCodec": "h264",
+  "audioCodec": "aac",
+  "subtitleCodec": "mov_text",
+  "bytes": 73872741,
+  "runtimeAssertions": 45,
+  "checkedSlides": 153,
+  "estimatedAzureDollars": 0.8587500000000005,
+  "preservedDrillPauses": 16
+}

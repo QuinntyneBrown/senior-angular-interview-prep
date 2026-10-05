@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Testing Angular Libraries Through Consumer Behavior</title><link rel="stylesheet" href="../assets/slides.css"><style>section{padding:125px 130px 140px}h2{font-size:48px;margin-bottom:25px}.kicker{font-size:23px;margin-bottom:15px}section>p,li{font-size:37px;line-height:1.45}li{margin-bottom:22px}pre.code{font-size:22px;line-height:1.38;padding:22px 30px;white-space:pre-wrap;overflow-wrap:anywhere}.question{font-size:37px;line-height:1.35}section>p.small{font-size:24px}</style></head><body data-lesson-number="testing" data-lesson-title="Testing Angular Libraries Through Consumer Behavior" data-parts="Foundations|TST-001|Recap">
+<section id="slide-000" data-part="0"><div class="kicker">Foundations</div><h2>Green tests need meaningful assertions</h2><ul><li>Welcome to the testing lesson.</li><li>The question shows tabs that shipped without keyboard support and with duplicate identifiers even though the tests were green.</li><li>A passing test is evidence only for the assertion it actually makes.</li></ul></section>
+<section id="slide-001" data-part="0" data-cue="Green tests need meaningful assertions · 2"><div class="kicker">Foundations</div><h2>Green tests need meaningful assertions · 2</h2><ul><li>A test can even preserve a bug if it expects the wrong result.</li><li>An assertion that the active class is absent after selection does not validate selection; it blesses that absence.</li><li>Begin by writing the user-visible contract in plain language.</li></ul></section>
+<section id="slide-002" data-part="0" data-cue="Green tests need meaningful assertions · 3"><div class="kicker">Foundations</div><h2>Green tests need meaningful assertions · 3</h2><ul><li>The testing strategy should reflect how the library is consumed.</li><li>Product teams bind inputs in templates, project content, handle outputs, and connect forms.</li><li>A component created alone with direct private method calls does not exercise those boundaries.</li></ul></section>
+<section id="slide-003" data-part="0" data-cue="A host exercises Angular integration"><div class="kicker">Foundations</div><h2>A host exercises Angular integration</h2><ul><li>A host template gives Angular the opportunity to bind inputs, create projected children, connect models, and resolve parent-provided injection contexts.</li><li>This matters for tabs because the group discovers projected tab components.</li><li>Calling a method on an isolated group cannot prove that discovery or its panel relationships work.</li></ul></section>
+<section id="slide-004" data-part="0" data-cue="A host exercises Angular integration · 2"><div class="kicker">Foundations</div><h2>A host exercises Angular integration · 2</h2><pre class="code" data-lang="html">&lt;ui-tabs label=&quot;Profile&quot;&gt;
+  &lt;ui-tab label=&quot;Account&quot;&gt;Account settings&lt;/ui-tab&gt;
+  &lt;ui-tab label=&quot;Security&quot;&gt;Security settings&lt;/ui-tab&gt;
+&lt;/ui-tabs&gt;
+&lt;ui-tabs label=&quot;Notifications&quot;&gt;
+  &lt;ui-tab label=&quot;Email&quot;&gt;Email settings&lt;/ui-tab&gt;
+&lt;/ui-tabs&gt;</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-005" data-part="0" data-cue="A host exercises Angular integration · 3"><div class="kicker">Foundations</div><h2>A host exercises Angular integration · 3</h2><ul><li>Change consumer inputs after the initial render.</li><li>A component may initialize correctly and then ignore a reset or a new set of children.</li><li>Test removal, empty content, and valid dynamic changes if they are supported.</li></ul></section>
+<section id="slide-006" data-part="0" data-cue="Interactions should exercise the event path"><div class="kicker">Foundations</div><h2>Interactions should exercise the event path</h2><ul><li>Directly calling select skips the event binding, key handling, default prevention, focus movement, and disabled checks.</li><li>For a click contract, click the real control.</li><li>For a keyboard contract, focus the relevant element and send the actual key in a browser test.</li></ul></section>
+<section id="slide-007" data-part="0" data-cue="Interactions should exercise the event path · 2"><div class="kicker">Foundations</div><h2>Interactions should exercise the event path · 2</h2><ul><li>Write assertions from the chosen interaction table.</li><li>In automatic tabs, ArrowRight moves focus and selection, wrapping at the final tab.</li><li>Home and End reach the edges.</li></ul></section>
+<section id="slide-008" data-part="0" data-cue="Interactions should exercise the event path · 3"><div class="kicker">Foundations</div><h2>Interactions should exercise the event path · 3</h2><ul><li>Use roles, accessible names, and supported harness methods to locate behavior.</li><li>A private class used for styling is a fragile consumer test selector.</li><li>The library may use internal selectors inside its harness because it owns both, but product tests should not need to know them.</li></ul></section>
+<section id="slide-009" data-part="0" data-cue="Harnesses are versioned testing interfaces"><div class="kicker">Foundations</div><h2>Harnesses are versioned testing interfaces</h2><ul><li>A component harness exposes meaningful operations such as selectTab and getSelectedTabLabel.</li><li>It encapsulates queries, interactions, and stabilization.</li><li>A filter can choose a group by its public label.</li></ul></section>
+<section id="slide-010" data-part="0" data-cue="Harnesses are versioned testing interfaces · 2"><div class="kicker">Foundations</div><h2>Harnesses are versioned testing interfaces · 2</h2><pre class="code" data-lang="ts">const tabs = await loader.getHarness(
+  TabsHarness.with({ label: 'Profile' })
+);
+await tabs.selectTab('Security');
+expect(await tabs.getSelectedTabLabel()).toBe('Security');
+// Consumer task, not a private class selector.</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-011" data-part="0" data-cue="Harnesses are versioned testing interfaces · 3"><div class="kicker">Foundations</div><h2>Harnesses are versioned testing interfaces · 3</h2><ul><li>Publish harnesses through a testing entry point and document supported environments.</li><li>Keep the harness and component versions compatible.</li><li>If a component's markup changes, the harness implementation can adapt while its task API stays stable.</li></ul></section>
+<section id="slide-012" data-part="0" data-cue="Stabilization must not hide rendering bugs"><div class="kicker">Foundations</div><h2>Stabilization must not hide rendering bugs</h2><ul><li>Angular tests can force a render with detectChanges.</li><li>That is useful for many assertions, but it can mask a missing change-detection notification.</li><li>A promise callback that writes a plain field may appear correct when the test manually runs change detection even though the application would not render it.</li></ul></section>
+<section id="slide-013" data-part="0" data-cue="Stabilization must not hide rendering bugs · 2"><div class="kicker">Foundations</div><h2>Stabilization must not hide rendering bugs · 2</h2><ul><li>For notification-sensitive behavior, use a zoneless fixture and wait for stability without forcing every update.</li><li>A signal consumed in the template, setInput, or markForCheck should notify Angular.</li><li>Test an asynchronous completion and a timer reset through the same path the component uses.</li></ul></section>
+<section id="slide-014" data-part="0" data-cue="Stabilization must not hide rendering bugs · 3"><div class="kicker">Foundations</div><h2>Stabilization must not hide rendering bugs · 3</h2><ul><li>Control time where the behavior depends on a deadline.</li><li>Fake timers or an injected scheduler can make a debounce or timeout deterministic.</li><li>But do not replace the event or scheduling mechanism that is the subject of the test.</li></ul></section>
+<section id="slide-015" data-part="0" data-cue="Accessibility automation and its limits"><div class="kicker">Foundations</div><h2>Accessibility automation and its limits</h2><ul><li>An accessibility scanner can detect missing names, invalid ARIA relationships, and many contrast failures in a rendered browser.</li><li>Run it on relevant component states: initial, selected, invalid, expanded, and disabled where those states change the tree.</li><li>A single empty fixture tells you little about a composite control.</li></ul></section>
+<section id="slide-016" data-part="0" data-cue="Accessibility automation and its limits · 2"><div class="kicker">Foundations</div><h2>Accessibility automation and its limits · 2</h2><ul><li>Keyboard and focus need explicit behavior tests.</li><li>A scanner can accept a tablist whose ArrowRight handler does nothing.</li><li>Live regions need a different kind of evidence: verify that a persistent connected region receives the intended message with the chosen politeness, then manually check supported screen reader combinations.</li></ul></section>
+<section id="slide-017" data-part="0" data-cue="Accessibility automation and its limits · 3"><div class="kicker">Foundations</div><h2>Accessibility automation and its limits · 3</h2><ul><li>Combine tests rather than letting one category stand in for all others.</li><li>Compiler checks prove types and templates.</li><li>Browser tests prove the exercised behavior.</li></ul></section>
+<section id="slide-018" data-part="0" data-cue="Make visual regression coverage intentional"><div class="kicker">Foundations</div><h2>Make visual regression coverage intentional</h2><ul><li>A large screenshot suite can be noisy when every story is captured in every theme at every viewport.</li><li>Start by mapping the behaviors each image protects.</li><li>Keep representative states, themes, density variants, and text-growth cases.</li></ul></section>
+<section id="slide-019" data-part="0" data-cue="Make visual regression coverage intentional · 2"><div class="kicker">Foundations</div><h2>Make visual regression coverage intentional · 2</h2><ul><li>Control the environment: fonts, viewport, locale, animation, loading data, and time.</li><li>Wait for a meaningful ready state rather than an arbitrary long sleep.</li><li>Diagnose flakes by category.</li></ul></section>
+<section id="slide-020" data-part="0" data-cue="Make visual regression coverage intentional · 3"><div class="kicker">Foundations</div><h2>Make visual regression coverage intentional · 3</h2><ul><li>Visual tests need reviewable baselines.</li><li>A baseline update should identify the intended change and the affected states.</li><li>Do not approve thousands of images blindly or turn off failures globally.</li></ul></section>
+<section id="slide-021" data-part="0" data-cue="Prove the regression test detects the defect"><div class="kicker">Foundations</div><h2>Prove the regression test detects the defect</h2><ul><li>When fixing a bug, make sure the new test fails against the old behavior for the intended reason.</li><li>If the original tabs lack a keyboard handler, an ArrowRight test should fail because focus and selection do not change, not because the fixture has an unrelated missing import.</li><li>This is the evidence that the test protects the correction.</li></ul></section>
+<section id="slide-022" data-part="0" data-cue="Prove the regression test detects the defect · 2"><div class="kicker">Foundations</div><h2>Prove the regression test detects the defect · 2</h2><ul><li>Avoid assertions that merely mirror the source.</li><li>Checking that a function assigns a field is weaker than observing the resulting selected panel and focus.</li><li>Test the public result with realistic input and multiple instances.</li></ul></section>
+<section id="slide-023" data-part="0" data-cue="Prove the regression test detects the defect · 3"><div class="kicker">Foundations</div><h2>Prove the regression test detects the defect · 3</h2><ul><li>In the upcoming question, we will replace method-existence checks with host-based interactions and a supported harness.</li><li>We will explain what the harness hides, what remains part of its public API, and how accessibility and visual checks complement it.</li><li>The goal is a test suite that tells the library team whether consumers can still perform their tasks.</li></ul></section>
+<section id="slide-024" data-part="1" data-cue="TST-001 · Scenario"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Scenario</h2><ul><li>We now review TST-001: Tests that pass while the component is broken.</li><li>Inspect the consumer contract and identify the mechanism behind each reported defect.</li></ul></section>
+<section id="slide-025" data-part="1" data-cue="TST-001 · Scenario"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Scenario</h2><ul><li>The first version of the tabs component in A11Y-003 shipped with keyboard support missing and duplicate ids, yet its tests were green.</li><li>These are its tests:</li></ul></section>
+<section id="slide-026" data-part="1" data-cue="TST-001 · Scenario · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Scenario · block 1 · page 1</h2><pre class="code" data-lang="ts">describe('TabsComponent', () =&gt; {
+  it('selects a tab', () =&gt; {
+    const fixture = TestBed.createComponent(TabsComponent);
+    fixture.componentInstance.select(1);
+    fixture.detectChanges();
+
+    const active = fixture.nativeElement.querySelector('.ui-tabs__tab--active');
+    expect(active).toBeNull();
+  });
+
+  it('has a select method', () =&gt; {
+    const fixture = TestBed.createComponent(TabsComponent);
+    expect(typeof fixture.componentInstance.select).toBe('function');
+  });</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-027" data-part="1" data-cue="TST-001 · Scenario · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Scenario · block 2 · page 2</h2><pre class="code" data-lang="ts">});</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-028" data-part="1" data-cue="TST-001 · Scenario"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Scenario</h2><ul><li>Product teams also test their own screens that contain ui-tabs.</li><li>Their tests query .ui-tabs__tab--active and broke when the library renamed that class.</li></ul></section>
+<section id="slide-029" data-part="1" data-cue="TST-001 · Interview question"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Interview question</h2><p class="question">Why did these tests not catch the bugs? Rewrite the testing approach for the library, and say what the library should give product teams for their tests.</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-030" data-part="1" data-cue="TST-001 · Why they missed everything"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Why they missed everything</h2><ul><li>No content.</li><li>TestBed.createComponent(TabsComponent) renders the tabs with nothing projected, so there are no tabs.</li><li>Someone made the test pass by asserting toBeNull(), so it now checks that nothing is selected, which is meaningless.</li></ul></section>
+<section id="slide-031" data-part="1" data-cue="TST-001 · The approach: test through a host, like a consumer"><div class="kicker">Interview walkthrough</div><h2>TST-001 · The approach: test through a host, like a consumer</h2><ul><li>Render the component inside a small host component whose template looks like real usage, interact the way users do, and assert on roles, states and focus.</li></ul></section>
+<section id="slide-032" data-part="1" data-cue="TST-001 · Answer · block 1 · page 1"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Answer · block 1 · page 1</h2><pre class="code" data-lang="ts">@Component({
+  imports: [TabsComponent, TabComponent],
+  template: `
+    &lt;ui-tabs label=&quot;Profile&quot;&gt;
+      &lt;ui-tab label=&quot;Account&quot;&gt;Account settings&lt;/ui-tab&gt;
+      &lt;ui-tab label=&quot;Security&quot;&gt;Security settings&lt;/ui-tab&gt;
+    &lt;/ui-tabs&gt;
+    &lt;ui-tabs label=&quot;Notifications&quot;&gt;
+      &lt;ui-tab label=&quot;Email&quot;&gt;Email settings&lt;/ui-tab&gt;
+    &lt;/ui-tabs&gt;
+  `,
+})
+class TwoTabGroupsHost {}
+</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-033" data-part="1" data-cue="TST-001 · Answer · block 2 · page 2"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Answer · block 2 · page 2</h2><pre class="code" data-lang="ts">describe('ui-tabs', () =&gt; {
+  let loader: HarnessLoader;
+  let fixture: ComponentFixture&lt;TwoTabGroupsHost&gt;;
+
+  beforeEach(() =&gt; {
+    fixture = TestBed.createComponent(TwoTabGroupsHost);
+    loader = TestbedHarnessEnvironment.loader(fixture);
+  });
+
+  it('selects the first tab initially', async () =&gt; {
+    const tabs = await loader.getHarness(TabsHarness.with({ label: 'Profile' }));
+    expect(await tabs.getSelectedTabLabel()).toBe('Account');
+  });
+</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-034" data-part="1" data-cue="TST-001 · Answer · block 3 · page 3"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Answer · block 3 · page 3</h2><pre class="code" data-lang="ts">  it('moves selection and focus with the arrow keys and wraps', async () =&gt; {
+    const tabs = await loader.getHarness(TabsHarness.with({ label: 'Profile' }));
+    await tabs.pressKeyOnSelectedTab(TestKey.RIGHT_ARROW);
+    expect(await tabs.getSelectedTabLabel()).toBe('Security');
+    expect(await tabs.isSelectedTabFocused()).toBe(true);
+    await tabs.pressKeyOnSelectedTab(TestKey.RIGHT_ARROW);
+    expect(await tabs.getSelectedTabLabel()).toBe('Account');
+  });
+
+  it('gives every element a unique id', () =&gt; {
+    const ids = [...fixture.nativeElement.querySelectorAll('[id]')].map((el: Element) =&gt; el.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-035" data-part="1" data-cue="TST-001 · Answer · block 4 · page 4"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Answer · block 4 · page 4</h2><pre class="code" data-lang="ts">  it('has no axe violations', async () =&gt; {
+    const results = await axe.run(fixture.nativeElement);
+    expect(results.violations).toEqual([]);
+  });
+});</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-036" data-part="1" data-cue="TST-001 · Ship a harness: the library's testing API"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Ship a harness: the library's testing API</h2><ul><li>Product teams should never query the library's internal DOM.</li><li>A component harness is a supported, versioned testing API: it hides the markup, works in unit tests and end-to-end tests, and waits for the component to be stable.</li><li>When the library changes its markup, it updates its own harness, and consumers' tests keep passing.</li></ul></section>
+<section id="slide-037" data-part="1" data-cue="TST-001 · Answer · block 5 · page 1"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Answer · block 5 · page 1</h2><pre class="code" data-lang="ts">import { BaseHarnessFilters, ComponentHarness, HarnessPredicate, TestKey } from '@angular/cdk/testing';
+
+export interface TabsHarnessFilters extends BaseHarnessFilters {
+  label?: string;
+}
+
+export class TabsHarness extends ComponentHarness {
+  static hostSelector = 'ui-tabs';
+
+  static with(options: TabsHarnessFilters = {}): HarnessPredicate&lt;TabsHarness&gt; {
+    return new HarnessPredicate(TabsHarness, options).addOption('label', options.label, (harness, label) =&gt;
+      HarnessPredicate.stringMatches(harness.getLabel(), label),
+    );
+  }</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-038" data-part="1" data-cue="TST-001 · Answer · block 6 · page 2"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Answer · block 6 · page 2</h2><pre class="code" data-lang="ts">
+  private readonly tablist = this.locatorFor('[role=&quot;tablist&quot;]');
+  private readonly tabs = this.locatorForAll('[role=&quot;tab&quot;]');
+  private readonly selectedTab = this.locatorFor('[role=&quot;tab&quot;][aria-selected=&quot;true&quot;]');
+
+  async getLabel(): Promise&lt;string | null&gt; {
+    return (await this.tablist()).getAttribute('aria-label');
+  }
+
+  async getTabLabels(): Promise&lt;string[]&gt; {
+    return Promise.all((await this.tabs()).map(tab =&gt; tab.text()));
+  }
+
+  async getSelectedTabLabel(): Promise&lt;string&gt; {</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-039" data-part="1" data-cue="TST-001 · Answer · block 7 · page 3"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Answer · block 7 · page 3</h2><pre class="code" data-lang="ts">    return (await this.selectedTab()).text();
+  }
+
+  async selectTab(label: string): Promise&lt;void&gt; {
+    for (const tab of await this.tabs()) {
+      if ((await tab.text()) === label) return tab.click();
+    }
+    throw new Error(`No tab labelled &quot;${label}&quot;.`);
+  }
+
+  async pressKeyOnSelectedTab(key: TestKey): Promise&lt;void&gt; {
+    return (await this.selectedTab()).sendKeys(key);
+  }
+</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-040" data-part="1" data-cue="TST-001 · Answer · block 8 · page 4"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Answer · block 8 · page 4</h2><pre class="code" data-lang="ts">  async isSelectedTabFocused(): Promise&lt;boolean&gt; {
+    return (await this.selectedTab()).isFocused();
+  }
+}</pre><p class="small muted">Excerpt · consult the complete source and explanation</p></section>
+<section id="slide-041" data-part="1" data-cue="TST-001 · Ship a harness: the library's testing API"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Ship a harness: the library's testing API</h2><ul><li>The harness is published from a testing entry point (@acme/ui/tabs/testing), documented, and covered by the same versioning rules as the component.</li></ul></section>
+<section id="slide-042" data-part="1" data-cue="TST-001 · What else belongs in the library's test strategy"><div class="kicker">Interview walkthrough</div><h2>TST-001 · What else belongs in the library's test strategy</h2><ul><li>Accessibility checks with axe on every component state.</li><li>Run them in a real browser (for example Vitest browser mode or Playwright), because DOM emulations cannot compute colour contrast or layout.</li><li>Visual regression tests for each component in each theme, so token changes are reviewed.</li></ul></section>
+<section id="slide-043" data-part="1" data-cue="TST-001 · Follow-up 1"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Follow-up 1</h2><p class="question">What belongs in a harness's API, and what should never be exposed?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-043-answer" data-part="1" data-cue="Expose task-level operations and observable state: select a tab by label, read t"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Follow-up 1 · Answer</h2><ul><li>Expose task-level operations and observable state: select a tab by label, read the selected label, send a supported key, and inspect focus when that is meaningful.</li><li>Hide private fields, raw nodes, styling classes, and internal component hierarchy.</li><li>The harness can use internal selectors because the library owns their maintenance.</li></ul></section>
+<section id="slide-044" data-part="1" data-cue="TST-001 · Follow-up 2"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Follow-up 2</h2><p class="question">How would you test that a live region announcement happens?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-044-answer" data-part="1" data-cue="Verify a connected persistent live region receives the intended new text with th"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Follow-up 2 · Answer</h2><ul><li>Verify a connected persistent live region receives the intended new text with the chosen politeness and timing, or verify the announcer boundary in a focused unit test.</li><li>Then use real browser integration to ensure the region exists and updates.</li><li>An automated DOM assertion cannot prove the exact speech emitted by a screen reader.</li></ul></section>
+<section id="slide-045" data-part="1" data-cue="TST-001 · Follow-up 3"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Follow-up 3</h2><p class="question">Your visual regression suite has 2,000 screenshots and is flaky. What do you do?</p><p class="small muted">Pause and answer aloud before the explanation.</p></section>
+<section id="slide-045-answer" data-part="1" data-cue="Classify flakes before changing thresholds: fonts, animation, data, timing, view"><div class="kicker">Interview walkthrough</div><h2>TST-001 · Follow-up 3 · Answer</h2><ul><li>Classify flakes before changing thresholds: fonts, animation, data, timing, viewport, and actual layout races need different fixes.</li><li>Freeze irrelevant variability and wait for a deterministic ready condition.</li><li>Map each screenshot to a risk, keep representative themes and states, and remove redundant captures only when coverage remains.</li></ul></section>
+<section id="slide-046" data-part="2" data-cue="Final review checklist"><div class="kicker">Recap and clarifications</div><h2>Final review checklist</h2><ul><li>Review the lesson by answering each main question and follow-up aloud.</li><li>For Testing Angular Libraries Through Consumer Behavior, connect each reported symptom to its mechanism, explain the corrected public contract, and name a regression check that exercises the consumer path.</li><li>State compatibility and accessibility limitations clearly.</li></ul></section>
+<script src="../assets/slides.js"></script></body></html>

@@ -1,0 +1,14 @@
+{
+  "topic": "testing",
+  "title": "Testing Angular Libraries Through Consumer Behavior",
+  "goals": "Use consumer hosts, browser interactions, component harnesses, accessibility checks, and focused visual regression coverage.",
+  "sources": [
+    {
+      "id": "TST-001",
+      "title": "Tests that pass while the component is broken",
+      "file": "tst-001-testing-like-a-consumer.md",
+      "followups": 3
+    }
+  ],
+  "pauses": 4
+}

@@ -1,0 +1,62 @@
+{
+  "generatedOn": "2026-10-05",
+  "seconds": 2866.099,
+  "chapters": [
+    {
+      "title": "Introduction and foundations",
+      "seconds": 0
+    },
+    {
+      "title": "TOK-001: A button that cannot be themed",
+      "seconds": 687.82
+    },
+    {
+      "title": "TOK-002: Renaming a public token in a minor release",
+      "seconds": 1261.893
+    },
+    {
+      "title": "TOK-003: Dark mode that flashes, crashes and disappears",
+      "seconds": 1772.565
+    },
+    {
+      "title": "TOK-004: Size tokens that break zoom and text spacing",
+      "seconds": 2399.774
+    },
+    {
+      "title": "Final review checklist",
+      "seconds": 2833.326
+    }
+  ],
+  "width": 1920,
+  "height": 1080,
+  "videoCodec": "h264",
+  "audioCodec": "aac",
+  "subtitleCodec": "mov_text",
+  "bytes": 65741578,
+  "runtimeAssertions": 7,
+  "assertions": [
+    "New inherited token wins over deprecated token",
+    "Deprecated inherited token remains a fallback",
+    "Absent overrides use library fallback",
+    "System preference changes resolved semantic surface",
+    "Forced colors retains non-color selected marker",
+    "Enlarged text and spacing remain within flexible button height",
+    "Icon hit target exceeds minimum dimensions"
+  ],
+  "consumerCompilationChecks": 0,
+  "consumerAssertions": [],
+  "checkedSlides": 135,
+  "captions": 773,
+  "estimatedAzureDollars": 0.6460049999999999,
+  "reservedCharacters": 43067,
+  "preservedDrillPauses": 16,
+  "mainQuestions": 4,
+  "followupQuestions": 12,
+  "fullDecodePassed": true,
+  "browserPlaybackPassed": true,
+  "checkedVideoSeeks": [
+    20,
+    790.2,
+    2846.099417
+  ]
+}

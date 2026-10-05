@@ -6,7 +6,9 @@
   "scripts": {
     "index": "node scripts/build-index.mjs",
     "check": "node scripts/build-index.mjs --check",
-    "verify:examples": "node scripts/verify-examples.mjs"
+    "verify:examples": "node scripts/verify-examples.mjs",
+    "instructional:build": "node tools/instructional-content/build.mjs",
+    "instructional:check": "node tools/instructional-content/check.mjs"
   },
   "engines": {
     "node": "^22.22.3 || >=24.15.0"
